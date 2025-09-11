@@ -1,21 +1,8 @@
 // useAxiosSubmit.js
 import axiosConfig from '@/axiosConfig'
-import { trimStringsDeep } from '@/utils/formatStringUtil'
-import { getFromDataFromObject } from '@/utils/handleObjectUtil'
+import { getFormDataFromObject } from '@/utils/handleObjectUtil'
+import { appendPath, trimStringsDeep } from '@/utils/handleStringUtil'
 import { useCallback, useState } from 'react'
-
-const appendPath = (baseUrl, tail) => {
-	if (tail == null || tail === '') return baseUrl
-	const parts = Array.isArray(tail) ? tail : [tail]
-	const cleaned = parts
-		.map((p) => String(p).replace(/^\/+|\/+$/g, ''))
-		.filter(Boolean)
-		.map(encodeURIComponent)
-
-	const [base, query = ''] = String(baseUrl).split('?')
-	const url = [base.replace(/\/+$/, ''), ...cleaned].join('/')
-	return query ? `${url}?${query}` : url
-}
 
 export function useAxiosSubmit(url = '', method = 'POST', data = {}, params = {}) {
 	const [loading, setLoading] = useState(false)
@@ -38,7 +25,7 @@ export function useAxiosSubmit(url = '', method = 'POST', data = {}, params = {}
 			let payload = undefined
 			if (!queryOnly) {
 				const trimmed = trimStringsDeep(data)
-				payload = getFromDataFromObject(trimmed)
+				payload = getFormDataFromObject(trimmed)
 			}
 
 			const res = await axiosConfig.request({

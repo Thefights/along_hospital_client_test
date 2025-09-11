@@ -1,9 +1,9 @@
-const { default: axios } = require('axios')
+import axios from 'axios'
 
 const axiosConfig = axios.create({
-	baseURL: 'http://localhost:3000',
+	baseURL: 'https://localhost:8000/api/v1',
 	headers: {
-		'Content-Type': 'application/json',
+		'Content-Type': 'multipart/form-data',
 	},
 })
 

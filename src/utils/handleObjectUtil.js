@@ -7,17 +7,6 @@ export const getStringCapitalized = (string) => {
 		.join(' ')
 }
 
-export const getObjectWithTrimmedStringValue = (object) => {
-	if (!object || typeof object !== 'object') return object
-
-	return Object.fromEntries(
-		Object.entries(object).map(([key, value]) => [
-			key,
-			typeof value === 'string' ? value.trim() : value,
-		])
-	)
-}
-
 export const getValueInObjectFromPath = (object, path) => {
 	if (!object || typeof object !== 'object' || !path) return undefined
 	return path
@@ -25,7 +14,7 @@ export const getValueInObjectFromPath = (object, path) => {
 		.reduce((obj, key) => (obj && obj[key] !== undefined ? obj[key] : undefined), object)
 }
 
-export const getFromDataFromObject = (obj, form = new FormData(), segments = []) => {
+export const getFormDataFromObject = (obj, form = new FormData(), segments = []) => {
 	const isFiley = (v) => v instanceof File || v instanceof Blob
 
 	const buildKey = (segs) => {
