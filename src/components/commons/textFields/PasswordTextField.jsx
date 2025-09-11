@@ -1,7 +1,8 @@
+import { isPasswordStrong, maxLen } from '@/utils/validateUtil'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { IconButton, InputAdornment } from '@mui/material'
 import React, { forwardRef, useState } from 'react'
 import ValidationTextField from './ValidationTextField'
-import { IconButton, InputAdornment } from '@mui/material'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 /**
  * @typedef {Object} CustomProps
@@ -21,14 +22,12 @@ const PasswordTextField = ({ label, name, value, onChange, ...props }, ref) => {
 	return (
 		<ValidationTextField
 			ref={ref}
-			type={showPassword ? 'text' : 'password'}
 			label={label}
+			type={showPassword ? 'text' : 'password'}
 			name={name}
 			value={value}
 			onChange={onChange}
-			regex='^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!*()]).{8,}$'
-			regexErrorText='Password must at least 8 characters and contains UPPERCASE, lowercase, number and special characters'
-			maxInput={50}
+			validate={[maxLen(50), isPasswordStrong()]}
 			slotProps={{
 				input: {
 					endAdornment: (

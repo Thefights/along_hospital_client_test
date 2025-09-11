@@ -7,3 +7,7 @@ export const isValidatedFieldsRef = (fieldsRef) => {
 	})
 	return isValid
 }
+
+export const isPlainObject = (v) => {
+	return v !== null && typeof v === 'object' && !Array.isArray(v)
+}

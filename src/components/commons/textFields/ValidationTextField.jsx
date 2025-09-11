@@ -1,4 +1,4 @@
-import { formatNumberWithCommas } from '@/utils/generalFormatter'
+import { isEmail, isNumber, required } from '@/utils/validateUtil'
 import { TextField } from '@mui/material'
 import React, { forwardRef, useImperativeHandle, useState } from 'react'
 
@@ -7,10 +7,7 @@ import React, { forwardRef, useImperativeHandle, useState } from 'react'
  * @property {string} label
  * @property {string|number} value
  * @property {function} onChange
- * @property {number} [minInput]
- * @property {number} [maxInput]
- * @property {string} [regex]
- * @property {string} [regexErrorText]
+ * @property {function} validate
  */
 
 /**
@@ -19,81 +16,49 @@ import React, { forwardRef, useImperativeHandle, useState } from 'react'
  *
  */
 const ValidationTextField = (
-	{
-		label,
-		type = 'text',
-		value,
-		onChange,
-		minInput,
-		maxInput = 255,
-		regex,
-		regexErrorText,
-		...props
-	},
+	{ label, type = 'text', value, onChange, validate, ...props },
 	ref
 ) => {
 	const [error, setError] = useState('')
 
-	const validateInput = () => {
-		value = value && typeof value === 'string' ? value.trim() : value
-		if (value === '' || value === undefined || value === null) {
-			setError('This field is required')
-			return false
-		}
+	const userRules = useMemo(() => {
+		if (!validate) return []
+		return Array.isArray(validate) ? validate : [validate]
+	}, [validate])
 
-		if (regex && !new RegExp(regex).test(value)) {
-			setError(regexErrorText)
-			return false
-		}
+	const builtinRules = useMemo(() => {
+		const rs = []
+		rs.push(required())
 
-		if (type === 'number' && isNaN(Number(value))) {
-			setError('Please enter a valid number')
-			return false
-		}
+		if (type === 'email') rs.push(isEmail())
+		if (type === 'number') rs.push(isNumber())
 
-		if (type === 'email' && !/^[a-zA-Z]+[-.]?\w+@([\w-]+\.)+[\w]{2,}$/.test(value)) {
-			setError('Please enter a valid email address')
-			return false
-		}
+		return rs
+	}, [type])
 
-		if (maxInput !== undefined) {
-			if (type === 'number' && value > maxInput) {
-				setError(`Number input can't greater than ${formatNumberWithCommas(maxInput)}`)
-				return false
-			}
+	const allRules = useMemo(() => [...builtinRules, ...userRules], [builtinRules, userRules])
 
-			if (type !== 'number' && value.length > maxInput) {
-				setError(`This field can't exceed ${maxInput} characters`)
+	const run = useCallback(() => {
+		const raw = typeof value === 'string' ? value.trim() : value
+		for (const r of allRules) {
+			const res = r(raw)
+			if (res !== true) {
+				setError(res)
 				return false
 			}
 		}
-
-		if (minInput !== undefined) {
-			if (type === 'number' && value < minInput) {
-				setError(`Number input can't less than ${minInput}`)
-				return false
-			}
-
-			if (type !== 'number' && value.length < minInput) {
-				setError(`This field must at least ${minInput} characters`)
-				return false
-			}
-		}
-
 		setError('')
 		return true
-	}
+	}, [value, allRules])
 
-	useImperativeHandle(ref, () => ({
-		validate: () => validateInput(),
-	}))
+	useImperativeHandle(ref, () => ({ validate: run }), [run])
 
 	return (
 		<TextField
 			label={label}
 			value={value ?? undefined}
 			onChange={onChange}
-			onBlur={validateInput}
+			onBlur={run}
 			error={!!error}
 			type={type}
 			helperText={error}
@@ -115,7 +80,6 @@ export default forwardRef(ValidationTextField)
   select
   value={value || ''}
   onChange={setValue}
-  ref={(el) => (fieldsRef.current['value'] = el)}
   >
     {array.map((element) => (
       <MenuItem key={element.id} value={element.id}>
