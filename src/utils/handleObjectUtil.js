@@ -1,20 +1,11 @@
-export const getStringCapitalized = (string) => {
-	return string
-		.trim()
-		.toLowerCase()
-		.split(/[\s_]+/)
-		.map((str) => str.replace(/(?:^|\s|["'([{])+\S/g, (match) => match.toUpperCase()))
-		.join(' ')
-}
-
-export const getValueInObjectFromPath = (object, path) => {
+export const getObjectValueFromStringPath = (object, path) => {
 	if (!object || typeof object !== 'object' || !path) return undefined
 	return path
 		.split('.')
 		.reduce((obj, key) => (obj && obj[key] !== undefined ? obj[key] : undefined), object)
 }
 
-export const getFormDataFromObject = (obj, form = new FormData(), segments = []) => {
+export const getObjectConvertingToFormData = (obj, form = new FormData(), segments = []) => {
 	const isFiley = (v) => v instanceof File || v instanceof Blob
 
 	const buildKey = (segs) => {
@@ -46,12 +37,12 @@ export const getFormDataFromObject = (obj, form = new FormData(), segments = [])
 	}
 
 	if (Array.isArray(obj)) {
-		obj.forEach((v, i) => objectToFormData(v, form, segments.concat(i)))
+		obj.forEach((v, i) => getObjectConvertingToFormData(v, form, segments.concat(i)))
 		return form
 	}
 
 	if (typeof obj === 'object') {
-		Object.keys(obj).forEach((k) => objectToFormData(obj[k], form, segments.concat(k)))
+		Object.keys(obj).forEach((k) => getObjectConvertingToFormData(obj[k], form, segments.concat(k)))
 		return form
 	}
 

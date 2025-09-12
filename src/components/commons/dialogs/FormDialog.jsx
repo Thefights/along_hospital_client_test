@@ -1,7 +1,18 @@
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useForm } from '@/hooks/useForm'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from '@mui/material'
-import { useCallback, useMemo } from 'react'
+import {
+	Box,
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+	MenuItem,
+	Stack,
+	TextField,
+	Typography,
+} from '@mui/material'
+import { useCallback, useMemo, useState } from 'react'
 import ValidationTextField from '../textFields/ValidationTextField'
 
 const FormDialog = ({
@@ -28,6 +39,9 @@ const FormDialog = ({
 		return v
 	}, [fields, initialValues])
 
+	const isRequired = useCallback((field) => field.required ?? method === 'POST', [method])
+	const [submitted, setSubmitted] = useState(false)
+
 	const { values, handleChange, setField, reset, registerRef, validateAll } = useForm(startValues)
 	const { loading, error, response, submit } = useAxiosSubmit(submitUrl, method, values, params)
 
@@ -37,6 +51,13 @@ const FormDialog = ({
 	}, [onClose, reset, startValues])
 
 	const handleSubmit = useCallback(async () => {
+		setSubmitted(true)
+
+		const missingRequiredFiles = fields.filter(
+			(f) => f.type === 'image' && isRequired(f) && !values[f.key]
+		)
+		if (missingRequiredFiles.length) return
+
 		try {
 			const ok = validateAll()
 			if (!ok) return
@@ -93,12 +114,12 @@ const FormDialog = ({
 
 	const renderImage = (field) => {
 		const file = values[field.key]
-		const preview = file instanceof File ? URL.createObjectURL(file) : ''
+		const preview = file instanceof File ? URL.createObjectURL(file) : field.imagePreview ?? ''
+		const showError = submitted && isRequired(field) && !file
 
 		return (
 			<Box key={field.key}>
-				<ValidationTextField
-					ref={registerRef(field.key)}
+				<TextField
 					name={field.key}
 					label={field.title}
 					type='file'
@@ -107,9 +128,13 @@ const FormDialog = ({
 						const file = e?.target?.files?.[0] || null
 						setField(field.key, file)
 					}}
-					validate={field.validate}
-					slotProps={{ input: { inputProps: { accept: 'image/*' } } }}
-					{...(field.props || {})}
+					error={showError}
+					helperText={showError ? 'This field is required' : ''}
+					fullWidth
+					slotProps={{
+						input: { inputProps: { accept: 'image/*' } },
+						inputLabel: { shrink: true },
+					}}
 				/>
 				{preview && (
 					<Box sx={{ mt: 1.5 }}>
@@ -120,7 +145,7 @@ const FormDialog = ({
 							component='img'
 							src={preview}
 							alt={field.title}
-							sx={{ width: '100%', maxHeight: 240, objectFit: 'contain', borderRadius: 2, boxShadow: 1 }}
+							sx={{ width: '100%', maxHeight: 240, objectFit: 'cover', borderRadius: 2, boxShadow: 1 }}
 							onLoad={() => URL.revokeObjectURL(preview)}
 						/>
 					</Box>
@@ -139,11 +164,6 @@ const FormDialog = ({
 						if (field.type === 'select') return renderSelect(field)
 						return renderStandard(field)
 					})}
-					{error && (
-						<Typography variant='body2' color='error'>
-							{error?.message || String(error)}
-						</Typography>
-					)}
 				</Stack>
 			</DialogContent>
 			<DialogActions>
@@ -176,7 +196,7 @@ const fields = [
     { key: 'age', title: 'Age', type: 'number', validate: [numberRange(0, 100)] },
 
     // Image upload field
-    { key: 'avatar', title: 'Avatar', type: 'image' },
+    { key: 'avatar', title: 'Avatar', type: 'image', imagePreview: 'https://example.com/avatar.jpg' },
 
 	// Select field with options
 	{ key: 'role', title: 'Role', type: 'select', options: ['User', 'Admin', { label: 'Super Admin', value: 'superadmin', disabled: true }] },

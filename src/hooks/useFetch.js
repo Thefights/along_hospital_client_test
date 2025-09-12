@@ -1,4 +1,4 @@
-import axiosConfig from '@/axiosConfig'
+import axiosConfig from '@/utils/axiosConfig'
 import useAsync from './useAsync'
 
 export default function useFetch(url, data = {}, dependencies = []) {

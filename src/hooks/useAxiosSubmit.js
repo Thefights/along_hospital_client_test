@@ -1,6 +1,7 @@
 // useAxiosSubmit.js
-import axiosConfig from '@/axiosConfig'
-import { getFormDataFromObject } from '@/utils/handleObjectUtil'
+import axiosConfig from '@/utils/axiosConfig'
+import { isPlainObject } from '@/utils/handleBooleanUtil'
+import { getObjectConvertingToFormData } from '@/utils/handleObjectUtil'
 import { appendPath, trimStringsDeep } from '@/utils/handleStringUtil'
 import { useCallback, useState } from 'react'
 
@@ -25,7 +26,7 @@ export function useAxiosSubmit(url = '', method = 'POST', data = {}, params = {}
 			let payload = undefined
 			if (!queryOnly) {
 				const trimmed = trimStringsDeep(data)
-				payload = getFormDataFromObject(trimmed)
+				payload = getObjectConvertingToFormData(trimmed)
 			}
 
 			const res = await axiosConfig.request({

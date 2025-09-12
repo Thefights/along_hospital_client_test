@@ -1,3 +1,12 @@
+export const getStringCapitalized = (string) => {
+	return string
+		.trim()
+		.toLowerCase()
+		.split(/[\s_]+/)
+		.map((str) => str.replace(/(?:^|\s|["'([{])+\S/g, (match) => match.toUpperCase()))
+		.join(' ')
+}
+
 export const trimStringsDeep = (input) => {
 	if (typeof input === 'string') return input.trim()
 	if (Array.isArray(input)) return input.map(trimStringsDeep)

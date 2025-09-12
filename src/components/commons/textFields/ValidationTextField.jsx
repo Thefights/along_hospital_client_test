@@ -1,6 +1,6 @@
 import { isEmail, isNumber, required } from '@/utils/validateUtil'
 import { TextField } from '@mui/material'
-import React, { forwardRef, useImperativeHandle, useState } from 'react'
+import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useState } from 'react'
 
 /**
  * @typedef {Object} CustomProps
@@ -39,9 +39,8 @@ const ValidationTextField = (
 	const allRules = useMemo(() => [...builtinRules, ...userRules], [builtinRules, userRules])
 
 	const run = useCallback(() => {
-		const raw = typeof value === 'string' ? value.trim() : value
 		for (const r of allRules) {
-			const res = r(raw)
+			const res = r(value)
 			if (res !== true) {
 				setError(res)
 				return false
@@ -65,7 +64,11 @@ const ValidationTextField = (
 			required
 			fullWidth
 			variant='outlined'
-			slotProps={type === 'date' || type === 'time' ? { inputLabel: { shrink: true } } : undefined}
+			slotProps={
+				type === 'date' || type === 'time' || type === 'file'
+					? { inputLabel: { shrink: true } }
+					: undefined
+			}
 			{...props}
 		/>
 	)
