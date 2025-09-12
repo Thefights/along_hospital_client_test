@@ -49,3 +49,27 @@ export const getObjectConvertingToFormData = (obj, form = new FormData(), segmen
 	form.append(buildKey(segments), obj)
 	return form
 }
+
+export const getObjectUnflatten = (flat) => {
+	const setIn = (obj, path, value) => {
+		const keys = String(path)
+			.replace(/\[(\d+)\]/g, '.$1')
+			.split('.')
+			.filter(Boolean)
+		let cur = obj
+		keys.forEach((k, i) => {
+			const last = i === keys.length - 1
+			if (last) cur[k] = value
+			else {
+				const nextIsIndex = /^\d+$/.test(keys[i + 1])
+				cur[k] = cur[k] ?? (nextIsIndex ? [] : {})
+				cur = cur[k]
+			}
+		})
+		return obj
+	}
+
+	const out = {}
+	for (const [p, v] of Object.entries(flat ?? {})) setIn(out, p, v)
+	return out
+}

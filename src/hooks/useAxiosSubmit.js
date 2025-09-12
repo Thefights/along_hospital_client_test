@@ -2,7 +2,7 @@
 import axiosConfig from '@/utils/axiosConfig'
 import { isPlainObject } from '@/utils/handleBooleanUtil'
 import { getObjectConvertingToFormData } from '@/utils/handleObjectUtil'
-import { appendPath, trimStringsDeep } from '@/utils/handleStringUtil'
+import { appendPath, getTrimString } from '@/utils/handleStringUtil'
 import { useCallback, useState } from 'react'
 
 export function useAxiosSubmit(url = '', method = 'POST', data = {}, params = {}) {
@@ -11,10 +11,10 @@ export function useAxiosSubmit(url = '', method = 'POST', data = {}, params = {}
 	const [response, setResponse] = useState(null)
 
 	const submit = useCallback(async () => {
+		console.log(data)
 		setLoading(true)
 		setError(null)
 		setResponse(null)
-
 		try {
 			const upper = String(method).toUpperCase()
 			const queryOnly = upper === 'GET' || upper === 'DELETE'
@@ -25,7 +25,7 @@ export function useAxiosSubmit(url = '', method = 'POST', data = {}, params = {}
 
 			let payload = undefined
 			if (!queryOnly) {
-				const trimmed = trimStringsDeep(data)
+				const trimmed = getTrimString(data)
 				payload = getObjectConvertingToFormData(trimmed)
 			}
 

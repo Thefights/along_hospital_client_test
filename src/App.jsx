@@ -1,5 +1,7 @@
+import TestForm from './pages/TestForm'
+
 function App() {
-	return <>Hello, World!</>
+	return <TestForm />
 }
 
 export default App

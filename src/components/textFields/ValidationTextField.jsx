@@ -1,4 +1,4 @@
-import { isEmail, isNumber, required } from '@/utils/validateUtil'
+import { isEmail, isNumber, isRequired } from '@/utils/validateUtil'
 import { TextField } from '@mui/material'
 import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useState } from 'react'
 
@@ -16,7 +16,7 @@ import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useState 
  *
  */
 const ValidationTextField = (
-	{ label, type = 'text', value, onChange, validate, ...props },
+	{ label, type = 'text', required = true, value, onChange, validate, ...props },
 	ref
 ) => {
 	const [error, setError] = useState('')
@@ -28,8 +28,7 @@ const ValidationTextField = (
 
 	const builtinRules = useMemo(() => {
 		const rs = []
-		rs.push(required())
-
+		if (required) rs.push(isRequired())
 		if (type === 'email') rs.push(isEmail())
 		if (type === 'number') rs.push(isNumber())
 
@@ -61,7 +60,7 @@ const ValidationTextField = (
 			error={!!error}
 			type={type}
 			helperText={error}
-			required
+			required={required}
 			fullWidth
 			variant='outlined'
 			slotProps={

@@ -7,13 +7,13 @@ export const getStringCapitalized = (string) => {
 		.join(' ')
 }
 
-export const trimStringsDeep = (input) => {
+export const getTrimString = (input) => {
 	if (typeof input === 'string') return input.trim()
-	if (Array.isArray(input)) return input.map(trimStringsDeep)
+	if (Array.isArray(input)) return input.map(getTrimString)
 	if (input && typeof input === 'object') {
 		if (input instanceof File || input instanceof Blob || input instanceof Date) return input
 		const out = {}
-		for (const k of Object.keys(input)) out[k] = trimStringsDeep(input[k])
+		for (const k of Object.keys(input)) out[k] = getTrimString(input[k])
 		return out
 	}
 	return input

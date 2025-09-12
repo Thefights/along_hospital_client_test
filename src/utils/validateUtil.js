@@ -1,5 +1,5 @@
 // validators.js
-export const required =
+export const isRequired =
 	(msg = 'This field is required') =>
 	(v) => {
 		const s = typeof v === 'string' ? v.trim() : v
