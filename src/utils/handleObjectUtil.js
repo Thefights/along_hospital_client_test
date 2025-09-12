@@ -5,7 +5,7 @@ export const getObjectValueFromStringPath = (object, path) => {
 		.reduce((obj, key) => (obj && obj[key] !== undefined ? obj[key] : undefined), object)
 }
 
-export const getObjectConvertingToFormData = (obj, form = new FormData(), segments = []) => {
+export const getObjectConvertingToFormData = (object, form = new FormData(), segments = []) => {
 	const isFiley = (v) => v instanceof File || v instanceof Blob
 
 	const buildKey = (segs) => {
@@ -21,32 +21,32 @@ export const getObjectConvertingToFormData = (obj, form = new FormData(), segmen
 		return key
 	}
 
-	if (obj == null) {
+	if (object == null) {
 		if (segments.length) form.append(buildKey(segments), '')
 		return form
 	}
 
-	if (isFiley(obj)) {
-		form.append(buildKey(segments), obj)
+	if (isFiley(object)) {
+		form.append(buildKey(segments), object)
 		return form
 	}
 
-	if (obj instanceof Date) {
-		form.append(buildKey(segments), obj.toISOString())
+	if (object instanceof Date) {
+		form.append(buildKey(segments), object.toISOString())
 		return form
 	}
 
-	if (Array.isArray(obj)) {
-		obj.forEach((v, i) => getObjectConvertingToFormData(v, form, segments.concat(i)))
+	if (Array.isArray(object)) {
+		object.forEach((v, i) => getObjectConvertingToFormData(v, form, segments.concat(i)))
 		return form
 	}
 
-	if (typeof obj === 'object') {
-		Object.keys(obj).forEach((k) => getObjectConvertingToFormData(obj[k], form, segments.concat(k)))
+	if (typeof object === 'object') {
+		Object.keys(object).forEach((k) => getObjectConvertingToFormData(object[k], form, segments.concat(k)))
 		return form
 	}
 
-	form.append(buildKey(segments), obj)
+	form.append(buildKey(segments), object)
 	return form
 }
 

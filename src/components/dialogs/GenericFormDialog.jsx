@@ -4,7 +4,7 @@ import { useForm } from '@/hooks/useForm'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 
-const FormDialog = ({
+const GenericFormDialog = ({
 	open,
 	onClose,
 	title = 'Form',
@@ -30,7 +30,7 @@ const FormDialog = ({
 
 	const [submitted, setSubmitted] = useState(false)
 	const { values, handleChange, setField, reset, registerRef, validateAll } = useForm(startValues)
-	const { loading, error, response, submit } = useAxiosSubmit(submitUrl, method, values, params)
+	const { loading, submit } = useAxiosSubmit(submitUrl, method, values, params)
 	const { renderField, hasRequiredMissing } = useFieldRenderer(
 		values,
 		setField,
@@ -77,7 +77,7 @@ const FormDialog = ({
 	)
 }
 
-export default FormDialog
+export default GenericFormDialog
 
 // Usage Example
 /*
@@ -125,7 +125,7 @@ const initialValues = {
 	contacts: [],
 }
 
-<FormDialog
+<GenericFormDialog
     open={createDialogOpen}
     onClose={() => setCreateDialogOpen(false)}
     fields={fields}

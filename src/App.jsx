@@ -1,7 +1,12 @@
-import TestForm from './pages/TestForm'
+import { Box } from '@mui/material'
+import TestTable from './pages/TestTable'
 
 function App() {
-	return <TestForm />
+	return (
+		<Box p={5}>
+			<TestTable />
+		</Box>
+	)
 }
 
 export default App

@@ -1,4 +1,4 @@
-import FormDialog from '@/components/dialogs/FormDialog'
+import GenericFormDialog from '@/components/dialogs/GenericFormDialog'
 import { maxLen, numberRange } from '@/utils/validateUtil'
 import { useState } from 'react'
 
@@ -52,7 +52,6 @@ const TestForm = () => {
 			key: 'contacts',
 			title: 'Contacts',
 			type: 'array',
-			required: false,
 			of: [
 				{ key: 'type', title: 'Type', type: 'select', options: ['Phone', 'Email'] },
 				{ key: 'value', title: 'Value', validate: [maxLen(255)] },
@@ -61,18 +60,18 @@ const TestForm = () => {
 	]
 
 	const initialValues = {
-		name: '',
-		email: '',
-		description: '',
-		age: '',
+		name: 'DuyLP',
+		email: 'DuyLPCE181153@fpt.edu.vn',
+		description: 'Toi ten la DuyLP',
+		age: 21,
 		avatar: '',
-		role: '',
-		address: { street: '', city: '', zip: '' },
+		role: 'Admin',
+		address: { street: 'Chu Van An', city: 'An Giang', zip: '900000' },
 		contacts: [],
 	}
 
 	return (
-		<FormDialog
+		<GenericFormDialog
 			open={createDialogOpen}
 			onClose={() => setCreateDialogOpen(false)}
 			fields={fields}

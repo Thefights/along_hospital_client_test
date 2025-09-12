@@ -1,8 +1,28 @@
 import axiosConfig from '@/utils/axiosConfig'
-import useAsync from './useAsync'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
-export default function useFetch(url, data = {}, dependencies = []) {
-	return useAsync(() => {
-		return axiosConfig.get(url, { params: data }).then((res) => res.data)
-	}, dependencies)
+export default function useFetch(url, params = {}, dependencies = []) {
+	const [loading, setLoading] = useState(false)
+	const [error, setError] = useState(null)
+	const [data, setData] = useState(null)
+
+	const memoParams = useMemo(() => params, [JSON.stringify(params)])
+
+	const fetchData = useCallback(async () => {
+		setLoading(true)
+		try {
+			const response = await axiosConfig.get(url, { params: memoParams })
+			setData(response.data)
+		} catch (error) {
+			setError(error)
+		} finally {
+			setLoading(false)
+		}
+	}, [url, memoParams, ...dependencies])
+
+	useEffect(() => {
+		fetchData()
+	}, [fetchData])
+
+	return { loading, error, data }
 }
