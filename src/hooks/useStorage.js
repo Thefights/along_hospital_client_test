@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import secureLocalStorage from 'react-secure-storage'
 
 export function useLocalStorage(key, defaultValue) {
 	return useStorage(key, defaultValue, window.localStorage)
@@ -6,6 +7,10 @@ export function useLocalStorage(key, defaultValue) {
 
 export function useSessionStorage(key, defaultValue) {
 	return useStorage(key, defaultValue, window.sessionStorage)
+}
+
+export function useSecureStorage(key, defaultValue) {
+	return useStorage(key, defaultValue, secureLocalStorage)
 }
 
 function useStorage(key, defaultValue, storageObject) {

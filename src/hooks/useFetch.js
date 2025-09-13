@@ -1,4 +1,4 @@
-import axiosConfig from '@/utils/axiosConfig'
+import axiosConfig from '@/configs/axiosConfig'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 export default function useFetch(url, params = {}, dependencies = []) {

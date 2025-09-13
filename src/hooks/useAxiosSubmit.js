@@ -1,5 +1,5 @@
 // useAxiosSubmit.js
-import axiosConfig from '@/utils/axiosConfig'
+import axiosConfig from '@/configs/axiosConfig'
 import { isPlainObject } from '@/utils/handleBooleanUtil'
 import { getObjectConvertingToFormData } from '@/utils/handleObjectUtil'
 import { appendPath, getTrimString } from '@/utils/handleStringUtil'
