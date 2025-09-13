@@ -1,14 +1,17 @@
+import useTranslation from '@/hooks/useTranslation'
 import ArchiveTwoToneIcon from '@mui/icons-material/ArchiveTwoTone'
 import { Stack, TableCell, TableRow, Typography } from '@mui/material'
 
 const EmptyRow = ({
 	colSpan = 1,
-	title = 'No data yet…',
+	title,
 	description,
 	icon = <ArchiveTwoToneIcon sx={{ fontSize: { xs: 72, sm: 96, md: 120 } }} />,
 	buttons,
 	minHeight = 200,
 }) => {
+	const { t } = useTranslation()
+
 	return (
 		<TableRow hover={false}>
 			<TableCell colSpan={colSpan} sx={{ py: 4 }}>
@@ -22,7 +25,7 @@ const EmptyRow = ({
 					{icon}
 					<Stack spacing={0.75}>
 						<Typography variant='h6' sx={{ fontWeight: 600 }}>
-							{title}
+							{title || t('text.no_data')}
 						</Typography>
 						{description && (
 							<Typography variant='body2' color='text.secondary'>

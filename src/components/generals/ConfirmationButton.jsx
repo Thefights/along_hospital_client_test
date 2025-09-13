@@ -1,3 +1,4 @@
+import useTranslation from '@/hooks/useTranslation'
 import {
 	Button,
 	Dialog,
@@ -30,6 +31,7 @@ const ConfirmationButton = ({
 	...props
 }) => {
 	const [open, setOpen] = useState(false)
+	const { t } = useTranslation()
 
 	const handleOpen = () => {
 		setOpen(true)
@@ -60,7 +62,7 @@ const ConfirmationButton = ({
 							{confirmButtonText}
 						</Button>
 						<Button onClick={handleClose} color='inherit'>
-							Cancel
+							{t('button.cancel')}
 						</Button>
 					</DialogActions>
 				</Dialog>

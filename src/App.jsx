@@ -1,10 +1,10 @@
 import { Box } from '@mui/material'
-import TestForm from './pages/TestForm'
+import TestTable from './pages/TestTable'
 
 function App() {
 	return (
 		<Box p={5}>
-			<TestForm />
+			<TestTable />
 		</Box>
 	)
 }

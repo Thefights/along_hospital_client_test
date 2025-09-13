@@ -80,7 +80,7 @@ const TestForm = () => {
 			submitUrl={'/user'}
 			method='PUT'
 			params={1} // This is Id 1
-			// submitLabel={t('button.update')}
+			submitLabel={t('button.update')}
 			submitButtonColor={'success'}
 		/>
 	)

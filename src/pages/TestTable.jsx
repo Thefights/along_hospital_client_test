@@ -1,11 +1,13 @@
 import GenericTable from '@/components/tables/GenericTable'
 import useFetch from '@/hooks/useFetch'
+import useTranslation from '@/hooks/useTranslation'
 import { Button } from '@mui/material'
 import { useState } from 'react'
 
 const TestTable = () => {
 	const [sort, setSort] = useState({ key: 'name', direction: 'asc' })
 	const { loading, error, responseData } = useFetch('/users', { sort }, [sort])
+	const { t, language, setLanguage } = useTranslation()
 
 	const fields = [
 		{ key: 'id', title: 'ID', width: 10, sortable: true, fixedColumn: true },
@@ -29,26 +31,36 @@ const TestTable = () => {
 	]
 
 	const testData = [
-		{
-			id: 1,
-			name:
-				'John Doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe',
-			age: 28,
-			address: { city: 'New York', country: 'USA' },
-		},
-		{ id: 2, name: 'Jane Smith', age: 34, address: { city: 'London', country: 'UK' } },
+		// {
+		// 	id: 1,
+		// 	name:
+		// 		'John Doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe',
+		// 	age: 28,
+		// 	address: { city: 'New York', country: 'USA' },
+		// },
+		// { id: 2, name: 'Jane Smith', age: 34, address: { city: 'London', country: 'UK' } },
 	]
 
 	return (
-		<GenericTable
-			data={testData}
-			fields={fields}
-			sort={sort}
-			onSortChange={setSort}
-			rowKey='id'
-			loading={loading}
-			stickyHeader={true}
-		/>
+		<>
+			<Button
+				onClick={() => {
+					setLanguage(language === 'en' ? 'vi' : 'en')
+					window.location.reload()
+				}}
+			>
+				{language === 'en' ? 'Switch to Vietnamese' : 'Switch to English'}
+			</Button>
+			<GenericTable
+				data={testData}
+				fields={fields}
+				sort={sort}
+				onSortChange={setSort}
+				rowKey='id'
+				loading={loading}
+				stickyHeader={true}
+			/>
+		</>
 	)
 }
 

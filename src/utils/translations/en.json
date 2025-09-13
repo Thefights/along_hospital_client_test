@@ -7,5 +7,11 @@
         "update": "Update",
         "delete": "Delete",
         "add_row": "Add Row"
+    },
+
+    "text": {
+        "no_data": "No data available...",
+        "search": "Search...",
+        "loading": "Loading..."
     }
 }
