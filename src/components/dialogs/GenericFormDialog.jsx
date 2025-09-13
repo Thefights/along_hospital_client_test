@@ -1,6 +1,7 @@
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
+import useTranslation from '@/hooks/useTranslation'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 
@@ -13,7 +14,7 @@ const GenericFormDialog = ({
 	submitUrl = '',
 	method = 'POST',
 	params = {},
-	submitLabel = 'Submit',
+	submitLabel,
 	submitButtonColor = 'primary',
 	onSuccess,
 	onError,
@@ -29,6 +30,7 @@ const GenericFormDialog = ({
 	}, [fields, initialValues])
 
 	const [submitted, setSubmitted] = useState(false)
+	const { t } = useTranslation()
 	const { values, handleChange, setField, reset, registerRef, validateAll } = useForm(startValues)
 	const { loading, submit } = useAxiosSubmit(submitUrl, method, values, params)
 	const { renderField, hasRequiredMissing } = useFieldRenderer(
@@ -36,7 +38,8 @@ const GenericFormDialog = ({
 		setField,
 		handleChange,
 		registerRef,
-		submitted
+		submitted,
+		'standard'
 	)
 
 	const handleClose = useCallback(() => {
@@ -67,10 +70,10 @@ const GenericFormDialog = ({
 			</DialogContent>
 			<DialogActions>
 				<Button onClick={handleClose} color='secondary' disabled={loading}>
-					Cancel
+					{t('button.cancel')}
 				</Button>
 				<Button onClick={handleSubmit} color={submitButtonColor} variant='contained' disabled={loading}>
-					{loading ? 'Submitting...' : submitLabel}
+					{loading ? t('button.submitting') + '...' : submitLabel ?? t('button.submit')}
 				</Button>
 			</DialogActions>
 		</Dialog>

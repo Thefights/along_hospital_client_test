@@ -25,3 +25,9 @@ function getNestedTranslation(language, keys) {
 		return obj?.[key]
 	}, translations[language])
 }
+
+// Usage example:
+/*
+const { t } = useTranslation()
+<div>{t("header.title")}</div> // { header: { title: "Welcome" } } => "Welcome"
+*/

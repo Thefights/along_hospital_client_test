@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 const TestTable = () => {
 	const [sort, setSort] = useState({ key: 'name', direction: 'asc' })
-	const { loading, error, data } = useFetch('/users', { sort }, [sort])
+	const { loading, error, responseData } = useFetch('/users', { sort }, [sort])
 
 	const fields = [
 		{ key: 'id', title: 'ID', width: 10, sortable: true, fixedColumn: true },

@@ -1,9 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
 
-// Usage example:
-// const [name, setName, removeName] = useLocalStorage('name', 'Bob')
-// const [age, setAge, removeAge] = useSessionStorage('age', 42)
-
 export function useLocalStorage(key, defaultValue) {
 	return useStorage(key, defaultValue, window.localStorage)
 }
@@ -35,3 +31,7 @@ function useStorage(key, defaultValue, storageObject) {
 
 	return [value, setValue, remove]
 }
+
+// Usage example:
+// const [name, setName, removeName] = useLocalStorage('name', 'Bob')
+// const [age, setAge, removeAge] = useSessionStorage('age', 42)

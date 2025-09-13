@@ -12,11 +12,18 @@ const normalizeOptions = (options) =>
 		  )
 		: []
 
-export default function useFieldRenderer(values, setField, handleChange, registerRef, submitted) {
+export default function useFieldRenderer(
+	values,
+	setField,
+	handleChange = () => {},
+	registerRef = () => {},
+	submitted,
+	textFieldVariant = 'outlined'
+) {
 	const hasRequiredMissing = useCallback(
 		(fields) => {
 			const checkField = (f, v) => {
-				if (!f.required) return false
+				if (f.required !== undefined && !f.required) return false
 				if (f.type === 'image') return !v
 				if (f.type === 'array') return !Array.isArray(v) || v.length === 0
 				if (f.type === 'object') {
@@ -34,6 +41,7 @@ export default function useFieldRenderer(values, setField, handleChange, registe
 	const renderStandard = (field) => (
 		<ValidationTextField
 			key={field.key}
+			variant={textFieldVariant}
 			ref={registerRef(field.key)}
 			name={field.key}
 			label={field.title}
@@ -53,6 +61,7 @@ export default function useFieldRenderer(values, setField, handleChange, registe
 		return (
 			<ValidationTextField
 				key={field.key}
+				variant={textFieldVariant}
 				ref={registerRef(field.key)}
 				name={field.key}
 				required={field.required ?? true}
@@ -61,7 +70,8 @@ export default function useFieldRenderer(values, setField, handleChange, registe
 				onChange={handleChange}
 				validate={field.validate}
 				select
-				{...(field.props || {})}>
+				{...(field.props || {})}
+			>
 				{opts.map((opt) => (
 					<MenuItem key={String(opt.value)} value={opt.value} disabled={opt.disabled}>
 						{opt.label}
@@ -81,6 +91,7 @@ export default function useFieldRenderer(values, setField, handleChange, registe
 			<Box key={field.key}>
 				<TextField
 					name={field.key}
+					variant={textFieldVariant}
 					label={field.title}
 					type='file'
 					value={undefined}
@@ -130,6 +141,7 @@ export default function useFieldRenderer(values, setField, handleChange, registe
 				return (
 					<ValidationTextField
 						key={name}
+						variant={textFieldVariant}
 						ref={registerRef(name)}
 						name={name}
 						label={child.title}
@@ -139,7 +151,8 @@ export default function useFieldRenderer(values, setField, handleChange, registe
 						validate={child.validate}
 						select
 						sx={{ minWidth: 220, flex: 1 }}
-						{...(child.props || {})}>
+						{...(child.props || {})}
+					>
 						{opts.map((opt) => (
 							<MenuItem key={String(opt.value)} value={opt.value} disabled={opt.disabled}>
 								{opt.label}
@@ -151,6 +164,7 @@ export default function useFieldRenderer(values, setField, handleChange, registe
 			return (
 				<ValidationTextField
 					key={name}
+					variant={textFieldVariant}
 					ref={registerRef(name)}
 					name={name}
 					required={child.required ?? true}
@@ -207,6 +221,7 @@ export default function useFieldRenderer(values, setField, handleChange, registe
 				return (
 					<ValidationTextField
 						key={name}
+						variant={textFieldVariant}
 						ref={registerRef(name)}
 						name={name}
 						required={child.required ?? true}
@@ -216,7 +231,8 @@ export default function useFieldRenderer(values, setField, handleChange, registe
 						validate={child.validate}
 						select
 						sx={{ minWidth: 220, flex: 1 }}
-						{...(child.props || {})}>
+						{...(child.props || {})}
+					>
 						{opts.map((opt) => (
 							<MenuItem key={String(opt.value)} value={opt.value} disabled={opt.disabled}>
 								{opt.label}
@@ -228,6 +244,7 @@ export default function useFieldRenderer(values, setField, handleChange, registe
 			return (
 				<ValidationTextField
 					key={name}
+					variant={textFieldVariant}
 					ref={registerRef(name)}
 					name={name}
 					required={child.required ?? true}

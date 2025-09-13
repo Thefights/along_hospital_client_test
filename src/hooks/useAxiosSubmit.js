@@ -8,13 +8,12 @@ import { useCallback, useState } from 'react'
 export function useAxiosSubmit(url = '', method = 'POST', data = {}, params = {}) {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(null)
-	const [data, setData] = useState(null)
+	const [responseData, setResponseData] = useState(null)
 
 	const submit = useCallback(async () => {
-		console.log(data)
 		setLoading(true)
 		setError(null)
-		setData(null)
+		setResponseData(null)
 		try {
 			const upper = String(method).toUpperCase()
 			const queryOnly = upper === 'GET' || upper === 'DELETE'
@@ -36,7 +35,7 @@ export function useAxiosSubmit(url = '', method = 'POST', data = {}, params = {}
 				data: payload,
 			})
 
-			setData(response.data)
+			setResponseData(response.data)
 			return response
 		} catch (err) {
 			setError(err)
@@ -46,15 +45,18 @@ export function useAxiosSubmit(url = '', method = 'POST', data = {}, params = {}
 		}
 	}, [url, method, params, data])
 
-	return { loading, error, data, submit }
+	return { loading, error, responseData, submit }
 }
 
 // Example usage:
+/* 
+const postUser = useAxiosSubmit('/api/user',
+ 'POST',
+ { name: "Name", description: 'My file' },
+ { id: 123 } // or 1 // params can be object or string if string then look like /api/user/1
+)
+*/
 
-// const postUser = useAxiosSubmit('/api/user',
-// 'POST',
-// { id: 123 },
-// { name: "Name", description: 'My file' })
 // postUser.submit()
 // postUser.loading
 // postUser.error

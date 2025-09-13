@@ -1,10 +1,11 @@
 import GenericFormDialog from '@/components/dialogs/GenericFormDialog'
+import useTranslation from '@/hooks/useTranslation'
 import { maxLen, numberRange } from '@/utils/validateUtil'
 import { useState } from 'react'
 
 const TestForm = () => {
 	const [createDialogOpen, setCreateDialogOpen] = useState(true)
-
+	const { t } = useTranslation()
 	const fields = [
 		// Normal field
 		{ key: 'name', title: 'Name', validate: [maxLen(255)] },
@@ -79,7 +80,7 @@ const TestForm = () => {
 			submitUrl={'/user'}
 			method='PUT'
 			params={1} // This is Id 1
-			submitLabel={'Update'}
+			// submitLabel={t('button.update')}
 			submitButtonColor={'success'}
 		/>
 	)

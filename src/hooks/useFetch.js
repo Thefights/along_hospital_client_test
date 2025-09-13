@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 export default function useFetch(url, params = {}, dependencies = []) {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(null)
-	const [data, setData] = useState(null)
+	const [responseData, setResponseData] = useState(null)
 
 	const memoParams = useMemo(() => params, [JSON.stringify(params)])
 
@@ -12,7 +12,7 @@ export default function useFetch(url, params = {}, dependencies = []) {
 		setLoading(true)
 		try {
 			const response = await axiosConfig.get(url, { params: memoParams })
-			setData(response.data)
+			setResponseData(response.data)
 		} catch (error) {
 			setError(error)
 		} finally {
@@ -24,5 +24,5 @@ export default function useFetch(url, params = {}, dependencies = []) {
 		fetchData()
 	}, [fetchData])
 
-	return { loading, error, data }
+	return { loading, error, responseData }
 }

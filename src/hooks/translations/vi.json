@@ -1,2 +1,11 @@
 {
+    "button": {
+        "submit": "Gửi",
+        "submitting": "Đang gửi",
+        "cancel": "Hủy",
+        "create": "Tạo",
+        "update": "Cập nhật",
+        "delete": "Xóa",
+        "add_row": "Thêm dòng"
+    }
 }
