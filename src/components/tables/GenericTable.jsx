@@ -1,6 +1,15 @@
 import { getObjectValueFromStringPath } from '@/utils/handleObjectUtil'
 import { ArrowDownward, ArrowUpward, UnfoldMore } from '@mui/icons-material'
-import { Paper, Stack, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material'
+import {
+	Paper,
+	Stack,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+} from '@mui/material'
 import { alpha, Box } from '@mui/system'
 import { useMemo } from 'react'
 import EmptyRow from '../generals/EmptyRow'
@@ -169,10 +178,11 @@ const GenericTable = ({
 			}}
 		>
 			<Table stickyHeader={stickyHeader} sx={{ tableLayout: 'fixed', minWidth: totalMinWidthPx }}>
-				<TableRow hover={false} sx={{ '&:hover': { bgcolor: 'inherit' } }}>
-					{fields.map(makeHeaderCell)}
-				</TableRow>
-
+				<TableHead>
+					<TableRow hover={false} sx={{ '&:hover': { bgcolor: 'inherit' } }}>
+						{fields.map(makeHeaderCell)}
+					</TableRow>
+				</TableHead>
 				<TableBody>
 					{loading ? (
 						<SkeletonTableRow colSpan={fields.length} />
