@@ -1,9 +1,16 @@
-import GenericTablePagination from '@/components/generals/GenericTablePagination'
+import { GenericTablePagination } from '@/components/generals/GenericPagination'
+import GenericTabs from '@/components/generals/GenericTabs'
 import GenericTable from '@/components/tables/GenericTable'
 import useFetch from '@/hooks/useFetch'
-import useTranslation from '@/hooks/useTranslation'
-import { Button } from '@mui/material'
+import { DisabledVisible, ListAlt, Settings } from '@mui/icons-material'
+import { Button, Stack } from '@mui/material'
 import { useState } from 'react'
+
+const statusTabs = [
+	{ key: 'all', title: 'All', icon: <ListAlt /> },
+	{ key: 'active', title: 'Active', icon: <Settings /> },
+	{ key: 'inactive', title: 'Inactive', icon: <DisabledVisible /> },
+]
 
 const fields = [
 	{ key: 'id', title: 'ID', width: 10, sortable: true, fixedColumn: true },
@@ -26,23 +33,14 @@ const fields = [
 	},
 ]
 
-const testData = [
-	// {
-	// 	id: 1,
-	// 	name:
-	// 		'John Doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe doe',
-	// 	age: 28,
-	// 	address: { city: 'New York', country: 'USA' },
-	// },
-	// { id: 2, name: 'Jane Smith', age: 34, address: { city: 'London', country: 'UK' } },
-]
-
 const TestTable = () => {
 	const [sort, setSort] = useState({ key: 'name', direction: 'asc' })
 	const [page, setPage] = useState(1)
 	const [rowsPerPage, setRowsPerPage] = useState(5)
+	const [currentStatusTab, setCurrentStatusTab] = useState(
+		statusTabs.find((tab) => tab.key === 'all')
+	)
 
-	const { t, language, setLanguage } = useTranslation()
 	const { loading, error, responseData } = useFetch('/users', { sort, page, rowsPerPage }, [
 		sort,
 		page,
@@ -51,16 +49,15 @@ const TestTable = () => {
 
 	return (
 		<>
-			<Button
-				onClick={() => {
-					setLanguage(language === 'en' ? 'vi' : 'en')
-					window.location.reload()
-				}}
-			>
-				{language === 'en' ? 'Switch to Vietnamese' : 'Switch to English'}
-			</Button>
+			<Stack direction='row' spacing={2} my={2}>
+				<GenericTabs
+					tabs={statusTabs}
+					currentTab={currentStatusTab}
+					setCurrentTab={setCurrentStatusTab}
+				/>
+			</Stack>
 			<GenericTable
-				data={testData}
+				data={responseData}
 				fields={fields}
 				sort={sort}
 				onSortChange={setSort}
@@ -69,7 +66,7 @@ const TestTable = () => {
 				stickyHeader={true}
 			/>
 			<GenericTablePagination
-				count={testData.length / rowsPerPage}
+				count={responseData?.length}
 				page={page}
 				setPage={setPage}
 				rowsPerPage={rowsPerPage}
