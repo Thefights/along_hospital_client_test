@@ -1,0 +1,63 @@
+// useForm.js
+import { useCallback, useRef, useState } from 'react'
+
+export function useForm(initialValues = {}) {
+	const [values, setValues] = useState(initialValues)
+
+	const fieldsRef = useRef(new Map())
+
+	const handleChange = useCallback((e) => {
+		const { name, value } = e.target
+		setValues((prev) => ({ ...prev, [name]: value }))
+	}, [])
+
+	const setField = useCallback((name, value) => {
+		setValues((prev) => ({ ...prev, [name]: value }))
+	}, [])
+
+	const reset = useCallback(
+		(next = initialValues) => {
+			setValues(next)
+		},
+		[initialValues]
+	)
+
+	const registerRef = useCallback(
+		(name) => (el) => {
+			if (!fieldsRef.current) fieldsRef.current = new Map()
+			if (el) fieldsRef.current.set(name, el)
+			else fieldsRef.current.delete(name)
+		},
+		[]
+	)
+
+	const validateAll = useCallback(() => {
+		let ok = true
+		for (const [, field] of fieldsRef.current) {
+			if (field && typeof field.validate === 'function' && !field.validate()) ok = false
+		}
+		return ok
+	}, [])
+
+	return {
+		values,
+		handleChange,
+		setField,
+		reset,
+
+		fieldsRef,
+		registerRef,
+		validateAll,
+	}
+}
+
+// Example usage:
+// const formUser = useForm({ username: '', email: '' })
+// formUser.handleChange()
+// formUser.setField('username', 'toiTenLaDuyLP')
+// formUser.setField('email', 'DuyLPCE181153@google.com')
+// formUser.getField('email')
+// formUser.reset()
+// formUser.reset({ username: 'DuyLP', email: 'DuyLPCE181153@fpt.edu.vn' })
+// formUser.registerRef('username')
+// formUser.validateAll()

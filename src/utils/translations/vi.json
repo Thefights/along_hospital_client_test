@@ -1,0 +1,17 @@
+{
+    "button": {
+        "submit": "Gửi",
+        "submitting": "Đang gửi",
+        "cancel": "Hủy",
+        "create": "Tạo",
+        "update": "Cập nhật",
+        "delete": "Xóa",
+        "add_row": "Thêm dòng"
+    },
+
+    "text": {
+        "no_data": "Không có dữ liệu...",
+        "search": "Tìm kiếm...",
+        "loading": "Đang tải..."
+    }
+}
