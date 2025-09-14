@@ -1,5 +1,5 @@
 import { useSecureStorage } from '@/hooks/useStorage'
-import { createContext } from 'react'
+import { createContext, useEffect, useMemo } from 'react'
 
 export const AuthContext = createContext(null)
 
@@ -31,7 +31,8 @@ const AuthProvider = ({ children }) => {
 
 	const hasRole = (required) => {
 		if (!required?.length) return true
-		return required.includes(auth?.role ?? null)
+		required = required.map((r) => String(r).toUpperCase())
+		return required.includes(String(auth?.role)?.toUpperCase() || null)
 	}
 
 	const value = useMemo(() => ({ auth, login, logout, hasRole }), [auth])

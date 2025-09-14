@@ -3,7 +3,7 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom'
 
 const ProtectedRoute = ({ allowRoles = [], redirectPath = '/login', unauthorizedPath = '/' }) => {
 	const { auth, hasRole } = useAuth()
-    const location = useLocation()
+	const location = useLocation()
 
 	if (allowRoles.length === 0) return <Outlet />
 

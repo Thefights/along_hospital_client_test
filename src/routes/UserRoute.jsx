@@ -1,14 +1,17 @@
 import UserLayout from '@/layouts/UserLayout'
-import { Route } from 'react-router-dom'
+import ProfilePage from '@/pages/users/ProfilePage'
+import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 
 const UserRoute = () => {
 	return (
-		<Route element={<ProtectedRoute allowRoles={['USER']} />}>
-			<Route element={<UserLayout />}>
-				<Route path='/profile' element={<div>Profile Page</div>} />
+		<Routes>
+			<Route element={<ProtectedRoute allowRoles={['USER']} />}>
+				<Route element={<UserLayout />}>
+					<Route path='/profile' element={<ProfilePage />} />
+				</Route>
 			</Route>
-		</Route>
+		</Routes>
 	)
 }
 

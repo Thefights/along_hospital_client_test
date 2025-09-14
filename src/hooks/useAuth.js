@@ -6,7 +6,7 @@ export default function useAuth() {
 	if (!ctx) throw new Error('useAuth must be used within AuthProvider')
 	return {
 		auth: ctx.auth,
-		hasRole: () => ctx.hasRole(),
+		hasRole: (required) => ctx.hasRole(required),
 		login: (token, role) => ctx.login(token, role),
 		logout: () => ctx.logout(),
 	}
