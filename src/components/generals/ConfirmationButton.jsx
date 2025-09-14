@@ -6,13 +6,16 @@ import {
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
+	Slide,
 } from '@mui/material'
-import { useState } from 'react'
+import { forwardRef, useState } from 'react'
 
 /**
  * @typedef {Object} CustomProps
  * @property {string} props.confirmationTitle
  * @property {string} props.confirmationDescription
+ * @property {import('@mui/material').DialogProps['maxWidth']} props.dialogWidth
+ * @property {'top' | 'bottom' | 'center'} props.dialogPosition
  * @property {string} props.confirmButtonText
  * @property {import('@mui/material').ButtonProps['color']} props.confirmButtonColor
  * @property {function} props.onConfirm
@@ -26,6 +29,8 @@ const ConfirmationButton = ({
 	confirmationDescription,
 	confirmButtonColor = 'primary',
 	confirmButtonText = 'OK',
+	dialogWidth = 'xs',
+	dialogPosition = 'top',
 	onConfirm,
 	children,
 	...props
@@ -52,7 +57,33 @@ const ConfirmationButton = ({
 				{children}
 			</Button>
 			{open && (
-				<Dialog open={open} onClose={handleClose} scroll='paper'>
+				<Dialog
+					open={open}
+					onClose={handleClose}
+					scroll='paper'
+					fullWidth
+					maxWidth={'xs'}
+					slots={{
+						transition: dialogPosition === 'top' ? Down : dialogPosition === 'bottom' ? Up : undefined,
+					}}
+					sx={
+						dialogPosition === 'top'
+							? {
+									'& .MuiDialog-container': {
+										alignItems: 'flex-start',
+										justifyContent: 'center',
+									},
+							  }
+							: dialogPosition === 'bottom'
+							? {
+									'& .MuiDialog-container': {
+										alignItems: 'flex-end',
+										justifyContent: 'center',
+									},
+							  }
+							: {}
+					}
+				>
 					<DialogTitle>{confirmationTitle}</DialogTitle>
 					<DialogContent>
 						<DialogContentText>{confirmationDescription}</DialogContentText>
@@ -70,6 +101,14 @@ const ConfirmationButton = ({
 		</>
 	)
 }
+
+const Down = forwardRef(function Down(props, ref) {
+	return <Slide direction='down' ref={ref} {...props} />
+})
+
+const Up = forwardRef(function Up(props, ref) {
+	return <Slide direction='up' ref={ref} {...props} />
+})
 
 export default ConfirmationButton
 

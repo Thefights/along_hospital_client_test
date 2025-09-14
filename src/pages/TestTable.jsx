@@ -1,9 +1,12 @@
+import ConfirmationButton from '@/components/generals/ConfirmationButton'
 import { GenericTablePagination } from '@/components/generals/GenericPagination'
 import GenericTabs from '@/components/generals/GenericTabs'
+import SearchBar from '@/components/generals/SearchBar'
 import GenericTable from '@/components/tables/GenericTable'
 import useFetch from '@/hooks/useFetch'
+import useTranslation from '@/hooks/useTranslation'
 import { DisabledVisible, ListAlt, Settings } from '@mui/icons-material'
-import { Button, Stack } from '@mui/material'
+import { Button, Paper, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 
 const statusTabs = [
@@ -41,6 +44,7 @@ const TestTable = () => {
 		statusTabs.find((tab) => tab.key === 'all')
 	)
 
+	const { t } = useTranslation()
 	const { loading, error, responseData } = useFetch('/users', { sort, page, rowsPerPage }, [
 		sort,
 		page,
@@ -48,13 +52,31 @@ const TestTable = () => {
 	])
 
 	return (
-		<>
-			<Stack direction='row' spacing={2} my={2}>
+		<Paper sx={{ py: 1, px: 2, mt: 2 }}>
+			<Stack direction='column' spacing={1} my={2}>
+				<Typography fontWeight={'bold'} flexGrow={1}>
+					Status:
+				</Typography>
+
 				<GenericTabs
 					tabs={statusTabs}
 					currentTab={currentStatusTab}
 					setCurrentTab={setCurrentStatusTab}
 				/>
+			</Stack>
+			<Stack direction='row' justifyContent='space-between' alignItems='center' my={2}>
+				<SearchBar widthPercent={30} />
+				<ConfirmationButton
+					confirmButtonColor='error'
+					confirmButtonText={t('button.delete')}
+					confirmationTitle='Delete selected users?'
+					confirmationDescription='Are you sure you want to delete the selected users? This action cannot be undone.'
+					onConfirm={() => console.log('Delete confirmed')}
+					color='error'
+					variant='outlined'
+				>
+					Delete selected users
+				</ConfirmationButton>
 			</Stack>
 			<GenericTable
 				data={responseData}
@@ -72,7 +94,7 @@ const TestTable = () => {
 				rowsPerPage={rowsPerPage}
 				setRowsPerPage={setRowsPerPage}
 			/>
-		</>
+		</Paper>
 	)
 }
 

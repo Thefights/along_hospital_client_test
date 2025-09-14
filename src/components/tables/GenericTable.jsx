@@ -12,7 +12,7 @@ import {
 } from '@mui/material'
 import { alpha, Box } from '@mui/system'
 import { useMemo } from 'react'
-import EmptyRow from '../generals/EmptyRow'
+import EmptyRow from './EmptyRow'
 import SkeletonTableRow from '../skeletons/SkeletonTableRow'
 
 const GenericTable = ({

@@ -41,14 +41,7 @@ export const GenericTablePagination = ({
 	)
 
 	return (
-		<Stack
-			direction='row'
-			justifyContent='space-between'
-			alignItems='center'
-			flexWrap={'wrap'}
-			mx={4}
-			my={2}
-		>
+		<Stack direction='row' justifyContent='space-between' alignItems='center' flexWrap={'wrap'} m={2}>
 			<Stack spacing={1} direction='row' alignItems='center'>
 				<Typography>Rows per page:</Typography>
 				<Select size='small' value={rowsPerPageNum} onChange={(e) => setRowsPerPage(e.target.value)}>
