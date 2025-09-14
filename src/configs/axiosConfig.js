@@ -34,7 +34,6 @@ axiosConfig.interceptors.response.use(
 		return response.data
 	},
 	(error) => {
-		console.log(error)
 		const { status, response } = error
 
 		let errorMessages = response?.data?.error
