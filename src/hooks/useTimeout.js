@@ -30,4 +30,4 @@ export default function useTimeout(callback, delay) {
 }
 
 // Usage example:
-// const { reset, clear } = useTimeout(() => console.log('Timeout!'), 1000)
+// const { reset, clear } = useTimeout(() => alert('Timeout!'), 1000)

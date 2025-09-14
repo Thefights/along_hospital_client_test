@@ -8,4 +8,4 @@ export default function useDebounce(callback, delay = 500, dependencies = []) {
 
 // Usage example:
 // const [searchValue, setSearchValue] = useState('')
-// useDebounce(() => console.log(searchValue), 500, [searchValue])
+// useDebounce(() => alert(searchValue), 500, [searchValue])

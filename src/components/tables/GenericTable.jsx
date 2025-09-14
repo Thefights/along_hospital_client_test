@@ -1,6 +1,7 @@
 import { getObjectValueFromStringPath } from '@/utils/handleObjectUtil'
 import { ArrowDownward, ArrowUpward, UnfoldMore } from '@mui/icons-material'
 import {
+	Checkbox,
 	Paper,
 	Stack,
 	Table,
@@ -12,15 +13,18 @@ import {
 } from '@mui/material'
 import { alpha, Box } from '@mui/system'
 import { useMemo } from 'react'
-import EmptyRow from './EmptyRow'
 import SkeletonTableRow from '../skeletons/SkeletonTableRow'
+import EmptyRow from './EmptyRow'
 
 const GenericTable = ({
 	data = [],
 	fields = [],
-	sort = { key: null, direction: 'asc' },
-	onSortChange,
 	rowKey,
+	sort = { key: null, direction: 'asc' },
+	setSort = () => {},
+	canSelectRows = false,
+	selectedRows = [],
+	setSelectedRows = () => {},
 	loading = false,
 	stickyHeader = true,
 	defaultMinWidthPx = 140,
@@ -50,7 +54,7 @@ const GenericTable = ({
 	const makeHeaderCell = (f, i) => {
 		const active = sort?.key === f.key
 		const dir = active ? sort?.direction : undefined
-		const canSort = !!f.sortable && !!onSortChange
+		const canSort = !!f.sortable && !!setSort
 
 		const sticky = stickyMeta[i]
 		const stickySx = sticky
@@ -96,7 +100,7 @@ const GenericTable = ({
 				onClick={() => {
 					if (!canSort) return
 					const next = active ? (dir === 'asc' ? 'desc' : 'asc') : 'asc'
-					onSortChange && onSortChange({ key: f.key, direction: next })
+					setSort && setSort({ key: f.key, direction: next })
 				}}
 			>
 				<Stack alignItems='center' justifyContent='space-between' direction={'row'} gap={1}>
@@ -168,6 +172,23 @@ const GenericTable = ({
 		)
 	}
 
+	const handleSelectAll = (e) => {
+		if (e.target.checked) {
+			const allIds = data.map((d) => getObjectValueFromStringPath(d, rowKey))
+			setSelectedRows(allIds)
+		} else {
+			setSelectedRows([])
+		}
+	}
+
+	const handleSelectOne = (value) => {
+		if (selectedRows.includes(value)) {
+			setSelectedRows(selectedRows.filter((v) => v !== value))
+		} else {
+			setSelectedRows([...selectedRows, value])
+		}
+	}
+
 	return (
 		<TableContainer
 			component={Paper}
@@ -180,6 +201,16 @@ const GenericTable = ({
 			<Table stickyHeader={stickyHeader} sx={{ tableLayout: 'fixed', minWidth: totalMinWidthPx }}>
 				<TableHead>
 					<TableRow hover={false} sx={{ '&:hover': { bgcolor: 'inherit' } }}>
+						{canSelectRows && (
+							<TableCell padding='checkbox'>
+								<Checkbox
+									color='primary'
+									indeterminate={selectedRows?.length > 0 && selectedRows?.length < data?.length}
+									checked={data?.length > 0 && selectedRows?.length >= data?.length}
+									onChange={handleSelectAll}
+								/>
+							</TableCell>
+						)}
 						{fields.map(makeHeaderCell)}
 					</TableRow>
 				</TableHead>
@@ -187,11 +218,34 @@ const GenericTable = ({
 					{loading ? (
 						<SkeletonTableRow colSpan={fields.length} />
 					) : data?.length ? (
-						data.map((row, rowIndex) => (
-							<TableRow hover key={rowKey ? getObjectValueFromStringPath(row, rowKey) : rowIndex}>
-								{fields.map((f, colIndex) => makeBodyCell(f, row, rowIndex, colIndex))}
-							</TableRow>
-						))
+						data.map((row, rowIndex) => {
+							const isItemSelected = canSelectRows
+								? selectedRows.includes(getObjectValueFromStringPath(row, rowKey))
+								: false
+
+							return (
+								<TableRow
+									hover
+									onClick={
+										canSelectRows
+											? () => handleSelectOne(getObjectValueFromStringPath(row, rowKey))
+											: undefined
+									}
+									key={rowKey ? getObjectValueFromStringPath(row, rowKey) : rowIndex}
+								>
+									{canSelectRows && (
+										<TableCell padding='checkbox'>
+											<Checkbox
+												color='primary'
+												checked={isItemSelected}
+												onChange={() => handleSelectOne(getObjectValueFromStringPath(row, rowKey))}
+											/>
+										</TableCell>
+									)}
+									{fields.map((f, colIndex) => makeBodyCell(f, row, rowIndex, colIndex))}
+								</TableRow>
+							)
+						})
 					) : (
 						<EmptyRow colSpan={fields.length} />
 					)}

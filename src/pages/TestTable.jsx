@@ -36,6 +36,12 @@ const fields = [
 	},
 ]
 
+const testData = [
+	{ id: 1, name: 'John Doe', age: 28, address: { city: 'New York', country: 'USA' } },
+	{ id: 2, name: 'Jane Smith', age: 34, address: { city: 'London', country: 'UK' } },
+	{ id: 3, name: 'Sam Brown', age: 22, address: { city: 'Sydney', country: 'Australia' } },
+]
+
 const TestTable = () => {
 	const [sort, setSort] = useState({ key: 'name', direction: 'asc' })
 	const [page, setPage] = useState(1)
@@ -43,6 +49,7 @@ const TestTable = () => {
 	const [currentStatusTab, setCurrentStatusTab] = useState(
 		statusTabs.find((tab) => tab.key === 'all')
 	)
+	const [selectedIds, setSelectedIds] = useState([])
 
 	const { t } = useTranslation()
 	const { loading, error, responseData } = useFetch('/users', { sort, page, rowsPerPage }, [
@@ -71,7 +78,7 @@ const TestTable = () => {
 					confirmButtonText={t('button.delete')}
 					confirmationTitle='Delete selected users?'
 					confirmationDescription='Are you sure you want to delete the selected users? This action cannot be undone.'
-					onConfirm={() => console.log('Delete confirmed')}
+					onConfirm={() => alert('Delete confirmed')}
 					color='error'
 					variant='outlined'
 				>
@@ -79,11 +86,14 @@ const TestTable = () => {
 				</ConfirmationButton>
 			</Stack>
 			<GenericTable
-				data={responseData}
+				data={testData}
 				fields={fields}
 				sort={sort}
 				onSortChange={setSort}
 				rowKey='id'
+				canSelectRows={true}
+				selectedRows={selectedIds}
+				setSelectedRows={setSelectedIds}
 				loading={loading}
 				stickyHeader={true}
 			/>
