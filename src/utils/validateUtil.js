@@ -1,4 +1,3 @@
-// validators.js
 export const isRequired =
 	(msg = 'This field is required') =>
 	(v) => {

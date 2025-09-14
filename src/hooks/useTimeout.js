@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useRef } from 'react'
 
 export default function useTimeout(callback, delay) {
 	const callbackRef = useRef(callback)

@@ -89,7 +89,7 @@ const TestTable = () => {
 				data={testData}
 				fields={fields}
 				sort={sort}
-				onSortChange={setSort}
+				setSort={setSort}
 				rowKey='id'
 				canSelectRows={true}
 				selectedRows={selectedIds}

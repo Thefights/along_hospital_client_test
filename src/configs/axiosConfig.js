@@ -1,5 +1,5 @@
-import useAuth from '@/hooks/useAuth'
 import axios from 'axios'
+import secureLocalStorage from 'react-secure-storage'
 import { toast } from 'react-toastify'
 
 const axiosConfig = axios.create({
@@ -13,7 +13,7 @@ const axiosConfig = axios.create({
 
 axiosConfig.interceptors.request.use(
 	(request) => {
-		const { auth } = useAuth()
+		const auth = secureLocalStorage.getItem('auth')
 		if (auth && auth.token) {
 			request.headers.Authorization = `Bearer ${auth.token}`
 		}
@@ -34,6 +34,7 @@ axiosConfig.interceptors.response.use(
 		return response.data
 	},
 	(error) => {
+		console.log(error)
 		const { status, response } = error
 
 		let errorMessages = response?.data?.error
@@ -52,7 +53,7 @@ axiosConfig.interceptors.response.use(
 				break
 			case 500:
 			default:
-				toast.error('Occured a server error, please try again later')
+				toast.error('Occurred a server error, please try again later')
 				break
 		}
 		return Promise.reject(error)
