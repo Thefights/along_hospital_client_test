@@ -95,7 +95,6 @@ const TestTable = () => {
 				selectedRows={selectedIds}
 				setSelectedRows={setSelectedIds}
 				loading={loading}
-				stickyHeader={true}
 			/>
 			<GenericTablePagination
 				count={responseData?.length}
