@@ -1,6 +1,6 @@
 import { ArrowBack, ArrowForward } from '@mui/icons-material'
 import { MenuItem, Pagination, PaginationItem, Select, Stack, Typography } from '@mui/material'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
 export const GenericPagination = ({
 	count = 1,
@@ -12,7 +12,7 @@ export const GenericPagination = ({
 	return (
 		<Pagination
 			count={Math.max(count, 1)}
-			page={page}
+			page={Math.max(page, 1)}
 			onChange={(event, value) => setPage(value)}
 			showFirstButton
 			showLastButton
@@ -39,6 +39,10 @@ export const GenericTablePagination = ({
 		() => parseInt(rowsPerPage || rowsPerPageOptions?.[0] || 5, 10),
 		[rowsPerPage]
 	)
+
+	useEffect(() => {
+		setPage(1)
+	}, [rowsPerPage])
 
 	return (
 		<Stack direction='row' justifyContent='space-between' alignItems='center' flexWrap={'wrap'} m={2}>

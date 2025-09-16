@@ -52,7 +52,7 @@ const TestTable = () => {
 	const [selectedIds, setSelectedIds] = useState([])
 
 	const { t } = useTranslation()
-	const { loading, error, responseData } = useFetch('/users', { sort, page, rowsPerPage }, [
+	const { loading, error, data } = useFetch('/users', { sort, page, rowsPerPage }, [
 		sort,
 		page,
 		rowsPerPage,
@@ -97,7 +97,7 @@ const TestTable = () => {
 				loading={loading}
 			/>
 			<GenericTablePagination
-				count={responseData?.length}
+				count={data?.length}
 				page={page}
 				setPage={setPage}
 				rowsPerPage={rowsPerPage}

@@ -1,22 +1,38 @@
 import axiosConfig from '@/configs/axiosConfig'
+import { isPlainObject } from '@/utils/handleBooleanUtil'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 export default function useFetch(url, params = {}, dependencies = []) {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(null)
-	const [responseData, setResponseData] = useState(null)
+	const [data, setData] = useState(null)
 
 	const memoParams = useMemo(() => params, [JSON.stringify(params)])
 
 	const fetchData = useCallback(async () => {
+		const controller = new AbortController()
+		const currentReqId = Date.now()
+		fetchData.reqId = currentReqId
+
 		setLoading(true)
+
+		const isObjParams = isPlainObject(memoParams)
+		const finalUrl = isObjParams ? url : appendPath(url, memoParams)
+		const axiosParams = isObjParams ? memoParams : undefined
+
 		try {
-			const response = await axiosConfig.get(url, { params: memoParams })
-			setResponseData(response.data)
+			const response = await axiosConfig.get(finalUrl, {
+				params: axiosParams,
+				signal: controller.signal,
+			})
+
+			if (fetchData.reqId === currentReqId) {
+				setData(response.data)
+			}
 		} catch (error) {
-			setError(error)
+			if (error.name !== 'CanceledError' && fetchData.reqId === currentReqId) setError(error)
 		} finally {
-			setLoading(false)
+			if (fetchData.reqId === currentReqId) setLoading(false)
 		}
 	}, [url, memoParams, ...dependencies])
 
@@ -24,5 +40,5 @@ export default function useFetch(url, params = {}, dependencies = []) {
 		fetchData()
 	}, [fetchData])
 
-	return { loading, error, responseData }
+	return { loading, error, data }
 }
