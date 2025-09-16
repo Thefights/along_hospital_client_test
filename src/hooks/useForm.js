@@ -56,7 +56,6 @@ export function useForm(initialValues = {}) {
 // formUser.handleChange()
 // formUser.setField('username', 'toiTenLaDuyLP')
 // formUser.setField('email', 'DuyLPCE181153@google.com')
-// formUser.getField('email')
 // formUser.reset()
 // formUser.reset({ username: 'DuyLP', email: 'DuyLPCE181153@fpt.edu.vn' })
 // formUser.registerRef('username')

@@ -16,6 +16,32 @@ import { useMemo } from 'react'
 import SkeletonTableRow from '../skeletons/SkeletonTableRow'
 import EmptyRow from './EmptyRow'
 
+const tableHeadCellStyle = (theme, canSort = false, sticky = false) => {
+	return {
+		position: 'relative',
+		fontWeight: 700,
+		color: '#444',
+		bgcolor: alpha(theme.palette.primary.light, 0.04),
+		borderBottom: `1px solid ${theme.palette.divider}`,
+		userSelect: canSort ? 'none' : undefined,
+		cursor: canSort ? 'pointer' : 'default',
+		'&:hover .sortIcon:not(.active)': {
+			opacity: 0.9,
+		},
+		'&:not(:last-of-type)::after': !sticky
+			? {
+					content: '""',
+					position: 'absolute',
+					top: '25%',
+					bottom: '25%',
+					right: 0,
+					width: '1px',
+					backgroundColor: theme.palette.divider,
+			  }
+			: {},
+	}
+}
+
 const GenericTable = ({
 	data = [],
 	fields = [],
@@ -26,7 +52,7 @@ const GenericTable = ({
 	selectedRows = [],
 	setSelectedRows = () => {},
 	loading = false,
-	stickyHeader = true,
+	stickyHeader = false,
 	defaultMinWidthPx = 140,
 }) => {
 	const { stickyMeta, widthsPct, totalMinWidthPx } = useMemo(() => {
@@ -48,7 +74,11 @@ const GenericTable = ({
 
 		const totalMin = fields.reduce((sum, f) => sum + (f?.minWidthPx ?? defaultMinWidthPx), 0)
 
-		return { stickyMeta: meta, widthsPct: finalPct, totalMinWidthPx: totalMin }
+		return {
+			stickyMeta: stickyHeader ? meta : [],
+			widthsPct: finalPct,
+			totalMinWidthPx: totalMin,
+		}
 	}, [fields, defaultMinWidthPx])
 
 	const makeHeaderCell = (f, i) => {
@@ -72,29 +102,9 @@ const GenericTable = ({
 				key={i}
 				align={f.isNumeric ? 'right' : 'left'}
 				sx={(theme) => ({
-					position: 'relative',
 					width: `${widthsPct[i]}%`,
 					minWidth: f.minWidthPx ?? defaultMinWidthPx,
-					fontWeight: 700,
-					color: '#444',
-					bgcolor: alpha(theme.palette.primary.light, 0.04),
-					borderBottom: `1px solid ${theme.palette.divider}`,
-					userSelect: canSort ? 'none' : undefined,
-					cursor: canSort ? 'pointer' : 'default',
-					'&:hover .sortIcon:not(.active)': {
-						opacity: 0.9,
-					},
-					'&:not(:last-of-type)::after': !sticky
-						? {
-								content: '""',
-								position: 'absolute',
-								top: '25%',
-								bottom: '25%',
-								right: 0,
-								width: '1px',
-								backgroundColor: theme.palette.divider,
-						  }
-						: {},
+					...tableHeadCellStyle(theme, canSort, sticky),
 					...stickySx,
 				})}
 				onClick={() => {
@@ -142,7 +152,7 @@ const GenericTable = ({
 			? {
 					position: 'sticky',
 					left: `${sticky.left}%`,
-					zIndex: 2,
+					zIndex: 3,
 					backgroundColor: (theme) => theme.palette.background.paper,
 					boxShadow: 'inset -1px 0 0 rgba(0,0,0,0.06)',
 			  }
@@ -202,12 +212,18 @@ const GenericTable = ({
 				<TableHead>
 					<TableRow hover={false} sx={{ '&:hover': { bgcolor: 'inherit' } }}>
 						{canSelectRows && (
-							<TableCell padding='checkbox'>
+							<TableCell
+								padding='checkbox'
+								sx={(theme) => ({
+									...tableHeadCellStyle(theme, false, stickyHeader),
+								})}
+							>
 								<Checkbox
 									color='primary'
 									indeterminate={selectedRows?.length > 0 && selectedRows?.length < data?.length}
 									checked={data?.length > 0 && selectedRows?.length >= data?.length}
 									onChange={handleSelectAll}
+									disabled={loading}
 								/>
 							</TableCell>
 						)}
@@ -234,7 +250,20 @@ const GenericTable = ({
 									key={rowKey ? getObjectValueFromStringPath(row, rowKey) : rowIndex}
 								>
 									{canSelectRows && (
-										<TableCell padding='checkbox'>
+										<TableCell
+											padding='checkbox'
+											sx={
+												stickyHeader
+													? {
+															position: 'sticky',
+															left: 0,
+															zIndex: 3,
+															backgroundColor: (theme) => theme.palette.background.paper,
+															boxShadow: 'inset -1px 0 0 rgba(0,0,0,0.06)',
+													  }
+													: {}
+											}
+										>
 											<Checkbox
 												color='primary'
 												checked={isItemSelected}
@@ -281,6 +310,9 @@ const testData = [
     fields={fields}
     sort={sort}
     onSortChange={setSort}
+	canSelectRows={true}
+	selectedRows={selectedIds}
+	setSelectedRows={setSelectedIds}
     rowKey="id"
     loading={loading}
     stickyHeader={true}

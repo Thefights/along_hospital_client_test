@@ -8,12 +8,12 @@ import { useCallback, useState } from 'react'
 export function useAxiosSubmit(url = '', method = 'POST', data = {}, params = {}) {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(null)
-	const [responseData, setResponseData] = useState(null)
+	const [data, setData] = useState(null)
 
 	const submit = useCallback(async () => {
 		setLoading(true)
 		setError(null)
-		setResponseData(null)
+		setData(null)
 		try {
 			const upper = String(method).toUpperCase()
 			const queryOnly = upper === 'GET' || upper === 'DELETE'
@@ -35,7 +35,7 @@ export function useAxiosSubmit(url = '', method = 'POST', data = {}, params = {}
 				data: payload,
 			})
 
-			setResponseData(response.data)
+			setData(response.data)
 			return response
 		} catch (err) {
 			setError(err)
@@ -45,7 +45,7 @@ export function useAxiosSubmit(url = '', method = 'POST', data = {}, params = {}
 		}
 	}, [url, method, params, data])
 
-	return { loading, error, responseData, submit }
+	return { loading, error, data, submit }
 }
 
 // Example usage:
