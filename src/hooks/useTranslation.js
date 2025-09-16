@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react'
-import * as translations from '../utils/translations'
+import * as translations from '../locales'
 import { useLocalStorage } from './useStorage'
 
 export default function useTranslation() {
@@ -10,9 +10,14 @@ export default function useTranslation() {
 	const fallbackDict = useMemo(() => translations[fallbackLanguage] ?? {}, [])
 
 	const t = useCallback(
-		(key, params) => {
+		(key, defaultValue, params) => {
 			const keys = key.split('.')
-			const val = getNestedTranslation(dict, keys) ?? getNestedTranslation(fallbackDict, keys) ?? key
+			const val =
+				getNestedTranslation(dict, keys) ||
+				getNestedTranslation(fallbackDict, keys) ||
+				defaultValue ||
+				key
+
 			return interpolate(val, params)
 		},
 		[dict, fallbackDict]
@@ -40,5 +45,5 @@ function interpolate(str, params) {
 /*
 const { t } = useTranslation()
 // { header: { title: "Welcome {name}" } }
-<div>{t("header.title", { name: "John" })}</div> => "Welcome John"
+<div>{t("header.title", "Hello World!", { name: "John" })}</div> => "Welcome John"
 */
