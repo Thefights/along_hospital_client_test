@@ -1,5 +1,6 @@
 import axiosConfig from '@/configs/axiosConfig'
 import { isPlainObject } from '@/utils/handleBooleanUtil'
+import { appendPath } from '@/utils/handleStringUtil'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 export default function useFetch(url, params = {}, dependencies = []) {
@@ -30,9 +31,13 @@ export default function useFetch(url, params = {}, dependencies = []) {
 				setData(response.data)
 			}
 		} catch (error) {
-			if (error.name !== 'CanceledError' && fetchData.reqId === currentReqId) setError(error)
+			if (error.name !== 'CanceledError' && fetchData.reqId === currentReqId) {
+				setError(error)
+			}
 		} finally {
-			if (fetchData.reqId === currentReqId) setLoading(false)
+			if (fetchData.reqId === currentReqId) {
+				setLoading(false)
+			}
 		}
 	}, [url, memoParams, ...dependencies])
 

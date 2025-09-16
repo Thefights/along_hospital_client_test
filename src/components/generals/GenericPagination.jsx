@@ -40,9 +40,17 @@ export const GenericTablePagination = ({
 		[rowsPerPage]
 	)
 
+	const totalPages = useMemo(() => {
+		return Math.max(Math.ceil((count || 0) / rowsPerPageNum), 1)
+	}, [count, rowsPerPageNum])
+
 	useEffect(() => {
 		setPage(1)
-	}, [rowsPerPage])
+	}, [rowsPerPageNum, setPage])
+
+	useEffect(() => {
+		if (page > totalPages) setPage(totalPages)
+	}, [page, totalPages])
 
 	return (
 		<Stack direction='row' justifyContent='space-between' alignItems='center' flexWrap={'wrap'} m={2}>
@@ -57,7 +65,7 @@ export const GenericTablePagination = ({
 				</Select>
 			</Stack>
 			<GenericPagination
-				count={count ? Math.ceil(count / rowsPerPageNum) : 1}
+				count={totalPages}
 				page={page}
 				setPage={setPage}
 				siblingCount={1}
