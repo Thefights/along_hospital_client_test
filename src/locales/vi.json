@@ -13,5 +13,11 @@
         "no_data": "Không có dữ liệu...",
         "search": "Tìm kiếm...",
         "loading": "Đang tải..."
+    },
+
+    "done_care_about_this": {
+        "delete_selected": "Xóa {number} mục đã chọn",
+        "delete_title": "Xóa người dùng đã chọn?",
+        "delete_description": "Bạn có chắc chắn muốn xóa {number} mục đã chọn không? Hành động này không thể hoàn tác."
     }
 }

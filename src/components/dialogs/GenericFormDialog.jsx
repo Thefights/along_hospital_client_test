@@ -3,7 +3,7 @@ import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from '@mui/material'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 const GenericFormDialog = ({
 	open,
@@ -42,6 +42,13 @@ const GenericFormDialog = ({
 		'standard'
 	)
 
+	useEffect(() => {
+		if (open) {
+			setSubmitted(false)
+			reset(startValues)
+		}
+	}, [open])
+
 	const handleClose = useCallback(() => {
 		reset(startValues)
 		onClose?.()
@@ -49,11 +56,11 @@ const GenericFormDialog = ({
 
 	const handleSubmit = useCallback(async () => {
 		setSubmitted(true)
-		if (hasRequiredMissing(fields)) return
+		const ok = validateAll()
+		const missingField = hasRequiredMissing(fields)
+		if (missingField || !ok) return
 
 		try {
-			const ok = validateAll()
-			if (!ok) return
 			const res = await submit()
 			onSuccess?.(res)
 			handleClose()

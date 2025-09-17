@@ -13,5 +13,11 @@
         "no_data": "No data available...",
         "search": "Search...",
         "loading": "Loading..."
+    },
+
+    "done_care_about_this": {
+        "delete_selected": "Delete {number} selected",
+        "delete_title": "Delete selected users?",
+        "delete_description": "Are you sure you want to delete {number} selected item(s)? This action cannot be undone."
     }
 }

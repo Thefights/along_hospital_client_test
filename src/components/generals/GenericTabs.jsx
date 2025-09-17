@@ -1,4 +1,5 @@
 import { Button, Stack } from '@mui/material'
+import { useMemo } from 'react'
 
 const GenericTab = ({ label, icon, active = false, onClick, disabled = false }) => {
 	return (
@@ -37,6 +38,8 @@ const GenericTabs = ({
 	maxWidth = '100%',
 	maxHeight,
 }) => {
+	const defaultTab = useMemo(() => tabs[0] || { key: '', title: '' }, [tabs])
+
 	return (
 		<Stack
 			width={'100%'}
@@ -52,7 +55,7 @@ const GenericTabs = ({
 					key={tab.key}
 					label={tab.title}
 					icon={tab.icon}
-					active={currentTab.key === tab.key}
+					active={(currentTab?.key || defaultTab.key) === tab.key}
 					disabled={tab.disabled}
 					onClick={() => setCurrentTab(tab)}
 				/>

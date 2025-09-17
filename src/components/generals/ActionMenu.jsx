@@ -1,0 +1,60 @@
+import { MoreHoriz } from '@mui/icons-material'
+import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from '@mui/material'
+import { useState } from 'react'
+
+/**
+ * actions: Array<{
+ *   title?: string
+ *   icon?: ReactNode
+ *   disabled?: boolean
+ *   onClick?: () => void | Promise<void>
+ * }>
+ */
+
+const ActionMenu = ({ actions = [], itemSx = {}, ariaLabel = 'Row actions' }) => {
+	const [anchorEl, setAnchorEl] = useState(null)
+	const open = Boolean(anchorEl)
+	const close = () => setAnchorEl(null)
+
+	const makeRun = (a) => async () => {
+		close()
+		await a.onClick?.()
+	}
+
+	return (
+		<>
+			<Tooltip title={ariaLabel}>
+				<IconButton
+					size='small'
+					onClick={(e) => setAnchorEl(e.currentTarget)}
+					aria-controls={open ? 'row-action-menu' : undefined}
+					aria-haspopup='menu'
+					aria-expanded={open ? 'true' : undefined}
+				>
+					<MoreHoriz />
+				</IconButton>
+			</Tooltip>
+
+			<Menu
+				id='row-action-menu'
+				anchorEl={anchorEl}
+				open={open}
+				onClose={close}
+				anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+				transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+			>
+				{actions.map((a, idx) => {
+					const run = makeRun(a)
+					return (
+						<MenuItem key={idx} onClick={run} disabled={a.disabled} sx={itemSx}>
+							{a.icon && <ListItemIcon>{a.icon}</ListItemIcon>}
+							<ListItemText>{a.title}</ListItemText>
+						</MenuItem>
+					)
+				})}
+			</Menu>
+		</>
+	)
+}
+
+export default ActionMenu

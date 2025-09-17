@@ -45,9 +45,9 @@ export default function useFieldRenderer(
 			ref={registerRef(field.key)}
 			name={field.key}
 			label={field.title}
-			required={field.required ?? true}
-			type={field.type ?? 'text'}
-			value={values[field.key] ?? ''}
+			required={field.required || true}
+			type={field.type || 'text'}
+			value={values[field.key] || ''}
 			onChange={handleChange}
 			validate={field.validate}
 			multiline={!!field.multiple}
