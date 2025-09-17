@@ -1,14 +1,6 @@
-import useTranslation from '@/hooks/useTranslation'
-import {
-	Button,
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogContentText,
-	DialogTitle,
-	Slide,
-} from '@mui/material'
-import { forwardRef, useState } from 'react'
+import { useConfirm } from '@/hooks/useConfirm'
+import { Button, Slide } from '@mui/material'
+import { forwardRef } from 'react'
 
 /**
  * @typedef {Object} CustomProps
@@ -35,70 +27,27 @@ const ConfirmationButton = ({
 	children,
 	...props
 }) => {
-	const [open, setOpen] = useState(false)
-	const { t } = useTranslation()
+	const confirm = useConfirm()
 
-	const handleOpen = () => {
-		setOpen(true)
-	}
+	const handleClick = async () => {
+		const isConfirmed = await confirm({
+			title: confirmationTitle,
+			description: confirmationDescription,
+			confirmColor: confirmButtonColor,
+			confirmText: confirmButtonText,
+			width: dialogWidth,
+			position: dialogPosition,
+		})
 
-	const handleClose = () => {
-		setOpen(false)
-	}
-
-	const handleConfirm = () => {
-		onConfirm()
-		handleClose()
+		if (isConfirmed && onConfirm) {
+			onConfirm()
+		}
 	}
 
 	return (
-		<>
-			<Button {...props} onClick={handleOpen}>
-				{children}
-			</Button>
-			{open && (
-				<Dialog
-					open={open}
-					onClose={handleClose}
-					scroll='paper'
-					fullWidth
-					maxWidth={'xs'}
-					slots={{
-						transition: dialogPosition === 'top' ? Down : dialogPosition === 'bottom' ? Up : undefined,
-					}}
-					sx={
-						dialogPosition === 'top'
-							? {
-									'& .MuiDialog-container': {
-										alignItems: 'flex-start',
-										justifyContent: 'center',
-									},
-							  }
-							: dialogPosition === 'bottom'
-							? {
-									'& .MuiDialog-container': {
-										alignItems: 'flex-end',
-										justifyContent: 'center',
-									},
-							  }
-							: {}
-					}
-				>
-					<DialogTitle>{confirmationTitle}</DialogTitle>
-					<DialogContent>
-						<DialogContentText>{confirmationDescription}</DialogContentText>
-					</DialogContent>
-					<DialogActions>
-						<Button onClick={handleConfirm} variant='contained' color={confirmButtonColor}>
-							{confirmButtonText}
-						</Button>
-						<Button onClick={handleClose} color='inherit'>
-							{t('button.cancel')}
-						</Button>
-					</DialogActions>
-				</Dialog>
-			)}
-		</>
+		<Button {...props} onClick={handleClick}>
+			{children}
+		</Button>
 	)
 }
 

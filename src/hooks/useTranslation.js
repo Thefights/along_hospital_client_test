@@ -10,7 +10,7 @@ export default function useTranslation() {
 	const fallbackDict = useMemo(() => translations[fallbackLanguage] ?? {}, [])
 
 	const t = useCallback(
-		(key, defaultValue, params) => {
+		(key, params) => {
 			const keys = key.split('.')
 			const val =
 				getNestedTranslation(dict, keys) ||
@@ -45,5 +45,5 @@ function interpolate(str, params) {
 /*
 const { t } = useTranslation()
 // { header: { title: "Welcome {name}" } }
-<div>{t("header.title", "Hello World!", { name: "John" })}</div> => "Welcome John"
+<div>{t("header.title", { name: "John" })}</div> => "Welcome John"
 */

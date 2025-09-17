@@ -240,15 +240,7 @@ const GenericTable = ({
 								: false
 
 							return (
-								<TableRow
-									hover
-									onClick={
-										canSelectRows
-											? () => handleSelectOne(getObjectValueFromStringPath(row, rowKey))
-											: undefined
-									}
-									key={rowKey ? getObjectValueFromStringPath(row, rowKey) : rowIndex}
-								>
+								<TableRow hover key={rowKey ? getObjectValueFromStringPath(row, rowKey) : rowIndex}>
 									{canSelectRows && (
 										<TableCell
 											padding='checkbox'
