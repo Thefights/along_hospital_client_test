@@ -3,6 +3,7 @@ import { isStringArray } from '@/utils/handleBooleanUtil'
 import { Add, Close, Delete } from '@mui/icons-material'
 import { Box, Button, IconButton, MenuItem, Stack, TextField, Typography } from '@mui/material'
 import { useCallback, useEffect, useRef } from 'react'
+import useFileUrls from './useFileUrls'
 
 const normalizeOptions = (options) =>
 	Array.isArray(options)
@@ -22,31 +23,11 @@ export default function useFieldRenderer(
 	textFieldVariant = 'outlined'
 ) {
 	const normalizedImageKeysRef = useRef(new Set())
-	const fileUrlMapRef = useRef(new Map())
+	const { getUrlForFile, revokeUrlForFile } = useFileUrls()
 
 	useEffect(() => {
-		return () => {
-			for (const u of fileUrlMapRef.current.values()) URL.revokeObjectURL(u)
-			fileUrlMapRef.current.clear()
-		}
-	}, [])
-
-	const getUrlForFile = useCallback((file) => {
-		const map = fileUrlMapRef.current
-		if (map.has(file)) return map.get(file)
-		const u = URL.createObjectURL(file)
-		map.set(file, u)
-		return u
-	}, [])
-
-	const revokeUrlForFile = useCallback((file) => {
-		const map = fileUrlMapRef.current
-		const u = map.get(file)
-		if (u) {
-			URL.revokeObjectURL(u)
-			map.delete(file)
-		}
-	}, [])
+		normalizedImageKeysRef.current.clear()
+	}, [values])
 
 	const hasRequiredMissing = useCallback(
 		(fields) => {
@@ -240,13 +221,16 @@ export default function useFieldRenderer(
 			>
 				<Box
 					component='img'
-					src={src || '/image-placeholder.jpg'}
+					src={src}
+					onError={(e) => {
+						e.currentTarget.onerror = null
+						e.currentTarget.src = '/image-placeholder.jpg'
+					}}
 					alt={alt}
 					sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
 				/>
 				<IconButton
 					size='small'
-					color='error'
 					onClick={onRemove}
 					sx={{
 						position: 'absolute',
