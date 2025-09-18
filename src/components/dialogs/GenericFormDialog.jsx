@@ -107,6 +107,8 @@ const fields = [
     // Image upload field with required false
     { key: 'avatar', title: 'Avatar', type: 'image', required: false, imagePreview: 'https://example.com/avatar.jpg' },
 
+	{ key: 'images', title: 'Images', type: 'image', required:true, multiple: 5 },
+
 	// Select field with options
 	{ key: 'role', title: 'Role', type: 'select', options: ['User', 'Admin', { label: 'Super Admin', value: 'superadmin', disabled: true }] },
 
@@ -125,21 +127,21 @@ const fields = [
 ]
 
 const initialValues = { 
-	name: '',
- 	email: '',
-	description: '',
-	age: '',
-   	avatar: '',
-   	role: '',
-   	address: { street: '', city: '', zip: '' },
-	contacts: [],
+	name: 'Doe',
+ 	email: 'Doe@example.com',
+	description: 'Description here',
+	age: '25',
+   	avatar: '/avatar.jpg',
+	images: ['/image1.jpg', '/image2.jpg'],
+   	role: 'User',
+   	address: { street: 'Street Name', city: 'City Name', zip: '12345' },
+	contacts: [ { type: 'Phone', value: '123-456-7890' }, { type: 'Email', value: 'Doe@example.com' }],
 }
 
 <GenericFormDialog
     open={createDialogOpen}
     onClose={() => setCreateDialogOpen(false)}
     fields={fields}
-    initialValues={initialValues}
     submitUrl={submitUrl}
     method='PUT'
     params={1} // This is Id 1

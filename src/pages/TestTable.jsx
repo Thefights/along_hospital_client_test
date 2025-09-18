@@ -14,9 +14,30 @@ import { Button, Paper, Stack, Typography } from '@mui/material'
 import { useMemo, useState } from 'react'
 
 const testData = [
-	{ id: 1, name: 'John Doe', age: 28, address: { city: 'New York', country: 'USA' } },
-	{ id: 2, name: 'Jane Smith', age: 34, address: { city: 'London', country: 'UK' } },
-	{ id: 3, name: 'Sam Brown', age: 22, address: { city: 'Sydney', country: 'Australia' } },
+	{
+		id: 1,
+		name: 'John Doe',
+		age: 28,
+		images: ['/image1.jpg', '/image2.jpg'],
+		signature: '/signature.jpg',
+		address: { city: 'New York', country: 'USA' },
+	},
+	{
+		id: 2,
+		name: 'Jane Smith',
+		age: 34,
+		images: ['/image3.jpg'],
+		signature: '/signature2.jpg',
+		address: { city: 'London', country: 'UK' },
+	},
+	{
+		id: 3,
+		name: 'Sam Brown',
+		age: 22,
+		images: ['/image4.jpg', '/image5.jpg', '/image6.jpg'],
+		signature: '/signature3.jpg',
+		address: { city: 'Sydney', country: 'Australia' },
+	},
 ]
 
 const TestTable = () => {
@@ -101,6 +122,8 @@ const TestTable = () => {
 		() => [
 			{ key: 'name', title: 'Name', validate: [maxLen(255)] },
 			{ key: 'age', title: 'Age', type: 'number', validate: [numberRange(0, 100)] },
+			{ key: 'images', title: 'Images', type: 'image', multiple: 5 },
+			{ key: 'signature', title: 'Signature', type: 'image' },
 			{
 				key: 'address',
 				title: 'Address',
