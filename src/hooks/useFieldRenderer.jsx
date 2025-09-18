@@ -1,7 +1,9 @@
 import ValidationTextField from '@/components/textFields/ValidationTextField'
-import { Delete } from '@mui/icons-material'
+import { isStringArray } from '@/utils/handleBooleanUtil'
+import { Add, Close, Delete } from '@mui/icons-material'
 import { Box, Button, IconButton, MenuItem, Stack, TextField, Typography } from '@mui/material'
-import { useCallback } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
+import useFileUrls from './useFileUrls'
 
 const normalizeOptions = (options) =>
 	Array.isArray(options)
@@ -20,11 +22,29 @@ export default function useFieldRenderer(
 	submitted,
 	textFieldVariant = 'outlined'
 ) {
+	const normalizedImageKeysRef = useRef(new Set())
+	const { getUrlForFile, revokeUrlForFile } = useFileUrls()
+
+	useEffect(() => {
+		normalizedImageKeysRef.current.clear()
+	}, [values])
+
 	const hasRequiredMissing = useCallback(
 		(fields) => {
 			const checkField = (f, v) => {
 				if (f.required !== undefined && !f.required) return false
-				if (f.type === 'image') return !v
+
+				if (f.type === 'image') {
+					const max = Number.isFinite(f.multiple) ? Math.max(1, Number(f.multiple)) : 1
+					if (max === 1) return !v
+					if (v && typeof v === 'object' && ('remainImages' in v || 'newImages' in v)) {
+						const total = (v.remainImages?.length || 0) + (v.newImages?.length || 0)
+						return total === 0
+					}
+					if (Array.isArray(v)) return v.length === 0
+					return true
+				}
+
 				if (f.type === 'array') return !Array.isArray(v) || v.length === 0
 				if (f.type === 'object') {
 					const obj = v || {}
@@ -81,7 +101,7 @@ export default function useFieldRenderer(
 		)
 	}
 
-	const renderImage = (field) => {
+	const renderImageSingle = (field) => {
 		const file = values[field.key]
 		const preview = file instanceof File ? URL.createObjectURL(file) : ''
 		const required = field.required ?? true
@@ -123,6 +143,183 @@ export default function useFieldRenderer(
 					</Box>
 				)}
 			</Box>
+		)
+	}
+
+	const renderImageMultiple = (field) => {
+		const key = field.key
+		const required = field.required ?? true
+		const max = Math.max(1, Number(field.multiple) || 1)
+		const v = values[key]
+		if (isStringArray(v) && !normalizedImageKeysRef.current.has(key)) {
+			normalizedImageKeysRef.current.add(key)
+			setField(key, {
+				remainImages: v.slice(),
+				newImages: [],
+				removeImages: [],
+			})
+		}
+
+		const isEditObj =
+			v && typeof v === 'object' && ('remainImages' in v || 'newImages' in v || 'removeImages' in v)
+
+		const remain = isEditObj ? v.remainImages || [] : []
+		const news = isEditObj ? v.newImages || [] : Array.isArray(v) ? v : []
+
+		const total = remain.length + news.length
+		const capacityLeft = Math.max(0, max - total)
+		const showError = submitted && required && total === 0
+
+		const addFiles = (filesList) => {
+			if (!filesList?.length || capacityLeft <= 0) return
+			const picked = Array.from(filesList).slice(0, capacityLeft)
+			if (isEditObj) {
+				setField(key, {
+					remainImages: remain,
+					newImages: [...news, ...picked],
+					removeImages: v.removeImages || [],
+				})
+			} else {
+				setField(key, [...news, ...picked])
+			}
+		}
+
+		const removeRemain = (idx) => {
+			if (!isEditObj) return
+			const nextRemain = remain.slice()
+			const removed = nextRemain.splice(idx, 1)[0]
+			setField(key, {
+				remainImages: nextRemain,
+				newImages: news,
+				removeImages: [...(v.removeImages || []), removed],
+			})
+		}
+
+		const removeNew = (idx) => {
+			const nextNew = news.slice()
+			const removed = nextNew.splice(idx, 1)[0]
+			if (isEditObj) {
+				setField(key, { remainImages: remain, newImages: nextNew, removeImages: v.removeImages || [] })
+			} else {
+				setField(key, nextNew)
+			}
+			if (removed instanceof File) revokeUrlForFile(removed)
+		}
+
+		const Tile = ({ src, alt, onRemove }) => (
+			<Box
+				sx={{
+					position: 'relative',
+					flex: '1 1 max(50%, 160px)',
+					maxWidth: 160,
+					aspectRatio: 1,
+					borderRadius: 2,
+					overflow: 'hidden',
+					boxShadow: 1,
+					alignItems: 'center',
+				}}
+			>
+				<Box
+					component='img'
+					src={src}
+					onError={(e) => {
+						e.currentTarget.onerror = null
+						e.currentTarget.src = '/image-placeholder.jpg'
+					}}
+					alt={alt}
+					sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+				/>
+				<IconButton
+					size='small'
+					onClick={onRemove}
+					sx={{
+						position: 'absolute',
+						top: 4,
+						right: 4,
+						bgcolor: 'background.paper',
+						boxShadow: 1,
+						'&:hover': { bgcolor: 'background.paper' },
+					}}
+				>
+					<Close fontSize='small' />
+				</IconButton>
+			</Box>
+		)
+
+		const inputId = `${key}__picker`
+		const AddTile = ({ remaining }) => (
+			<label htmlFor={inputId} style={{ display: 'contents' }}>
+				<Box
+					sx={{
+						cursor: 'pointer',
+						flex: '1 1 max(50%, 160px)',
+						maxWidth: 160,
+						aspectRatio: 1,
+						borderRadius: 2,
+						boxShadow: 1,
+						border: '1px dashed',
+						borderColor: 'divider',
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'center',
+						transition: 'background-color .15s ease',
+						'&:hover': { bgcolor: 'action.hover' },
+					}}
+				>
+					<Stack alignItems='center' spacing={0.5}>
+						<Add />
+						<Typography variant='caption'>Add {remaining}</Typography>
+					</Stack>
+				</Box>
+			</label>
+		)
+
+		return (
+			<Stack key={key} spacing={1.25}>
+				<Typography variant='subtitle2'>
+					{field.title} ({total}/{max})
+				</Typography>
+				<input
+					id={inputId}
+					type='file'
+					accept='image/*'
+					multiple
+					style={{ display: 'none' }}
+					onChange={(e) => {
+						addFiles(e.target.files)
+						e.target.value = ''
+					}}
+				/>
+				<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, alignItems: 'flex-start' }}>
+					{remain.map((url, i) => (
+						<Tile
+							key={`remain-${i}`}
+							src={String(url)}
+							alt={`${field.title}-remain-${i}`}
+							onRemove={() => removeRemain(i)}
+						/>
+					))}
+					{news.map((file, i) => {
+						const src = file instanceof File ? getUrlForFile(file) : ''
+						const fileKey = (f) => `${f.name}_${f.size}_${f.lastModified}`
+						return (
+							<Tile
+								key={`new-${fileKey(file)}`}
+								src={src}
+								alt={`${field.title}-new-${fileKey(file)}`}
+								onRemove={() => removeNew(i)}
+							/>
+						)
+					})}
+					{capacityLeft > 0 && <AddTile remaining={capacityLeft} />}
+				</Box>
+
+				{showError && (
+					<Typography variant='caption' color='error'>
+						This field is required
+					</Typography>
+				)}
+			</Stack>
 		)
 	}
 
@@ -284,6 +481,11 @@ export default function useFieldRenderer(
 				</Button>
 			</Stack>
 		)
+	}
+
+	const renderImage = (field) => {
+		const max = Number.isFinite(field.multiple) ? Math.max(1, Number(field.multiple)) : 1
+		return max > 1 ? renderImageMultiple(field) : renderImageSingle(field)
 	}
 
 	const map = {

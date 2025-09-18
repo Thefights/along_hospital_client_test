@@ -42,7 +42,9 @@ export const getObjectConvertingToFormData = (object, form = new FormData(), seg
 	}
 
 	if (typeof object === 'object') {
-		Object.keys(object).forEach((k) => getObjectConvertingToFormData(object[k], form, segments.concat(k)))
+		Object.keys(object).forEach((k) =>
+			getObjectConvertingToFormData(object[k], form, segments.concat(k))
+		)
 		return form
 	}
 
