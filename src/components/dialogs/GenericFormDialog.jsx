@@ -107,7 +107,7 @@ const fields = [
     // Image upload field with required false
     { key: 'avatar', title: 'Avatar', type: 'image', required: false, imagePreview: 'https://example.com/avatar.jpg' },
 
-	{ key: 'images', title: 'Images', type: 'image', required:true, multiple: 5 },
+	{ key: 'images', title: 'Images', type: 'image', required: true, multiple: 5 },
 
 	// Select field with options
 	{ key: 'role', title: 'Role', type: 'select', options: ['User', 'Admin', { label: 'Super Admin', value: 'superadmin', disabled: true }] },
@@ -143,6 +143,19 @@ const initialValues = {
     onClose={() => setCreateDialogOpen(false)}
     fields={fields}
     submitUrl={submitUrl}
+    method='POST'
+    submitLabel={submitLabel}
+    submitButtonColor={submitButtonColor}
+    onSuccess={(res) => handleSuccess(res)}
+    onError={(e) => handleError(e)}
+/>
+
+<GenericFormDialog
+    open={updateDialogOpen}
+    onClose={() => setUpdateDialogOpen(false)}
+	initialValues={initialValues}
+    fields={fields}
+    submitUrl={submitUrl}
     method='PUT'
     params={1} // This is Id 1
     submitLabel={submitLabel}
@@ -150,5 +163,7 @@ const initialValues = {
     onSuccess={(res) => handleSuccess(res)}
     onError={(e) => handleError(e)}
 />
+
+
 
 */
