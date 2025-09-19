@@ -12,11 +12,7 @@ export default function useTranslation() {
 	const t = useCallback(
 		(key, params) => {
 			const keys = key.split('.')
-			const val =
-				getNestedTranslation(dict, keys) ||
-				getNestedTranslation(fallbackDict, keys) ||
-				defaultValue ||
-				key
+			const val = getNestedTranslation(dict, keys) || getNestedTranslation(fallbackDict, keys) || key
 
 			return interpolate(val, params)
 		},
