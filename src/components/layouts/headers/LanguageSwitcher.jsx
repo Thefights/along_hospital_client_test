@@ -27,7 +27,7 @@ export default function LanguageSwitcher() {
 					px: 1.25,
 					py: 0.75,
 					borderRadius: 999,
-					border: '1px solid',
+					border: '2px solid',
 					borderColor: 'divider',
 					bgcolor: 'background.default',
 					gap: 1,

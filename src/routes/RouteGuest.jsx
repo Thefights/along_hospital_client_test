@@ -1,19 +1,19 @@
 import useAuth from '@/hooks/useAuth'
-import GuestLayout from '@/layouts/GuestLayout'
-import UserLayout from '@/layouts/UserLayout'
+import LayoutGuest from '@/layouts/LayoutGuest'
+import LayoutPatient from '@/layouts/LayoutPatient'
 import HomePage from '@/pages/guests/HomePage'
 import LoginPage from '@/pages/guests/LoginPage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 
-const GuestRoute = () => {
+const RouteGuest = () => {
 	const { auth } = useAuth()
 
 	return (
 		<Routes>
 			<Route element={<ProtectedRoute allowRoles={[]} />}>
 				{/* This is route with layout */}
-				<Route element={auth?.role !== null ? <UserLayout /> : <GuestLayout />}>
+				<Route element={auth?.role !== null ? <LayoutPatient /> : <LayoutGuest />}>
 					<Route path='/' index element={<HomePage />} />
 				</Route>
 
@@ -24,4 +24,4 @@ const GuestRoute = () => {
 	)
 }
 
-export default GuestRoute
+export default RouteGuest

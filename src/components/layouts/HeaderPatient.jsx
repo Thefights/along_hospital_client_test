@@ -1,18 +1,23 @@
 import SearchBar from '@/components/generals/SearchBar'
+import useAuth from '@/hooks/useAuth'
 import { AppBar, Box, Stack, Toolbar, useMediaQuery, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import AppointmentButton from './headers/AppointmentButton'
+import CartButton from './headers/CartButton'
 import LanguageSwitcher from './headers/LanguageSwitcher'
-import LoginButton from './headers/LoginButton'
 import LogoButton from './headers/LogoButton'
 import MobileDrawer from './headers/MobileDrawer'
 import MobileMenuButton from './headers/MobileMenuButton'
 import NavItem from './headers/NavItem'
+import UserAvatarMenu from './headers/UserAvatarMenu'
 
-export default function HeaderGuest({ items = [] }) {
+const HeaderPatient = ({ items = [], userMenuItems = [], patient = {}, cartCount = 0 }) => {
 	const navigate = useNavigate()
 	const [openDrawer, setOpenDrawer] = useState(false)
+	const { logout } = useAuth()
 	const theme = useTheme()
+
 	const isDownMd = useMediaQuery(theme.breakpoints.down('md'))
 	const isDownLg = useMediaQuery(theme.breakpoints.down('lg'))
 
@@ -49,7 +54,9 @@ export default function HeaderGuest({ items = [] }) {
 							</Box>
 						)}
 						<LanguageSwitcher />
-						<LoginButton onClick={() => navigate('/login')} />
+						<CartButton count={cartCount} onClick={() => navigate('/cart')} />
+						<AppointmentButton onClick={() => navigate('/appointment')} />
+						<UserAvatarMenu items={userMenuItems} patient={patient} onLogout={logout} />
 						{isDownMd && <MobileMenuButton onOpen={() => setOpenDrawer(true)} />}
 					</Stack>
 				</Toolbar>
@@ -59,19 +66,4 @@ export default function HeaderGuest({ items = [] }) {
 	)
 }
 
-/* -------------------------------------------
-Example usage (remove or adjust in your app):
-----------------------------------------------
-const items = [
-  { label: 'Home', url: '/' },
-  { label: 'Medicine', url: '/medicine' },
-  { label: 'Medical Service', url: '/service', of: [
-      { label: 'General Checkup', url: '/service/checkup' },
-      { label: 'Pediatrics', url: '/service/pediatrics' },
-  ]},
-  { label: 'Doctor', url: '/doctor' },
-  { label: 'Specialty', url: '/specialty' },
-  { label: 'Blog', url: '/blog' },
-];
-// <HeaderGuest items={items} />
-*/
+export default HeaderPatient

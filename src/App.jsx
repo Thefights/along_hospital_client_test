@@ -7,8 +7,8 @@ import ConfirmationProvider from './configs/ConfirmationProvider'
 import { hospitalLightTheme } from './configs/themeConfig'
 import NotFoundPage from './pages/commons/NotFoundPage'
 import TestTable from './pages/TestTable'
-import GuestRoute from './routes/GuestRoute'
-import UserRoute from './routes/UserRoute'
+import RouteGuest from './routes/RouteGuest'
+import RoutePatient from './routes/RoutePatient'
 
 function App() {
 	return (
@@ -18,8 +18,8 @@ function App() {
 				<AuthProvider>
 					<ConfirmationProvider>
 						<Routes>
-							<Route path='/*' element={<GuestRoute />} />
-							<Route path='/user/*' element={<UserRoute />} />
+							<Route path='/*' element={<RouteGuest />} />
+							<Route path='/user/*' element={<RoutePatient />} />
 							<Route path='/test' element={<TestTable />} />
 							<Route path='*' element={<NotFoundPage />} />
 						</Routes>

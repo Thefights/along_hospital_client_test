@@ -1,7 +1,9 @@
 import { createTheme } from '@mui/material'
+import { common } from '@mui/material/colors'
 
 const lightPalette = {
 	mode: 'light',
+	common: { ...common },
 	primary: {
 		main: '#1E88E5',
 		light: '#00bece',
@@ -81,6 +83,7 @@ const lightPalette = {
 
 const darkPalette = {
 	mode: 'dark',
+	common: { ...common },
 	primary: {
 		main: '#63B3ED',
 		light: '#90CAF9',

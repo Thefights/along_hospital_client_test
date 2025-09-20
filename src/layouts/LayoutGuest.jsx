@@ -3,7 +3,7 @@ import HeaderGuest from '@/components/layouts/HeaderGuest'
 import useTranslation from '@/hooks/useTranslation'
 import { Outlet } from 'react-router-dom'
 
-const GuestLayout = () => {
+const LayoutGuest = () => {
 	const { t } = useTranslation()
 	const items = [
 		{ label: t('header.home'), url: '/' },
@@ -26,4 +26,4 @@ const GuestLayout = () => {
 	)
 }
 
-export default GuestLayout
+export default LayoutGuest

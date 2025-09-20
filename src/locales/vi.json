@@ -17,7 +17,15 @@
         "doctor": "Bác sĩ",
         "specialty": "Chuyên khoa",
         "blog": "Blog",
-        "about_us": "Về chúng tôi"
+        "about_us": "Về chúng tôi",
+        "user_menu": {
+            "profile": "Hồ sơ",
+            "medical_history": "Lịch sử y tế",
+            "order_history": "Lịch sử đơn hàng",
+            "change_password": "Đổi mật khẩu",
+            "setting": "Cài đặt",
+            "logout": "Đăng xuất"
+        }
     },
 
     "text": {

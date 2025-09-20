@@ -17,7 +17,15 @@
         "doctor": "Doctor",
         "specialty": "Specialty",
         "blog": "Blog",
-        "about_us": "About Us"
+        "about_us": "About Us",
+        "user_menu": {
+            "profile": "Profile",
+            "medical_history": "Medical History",
+            "order_history": "Order History",
+            "change_password": "Change Password",
+            "setting": "Setting",
+            "logout": "Logout"
+        }
     },
 
     "text": {

@@ -12,8 +12,6 @@ import {
 } from '@mui/material'
 import { useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import LanguageSwitcher from './LanguageSwitcher'
-import LoginButton from './LoginButton'
 import LogoButton from './LogoButton'
 
 const MobileDrawer = ({ items, openDrawer, setOpenDrawer }) => {
@@ -101,12 +99,6 @@ const MobileDrawer = ({ items, openDrawer, setOpenDrawer }) => {
 				</List>
 
 				<Divider sx={{ my: 1.5 }} />
-
-				<Stack direction='row' alignItems='center' spacing={1.25}>
-					<LanguageSwitcher />
-					<Box sx={{ flexGrow: 1 }} />
-					<LoginButton onClick={() => go('/login')} />
-				</Stack>
 			</Box>
 		</Drawer>
 	)
