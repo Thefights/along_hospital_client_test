@@ -1,8 +1,10 @@
-import { Container } from '@mui/material'
+import { ThemeProvider } from '@emotion/react'
+import { CssBaseline } from '@mui/material'
 import { Route, BrowserRouter as RouterProvider, Routes } from 'react-router-dom'
 import { Slide, ToastContainer } from 'react-toastify'
 import AuthProvider from './configs/AuthProvider'
 import ConfirmationProvider from './configs/ConfirmationProvider'
+import { hospitalLightTheme } from './configs/themeConfig'
 import NotFoundPage from './pages/commons/NotFoundPage'
 import TestTable from './pages/TestTable'
 import GuestRoute from './routes/GuestRoute'
@@ -10,7 +12,8 @@ import UserRoute from './routes/UserRoute'
 
 function App() {
 	return (
-		<Container maxWidth='xl' sx={{ minHeight: '100vh' }}>
+		<ThemeProvider theme={hospitalLightTheme}>
+			<CssBaseline />
 			<RouterProvider>
 				<AuthProvider>
 					<ConfirmationProvider>
@@ -32,7 +35,7 @@ function App() {
 					</ConfirmationProvider>
 				</AuthProvider>
 			</RouterProvider>
-		</Container>
+		</ThemeProvider>
 	)
 }
 

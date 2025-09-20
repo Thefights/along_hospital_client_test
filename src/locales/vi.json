@@ -6,7 +6,18 @@
         "create": "Tạo",
         "update": "Cập nhật",
         "delete": "Xóa",
-        "add_row": "Thêm dòng"
+        "add_row": "Thêm dòng",
+        "login": "Đăng nhập"
+    },
+
+    "header": {
+        "home": "Trang chủ",
+        "medicine": "Thuốc",
+        "medical_service": "Dịch vụ y tế",
+        "doctor": "Bác sĩ",
+        "specialty": "Chuyên khoa",
+        "blog": "Blog",
+        "about_us": "Về chúng tôi"
     },
 
     "text": {
