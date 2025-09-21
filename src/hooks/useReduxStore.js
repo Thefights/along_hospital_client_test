@@ -4,9 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import useFetch from './useFetch'
 
 /**
+ * @typedef {import('@/redux/store').RootState} RootState
+ */
+
+/**
  * @param {object} params
  * @param {string} params.url
- * @param {(state: RootState) => any} params.selector
+ * @param {(state: import('@/redux/store').RootState) => any} params.selector
  * @param {(payload: any) => any} params.setStore
  * @param {(storeValue: any) => any} [params.dataToGet=(x)=>x]
  * @param {(apiValue: any) => any} [params.dataToStore=(x)=>x]

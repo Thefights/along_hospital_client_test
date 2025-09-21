@@ -5,6 +5,10 @@ const store = configureStore({
 	reducer: rootReducer,
 })
 
-export const RootState = store.getState()
-
 export default store
+
+/**
+ * @typedef {ReturnType<typeof store.getState>} RootState
+ * @typedef {typeof store.dispatch} AppDispatch
+ */
+export {}
