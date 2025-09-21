@@ -1,9 +1,10 @@
+import { getEnv } from '@/utils/commons'
 import axios from 'axios'
 import secureLocalStorage from 'react-secure-storage'
 import { toast } from 'react-toastify'
 
 const axiosConfig = axios.create({
-	baseURL: 'https://localhost:8000/api/v1',
+	baseURL: getEnv('VITE_BASE_API_URL', 'https://localhost:8080'),
 	headers: {
 		'Content-Type': 'multipart/form-data',
 		'Access-Control-Allow-Origin': '*',
