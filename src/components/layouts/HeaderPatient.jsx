@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router-dom'
 import AppointmentButton from './headers/AppointmentButton'
 import CartButton from './headers/CartButton'
 import LanguageSwitcher from './headers/LanguageSwitcher'
-import LogoButton from './headers/LogoButton'
 import MobileDrawer from './headers/MobileDrawer'
 import MobileMenuButton from './headers/MobileMenuButton'
 import NavItem from './headers/NavItem'
+import SystemLogoAndName from './headers/SystemLogoAndName'
 import UserAvatarMenu from './headers/UserAvatarMenu'
 
 const HeaderPatient = ({ items = [], userMenuItems = [], patient = {}, cartCount = 0 }) => {
@@ -36,7 +36,7 @@ const HeaderPatient = ({ items = [], userMenuItems = [], patient = {}, cartCount
 			>
 				<Toolbar sx={{ minHeight: 72 }}>
 					<Stack direction='row' alignItems='center' spacing={2} sx={{ flex: 1 }}>
-						<LogoButton onClick={() => navigate('/')} />
+						<SystemLogoAndName onClick={() => navigate('/')} />
 
 						{!isDownMd && (
 							<Stack direction='row' spacing={0.5} sx={{ display: 'flex', ml: 2 }} role='menubar'>

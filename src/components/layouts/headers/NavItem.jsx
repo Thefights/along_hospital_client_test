@@ -14,6 +14,8 @@ export default function NavItem({ label, url, of = [] }) {
 	const close = useCallback(() => setOpen(false), [])
 	const toggle = useCallback(() => setOpen((o) => !o), [])
 
+	const defaultTextColor = 'primary.light'
+
 	useEffect(() => {
 		if (!open) listRefs.current = []
 	}, [open])
@@ -44,13 +46,13 @@ export default function NavItem({ label, url, of = [] }) {
 					py: 1,
 					borderRadius: 1.5,
 					':hover': { bgcolor: 'action.hover' },
-					':focus-visible': { outline: '3px solid', outlineColor: 'primary.light' },
+					':focus-visible': { outline: '3px solid', outlineColor: defaultTextColor },
 				}}
 			>
-				<Typography variant='body2' sx={{ fontWeight: 500, color: 'primary.main' }}>
+				<Typography variant='body2' sx={{ fontWeight: 500, color: defaultTextColor }}>
 					{label}
 				</Typography>
-				{hasSub && <ArrowDropDown fontSize='small' sx={{ ml: 0.25, color: 'primary.main' }} />}
+				{hasSub && <ArrowDropDown fontSize='small' sx={{ ml: 0.25, color: defaultTextColor }} />}
 			</ButtonBase>
 
 			{hasSub && (
@@ -60,7 +62,7 @@ export default function NavItem({ label, url, of = [] }) {
 					onClose={close}
 					anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
 					transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-					slotProps={{ paper: { sx: { mt: 1, borderRadius: 2, width: 220 } } }}
+					slotProps={{ paper: { sx: { mt: 1, borderRadius: 1, width: 220 } } }}
 				>
 					<List
 						id={`submenu-${label}`}
@@ -93,7 +95,7 @@ export default function NavItem({ label, url, of = [] }) {
 									navigate(sub.url)
 								}}
 							>
-								<ListItemText primary={sub.label} sx={{ color: 'primary.main' }} />
+								<ListItemText primary={sub.label} sx={{ color: defaultTextColor }} />
 							</ListItemButton>
 						))}
 					</List>

@@ -7,12 +7,14 @@ const LayoutGuest = () => {
 	const { t } = useTranslation()
 	const items = [
 		{ label: t('header.home'), url: '/' },
-		{ label: t('header.medicine'), url: '/medicine' },
 		{
-			label: t('header.medical_service'),
-			url: '/service',
+			label: t('header.service'),
+			of: [
+				{ label: t('header.medical_service'), url: '/service' },
+				{ label: t('header.medicine'), url: '/medicine' },
+				{ label: t('header.doctor'), url: '/doctor' },
+			],
 		},
-		{ label: t('header.doctor'), url: '/doctor' },
 		{ label: t('header.specialty'), url: '/specialty' },
 		{ label: t('header.blog'), url: '/blog' },
 		{ label: t('header.about_us'), url: '/about' },

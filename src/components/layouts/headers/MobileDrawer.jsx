@@ -12,7 +12,7 @@ import {
 } from '@mui/material'
 import { useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import LogoButton from './LogoButton'
+import SystemLogoAndName from './SystemLogoAndName'
 
 const MobileDrawer = ({ items, openDrawer, setOpenDrawer }) => {
 	const location = useLocation()
@@ -38,7 +38,7 @@ const MobileDrawer = ({ items, openDrawer, setOpenDrawer }) => {
 			<Box sx={{ p: 2 }}>
 				<Stack direction='row' alignItems='center' justifyContent='space-between'>
 					<Stack direction='row' alignItems='center' spacing={1.5}>
-						<LogoButton onClick={() => go('/')} />
+						<SystemLogoAndName onClick={() => go('/')} />
 					</Stack>
 					<IconButton onClick={() => setOpenDrawer(false)}>
 						<Close />

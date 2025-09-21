@@ -4,10 +4,10 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import LanguageSwitcher from './headers/LanguageSwitcher'
 import LoginButton from './headers/LoginButton'
-import LogoButton from './headers/LogoButton'
 import MobileDrawer from './headers/MobileDrawer'
 import MobileMenuButton from './headers/MobileMenuButton'
 import NavItem from './headers/NavItem'
+import SystemLogoAndName from './headers/SystemLogoAndName'
 
 export default function HeaderGuest({ items = [] }) {
 	const navigate = useNavigate()
@@ -31,7 +31,7 @@ export default function HeaderGuest({ items = [] }) {
 			>
 				<Toolbar sx={{ minHeight: 72 }}>
 					<Stack direction='row' alignItems='center' spacing={2} sx={{ flex: 1 }}>
-						<LogoButton onClick={() => navigate('/')} />
+						<SystemLogoAndName onClick={() => navigate('/')} />
 
 						{!isDownMd && (
 							<Stack direction='row' spacing={0.5} sx={{ display: 'flex', ml: 2 }} role='menubar'>
