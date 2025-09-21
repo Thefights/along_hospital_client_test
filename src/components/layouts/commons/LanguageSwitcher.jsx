@@ -3,18 +3,13 @@ import { ArrowDropDown, Language } from '@mui/icons-material'
 import { ButtonBase, List, ListItemButton, ListItemText, Popover, Typography } from '@mui/material'
 import { useRef, useState } from 'react'
 
-export default function LanguageSwitcher() {
+const LanguageSwitcher = () => {
 	const [open, setOpen] = useState(false)
 	const anchorRef = useRef(null)
 	const { language, setLanguage } = useTranslation()
 
 	const handleToggle = () => setOpen((o) => !o)
 	const handleClose = () => setOpen(false)
-
-	const choose = (code) => {
-		setLanguage(code)
-		window.location.reload()
-	}
 
 	return (
 		<>
@@ -49,10 +44,10 @@ export default function LanguageSwitcher() {
 				slotProps={{ paper: { sx: { mt: 1, borderRadius: 2 } } }}
 			>
 				<List role='listbox' sx={{ minWidth: 220, py: 0.5 }} dense>
-					<ListItemButton role='option' selected={language === 'en'} onClick={() => choose('en')}>
+					<ListItemButton role='option' selected={language === 'en'} onClick={() => setLanguage('en')}>
 						<ListItemText primary='English (EN)' />
 					</ListItemButton>
-					<ListItemButton role='option' selected={language === 'vi'} onClick={() => choose('vi')}>
+					<ListItemButton role='option' selected={language === 'vi'} onClick={() => setLanguage('vi')}>
 						<ListItemText primary='Tiếng Việt (VI)' />
 					</ListItemButton>
 				</List>
@@ -60,3 +55,5 @@ export default function LanguageSwitcher() {
 		</>
 	)
 }
+
+export default LanguageSwitcher

@@ -5,16 +5,20 @@ import { Route, BrowserRouter as RouterProvider, Routes } from 'react-router-dom
 import { Slide, ToastContainer } from 'react-toastify'
 import AuthProvider from './configs/AuthProvider'
 import ConfirmationProvider from './configs/ConfirmationProvider'
-import { hospitalLightTheme } from './configs/themeConfig'
+import { hospitalDarkTheme, hospitalLightTheme } from './configs/themeConfig'
+import { useLocalStorage } from './hooks/useStorage'
 import NotFoundPage from './pages/commons/NotFoundPage'
 import TestTable from './pages/TestTable'
 import store from './redux/store'
 import RouteGuest from './routes/RouteGuest'
+import RouteManager from './routes/RouteManager'
 import RoutePatient from './routes/RoutePatient'
 
 function App() {
+	const [theme, setTheme] = useLocalStorage('theme', 'light')
+
 	return (
-		<ThemeProvider theme={hospitalLightTheme}>
+		<ThemeProvider theme={theme === 'light' ? hospitalLightTheme : hospitalDarkTheme}>
 			<CssBaseline />
 			<ReduxStoreProvider store={store}>
 				<RouterProvider>
@@ -23,6 +27,7 @@ function App() {
 							<Routes>
 								<Route path='/*' element={<RouteGuest />} />
 								<Route path='/user/*' element={<RoutePatient />} />
+								<Route path='/admin/*' element={<RouteManager />} />
 								<Route path='/test' element={<TestTable />} />
 								<Route path='*' element={<NotFoundPage />} />
 							</Routes>

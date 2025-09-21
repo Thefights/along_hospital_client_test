@@ -25,6 +25,8 @@ export default function SystemLogoAndName({ onClick, onlyShowIcon = false }) {
 				<Typography
 					variant='h6'
 					component='div'
+					noWrap
+					textOverflow={'ellipsis'}
 					sx={{ ml: 1, userSelect: 'none', color: 'primary.dark' }}
 				>
 					{getEnv('VITE_SYSTEM_NAME')}
