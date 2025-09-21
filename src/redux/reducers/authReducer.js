@@ -14,9 +14,7 @@ const authSlice = createSlice({
 		setAuthStore: (state, action) => {
 			return { ...state, ...action.payload, isAuthenticated: true }
 		},
-		resetAuthStore: (state, action) => {
-			state = initialState
-		},
+		resetAuthStore: () => initialState,
 	},
 })
 

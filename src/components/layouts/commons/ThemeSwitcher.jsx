@@ -9,7 +9,7 @@ const ThemeSwitcher = () => {
 		<Tooltip title={`Change to ${theme === 'light' ? 'dark' : 'light'} mode`}>
 			<IconButton
 				onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-				sx={{ borderRadius: 2, color: theme === 'light' ? 'text.light' : 'text.primary' }}
+				sx={{ borderRadius: 2, color: 'text.primary' }}
 			>
 				{theme === 'light' ? <LightMode /> : <DarkMode />}
 			</IconButton>
