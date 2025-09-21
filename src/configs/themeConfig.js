@@ -76,7 +76,10 @@ const lightPalette = {
 		900: '#0F172A',
 	},
 	gradients: {
-		brand: 'linear-gradient(135deg, #1E88E5 0%, #00BFA6 100%)',
+		brand_45deg: 'linear-gradient(45deg, #1E88E5 0%, #00BFA6 100%)',
+		brand_135deg: 'linear-gradient(135deg, #1E88E5 0%, #00BFA6 100%)',
+		brand_reverse_45deg: 'linear-gradient(45deg, #00BFA6 0%, #1E88E5 100%)',
+		brand_reverse_135deg: 'linear-gradient(135deg, #00BFA6 0%, #1E88E5 100%)',
 		calm: 'linear-gradient(135deg, #E6F2FD 0%, #E6FAF8 100%)',
 	},
 }
@@ -157,6 +160,7 @@ const darkPalette = {
 	},
 	gradients: {
 		brand: 'linear-gradient(135deg, #2563EB 0%, #14B8A6 100%)',
+		brand_reverse: 'linear-gradient(135deg, #14B8A6 0%, #2563EB 100%)',
 		calm: 'linear-gradient(135deg, #0F1A28 0%, #0F1E1D 100%)',
 	},
 }

@@ -29,6 +29,27 @@
         }
     },
 
+    "footer":{
+        "__________comment1": "For footer section links",
+        "medical":"Y tế",
+        "resources":"Tài nguyên",
+        "support":"Hỗ trợ",
+        "about":"Về chúng tôi",
+        
+        "__________comment2": "For footer section titles",
+        "service":"Dịch vụ",
+        "doctor":"Bác sĩ",
+        "specialty":"Chuyên khoa",
+        "blog":"Blog",
+        "medicine":"Thuốc",
+        "contact_us":"Liên hệ",
+        "faq":"Câu hỏi thường gặp",
+        "privacy_policy":"Chính sách bảo mật",
+        "terms_of_service":"Điều khoản dịch vụ",
+        "our_hospital":"Bệnh viện của chúng tôi",
+        "career":"Nghề nghiệp"
+    },
+
     "text": {
         "no_data": "Không có dữ liệu...",
         "search": "Tìm kiếm...",

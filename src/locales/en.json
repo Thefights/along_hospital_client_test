@@ -29,6 +29,27 @@
         }
     },
 
+    "footer":{
+        "__________comment1": "For footer section links",
+        "medical":"Medical",
+        "resources":"Resources",
+        "support":"Support",
+        "about":"About",
+
+        "__________comment2": "For footer section titles",
+        "service":"Service", 
+        "doctor":"Doctor",
+        "specialty":"Specialty",
+        "blog":"Blog",
+        "medicine":"Medicine",
+        "contact_us":"Contact Us",
+        "faq":"FAQ",
+        "privacy_policy":"Privacy Policy",
+        "terms_of_service":"Terms of Service",
+        "our_hospital":"Our Hospital",
+        "career":"Career"
+    },
+
     "text": {
         "no_data": "No data available...",
         "search": "Search...",
