@@ -8,6 +8,7 @@ const initState = {
 	appointments: [],
 	medicalHistories: [],
 }
+
 const userSlice = createSlice({
 	name: 'user',
 	initialState: initState,

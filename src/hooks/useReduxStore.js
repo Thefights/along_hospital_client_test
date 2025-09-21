@@ -10,7 +10,7 @@ import useFetch from './useFetch'
 /**
  * @param {object} params
  * @param {string} params.url
- * @param {(state: import('@/redux/store').RootState) => any} params.selector
+ * @param {(state: RootState) => any} params.selector
  * @param {(payload: any) => any} params.setStore
  * @param {(storeValue: any) => any} [params.dataToGet=(x)=>x]
  * @param {(apiValue: any) => any} [params.dataToStore=(x)=>x]

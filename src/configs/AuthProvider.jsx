@@ -25,11 +25,14 @@ const AuthProvider = ({ children }) => {
 
 	const hasRole = (required) => {
 		if (!required?.length) return true
+
+		const auth = authStore.data
+		if (!auth?.role) return false
 		required = required.map((r) => String(r).toUpperCase())
 		return required.includes(String(auth?.role)?.toUpperCase() || null)
 	}
 
-	const value = useMemo(() => ({ auth: authStore.data, login, logout, hasRole }), [auth])
+	const value = useMemo(() => ({ auth: authStore.data, login, logout, hasRole }), [authStore.data])
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
