@@ -2,7 +2,7 @@ import { Facebook, LinkedIn, Twitter, YouTube } from '@mui/icons-material'
 import { Box, IconButton, Stack, Typography } from '@mui/material'
 import { alpha, useTheme } from '@mui/material/styles'
 import { useNavigate } from 'react-router-dom'
-import SystemLogoAndName from '../headers/SystemLogoAndName'
+import SystemLogoAndName from '../commons/SystemLogoAndName'
 
 const FooterBottom = () => {
 	const theme = useTheme()

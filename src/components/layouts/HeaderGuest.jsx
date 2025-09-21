@@ -2,12 +2,12 @@ import SearchBar from '@/components/generals/SearchBar'
 import { AppBar, Box, Stack, Toolbar, useMediaQuery, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import LanguageSwitcher from './headers/LanguageSwitcher'
-import LoginButton from './headers/LoginButton'
-import MobileDrawer from './headers/MobileDrawer'
-import MobileMenuButton from './headers/MobileMenuButton'
-import NavItem from './headers/NavItem'
-import SystemLogoAndName from './headers/SystemLogoAndName'
+import LoginButton from './buttons/LoginButton'
+import MobileMenuButton from './buttons/MobileMenuButton'
+import LanguageSwitcher from './commons/LanguageSwitcher'
+import NavItem from './commons/NavItem'
+import SystemLogoAndName from './commons/SystemLogoAndName'
+import MobileDrawer from './MobileDrawer'
 
 export default function HeaderGuest({ items = [] }) {
 	const navigate = useNavigate()

@@ -8,7 +8,6 @@ const initState = {
 	appointments: [],
 	medicalHistories: [],
 }
-
 const userSlice = createSlice({
 	name: 'user',
 	initialState: initState,
@@ -34,5 +33,13 @@ const userSlice = createSlice({
 	},
 })
 
-export const { setCartStore, setProfileStore } = userSlice.actions
+export const {
+	setCartStore,
+	setProfileStore,
+	setOrdersStore,
+	setVouchersStore,
+	setAppointmentsStore,
+	setMedicalHistoriesStore,
+} = userSlice.actions
+
 export default userSlice.reducer

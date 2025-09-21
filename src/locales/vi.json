@@ -28,7 +28,6 @@
             "logout": "Đăng xuất"
         }
     },
-
     "footer":{
         "__________comment1": "For footer section links",
         "medical":"Y tế",
@@ -49,7 +48,6 @@
         "our_hospital":"Bệnh viện của chúng tôi",
         "career":"Nghề nghiệp"
     },
-
     "text": {
         "no_data": "Không có dữ liệu...",
         "search": "Tìm kiếm...",

@@ -40,6 +40,8 @@ const FooterSection = ({ title, links = [], onNavigate }) => {
 			>
 				{links.map((item) => (
 					<ListItemButton
+						disableGutters
+						disableRipple
 						key={item.label + item.url}
 						aria-label={`${item.label}`}
 						onClick={() => onNavigate(item.url)}
