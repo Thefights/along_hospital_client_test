@@ -15,16 +15,15 @@ import {
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const UserAvatarMenu = ({ patient, items = [], onLogout }) => {
+const UserAvatarMenu = ({ profile, items = [], onLogout }) => {
 	const [open, setOpen] = useState(false)
 	const anchorRef = useRef(null)
 	const listRefs = useRef([])
 	const navigate = useNavigate()
 	const { t } = useTranslation()
-
-	const name = patient?.name || 'Patient Name'
-	const email = patient?.email || 'patient@example.com'
-	const avatarUrl = patient?.avatarUrl
+	const name = profile?.name || 'Patient Name'
+	const email = profile?.email || 'patient@example.com'
+	const avatarUrl = profile?.avatarUrl
 	const initials = name
 		.split(' ')
 		.map((p) => p[0])
@@ -43,13 +42,13 @@ const UserAvatarMenu = ({ patient, items = [], onLogout }) => {
 				onClick={() => setOpen((o) => !o)}
 				sx={{
 					borderRadius: 999,
-					border: '1px solid',
-					borderColor: 'grey[300]',
+					border: '2px solid',
+					borderColor: 'divider',
 					pl: 0.5,
 					pr: 1,
 					py: 0.25,
 					gap: 1,
-					bgcolor: 'common.white',
+					bgcolor: 'background.default',
 				}}
 			>
 				<Avatar

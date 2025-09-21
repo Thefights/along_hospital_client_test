@@ -58,7 +58,6 @@ const lightPalette = {
 	},
 	text: {
 		primary: '#0F172A',
-		white: '#',
 		secondary: '#475569',
 		disabled: '#94A3B8',
 	},
@@ -141,7 +140,6 @@ const darkPalette = {
 	},
 	text: {
 		primary: '#E2E8F0',
-		light: '#64748B',
 		secondary: '#94A3B8',
 		disabled: '#64748B',
 	},
@@ -159,8 +157,10 @@ const darkPalette = {
 		900: '#E5E7EB',
 	},
 	gradients: {
-		brand: 'linear-gradient(135deg, #2563EB 0%, #14B8A6 100%)',
-		brand_reverse: 'linear-gradient(135deg, #14B8A6 0%, #2563EB 100%)',
+		brand_45deg: 'linear-gradient(45deg, #2563EB 0%, #14B8A6 100%)',
+		brand_135deg: 'linear-gradient(135deg, #2563EB 0%, #14B8A6 100%)',
+		brand_reverse_45deg: 'linear-gradient(45deg, #14B8A6 0%, #2563EB 100%)',
+		brand_reverse_135deg: 'linear-gradient(135deg, #14B8A6 0%, #2563EB 100%)',
 		calm: 'linear-gradient(135deg, #0F1A28 0%, #0F1E1D 100%)',
 	},
 }

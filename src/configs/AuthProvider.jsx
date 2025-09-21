@@ -1,41 +1,38 @@
-import { useSecureStorage } from '@/hooks/useStorage'
-import { createContext, useEffect, useMemo } from 'react'
+import useReduxStore from '@/hooks/useReduxStore'
+import { resetAuthStore, setAuthStore } from '@/redux/reducers/authReducer'
+import { createContext, useMemo } from 'react'
+import { useDispatch } from 'react-redux'
+import { ApiUrls } from './apiUrls'
 
 export const AuthContext = createContext(null)
 
 const AuthProvider = ({ children }) => {
-	const [auth, setAuth, removeAuth] = useSecureStorage('auth', {
-		token: null,
-		role: null,
+	const dispatch = useDispatch()
+
+	const authStore = useReduxStore({
+		url: ApiUrls.AUTH.CURRENT_ACCOUNT,
+		selector: (s) => s.auth,
+		setStore: setAuthStore,
 	})
 
-	useEffect(() => {
-		const onChange = () => setAuth(auth)
-		window.addEventListener('storage', onChange)
-		window.addEventListener('authchange', onChange)
-		return () => {
-			window.removeEventListener('storage', onChange)
-			window.removeEventListener('authchange', onChange)
-		}
-	}, [])
-
-	const login = (token, role) => {
-		setAuth({ token, role })
-		window.dispatchEvent(new Event('authchange'))
+	const login = (payload) => {
+		dispatch(setAuthStore(payload))
 	}
 
 	const logout = () => {
-		removeAuth()
-		window.dispatchEvent(new Event('authchange'))
+		dispatch(resetAuthStore())
 	}
 
 	const hasRole = (required) => {
 		if (!required?.length) return true
+
+		const auth = authStore.data
+		if (!auth?.role) return false
 		required = required.map((r) => String(r).toUpperCase())
 		return required.includes(String(auth?.role)?.toUpperCase() || null)
 	}
 
-	const value = useMemo(() => ({ auth, login, logout, hasRole }), [auth])
+	const value = useMemo(() => ({ auth: authStore.data, login, logout, hasRole }), [authStore.data])
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 

@@ -1,5 +1,5 @@
 import Footer from '@/components/layouts/Footer'
-import HeaderGuest from '@/components/layouts/HeaderGuest'
+import Header from '@/components/layouts/Header'
 import useTranslation from '@/hooks/useTranslation'
 import { Container, Stack } from '@mui/material'
 import { Outlet } from 'react-router-dom'
@@ -57,7 +57,7 @@ const LayoutGuest = () => {
 
 	return (
 		<Stack minHeight='100vh'>
-			<HeaderGuest items={items} />
+			<Header items={items} />
 			<Container sx={{ flexGrow: 1 }} maxWidth='lg'>
 				<Outlet />
 			</Container>

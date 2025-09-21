@@ -21,7 +21,7 @@ export default function Footer({ sections = [] }) {
 			<Container maxWidth='lg' sx={{ py: { xs: 3, sm: 4 } }}>
 				<Grid container spacing={{ xs: 2, sm: 3, md: 4 }} justifyContent={'center'}>
 					{sections.map((sec, idx) => (
-						<Grid key={sec.title + idx} item size={{ xs: 6, md: 3 }}>
+						<Grid key={sec.title + idx} size={{ xs: 6, md: 3 }}>
 							<FooterSection title={sec.title} links={sec.links} onNavigate={(url) => navigate(url)} />
 						</Grid>
 					))}

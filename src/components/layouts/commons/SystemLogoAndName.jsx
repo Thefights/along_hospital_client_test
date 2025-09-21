@@ -1,7 +1,7 @@
 import { getEnv } from '@/utils/commons'
 import { Box, ButtonBase, Typography } from '@mui/material'
 
-export default function SystemLogoAndName({ onClick }) {
+export default function SystemLogoAndName({ onClick, onlyShowIcon = false }) {
 	return (
 		<>
 			<ButtonBase
@@ -21,13 +21,17 @@ export default function SystemLogoAndName({ onClick }) {
 					<rect x='22' y='44' width='56' height='12' rx='3' fill='#1976d2' />
 				</Box>
 			</ButtonBase>
-			<Typography
-				variant='h6'
-				component='div'
-				sx={{ ml: 1, userSelect: 'none', color: 'primary.dark' }}
-			>
-				{getEnv('VITE_SYSTEM_NAME')}
-			</Typography>
+			{!onlyShowIcon && (
+				<Typography
+					variant='h6'
+					component='div'
+					noWrap
+					textOverflow={'ellipsis'}
+					sx={{ ml: 1, userSelect: 'none', color: 'primary.dark' }}
+				>
+					{getEnv('VITE_SYSTEM_NAME')}
+				</Typography>
+			)}
 		</>
 	)
 }

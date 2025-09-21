@@ -5,13 +5,12 @@ const FooterSection = ({ title, links = [], onNavigate }) => {
 	const theme = useTheme()
 
 	return (
-		<Box aria-label={`footer section ${title}`}>
-			<Typography variant='subtitle1' sx={{ fontWeight: 700, mb: 1, color: 'primary.contrastText' }}>
+		<Box>
+			<Typography variant='subtitle1' sx={{ fontWeight: 700, mb: 1, color: 'text.primary' }}>
 				{title}
 			</Typography>
 
 			<List
-				aria-label={`${title} links`}
 				sx={{
 					py: 0,
 					width: 'max-content',
@@ -21,7 +20,7 @@ const FooterSection = ({ title, links = [], onNavigate }) => {
 						minHeight: 36,
 						justifyContent: 'flex-start',
 						textAlign: 'left',
-						color: 'primary.contrastText',
+						color: 'text.primary',
 						opacity: 0.9,
 						borderRadius: 1,
 						transition: 'all .15s ease',
@@ -32,7 +31,7 @@ const FooterSection = ({ title, links = [], onNavigate }) => {
 							bgcolor: 'transparent',
 						},
 						'&:focus-visible': {
-							outline: `2px solid ${alpha(theme.palette.primary.contrastText, 0.8)}`,
+							outline: `2px solid ${alpha(theme.palette.text.primary, 0.8)}`,
 							outlineOffset: '2px',
 						},
 					},
@@ -40,8 +39,9 @@ const FooterSection = ({ title, links = [], onNavigate }) => {
 			>
 				{links.map((item) => (
 					<ListItemButton
+						disableGutters
+						disableRipple
 						key={item.label + item.url}
-						aria-label={`${item.label}`}
 						onClick={() => onNavigate(item.url)}
 					>
 						<Typography variant='body2' sx={{ color: 'inherit' }}>

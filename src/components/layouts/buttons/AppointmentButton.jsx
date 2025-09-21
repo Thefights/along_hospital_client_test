@@ -3,7 +3,7 @@ import { IconButton } from '@mui/material'
 
 const AppointmentButton = ({ onClick }) => {
 	return (
-		<IconButton onClick={onClick} aria-label='Book appointment'>
+		<IconButton onClick={onClick}>
 			<EventAvailable sx={{ color: 'common.black' }} />
 		</IconButton>
 	)

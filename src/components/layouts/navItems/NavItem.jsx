@@ -14,7 +14,7 @@ export default function NavItem({ label, url, of = [] }) {
 	const close = useCallback(() => setOpen(false), [])
 	const toggle = useCallback(() => setOpen((o) => !o), [])
 
-	const defaultTextColor = 'primary.light'
+	const defaultTextColor = 'text.primary'
 
 	useEffect(() => {
 		if (!open) listRefs.current = []

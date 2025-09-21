@@ -1,20 +1,22 @@
 import Footer from '@/components/layouts/Footer'
-import HeaderPatient from '@/components/layouts/HeaderPatient'
+import Header from '@/components/layouts/Header'
+import { ApiUrls } from '@/configs/apiUrls'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
 import { setCartStore, setProfileStore } from '@/redux/reducers/userReducer'
 import { AssignmentOutlined, HistoryOutlined, LockReset, Person } from '@mui/icons-material'
+import { Container, Stack } from '@mui/material'
 import { Outlet } from 'react-router-dom'
 
 const LayoutPatient = () => {
-	const patientStore = useReduxStore({
-		url: '/profile',
+	const profileStore = useReduxStore({
+		url: ApiUrls.USER.PROFILE,
 		selector: (s) => s.user.profile,
 		setStore: setProfileStore,
 	})
 
 	const cartCountStore = useReduxStore({
-		url: '/cart',
+		url: ApiUrls.USER.CART,
 		selector: (s) => s.user.cart,
 		setStore: setCartStore,
 		dataToGet: (cart) => cart?.cartDetails?.length || 0,
@@ -47,17 +49,54 @@ const LayoutPatient = () => {
 		{ label: t('header.user_menu.change_password'), url: '/change-password', icon: <LockReset /> },
 	]
 
+	const footerSections = [
+		{
+			title: t('footer.medical'),
+			links: [
+				{ label: t('footer.service'), url: '/service' },
+				{ label: t('footer.doctor'), url: '/doctor' },
+				{ label: t('footer.specialty'), url: '/specialty' },
+			],
+		},
+		{
+			title: t('footer.resources'),
+			links: [
+				{ label: t('footer.blog'), url: '/blog' },
+				{ label: t('footer.medicine'), url: '/medicine' },
+			],
+		},
+		{
+			title: t('footer.support'),
+			links: [
+				{ label: t('footer.contact_us'), url: '/contact' },
+				{ label: t('footer.faq'), url: '/faq' },
+			],
+		},
+		{
+			title: t('footer.about'),
+			links: [
+				{ label: t('footer.our_hospital'), url: '/about' },
+				{ label: t('footer.career'), url: '/careers' },
+				{ label: t('footer.privacy_policy'), url: '/privacy-policy' },
+				{ label: t('footer.terms_of_service'), url: '/terms-of-service' },
+			],
+		},
+	]
+
 	return (
-		<>
-			<HeaderPatient
+		<Stack minHeight='100vh'>
+			<Header
 				items={items}
+				isAuthenticated={true}
 				userMenuItems={userMenuItems}
-				patient={patientStore.data}
+				profile={profileStore.data}
 				cartCount={cartCountStore.data}
 			/>
-			<Outlet />
-			<Footer />
-		</>
+			<Container sx={{ flexGrow: 1 }} maxWidth='lg'>
+				<Outlet />
+			</Container>
+			<Footer sections={footerSections} />
+		</Stack>
 	)
 }
 

@@ -138,6 +138,10 @@ const initialValues = {
 	contacts: [ { type: 'Phone', value: '123-456-7890' }, { type: 'Email', value: 'Doe@example.com' }],
 }
 
+const handleSuccess = (res) => {
+	dispatch(setProfileStore(res.data))
+}
+
 <GenericFormDialog
     open={createDialogOpen}
     onClose={() => setCreateDialogOpen(false)}

@@ -12,7 +12,7 @@ import {
 } from '@mui/material'
 import { useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import SystemLogoAndName from './SystemLogoAndName'
+import SystemLogoAndName from './commons/SystemLogoAndName'
 
 const MobileDrawer = ({ items, openDrawer, setOpenDrawer }) => {
 	const location = useLocation()
