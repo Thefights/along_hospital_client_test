@@ -1,5 +1,6 @@
 import Footer from '@/components/layouts/Footer'
 import Header from '@/components/layouts/Header'
+import { ApiUrls } from '@/configs/apiUrls'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
 import { setCartStore, setProfileStore } from '@/redux/reducers/userReducer'
@@ -9,13 +10,13 @@ import { Outlet } from 'react-router-dom'
 
 const LayoutPatient = () => {
 	const profileStore = useReduxStore({
-		url: '/profile',
+		url: ApiUrls.USER.PROFILE,
 		selector: (s) => s.user.profile,
 		setStore: setProfileStore,
 	})
 
 	const cartCountStore = useReduxStore({
-		url: '/cart',
+		url: ApiUrls.USER.CART,
 		selector: (s) => s.user.cart,
 		setStore: setCartStore,
 		dataToGet: (cart) => cart?.cartDetails?.length || 0,

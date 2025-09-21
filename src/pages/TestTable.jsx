@@ -5,6 +5,7 @@ import { GenericTablePagination } from '@/components/generals/GenericPagination'
 import GenericTabs from '@/components/generals/GenericTabs'
 import SearchBar from '@/components/generals/SearchBar'
 import GenericTable from '@/components/tables/GenericTable'
+import { ApiUrls } from '@/configs/apiUrls'
 import { useConfirm } from '@/hooks/useConfirm'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
@@ -52,7 +53,7 @@ const TestTable = () => {
 
 	const confirm = useConfirm()
 	const { t } = useTranslation()
-	const { loading, error, data } = useFetch('/users', { sort, page, rowsPerPage }, [
+	const { loading, error, data } = useFetch(ApiUrls.USER.BASE, { sort, page, rowsPerPage }, [
 		sort,
 		page,
 		rowsPerPage,

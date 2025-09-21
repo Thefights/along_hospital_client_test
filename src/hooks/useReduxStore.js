@@ -29,7 +29,11 @@ export default function useReduxStore({
 
 	const needFetch = isEmptyValue(storeData)
 	useEffect(() => {
-		if (needFetch) fetch()
+		const fetchData = async () => {
+			await fetch()
+		}
+
+		if (needFetch) fetchData()
 	}, [needFetch, fetch])
 
 	useEffect(() => {
