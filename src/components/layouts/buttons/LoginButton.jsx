@@ -1,6 +1,6 @@
 import useTranslation from '@/hooks/useTranslation'
 import { Login } from '@mui/icons-material'
-import { Box, ButtonBase, Stack } from '@mui/material'
+import { alpha, Box, ButtonBase, Stack } from '@mui/material'
 
 export default function LoginButton({ onClick }) {
 	const { t } = useTranslation()
@@ -21,7 +21,7 @@ export default function LoginButton({ onClick }) {
 				':focus-visible': { outline: '3px solid', outlineColor: 'primary.light' },
 			}}
 		>
-			<Stack direction='row' alignItems='center' gap={1} color={'primary.contrastText'}>
+			<Stack direction='row' alignItems='center' gap={1} color={'text.primary'}>
 				<Box
 					component='span'
 					aria-hidden='true'
@@ -30,7 +30,7 @@ export default function LoginButton({ onClick }) {
 						height: 8,
 						borderRadius: '50%',
 						bgcolor: 'primary.contrastText',
-						boxShadow: '0 0 10px 3px rgba(255, 255, 255, 0.12)',
+						boxShadow: (theme) => `0 0 10px 3px ${alpha(theme.palette.text.primary, 0.12)}`,
 					}}
 				/>
 				<span>{t('button.login')}</span>

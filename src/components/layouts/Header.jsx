@@ -1,18 +1,32 @@
 import SearchBar from '@/components/generals/SearchBar'
+import useAuth from '@/hooks/useAuth'
 import { AppBar, Box, Stack, Toolbar, useMediaQuery, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import AppointmentButton from './buttons/AppointmentButton'
+import CartButton from './buttons/CartButton'
 import LoginButton from './buttons/LoginButton'
 import MobileMenuButton from './buttons/MobileMenuButton'
 import LanguageSwitcher from './commons/LanguageSwitcher'
-import NavItem from './commons/NavItem'
 import SystemLogoAndName from './commons/SystemLogoAndName'
+import ThemeSwitcher from './commons/ThemeSwitcher'
+import UserAvatarMenu from './commons/UserAvatarMenu'
 import MobileDrawer from './MobileDrawer'
+import NavItem from './navItems/NavItem'
 
-export default function HeaderGuest({ items = [] }) {
+const Header = ({
+	items = [],
+	isAuthenticated = false,
+	userMenuItems = [],
+	profile = {},
+	cartCount = 0,
+}) => {
 	const navigate = useNavigate()
 	const [openDrawer, setOpenDrawer] = useState(false)
+	const { logout } = useAuth()
 	const theme = useTheme()
+
+	const isDownSm = useMediaQuery(theme.breakpoints.down('sm'))
 	const isDownMd = useMediaQuery(theme.breakpoints.down('md'))
 	const isDownLg = useMediaQuery(theme.breakpoints.down('lg'))
 
@@ -31,7 +45,7 @@ export default function HeaderGuest({ items = [] }) {
 			>
 				<Toolbar sx={{ minHeight: 72 }}>
 					<Stack direction='row' alignItems='center' spacing={2} sx={{ flex: 1 }}>
-						<SystemLogoAndName onClick={() => navigate('/')} />
+						<SystemLogoAndName onClick={() => navigate('/')} onlyShowIcon={isDownSm} />
 
 						{!isDownMd && (
 							<Stack direction='row' spacing={0.5} sx={{ display: 'flex', ml: 2 }} role='menubar'>
@@ -48,8 +62,17 @@ export default function HeaderGuest({ items = [] }) {
 								<SearchBar />
 							</Box>
 						)}
+						<ThemeSwitcher />
 						<LanguageSwitcher />
-						<LoginButton onClick={() => navigate('/login')} />
+						{!isAuthenticated ? (
+							<LoginButton onClick={() => navigate('/login')} />
+						) : (
+							<>
+								<CartButton count={cartCount} onClick={() => navigate('/cart')} />
+								<AppointmentButton onClick={() => navigate('/appointment')} />
+								<UserAvatarMenu items={userMenuItems} profile={profile} onLogout={logout} />
+							</>
+						)}
 						{isDownMd && <MobileMenuButton onOpen={() => setOpenDrawer(true)} />}
 					</Stack>
 				</Toolbar>
@@ -59,19 +82,4 @@ export default function HeaderGuest({ items = [] }) {
 	)
 }
 
-/* -------------------------------------------
-Example usage (remove or adjust in your app):
-----------------------------------------------
-const items = [
-  { label: 'Home', url: '/' },
-  { label: 'Medicine', url: '/medicine' },
-  { label: 'Medical Service', url: '/service', of: [
-      { label: 'General Checkup', url: '/service/checkup' },
-      { label: 'Pediatrics', url: '/service/pediatrics' },
-  ]},
-  { label: 'Doctor', url: '/doctor' },
-  { label: 'Specialty', url: '/specialty' },
-  { label: 'Blog', url: '/blog' },
-];
-// <HeaderGuest items={items} />
-*/
+export default Header

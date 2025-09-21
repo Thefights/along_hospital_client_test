@@ -1,5 +1,5 @@
 import Footer from '@/components/layouts/Footer'
-import HeaderPatient from '@/components/layouts/HeaderPatient'
+import Header from '@/components/layouts/Header'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
 import { setCartStore, setProfileStore } from '@/redux/reducers/userReducer'
@@ -8,7 +8,7 @@ import { Container, Stack } from '@mui/material'
 import { Outlet } from 'react-router-dom'
 
 const LayoutPatient = () => {
-	const patientStore = useReduxStore({
+	const profileStore = useReduxStore({
 		url: '/profile',
 		selector: (s) => s.user.profile,
 		setStore: setProfileStore,
@@ -84,10 +84,11 @@ const LayoutPatient = () => {
 
 	return (
 		<Stack minHeight='100vh'>
-			<HeaderPatient
+			<Header
 				items={items}
+				isAuthenticated={true}
 				userMenuItems={userMenuItems}
-				patient={patientStore.data}
+				profile={profileStore.data}
 				cartCount={cartCountStore.data}
 			/>
 			<Container sx={{ flexGrow: 1 }} maxWidth='lg'>

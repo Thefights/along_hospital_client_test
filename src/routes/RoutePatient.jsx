@@ -6,7 +6,7 @@ import ProtectedRoute from './ProtectedRoute'
 const RoutePatient = () => {
 	return (
 		<Routes>
-			<Route element={<ProtectedRoute allowRoles={[]} />}>
+			<Route element={<ProtectedRoute allowRoles={['USER']} />}>
 				<Route element={<LayoutPatient />}>
 					<Route path='/profile' element={<ProfilePage />} />
 				</Route>
