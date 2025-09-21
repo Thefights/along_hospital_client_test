@@ -45,7 +45,7 @@ export function useAxiosSubmit(url = '', method = 'POST', data = {}, params = {}
 		}
 	}, [url, method, params, data])
 
-	return { loading, error, data, submit }
+	return { loading, error, response, submit }
 }
 
 // Example usage:

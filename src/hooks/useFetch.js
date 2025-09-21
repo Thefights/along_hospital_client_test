@@ -3,7 +3,7 @@ import { isPlainObject } from '@/utils/handleBooleanUtil'
 import { appendPath } from '@/utils/handleStringUtil'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-export default function useFetch(url, params = {}, dependencies = []) {
+export default function useFetch(url, params = {}, dependencies = [], fetchOnMount = true) {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(null)
 	const [data, setData] = useState(null)
@@ -42,8 +42,8 @@ export default function useFetch(url, params = {}, dependencies = []) {
 	}, [url, memoParams, ...dependencies])
 
 	useEffect(() => {
-		fetchData()
-	}, [fetchData])
+		if (fetchOnMount) fetchData()
+	}, [fetchData, fetchOnMount])
 
-	return { loading, error, data }
+	return { loading, error, data, fetch: fetchData }
 }
