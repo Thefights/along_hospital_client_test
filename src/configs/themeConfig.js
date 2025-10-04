@@ -13,7 +13,7 @@ const lightPalette = {
 		softBorder: '#B3DAFF',
 	},
 	secondary: {
-		main: '#00BFA6',
+		main: '#00897B',
 		light: '#4FD1C5',
 		dark: '#007C73',
 		contrastText: '#FFFFFF',
@@ -60,6 +60,11 @@ const lightPalette = {
 		primary: '#0F172A',
 		secondary: '#475569',
 		disabled: '#94A3B8',
+		blue: {
+			light: '#90CAF9',
+			main: '#42A5F5',
+			dark: '#1976D2',
+		},
 	},
 	divider: '#E2E8F0',
 	grey: {
@@ -80,6 +85,7 @@ const lightPalette = {
 		brand_reverse_45deg: 'linear-gradient(45deg, #00BFA6 0%, #1E88E5 100%)',
 		brand_reverse_135deg: 'linear-gradient(135deg, #00BFA6 0%, #1E88E5 100%)',
 		calm: 'linear-gradient(135deg, #E6F2FD 0%, #E6FAF8 100%)',
+		background: 'linear-gradient(135deg, #F9FBFD 0%, #F3FFFD 100%)',
 	},
 }
 
@@ -142,8 +148,13 @@ const darkPalette = {
 		primary: '#E2E8F0',
 		secondary: '#94A3B8',
 		disabled: '#64748B',
+		blue: {
+			light: '#64B5F6',
+			main: '#2196F3',
+			dark: '#1976D2',
+		},
 	},
-	divider: '#263043',
+	divider: '#334155',
 	grey: {
 		50: '#0B1220',
 		100: '#0F172A',
@@ -157,11 +168,12 @@ const darkPalette = {
 		900: '#E5E7EB',
 	},
 	gradients: {
-		brand_45deg: 'linear-gradient(45deg, #2563EB 0%, #14B8A6 100%)',
-		brand_135deg: 'linear-gradient(135deg, #2563EB 0%, #14B8A6 100%)',
-		brand_reverse_45deg: 'linear-gradient(45deg, #14B8A6 0%, #2563EB 100%)',
-		brand_reverse_135deg: 'linear-gradient(135deg, #14B8A6 0%, #2563EB 100%)',
-		calm: 'linear-gradient(135deg, #0F1A28 0%, #0F1E1D 100%)',
+		brand_45deg: 'linear-gradient(45deg, #1565C0 0%, #00897B 100%)',
+		brand_135deg: 'linear-gradient(135deg, #1565C0 0%, #00897B 100%)',
+		brand_reverse_45deg: 'linear-gradient(45deg, #00897B 0%, #1565C0 100%)',
+		brand_reverse_135deg: 'linear-gradient(135deg, #00897B 0%, #1565C0 100%)',
+		calm: 'linear-gradient(135deg, #0D1B2A 0%, #122C34 100%)',
+		background: 'linear-gradient(135deg, #0A1929 0%, #001E1F 100%)',
 	},
 }
 
