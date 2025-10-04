@@ -121,10 +121,16 @@ const TestTable = () => {
 
 	const upsertField = useMemo(
 		() => [
-			{ key: 'name', title: 'Name', validate: [maxLen(255)] },
+			{
+				key: 'name',
+				title: 'Name',
+				validate: [maxLen(255)],
+				required: false,
+				props: { variant: 'outlined', slotProps: { input: { readOnly: true } } },
+			},
 			{ key: 'age', title: 'Age', type: 'number', validate: [numberRange(0, 100)] },
 			{ key: 'images', title: 'Images', type: 'image', multiple: 5 },
-			{ key: 'signature', title: 'Signature', type: 'image' },
+			{ key: 'signature', title: 'Signature', required: false, type: 'image' },
 			{
 				key: 'address',
 				title: 'Address',
@@ -132,6 +138,15 @@ const TestTable = () => {
 				of: [
 					{ key: 'city', title: 'City', validate: [maxLen(255)] },
 					{ key: 'country', title: 'Country', validate: [maxLen(255)] },
+				],
+			},
+			{
+				key: 'tags',
+				title: 'Tags',
+				type: 'array',
+				of: [
+					{ key: 'name', title: 'Name', validate: [maxLen(255)] },
+					{ key: 'value', title: 'Value', validate: [maxLen(255)] },
 				],
 			},
 		],

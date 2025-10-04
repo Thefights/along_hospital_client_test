@@ -1,6 +1,6 @@
 import { Box, TextField, Typography } from '@mui/material'
 
-const ImageRenderField = ({ field, textFieldVariant, setField, required, showError, preview }) => {
+const ImageRenderField = ({ field, textFieldVariant, setField, showError, preview }) => {
 	return (
 		<Box key={field.key}>
 			<TextField
@@ -13,7 +13,7 @@ const ImageRenderField = ({ field, textFieldVariant, setField, required, showErr
 					const f = e?.target?.files?.[0] || null
 					setField(field.key, f)
 				}}
-				required={required}
+				required={field.required ?? true}
 				error={showError}
 				helperText={showError ? 'This field is required' : ''}
 				fullWidth

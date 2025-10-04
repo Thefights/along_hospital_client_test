@@ -76,6 +76,30 @@ export const getObjectUnflatten = (flat) => {
 	return out
 }
 
+export const getObjectMerged = (base, override) => {
+	if (!base && !override) return undefined
+	const out = { ...(base || {}) }
+	if (override) {
+		Object.keys(override).forEach((k) => {
+			const b = out[k]
+			const o = override[k]
+			if (
+				b &&
+				typeof b === 'object' &&
+				!Array.isArray(b) &&
+				o &&
+				typeof o === 'object' &&
+				!Array.isArray(o)
+			) {
+				out[k] = getObjectMerged(b, o)
+			} else {
+				out[k] = o
+			}
+		})
+	}
+	return out
+}
+
 export const normalizeOptions = (options) => {
 	return Array.isArray(options)
 		? options.map((option) =>

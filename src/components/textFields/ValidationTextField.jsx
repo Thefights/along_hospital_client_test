@@ -1,3 +1,4 @@
+import { getObjectMerged } from '@/utils/handleObjectUtil'
 import { isEmail, isNumber, isRequired } from '@/utils/validateUtil'
 import { TextField } from '@mui/material'
 import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useState } from 'react'
@@ -20,6 +21,8 @@ const ValidationTextField = (
 	ref
 ) => {
 	const [error, setError] = useState('')
+
+	const { slotProps, ...restProps } = props
 
 	const userRules = useMemo(() => {
 		if (!validate) return []
@@ -51,6 +54,18 @@ const ValidationTextField = (
 
 	useImperativeHandle(ref, () => ({ validate: run }), [run])
 
+	const internalSlotProps = useMemo(() => {
+		if (type === 'date' || type === 'time' || type === 'file') {
+			return { inputLabel: { shrink: true } }
+		}
+		return undefined
+	}, [type])
+
+	const mergedSlotProps = useMemo(
+		() => getObjectMerged(internalSlotProps, slotProps),
+		[internalSlotProps, slotProps]
+	)
+
 	return (
 		<TextField
 			label={label}
@@ -63,12 +78,8 @@ const ValidationTextField = (
 			required={required}
 			fullWidth
 			variant='outlined'
-			slotProps={
-				type === 'date' || type === 'time' || type === 'file'
-					? { inputLabel: { shrink: true } }
-					: undefined
-			}
-			{...props}
+			slotProps={mergedSlotProps}
+			{...restProps}
 		/>
 	)
 }

@@ -16,7 +16,7 @@ export default function useFieldRenderer(
 	handleChange = () => {},
 	registerRef = () => {},
 	submitted,
-	textFieldVariant = 'outlined'
+	textFieldVariant = 'standard'
 ) {
 	const normalizedImageKeysRef = useRef(new Set())
 	const { getUrlForFile, revokeUrlForFile } = useFileUrls()
@@ -61,7 +61,7 @@ export default function useFieldRenderer(
 			ref={registerRef(field.key)}
 			name={field.key}
 			label={field.title}
-			required={field.required || true}
+			required={field.required ?? true}
 			type={field.type || 'text'}
 			value={values[field.key] || ''}
 			onChange={handleChange}
@@ -109,7 +109,6 @@ export default function useFieldRenderer(
 				field={field}
 				textFieldVariant={textFieldVariant}
 				setField={setField}
-				required={required}
 				showError={showError}
 				preview={preview}
 			/>
@@ -302,7 +301,7 @@ export default function useFieldRenderer(
 		}
 
 		return (
-			<Stack key={field.key} spacing={1.5}>
+			<Stack key={field.key} spacing={1.25}>
 				<Typography variant='subtitle2'>{field.title}</Typography>
 				<Stack spacing={1}>
 					{rows.map((_, idx) => (
@@ -355,3 +354,67 @@ export default function useFieldRenderer(
 
 	return { renderField, hasRequiredMissing }
 }
+
+// Usage Example
+////// JUST USE 'require = false' IF THE FIELD IS NOT REQUIRED, OR ELSE THE FIELD IS ALWAYS REQUIRED //////
+/*
+const fields = [
+	// Normal field
+	{ key: 'name', title: 'Name', validate: [maxLen(255)] },
+	// Changed type to 'email' with customize props
+	{ key: 'email', title: 'Email', type: 'email', validate: [maxLen(255)], props: { variant: 'outlined', slotProps: { input: { readOnly: true } } } },
+	// Multiline field
+	{ key: 'description', title: 'Description', multiple: 4, validate: [maxLen(1000)] },
+	// Number field with numberRange validation
+	{ key: 'age', title: 'Age', type: 'number', validate: [numberRange(0, 100)] },
+	// Image upload field with required false
+	{ key: 'avatar', title: 'Avatar', type: 'image', required: false },
+	// Image upload field allowing multiple images (max 3)
+	{ key: 'images', title: 'Images', type: 'image', multiple: 5 },
+	// Object field with child fields
+	{ key: 'address', title: 'Address', type: 'object', of: [
+		{ key: 'city', title: 'City', validate: [maxLen(255)] },
+		{ key: 'country', title: 'Country', validate: [maxLen(255)] },
+	]},
+	// Array field with child fields
+	{ key: 'contacts', title: 'Contacts', type: 'array', of: [
+		{ key: 'type', title: 'Type', type: 'select', options: ['Phone', 'Email'] },
+		{ key: 'value', title: 'Value', validate: [maxLen(255)] },
+	]},
+]
+
+const initialValues = {
+	name: 'Doe',
+	email: 'Doe@example.com',
+	description: 'Description here',
+	age: '25',
+	avatar: '/avatar.jpg',
+	images: ['/image1.jpg', '/image2.jpg'],
+	address: { city: 'City Name', country: 'Country Name' },
+	contacts: [ { type: 'Phone', value: '123-456-7890' }, { type: 'Email', value: 'Doe@example.com' }],
+}
+
+// useForm with useFieldRenderer
+const { values, setField, handleChange, registerRef, submitted } = useForm(initialValues)
+const { renderField, hasRequiredMissing } = useFieldRenderer(values, setField, handleChange, registerRef, submitted, 'outlined'/'filled'/'standard')
+
+const handleSubmit = () => {
+	if (hasRequiredMissing(fields)) {
+		alert('Please fill all required fields')
+		return
+	}
+
+	alert('Form submitted: ' + JSON.stringify(values, null, 2))
+}
+
+<Stack spacing={2}>
+	{fields.map((f) => renderField(f))}
+	<Button
+		variant='contained'
+		onClick={handleSubmit}
+	>
+		Submit
+	</Button>
+</Stack>
+
+*/
