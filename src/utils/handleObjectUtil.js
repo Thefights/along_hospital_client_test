@@ -75,3 +75,13 @@ export const getObjectUnflatten = (flat) => {
 	for (const [p, v] of Object.entries(flat ?? {})) setIn(out, p, v)
 	return out
 }
+
+export const normalizeOptions = (options) => {
+	return Array.isArray(options)
+		? options.map((option) =>
+				typeof option === 'object' && option !== null && 'value' in option
+					? option
+					: { label: String(option), value: option }
+		  )
+		: []
+}
