@@ -1,26 +1,26 @@
+import { getTranslation } from '@/hooks/useTranslation'
+
 export const isRequired =
-	(msg = 'This field is required') =>
+	(msg = getTranslation('error.required')) =>
 	(v) => {
 		const s = typeof v === 'string' ? v.trim() : v
 		return s == null || s === '' ? msg : true
 	}
 
 export const isEmail =
-	(msg = 'Please enter a valid email') =>
+	(msg = getTranslation('error.invalid_email')) =>
 	(v) =>
 		v == null || v === '' || /\S+@\S+\.\S+/.test(String(v)) ? true : msg
 
 export const isNumber =
-	(msg = 'Please enter a valid number') =>
+	(msg = getTranslation('error.invalid_number')) =>
 	(v) => {
 		if (v == null || v === '') return true
 		return !Number.isNaN(Number(v)) ? true : msg
 	}
 
 export const isPasswordStrong =
-	(
-		msg = 'Password must be at least 8 characters long and include uppercase, lowercase, number, and special character'
-	) =>
+	(msg = getTranslation('error.weak_password')) =>
 	(v) => {
 		if (v == null || v === '') return true
 		const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
@@ -28,16 +28,16 @@ export const isPasswordStrong =
 	}
 
 export const minLen = (n, msg) => (v) =>
-	String(v ?? '').length < n ? msg ?? `Must be at least ${n} characters` : true
+	String(v ?? '').length < n ? msg ?? getTranslation('error.min_length', { min: n }) : true
 
 export const maxLen = (n, msg) => (v) =>
-	String(v ?? '').length > n ? msg ?? `Cannot exceed ${n} characters` : true
+	String(v ?? '').length > n ? msg ?? getTranslation('error.max_length', { max: n }) : true
 
 export const numberRange = (min, max) => (v) => {
 	if (v == null || v === '') return true
 	const n = Number(v)
 
-	if (min != null && n < min) return `Minimum number is ${min}`
-	if (max != null && n > max) return `Maximum number is ${max}`
+	if (min != null && n < min) return getTranslation('error.min_number', { min })
+	if (max != null && n > max) return getTranslation('error.max_number', { max })
 	return true
 }

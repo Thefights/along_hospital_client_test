@@ -18,6 +18,42 @@
         "time": "Thời gian"
     },
 
+    "error": {
+        "required": "Trường này là bắt buộc",
+        "invalid_email": "Vui lòng nhập email hợp lệ",
+        "invalid_phone": "Vui lòng nhập số điện thoại hợp lệ",
+        "invalid_date": "Vui lòng nhập ngày hợp lệ",
+        "invalid_time": "Vui lòng nhập thời gian hợp lệ",
+        "invalid_number": "Vui lòng nhập số hợp lệ",
+        "password_strong": "Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt",
+        "min_length": "Phải có ít nhất {min} ký tự",
+        "max_length": "Không được vượt quá {max} ký tự",
+        "min_number": "Số tối thiểu là {min}",
+        "max_number": "Số tối đa là {max}",
+        "fill_all_required": "Vui lòng điền tất cả các trường bắt buộc"
+    },
+
+    "profile": {
+        "personal_information": "Thông tin cá nhân",
+        "full_name": "Họ và tên",
+        "email": "Email",
+        "phone": "Số điện thoại",
+        "address": "Địa chỉ",
+        "date_of_birth": "Ngày sinh",
+        "gender": "Giới tính"
+    },
+
+    "appointment": {
+        "confirm_create_title": "Xác nhận tạo cuộc hẹn",
+        "confirm_create_description": "Bạn có chắc chắn muốn tạo cuộc hẹn này không?",
+        "patient_info": "Thông tin bệnh nhân",
+        "appointment_info": "Thông tin cuộc hẹn",
+        "create_appointment": "Tạo Cuộc Hẹn",
+        "select_specialty": "Chọn chuyên khoa",
+        "purpose": "Mục đích",
+        "specialty": "Chuyên khoa"
+    },
+
     "header": {
         "home": "Trang chủ",
         "medicine": "Thuốc",
@@ -56,27 +92,6 @@
         "terms_of_service":"Điều khoản dịch vụ",
         "our_hospital":"Bệnh viện của chúng tôi",
         "career":"Nghề nghiệp"
-    },
-
-    "profile": {
-        "personal_information": "Thông tin cá nhân",
-        "full_name": "Họ và tên",
-        "email": "Email",
-        "phone": "Số điện thoại",
-        "address": "Địa chỉ",
-        "date_of_birth": "Ngày sinh",
-        "gender": "Giới tính"
-    },
-
-    "appointment": {
-        "confirm_create_title": "Xác nhận tạo cuộc hẹn",
-        "confirm_create_description": "Bạn có chắc chắn muốn tạo cuộc hẹn này không?",
-        "patient_info": "Thông tin bệnh nhân",
-        "appointment_info": "Thông tin cuộc hẹn",
-        "create_appointment": "Tạo Cuộc Hẹn",
-        "select_specialty": "Chọn chuyên khoa",
-        "purpose": "Mục đích",
-        "specialty": "Chuyên khoa"
     },
 
     "done_care_about_this": {
