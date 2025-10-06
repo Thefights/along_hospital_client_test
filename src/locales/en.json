@@ -10,6 +10,51 @@
         "login": "Login"
     },
 
+    "text": {
+        "no_data": "No data available...",
+        "search": "Search...",
+        "loading": "Loading...",
+        "image_preview": "Image Preview",
+        "date": "Date",
+        "time": "Time"
+    },
+
+    "error": {
+        "required": "This field is required",
+        "invalid_email": "Please enter a valid email",
+        "invalid_phone": "Please enter a valid phone number",
+        "invalid_date": "Please enter a valid date",
+        "invalid_time": "Please enter a valid time",
+        "invalid_number": "Please enter a valid number",
+        "weak_password": "Password must contain at least 8 characters, including uppercase, lowercase, number, and special character",
+        "min_length": "Must be at least {min} characters, currently {current}",
+        "max_length": "Can't exceed {max} characters, currently {current}/{max}",
+        "min_number": "Minimum number is {min}",
+        "max_number": "Maximum number is {max}",
+        "fill_all_required": "Please fill all required fields"
+    },
+
+    "profile": {
+        "personal_information": "Personal Information",
+        "full_name": "Full Name",
+        "email": "Email",
+        "phone": "Phone",
+        "address": "Address",
+        "date_of_birth": "Date of Birth",
+        "gender": "Gender"
+    },
+
+    "appointment": {
+        "confirm_create_title": "Confirm create appointment",
+        "confirm_create_description": "Are you sure to create this appointment?",
+        "patient_info": "Patient Info",
+        "appointment_info": "Appointment Info",
+        "create_appointment": "Create Appointment",
+        "select_specialty": "Select Specialty",
+        "purpose": "Purpose",
+        "specialty": "Specialty"
+    },
+
     "header": {
         "home": "Home",
         "medicine": "Medicine",
@@ -48,12 +93,6 @@
         "terms_of_service":"Terms of Service",
         "our_hospital":"Our Hospital",
         "career":"Career"
-    },
-
-    "text": {
-        "no_data": "No data available...",
-        "search": "Search...",
-        "loading": "Loading..."
     },
 
     "done_care_about_this": {

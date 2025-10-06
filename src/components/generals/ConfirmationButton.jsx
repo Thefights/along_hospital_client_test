@@ -45,7 +45,7 @@ const ConfirmationButton = ({
 	}
 
 	return (
-		<Button {...props} onClick={handleClick}>
+		<Button variant='contained' {...props} onClick={handleClick}>
 			{children}
 		</Button>
 	)

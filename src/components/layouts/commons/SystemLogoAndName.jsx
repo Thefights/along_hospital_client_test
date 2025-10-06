@@ -12,14 +12,15 @@ export default function SystemLogoAndName({ onClick, onlyShowIcon = false }) {
 					borderRadius: '50%',
 					overflow: 'hidden',
 					bgcolor: 'background.paper',
+					border: (theme) => `2px solid ${theme.palette.text.blue.light}`,
 					boxShadow: 1,
 				}}
 			>
-				<Box component='svg' viewBox='0 0 100 100' role='img' sx={{ width: '100%', height: '100%' }}>
-					<circle cx='50' cy='50' r='48' fill='#e3f2fd' stroke='#90caf9' strokeWidth='4' />
-					<rect x='44' y='22' width='12' height='56' rx='3' fill='#1976d2' />
-					<rect x='22' y='44' width='56' height='12' rx='3' fill='#1976d2' />
-				</Box>
+				<Box
+					component='img'
+					src={'/system-logo.png'}
+					sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+				/>
 			</ButtonBase>
 			{!onlyShowIcon && (
 				<Typography
@@ -27,7 +28,7 @@ export default function SystemLogoAndName({ onClick, onlyShowIcon = false }) {
 					component='div'
 					noWrap
 					textOverflow={'ellipsis'}
-					sx={{ ml: 1, userSelect: 'none', color: 'primary.dark' }}
+					sx={{ ml: 1, userSelect: 'none', color: 'text.blue.dark' }}
 				>
 					{getEnv('VITE_SYSTEM_NAME')}
 				</Typography>

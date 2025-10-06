@@ -26,6 +26,23 @@ export default function useTranslation() {
 	}
 }
 
+export const getTranslation = (key, params) => {
+	let language = window?.localStorage?.getItem('language') || '"en"'
+	const fallbackLanguage = 'en'
+
+	try {
+		language = language.toLowerCase().slice(1, -1)
+	} catch {}
+
+	const dict = translations[language]
+	const fallbackDict = translations[fallbackLanguage]
+
+	const keys = key.split('.')
+	const val = getNestedTranslation(dict, keys) || getNestedTranslation(fallbackDict, keys) || key
+
+	return interpolate(val, params)
+}
+
 function getNestedTranslation(dict, keys) {
 	return keys.reduce((obj, key) => {
 		return obj?.[key]

@@ -1,18 +1,15 @@
+import AddTileRenderField from '@/components/fieldRenderers/AddTileRenderField'
+import ChildFieldRenderField from '@/components/fieldRenderers/ChildFieldRenderField'
+import ImageRenderField from '@/components/fieldRenderers/ImageRenderField'
+import ImageTileRenderField from '@/components/fieldRenderers/ImageTileRenderField'
 import ValidationTextField from '@/components/textFields/ValidationTextField'
 import { isStringArray } from '@/utils/handleBooleanUtil'
-import { Add, Close, Delete } from '@mui/icons-material'
-import { Box, Button, IconButton, MenuItem, Stack, TextField, Typography } from '@mui/material'
+import { normalizeOptions } from '@/utils/handleObjectUtil'
+import { Delete } from '@mui/icons-material'
+import { Box, Button, IconButton, MenuItem, Stack, Typography } from '@mui/material'
 import { useCallback, useEffect, useRef } from 'react'
 import useFileUrls from './useFileUrls'
-
-const normalizeOptions = (options) =>
-	Array.isArray(options)
-		? options.map((option) =>
-				typeof option === 'object' && option !== null && 'value' in option
-					? option
-					: { label: String(option), value: option }
-		  )
-		: []
+import useTranslation from './useTranslation'
 
 export default function useFieldRenderer(
 	values,
@@ -20,10 +17,12 @@ export default function useFieldRenderer(
 	handleChange = () => {},
 	registerRef = () => {},
 	submitted,
-	textFieldVariant = 'outlined'
+	textFieldVariant = 'standard',
+	textFieldSize = 'medium'
 ) {
 	const normalizedImageKeysRef = useRef(new Set())
 	const { getUrlForFile, revokeUrlForFile } = useFileUrls()
+	const { t } = useTranslation()
 
 	useEffect(() => {
 		normalizedImageKeysRef.current.clear()
@@ -65,13 +64,14 @@ export default function useFieldRenderer(
 			ref={registerRef(field.key)}
 			name={field.key}
 			label={field.title}
-			required={field.required || true}
+			required={field.required ?? true}
 			type={field.type || 'text'}
 			value={values[field.key] || ''}
 			onChange={handleChange}
 			validate={field.validate}
 			multiline={!!field.multiple}
 			rows={field.multiple}
+			size={textFieldSize}
 			{...(field.props || {})}
 		/>
 	)
@@ -90,6 +90,7 @@ export default function useFieldRenderer(
 				onChange={handleChange}
 				validate={field.validate}
 				select
+				size={textFieldSize}
 				{...(field.props || {})}
 			>
 				{opts.map((opt) => (
@@ -108,41 +109,14 @@ export default function useFieldRenderer(
 		const showError = submitted && required && !file
 
 		return (
-			<Box key={field.key}>
-				<TextField
-					name={field.key}
-					variant={textFieldVariant}
-					label={field.title}
-					type='file'
-					value={undefined}
-					onChange={(e) => {
-						const f = e?.target?.files?.[0] || null
-						setField(field.key, f)
-					}}
-					required={required}
-					error={showError}
-					helperText={showError ? 'This field is required' : ''}
-					fullWidth
-					slotProps={{
-						input: { inputProps: { accept: 'image/*' } },
-						inputLabel: { shrink: true },
-					}}
-				/>
-				{preview && (
-					<Box sx={{ mt: 1.5 }}>
-						<Typography variant='caption' sx={{ display: 'block', mb: 0.5 }}>
-							Image Preview
-						</Typography>
-						<Box
-							component='img'
-							src={preview}
-							alt={field.title}
-							sx={{ width: '100%', maxHeight: 240, objectFit: 'cover', borderRadius: 2, boxShadow: 1 }}
-							onLoad={() => URL.revokeObjectURL(preview)}
-						/>
-					</Box>
-				)}
-			</Box>
+			<ImageRenderField
+				key={field.key}
+				field={field}
+				textFieldVariant={textFieldVariant}
+				setField={setField}
+				showError={showError}
+				preview={preview}
+			/>
 		)
 	}
 
@@ -206,73 +180,7 @@ export default function useFieldRenderer(
 			if (removed instanceof File) revokeUrlForFile(removed)
 		}
 
-		const Tile = ({ src, alt, onRemove }) => (
-			<Box
-				sx={{
-					position: 'relative',
-					flex: '1 1 max(50%, 160px)',
-					maxWidth: 160,
-					aspectRatio: 1,
-					borderRadius: 2,
-					overflow: 'hidden',
-					boxShadow: 1,
-					alignItems: 'center',
-				}}
-			>
-				<Box
-					component='img'
-					src={src}
-					onError={(e) => {
-						e.currentTarget.onerror = null
-						e.currentTarget.src = '/image-placeholder.jpg'
-					}}
-					alt={alt}
-					sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
-				/>
-				<IconButton
-					size='small'
-					onClick={onRemove}
-					sx={{
-						position: 'absolute',
-						top: 4,
-						right: 4,
-						bgcolor: 'background.paper',
-						boxShadow: 1,
-						'&:hover': { bgcolor: 'background.paper' },
-					}}
-				>
-					<Close fontSize='small' />
-				</IconButton>
-			</Box>
-		)
-
 		const inputId = `${key}__picker`
-		const AddTile = ({ remaining }) => (
-			<label htmlFor={inputId} style={{ display: 'contents' }}>
-				<Box
-					sx={{
-						cursor: 'pointer',
-						flex: '1 1 max(50%, 160px)',
-						maxWidth: 160,
-						aspectRatio: 1,
-						borderRadius: 2,
-						boxShadow: 1,
-						border: '1px dashed',
-						borderColor: 'divider',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-						transition: 'background-color .15s ease',
-						'&:hover': { bgcolor: 'action.hover' },
-					}}
-				>
-					<Stack alignItems='center' spacing={0.5}>
-						<Add />
-						<Typography variant='caption'>Add {remaining}</Typography>
-					</Stack>
-				</Box>
-			</label>
-		)
 
 		return (
 			<Stack key={key} spacing={1.25}>
@@ -292,7 +200,7 @@ export default function useFieldRenderer(
 				/>
 				<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, alignItems: 'flex-start' }}>
 					{remain.map((url, i) => (
-						<Tile
+						<ImageTileRenderField
 							key={`remain-${i}`}
 							src={String(url)}
 							alt={`${field.title}-remain-${i}`}
@@ -301,9 +209,9 @@ export default function useFieldRenderer(
 					))}
 					{news.map((file, i) => {
 						const src = file instanceof File ? getUrlForFile(file) : ''
-						const fileKey = (f) => `${f.name}_${f.size}_${f.lastModified}`
+						const fileKey = (f) => `${f.name}_${f.size}_${f.lastModified}_${i}`
 						return (
-							<Tile
+							<ImageTileRenderField
 								key={`new-${fileKey(file)}`}
 								src={src}
 								alt={`${field.title}-new-${fileKey(file)}`}
@@ -311,12 +219,12 @@ export default function useFieldRenderer(
 							/>
 						)
 					})}
-					{capacityLeft > 0 && <AddTile remaining={capacityLeft} />}
+					{capacityLeft > 0 && <AddTileRenderField remaining={capacityLeft} inputId={inputId} />}
 				</Box>
 
 				{showError && (
 					<Typography variant='caption' color='error'>
-						This field is required
+						{t('error.required')}
 					</Typography>
 				)}
 			</Stack>
@@ -333,45 +241,16 @@ export default function useFieldRenderer(
 			const joinPath = (parent, child) => (parent ? `${parent}.${child}` : child)
 			const name = joinPath(field.key, child.key)
 			const v = obj[child.key] ?? ''
-			if (child.type === 'select') {
-				const opts = normalizeOptions(child.options || [])
-				return (
-					<ValidationTextField
-						key={name}
-						variant={textFieldVariant}
-						ref={registerRef(name)}
-						name={name}
-						label={child.title}
-						required={child.required ?? true}
-						value={v}
-						onChange={(e) => updateChild(child.key, e.target.value)}
-						validate={child.validate}
-						select
-						sx={{ minWidth: 220, flex: 1 }}
-						{...(child.props || {})}
-					>
-						{opts.map((opt) => (
-							<MenuItem key={String(opt.value)} value={opt.value} disabled={opt.disabled}>
-								{opt.label}
-							</MenuItem>
-						))}
-					</ValidationTextField>
-				)
-			}
 			return (
-				<ValidationTextField
+				<ChildFieldRenderField
 					key={name}
-					variant={textFieldVariant}
-					ref={registerRef(name)}
+					child={child}
 					name={name}
-					required={child.required ?? true}
-					label={child.title}
-					type={child.type ?? 'text'}
 					value={v}
 					onChange={(e) => updateChild(child.key, e.target.value)}
-					validate={child.validate}
-					sx={{ flex: 1 }}
-					{...(child.props || {})}
+					registerRef={registerRef}
+					textFieldVariant={textFieldVariant}
+					textFieldSize={textFieldSize}
 				/>
 			)
 		}
@@ -404,6 +283,7 @@ export default function useFieldRenderer(
 				field.key,
 				rows.filter((_, i) => i !== idx)
 			)
+
 		const updateCell = (idx, childKey, nextVal) => {
 			const next = rows.slice()
 			next[idx] = { ...next[idx], [childKey]: nextVal }
@@ -413,51 +293,22 @@ export default function useFieldRenderer(
 		const renderChild = (child, idx) => {
 			const name = `${field.key}[${idx}].${child.key}`
 			const v = rows[idx]?.[child.key] ?? ''
-			if (child.type === 'select') {
-				const opts = normalizeOptions(child.options || [])
-				return (
-					<ValidationTextField
-						key={name}
-						variant={textFieldVariant}
-						ref={registerRef(name)}
-						name={name}
-						required={child.required ?? true}
-						label={child.title}
-						value={v}
-						onChange={(e) => updateCell(idx, child.key, e.target.value)}
-						validate={child.validate}
-						select
-						sx={{ minWidth: 220, flex: 1 }}
-						{...(child.props || {})}
-					>
-						{opts.map((opt) => (
-							<MenuItem key={String(opt.value)} value={opt.value} disabled={opt.disabled}>
-								{opt.label}
-							</MenuItem>
-						))}
-					</ValidationTextField>
-				)
-			}
 			return (
-				<ValidationTextField
+				<ChildFieldRenderField
 					key={name}
-					variant={textFieldVariant}
-					ref={registerRef(name)}
+					child={child}
 					name={name}
-					required={child.required ?? true}
-					label={child.title}
-					type={child.type ?? 'text'}
 					value={v}
 					onChange={(e) => updateCell(idx, child.key, e.target.value)}
-					validate={child.validate}
-					sx={{ flex: 1 }}
-					{...(child.props || {})}
+					registerRef={registerRef}
+					textFieldVariant={textFieldVariant}
+					textFieldSize={textFieldSize}
 				/>
 			)
 		}
 
 		return (
-			<Stack key={field.key} spacing={1.5}>
+			<Stack key={field.key} spacing={1.25}>
 				<Typography variant='subtitle2'>{field.title}</Typography>
 				<Stack spacing={1}>
 					{rows.map((_, idx) => (
@@ -473,11 +324,11 @@ export default function useFieldRenderer(
 				</Stack>
 				{showListError && (
 					<Typography variant='caption' color='error'>
-						This field is required
+						{t('error.required')}
 					</Typography>
 				)}
 				<Button variant='outlined' onClick={addRow} sx={{ width: 'min(50%, 200px)' }}>
-					+ Add row
+					+ {t('button.add_row')}
 				</Button>
 			</Stack>
 		)
@@ -510,3 +361,75 @@ export default function useFieldRenderer(
 
 	return { renderField, hasRequiredMissing }
 }
+
+// Usage Example
+////// JUST USE 'require = false' IF THE FIELD IS NOT REQUIRED, OR ELSE THE FIELD IS ALWAYS REQUIRED //////
+/*
+const fields = [
+	// Normal field
+	{ key: 'name', title: 'Name', validate: [maxLen(255)] },
+	// Changed type to 'email' and some customize props
+	{ key: 'email', title: 'Email', type: 'email', validate: [maxLen(255)], props: { variant: 'outlined', slotProps: { input: { readOnly: true } } } },
+	// Multiline field
+	{ key: 'description', title: 'Description', multiple: 4, validate: [maxLen(1000)] },
+	// Number field with numberRange validation
+	{ key: 'age', title: 'Age', type: 'number', validate: [numberRange(0, 100)] },
+	// Select field with options
+	{ key: 'role', title: 'Role', type: 'select', options: ['Admin', 'User', { label: 'Guest', value: 'guest', disabled: true }] },
+	// Image upload field with required false
+	{ key: 'avatar', title: 'Avatar', type: 'image', required: false },
+	// Image upload field allowing multiple images (max 3)
+	{ key: 'images', title: 'Images', type: 'image', multiple: 5 },
+	// Object field with child fields
+	{ key: 'address', title: 'Address', type: 'object', of: [
+		{ key: 'city', title: 'City', validate: [maxLen(255)] },
+		{ key: 'country', title: 'Country', validate: [maxLen(255)] },
+	]},
+	// Array field with child fields
+	{ key: 'contacts', title: 'Contacts', type: 'array', of: [
+		{ key: 'type', title: 'Type', type: 'select', options: ['Phone', 'Email'] },
+		{ key: 'value', title: 'Value', validate: [maxLen(255)] },
+	]},
+]
+
+const initialValues = {
+	name: 'Doe',
+	email: 'Doe@example.com',
+	description: 'Description here',
+	age: '25',
+	role: 'User',
+	avatar: '/avatar.jpg',
+	images: ['/image1.jpg', '/image2.jpg'],
+	address: { city: 'City Name', country: 'Country Name' },
+	contacts: [ { type: 'Phone', value: '123-456-7890' }, { type: 'Email', value: 'Doe@example.com' }],
+}
+
+// useForm with useFieldRenderer
+const [submitted, setSubmitted] = useState(false)
+const { values, handleChange, setField, reset, registerRef, validateAll } = useForm(initialValues)
+const { renderField, hasRequiredMissing } = useFieldRenderer(values, setField, handleChange, registerRef, submitted, 'standard'/'outlined'/'filled', 'small'/'medium')
+
+const handleSubmit = () => {
+	setSubmitted(true)
+	const ok = validateAll()
+	const isMissing = hasRequiredMissing(fields)
+
+	if (!ok || isMissing) {
+		alert('Please fill all required fields')
+		return
+	}
+
+	alert('Form submitted: ' + JSON.stringify(values, null, 2))
+}
+
+<Stack spacing={2}>
+	{fields.map((f) => renderField(f))}
+	<Button
+		variant='contained'
+		onClick={handleSubmit}
+	>
+		Submit
+	</Button>
+</Stack>
+
+*/
