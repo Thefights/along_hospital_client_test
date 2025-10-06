@@ -70,7 +70,10 @@ const ValidationTextField = (
 		<TextField
 			label={label}
 			value={value ?? undefined}
-			onChange={onChange}
+			onChange={(e) => {
+				onChange?.(e)
+				run()
+			}}
 			onBlur={run}
 			error={!!error}
 			type={type}

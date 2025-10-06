@@ -28,10 +28,14 @@ export const isPasswordStrong =
 	}
 
 export const minLen = (n, msg) => (v) =>
-	String(v ?? '').length < n ? msg ?? getTranslation('error.min_length', { min: n }) : true
+	String(v ?? '').length < n
+		? msg ?? getTranslation('error.min_length', { min: n, current: String(v ?? '').length })
+		: true
 
 export const maxLen = (n, msg) => (v) =>
-	String(v ?? '').length > n ? msg ?? getTranslation('error.max_length', { max: n }) : true
+	String(v ?? '').length > n
+		? msg ?? getTranslation('error.max_length', { max: n, current: String(v ?? '').length })
+		: true
 
 export const numberRange = (min, max) => (v) => {
 	if (v == null || v === '') return true

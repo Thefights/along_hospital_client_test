@@ -26,8 +26,8 @@
         "invalid_time": "Please enter a valid time",
         "invalid_number": "Please enter a valid number",
         "weak_password": "Password must contain at least 8 characters, including uppercase, lowercase, number, and special character",
-        "min_length": "Must be at least {min} characters",
-        "max_length": "Can't exceed {max} characters",
+        "min_length": "Must be at least {min} characters, currently {current}",
+        "max_length": "Can't exceed {max} characters, currently {current}/{max}",
         "min_number": "Minimum number is {min}",
         "max_number": "Maximum number is {max}",
         "fill_all_required": "Please fill all required fields"

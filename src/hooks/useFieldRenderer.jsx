@@ -9,6 +9,7 @@ import { Delete } from '@mui/icons-material'
 import { Box, Button, IconButton, MenuItem, Stack, Typography } from '@mui/material'
 import { useCallback, useEffect, useRef } from 'react'
 import useFileUrls from './useFileUrls'
+import useTranslation from './useTranslation'
 
 export default function useFieldRenderer(
 	values,
@@ -21,6 +22,7 @@ export default function useFieldRenderer(
 ) {
 	const normalizedImageKeysRef = useRef(new Set())
 	const { getUrlForFile, revokeUrlForFile } = useFileUrls()
+	const { t } = useTranslation()
 
 	useEffect(() => {
 		normalizedImageKeysRef.current.clear()
@@ -222,7 +224,7 @@ export default function useFieldRenderer(
 
 				{showError && (
 					<Typography variant='caption' color='error'>
-						This field is required
+						{t('error.required')}
 					</Typography>
 				)}
 			</Stack>
@@ -322,11 +324,11 @@ export default function useFieldRenderer(
 				</Stack>
 				{showListError && (
 					<Typography variant='caption' color='error'>
-						This field is required
+						{t('error.required')}
 					</Typography>
 				)}
 				<Button variant='outlined' onClick={addRow} sx={{ width: 'min(50%, 200px)' }}>
-					+ Add row
+					+ {t('button.add_row')}
 				</Button>
 			</Stack>
 		)
