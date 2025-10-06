@@ -1,6 +1,6 @@
 import ConfirmationButton from '@/components/generals/ConfirmationButton'
+import { defaultScrollbarStyle } from '@/configs/defaultStylesConfig'
 import useTranslation from '@/hooks/useTranslation'
-import { defaultScrollbarConfig } from '@/utils/commons'
 import { Divider, Stack, Typography } from '@mui/material'
 
 const LeftCreateAppointmentSection = ({
@@ -8,6 +8,7 @@ const LeftCreateAppointmentSection = ({
 	appointmentFields,
 	renderField,
 	handleSubmit,
+	loading,
 }) => {
 	const { t } = useTranslation()
 
@@ -22,7 +23,7 @@ const LeftCreateAppointmentSection = ({
 				maxHeight={500}
 				overflow={'auto'}
 				sx={{
-					...defaultScrollbarConfig,
+					...defaultScrollbarStyle,
 				}}
 			>
 				<Typography variant='h6' sx={{ mb: 2, color: 'text.primary' }}>
@@ -43,6 +44,7 @@ const LeftCreateAppointmentSection = ({
 				onConfirm={handleSubmit}
 				variant='contained'
 				sx={{ width: '50%' }}
+				loading={loading}
 			>
 				{t('appointment.create_appointment')}
 			</ConfirmationButton>
