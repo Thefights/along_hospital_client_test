@@ -14,6 +14,7 @@
         "no_data": "Không có dữ liệu...",
         "search": "Tìm kiếm...",
         "loading": "Đang tải...",
+        "image_preview": "Xem trước hình ảnh",
         "date": "Ngày",
         "time": "Thời gian"
     },
@@ -25,7 +26,7 @@
         "invalid_date": "Vui lòng nhập ngày hợp lệ",
         "invalid_time": "Vui lòng nhập thời gian hợp lệ",
         "invalid_number": "Vui lòng nhập số hợp lệ",
-        "password_strong": "Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt",
+        "weak_password": "Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt",
         "min_length": "Phải có ít nhất {min} ký tự, hiện tại {current}",
         "max_length": "Không được vượt quá {max} ký tự, hiện tại {current}/{max}",
         "min_number": "Số tối thiểu là {min}",

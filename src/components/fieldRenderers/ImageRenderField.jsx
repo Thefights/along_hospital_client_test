@@ -1,6 +1,8 @@
+import useTranslation from '@/hooks/useTranslation'
 import { Box, TextField, Typography } from '@mui/material'
 
 const ImageRenderField = ({ field, textFieldVariant, setField, showError, preview }) => {
+	const { t } = useTranslation()
 	return (
 		<Box key={field.key}>
 			<TextField
@@ -15,7 +17,7 @@ const ImageRenderField = ({ field, textFieldVariant, setField, showError, previe
 				}}
 				required={field.required ?? true}
 				error={showError}
-				helperText={showError ? 'This field is required' : ''}
+				helperText={showError ? t('error.required') : ''}
 				fullWidth
 				slotProps={{
 					input: { inputProps: { accept: 'image/*' } },
@@ -25,7 +27,7 @@ const ImageRenderField = ({ field, textFieldVariant, setField, showError, previe
 			{preview && (
 				<Box sx={{ mt: 1.5 }}>
 					<Typography variant='caption' sx={{ display: 'block', mb: 0.5 }}>
-						Image Preview
+						{t('image_preview')}
 					</Typography>
 					<Box
 						component='img'
