@@ -20,7 +20,7 @@ const ImageTileRenderField = ({ src, alt, onRemove }) => {
 				src={src}
 				onError={(e) => {
 					e.currentTarget.onerror = null
-					e.currentTarget.src = '/image-placeholder.jpg'
+					e.currentTarget.src = '/placeholder-image.png'
 				}}
 				alt={alt}
 				sx={{ width: '100%', height: '100%', objectFit: 'cover' }}

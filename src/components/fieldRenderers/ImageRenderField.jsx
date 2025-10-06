@@ -33,6 +33,10 @@ const ImageRenderField = ({ field, textFieldVariant, setField, showError, previe
 						alt={field.title}
 						sx={{ width: '100%', maxHeight: 240, objectFit: 'cover', borderRadius: 2, boxShadow: 1 }}
 						onLoad={() => URL.revokeObjectURL(preview)}
+						onError={(e) => {
+							e.currentTarget.onerror = null
+							e.currentTarget.src = '/placeholder-image.png'
+						}}
 					/>
 				</Box>
 			)}
