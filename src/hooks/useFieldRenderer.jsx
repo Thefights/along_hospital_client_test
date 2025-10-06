@@ -16,7 +16,8 @@ export default function useFieldRenderer(
 	handleChange = () => {},
 	registerRef = () => {},
 	submitted,
-	textFieldVariant = 'standard'
+	textFieldVariant = 'standard',
+	textFieldSize = 'medium'
 ) {
 	const normalizedImageKeysRef = useRef(new Set())
 	const { getUrlForFile, revokeUrlForFile } = useFileUrls()
@@ -68,6 +69,7 @@ export default function useFieldRenderer(
 			validate={field.validate}
 			multiline={!!field.multiple}
 			rows={field.multiple}
+			size={textFieldSize}
 			{...(field.props || {})}
 		/>
 	)
@@ -86,6 +88,7 @@ export default function useFieldRenderer(
 				onChange={handleChange}
 				validate={field.validate}
 				select
+				size={textFieldSize}
 				{...(field.props || {})}
 			>
 				{opts.map((opt) => (
@@ -243,8 +246,9 @@ export default function useFieldRenderer(
 					name={name}
 					value={v}
 					onChange={(e) => updateChild(child.key, e.target.value)}
-					textFieldVariant={textFieldVariant}
 					registerRef={registerRef}
+					textFieldVariant={textFieldVariant}
+					textFieldSize={textFieldSize}
 				/>
 			)
 		}
@@ -294,8 +298,9 @@ export default function useFieldRenderer(
 					name={name}
 					value={v}
 					onChange={(e) => updateCell(idx, child.key, e.target.value)}
-					textFieldVariant={textFieldVariant}
 					registerRef={registerRef}
+					textFieldVariant={textFieldVariant}
+					textFieldSize={textFieldSize}
 				/>
 			)
 		}
@@ -361,12 +366,14 @@ export default function useFieldRenderer(
 const fields = [
 	// Normal field
 	{ key: 'name', title: 'Name', validate: [maxLen(255)] },
-	// Changed type to 'email' with customize props
+	// Changed type to 'email' and some customize props
 	{ key: 'email', title: 'Email', type: 'email', validate: [maxLen(255)], props: { variant: 'outlined', slotProps: { input: { readOnly: true } } } },
 	// Multiline field
 	{ key: 'description', title: 'Description', multiple: 4, validate: [maxLen(1000)] },
 	// Number field with numberRange validation
 	{ key: 'age', title: 'Age', type: 'number', validate: [numberRange(0, 100)] },
+	// Select field with options
+	{ key: 'role', title: 'Role', type: 'select', options: ['Admin', 'User', { label: 'Guest', value: 'guest', disabled: true }] },
 	// Image upload field with required false
 	{ key: 'avatar', title: 'Avatar', type: 'image', required: false },
 	// Image upload field allowing multiple images (max 3)
@@ -388,6 +395,7 @@ const initialValues = {
 	email: 'Doe@example.com',
 	description: 'Description here',
 	age: '25',
+	role: 'User',
 	avatar: '/avatar.jpg',
 	images: ['/image1.jpg', '/image2.jpg'],
 	address: { city: 'City Name', country: 'Country Name' },
@@ -395,11 +403,16 @@ const initialValues = {
 }
 
 // useForm with useFieldRenderer
-const { values, setField, handleChange, registerRef, submitted } = useForm(initialValues)
-const { renderField, hasRequiredMissing } = useFieldRenderer(values, setField, handleChange, registerRef, submitted, 'outlined'/'filled'/'standard')
+const [submitted, setSubmitted] = useState(false)
+const { values, handleChange, setField, reset, registerRef, validateAll } = useForm(initialValues)
+const { renderField, hasRequiredMissing } = useFieldRenderer(values, setField, handleChange, registerRef, submitted, 'standard'/'outlined'/'filled', 'small'/'medium')
 
 const handleSubmit = () => {
-	if (hasRequiredMissing(fields)) {
+	setSubmitted(true)
+	const ok = validateAll()
+	const isMissing = hasRequiredMissing(fields)
+
+	if (!ok || isMissing) {
 		alert('Please fill all required fields')
 		return
 	}

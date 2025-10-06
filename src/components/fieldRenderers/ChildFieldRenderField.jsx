@@ -7,8 +7,9 @@ const ChildFieldRenderField = ({
 	name,
 	value,
 	onChange = (e) => {},
-	textFieldVariant,
 	registerRef,
+	textFieldVariant,
+	textFieldSize,
 }) => {
 	if (child.type === 'select') {
 		const opts = normalizeOptions(child.options || [])
@@ -24,6 +25,7 @@ const ChildFieldRenderField = ({
 				onChange={onChange}
 				validate={child.validate}
 				select
+				size={textFieldSize}
 				sx={{ minWidth: 220, flex: 1 }}
 				{...(child.props || {})}
 			>
