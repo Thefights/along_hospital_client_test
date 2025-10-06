@@ -7,6 +7,9 @@ export const ApiUrls = {
 		PROFILE: `/user/profile`,
 		CART: `/user/cart`,
 	},
+	SPECIALTY: {
+		BASE: `/specialty`,
+	},
 	APPOINTMENT: {
 		BASE: `/appointment`,
 		CANCEL: (id) => `/appointment/cancel/${id}`,

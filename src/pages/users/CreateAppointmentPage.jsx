@@ -1,32 +1,37 @@
 import LeftCreateAppointmentSection from '@/components/sections/createAppointmentSections/LeftCreateAppointmentSection'
 import RightCreateAppointmentSection from '@/components/sections/createAppointmentSections/RightCreateAppointmentSection'
+import { ApiUrls } from '@/configs/apiUrls'
+import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
+import useFetch from '@/hooks/useFetch'
 import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
+import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
+import { setProfileStore } from '@/redux/reducers/userReducer'
 import { maxLen } from '@/utils/validateUtil'
-import { Grid, Paper } from '@mui/material'
+import { Grid, Paper, Skeleton } from '@mui/material'
 import { useState } from 'react'
-
-const initialValues = {
-	fullName: 'Jane Doe',
-	email: 'jane.doe@example.com',
-	phone: '+84 912 345 678',
-	address: '12 Nguyen Trai, District 1, HCMC',
-	dateOfBirth: '1995-05-20',
-	gender: 'Female',
-	date: '',
-	time: '',
-	purpose: '',
-	specialtyId: '',
-}
+import { toast } from 'react-toastify'
 
 const CreateAppointmentPage = () => {
-	const [submitted, setSubmitted] = useState(false)
-
 	const { t } = useTranslation()
-	const { values, handleChange, setField, registerRef, validateAll } = useForm(initialValues)
+
+	const [submitted, setSubmitted] = useState(false)
+	const getSpecialty = useFetch(ApiUrls.SPECIALTY.BASE)
+
+	const userProfile = useReduxStore({
+		url: ApiUrls.USER.PROFILE,
+		selector: (state) => state.user.profile,
+		setStore: setProfileStore,
+	})
+	const { values, handleChange, setField, registerRef, validateAll } = useForm({
+		date: '',
+		time: '',
+		purpose: '',
+		specialtyId: '',
+	})
 	const { renderField, hasRequiredMissing } = useFieldRenderer(
-		values,
+		{ ...userProfile, ...values },
 		setField,
 		handleChange,
 		registerRef,
@@ -34,6 +39,7 @@ const CreateAppointmentPage = () => {
 		'outlined',
 		'medium'
 	)
+	const postAppointment = useAxiosSubmit(ApiUrls.APPOINTMENT.BASE, 'POST', values)
 
 	const patientFields = [
 		{
@@ -91,20 +97,23 @@ const CreateAppointmentPage = () => {
 			key: 'specialtyId',
 			title: t('appointment.specialty'),
 			type: 'select',
-			options: [{ label: t('appointment.select_specialty'), value: '' }],
+			options: [
+				{ label: t('appointment.select_specialty'), value: '' },
+				...(getSpecialty.data?.map((s) => ({ label: s.name, value: s.id })) || []),
+			],
 		},
 	]
 
 	const fields = [...patientFields, ...appointmentFields]
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		setSubmitted(true)
 		const ok = validateAll()
 		const isMissing = hasRequiredMissing(fields)
 		if (!ok || isMissing) {
-			alert('Please fill all required fields')
+			toast.warn(t('error.fill_all_required'))
 		} else {
-			alert('Form submitted: ' + JSON.stringify(values, null, 2))
+			await postAppointment.submit()
 		}
 	}
 
@@ -119,12 +128,17 @@ const CreateAppointmentPage = () => {
 		>
 			<Grid container spacing={2}>
 				<Grid size={{ xs: 12, md: 6, lg: 7 }} my={2} px={4} py={2}>
-					<LeftCreateAppointmentSection
-						patientFields={patientFields}
-						appointmentFields={appointmentFields}
-						renderField={renderField}
-						handleSubmit={handleSubmit}
-					/>
+					{getSpecialty.loading ? (
+						<Skeleton></Skeleton>
+					) : (
+						<LeftCreateAppointmentSection
+							patientFields={patientFields}
+							appointmentFields={appointmentFields}
+							renderField={renderField}
+							handleSubmit={handleSubmit}
+							loading={postAppointment.loading}
+						/>
+					)}
 				</Grid>
 				<Grid size={{ xs: 0, md: 6, lg: 5 }}>
 					<RightCreateAppointmentSection />
