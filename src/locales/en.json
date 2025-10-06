@@ -53,7 +53,30 @@
     "text": {
         "no_data": "No data available...",
         "search": "Search...",
-        "loading": "Loading..."
+        "loading": "Loading...",
+        "date": "Date",
+        "time": "Time"
+    },
+
+    "profile": {
+        "personal_information": "Personal Information",
+        "full_name": "Full Name",
+        "email": "Email",
+        "phone": "Phone",
+        "address": "Address",
+        "date_of_birth": "Date of Birth",
+        "gender": "Gender"
+    },
+
+    "appointment": {
+        "confirm_create_title": "Confirm create appointment",
+        "confirm_create_description": "Are you sure to create this appointment?",
+        "patient_info": "Patient Info",
+        "appointment_info": "Appointment Info",
+        "create_appointment": "Create Appointment",
+        "select_specialty": "Select Specialty",
+        "purpose": "Purpose",
+        "specialty": "Specialty"
     },
 
     "done_care_about_this": {

@@ -10,6 +10,14 @@
         "login": "Đăng nhập"
     },
 
+    "text": {
+        "no_data": "Không có dữ liệu...",
+        "search": "Tìm kiếm...",
+        "loading": "Đang tải...",
+        "date": "Ngày",
+        "time": "Thời gian"
+    },
+
     "header": {
         "home": "Trang chủ",
         "medicine": "Thuốc",
@@ -28,6 +36,7 @@
             "logout": "Đăng xuất"
         }
     },
+
     "footer":{
         "__________comment1": "For footer section links",
         "medical":"Y tế",
@@ -48,10 +57,26 @@
         "our_hospital":"Bệnh viện của chúng tôi",
         "career":"Nghề nghiệp"
     },
-    "text": {
-        "no_data": "Không có dữ liệu...",
-        "search": "Tìm kiếm...",
-        "loading": "Đang tải..."
+
+    "profile": {
+        "personal_information": "Thông tin cá nhân",
+        "full_name": "Họ và tên",
+        "email": "Email",
+        "phone": "Số điện thoại",
+        "address": "Địa chỉ",
+        "date_of_birth": "Ngày sinh",
+        "gender": "Giới tính"
+    },
+
+    "appointment": {
+        "confirm_create_title": "Xác nhận tạo cuộc hẹn",
+        "confirm_create_description": "Bạn có chắc chắn muốn tạo cuộc hẹn này không?",
+        "patient_info": "Thông tin bệnh nhân",
+        "appointment_info": "Thông tin cuộc hẹn",
+        "create_appointment": "Tạo Cuộc Hẹn",
+        "select_specialty": "Chọn chuyên khoa",
+        "purpose": "Mục đích",
+        "specialty": "Chuyên khoa"
     },
 
     "done_care_about_this": {
