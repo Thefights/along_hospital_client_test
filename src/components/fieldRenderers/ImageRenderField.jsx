@@ -27,7 +27,7 @@ const ImageRenderField = ({ field, textFieldVariant, setField, showError, previe
 			{preview && (
 				<Box sx={{ mt: 1.5 }}>
 					<Typography variant='caption' sx={{ display: 'block', mb: 0.5 }}>
-						{t('image_preview')}
+						{t('text.image_preview')}
 					</Typography>
 					<Box
 						component='img'

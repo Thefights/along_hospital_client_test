@@ -9,7 +9,7 @@ import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
 import { setProfileStore } from '@/redux/reducers/userReducer'
 import { maxLen } from '@/utils/validateUtil'
-import { Grid, Paper, Skeleton } from '@mui/material'
+import { Grid, Paper } from '@mui/material'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -128,17 +128,14 @@ const CreateAppointmentPage = () => {
 		>
 			<Grid container spacing={2}>
 				<Grid size={{ xs: 12, md: 6, lg: 7 }} my={2} px={4} py={2}>
-					{getSpecialty.loading ? (
-						<Skeleton></Skeleton>
-					) : (
-						<LeftCreateAppointmentSection
-							patientFields={patientFields}
-							appointmentFields={appointmentFields}
-							renderField={renderField}
-							handleSubmit={handleSubmit}
-							loading={postAppointment.loading}
-						/>
-					)}
+					<LeftCreateAppointmentSection
+						patientFields={patientFields}
+						appointmentFields={appointmentFields}
+						renderField={renderField}
+						handleSubmit={handleSubmit}
+						loadingGet={userProfile.loading || getSpecialty.loading}
+						loadingSubmit={postAppointment.loading}
+					/>
 				</Grid>
 				<Grid size={{ xs: 0, md: 6, lg: 5 }}>
 					<RightCreateAppointmentSection />
