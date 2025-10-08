@@ -81,6 +81,7 @@ const ConfirmationDialog = ({
 					disabled={confirmButtonLoading}
 				>
 					{confirmButtonText}
+					{confirmButtonLoading && '...'}
 				</Button>
 			</DialogActions>
 		</Dialog>

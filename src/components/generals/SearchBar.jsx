@@ -26,3 +26,14 @@ const SearchBar = ({ widthPercent = 100, value, setValue, placeholder }) => {
 }
 
 export default SearchBar
+
+// Usage example:
+
+/*
+<SearchBar
+	widthPercent={50}
+	value={searchTerm}
+	setValue={setSearchTerm}
+	placeholder="Search items..."
+/>
+*/
