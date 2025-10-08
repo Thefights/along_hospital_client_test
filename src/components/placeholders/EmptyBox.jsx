@@ -1,3 +1,4 @@
+import useTranslation from '@/hooks/useTranslation'
 import { ArchiveTwoTone } from '@mui/icons-material'
 import { Stack, Typography } from '@mui/material'
 
@@ -8,6 +9,8 @@ const EmptyBox = ({
 	buttons,
 	minHeight = 200,
 }) => {
+	const { t } = useTranslation()
+
 	return (
 		<Stack
 			direction='row'

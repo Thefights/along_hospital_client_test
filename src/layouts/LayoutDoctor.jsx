@@ -1,9 +1,18 @@
-import DashboardDrawer from '@/components/layouts/DashboardDrawer'
+import { default as DashboardDrawer } from '@/components/layouts/DashboardDrawer'
 import DashboardHeader from '@/components/layouts/DashboardHeader'
-import useAuth from '@/hooks/useAuth'
-import useReduxStore from '@/hooks/useReduxStore'
+import { ApiUrls } from '@/configs/apiUrls'
+import { default as useAuth } from '@/hooks/useAuth'
+import { default as useReduxStore } from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
 import { setProfileStore } from '@/redux/reducers/userReducer'
+import {
+	DashboardRounded,
+	Inventory2Rounded,
+	LocalHospitalRounded,
+	PeopleAltRounded,
+	Person,
+	SettingsRounded,
+} from '@mui/icons-material'
 import { Container, Stack } from '@mui/material'
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'

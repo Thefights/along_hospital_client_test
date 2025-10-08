@@ -6,7 +6,7 @@ import AppointmentListItem from '@/components/sections/manageAppointmentSections
 import useDebounce from '@/hooks/useDebounce'
 import useTranslation from '@/hooks/useTranslation'
 import { Box, Paper, Stack, Typography } from '@mui/material'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import EmptyBox from '../placeholders/EmptyBox'
 
@@ -104,7 +104,7 @@ const ManageAppointmentBasePage = ({
 					/>
 					<Stack spacing={1}>
 						{appointments.length === 0 ? (
-							<EmptyBox title={t('text.no_data')} minHeight={300} />
+							<EmptyBox minHeight={300} />
 						) : (
 							appointments.map((appt, index) => (
 								<AppointmentListItem
