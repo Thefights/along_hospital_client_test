@@ -14,7 +14,7 @@ import {
 import { alpha, Box } from '@mui/system'
 import { useMemo } from 'react'
 import SkeletonTableRow from '../skeletons/SkeletonTableRow'
-import EmptyRow from './EmptyRow'
+import EmptyRow from '../placeholders/EmptyRow'
 
 const tableHeadCellStyle = (theme, canSort = false, sticky = false) => {
 	return {

@@ -5,8 +5,10 @@ import AppointmentFilterBar from '@/components/sections/manageAppointmentSection
 import AppointmentListItem from '@/components/sections/manageAppointmentSections/AppointmentListItem'
 import useDebounce from '@/hooks/useDebounce'
 import useTranslation from '@/hooks/useTranslation'
-import { Box, Paper, Stack, Typography } from '@mui/material'
+import { Box, Button, Paper, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import EmptyBox from '../placeholders/EmptyBox'
 
 const ManageAppointmentBasePage = ({
 	headerTitle = 'Manage Appointments',
@@ -34,6 +36,7 @@ const ManageAppointmentBasePage = ({
 	useDebounce(() => setFilters({ ...filters, search: searchTerm, page: 1 }), 500, [searchTerm])
 
 	const { t } = useTranslation()
+	const navigate = useNavigate()
 
 	const statusTabs = [
 		{ key: '', title: t('text.all') },
@@ -100,13 +103,21 @@ const ManageAppointmentBasePage = ({
 						setCurrentTab={(status) => setFilters({ ...filters, status })}
 					/>
 					<Stack spacing={1}>
-						{appointments.map((appt, index) => (
-							<AppointmentListItem
-								key={appt?.id || index}
-								appointment={appt}
-								onClick={() => onOpenDrawer(appt)}
+						{appointments.length === 0 ? (
+							<EmptyBox
+								title={t('text.no_data')}
+								minHeight={300}
+								buttons={<Button variant='contained'>{t('appointment.title.create_appointment')}</Button>}
 							/>
-						))}
+						) : (
+							appointments.map((appt, index) => (
+								<AppointmentListItem
+									key={appt?.id || index}
+									appointment={appt}
+									onClick={() => onOpenDrawer(appt)}
+								/>
+							))
+						)}
 					</Stack>
 					<Box sx={{ display: 'flex', justifyContent: 'center', pt: 1 }}>
 						{filters?.pageSize ? (
