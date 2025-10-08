@@ -18,6 +18,17 @@
         "date": "Date",
         "time": "Time"
     },
+    "tooltip": {
+        "menu": "Menu",
+        "edit": "Edit",
+        "delete": "Delete",
+        "cart": "Cart",
+        "create_appointment": "Create Appointment",
+        "switch_dark": "Switch to dark mode",
+        "switch_light": "Switch to light mode",
+        "collapse": "Collapse",
+        "expand": "Expand"
+    },
     "error": {
         "required": "This field is required",
         "invalid_email": "Please enter a valid email",
@@ -100,6 +111,7 @@
         "about_us": "About Us",
         "user_menu": {
             "profile": "Profile",
+            "appointments": "Appointments",
             "medical_history": "Medical History",
             "order_history": "Order History",
             "change_password": "Change Password",

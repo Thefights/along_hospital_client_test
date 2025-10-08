@@ -1,13 +1,18 @@
+import useTranslation from '@/hooks/useTranslation'
 import { ShoppingCartOutlined } from '@mui/icons-material'
-import { Badge, IconButton } from '@mui/material'
+import { Badge, IconButton, Tooltip } from '@mui/material'
 
 const CartButton = ({ count = 0, onClick }) => {
+	const { t } = useTranslation()
+
 	return (
-		<IconButton onClick={onClick}>
-			<Badge badgeContent={count} color='error' max={99} showZero>
-				<ShoppingCartOutlined sx={{ color: 'common.black' }} />
-			</Badge>
-		</IconButton>
+		<Tooltip title={t('tooltip.cart')}>
+			<IconButton onClick={onClick}>
+				<Badge badgeContent={count} color='error' max={99} showZero>
+					<ShoppingCartOutlined />
+				</Badge>
+			</IconButton>
+		</Tooltip>
 	)
 }
 

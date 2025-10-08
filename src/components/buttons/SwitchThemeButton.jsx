@@ -1,15 +1,17 @@
 import { useLocalStorage } from '@/hooks/useStorage'
+import useTranslation from '@/hooks/useTranslation'
 import { DarkMode, LightMode } from '@mui/icons-material'
 import { IconButton, Tooltip } from '@mui/material'
 
-const ThemeSwitcher = () => {
+const SwitchThemeButton = () => {
 	const [theme, setTheme] = useLocalStorage('theme', 'light')
+	const { t } = useTranslation()
 
 	return (
-		<Tooltip title={`Change to ${theme === 'light' ? 'dark' : 'light'} mode`}>
+		<Tooltip title={t(theme === 'light' ? 'tooltip.switch_dark' : 'tooltip.switch_light')}>
 			<IconButton
 				onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-				sx={{ borderRadius: 2, color: 'text.primary' }}
+				sx={{ borderRadius: 2 }}
 			>
 				{theme === 'light' ? <LightMode /> : <DarkMode />}
 			</IconButton>
@@ -17,4 +19,4 @@ const ThemeSwitcher = () => {
 	)
 }
 
-export default ThemeSwitcher
+export default SwitchThemeButton

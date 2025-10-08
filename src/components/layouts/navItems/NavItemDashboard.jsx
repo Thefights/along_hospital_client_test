@@ -44,10 +44,6 @@ const NavItemDashboard = ({
 				ref={buttonRef}
 				onClick={handleActivate}
 				onKeyDown={onKeyDown}
-				role='button'
-				aria-haspopup={hasSubmenu ? 'true' : undefined}
-				aria-expanded={hasSubmenu ? Boolean(expanded[item.key]) : undefined}
-				aria-controls={hasSubmenu && !collapsed ? `submenu-${item.key}` : undefined}
 				tabIndex={0}
 				sx={{
 					mx: 1,
@@ -99,6 +95,7 @@ const NavItemDashboard = ({
 				)}
 
 				{hasSubmenu &&
+					!collapsed &&
 					(expanded[item.key] ? (
 						<ExpandLessRounded sx={{ color: theme.palette.grey[500] }} />
 					) : (

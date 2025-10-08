@@ -1,17 +1,17 @@
 import SearchBar from '@/components/generals/SearchBar'
 import { routeUrls } from '@/configs/routeUrls'
 import useAuth from '@/hooks/useAuth'
-import { AppBar, Box, Stack, Toolbar, useMediaQuery, useTheme } from '@mui/material'
+import { alpha, AppBar, Box, Stack, Toolbar, useMediaQuery, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AppointmentButton from '../buttons/AppointmentButton'
 import CartButton from '../buttons/CartButton'
 import LoginButton from '../buttons/LoginButton'
 import MobileMenuButton from '../buttons/MobileMenuButton'
-import LanguageSwitcher from './commons/LanguageSwitcher'
+import SwitchLanguageButton from '../buttons/SwitchLanguageButton'
+import SwitchThemeButton from '../buttons/SwitchThemeButton'
+import UserAvatarMenu from '../menus/UserAvatarMenu'
 import SystemLogoAndName from './commons/SystemLogoAndName'
-import ThemeSwitcher from './commons/ThemeSwitcher'
-import UserAvatarMenu from './commons/UserAvatarMenu'
 import MobileDrawer from './MobileDrawer'
 import NavItem from './navItems/NavItem'
 
@@ -39,7 +39,7 @@ const Header = ({
 				elevation={0}
 				sx={{
 					backdropFilter: 'saturate(180%) blur(8px)',
-					bgcolor: 'rgba(255,255,255,0.6)',
+					bgcolor: (theme) => alpha(theme.palette.background.paper, 0.6),
 					borderBottom: '1px solid',
 					borderColor: 'divider',
 				}}
@@ -63,8 +63,8 @@ const Header = ({
 								<SearchBar />
 							</Box>
 						)}
-						<ThemeSwitcher />
-						<LanguageSwitcher />
+						<SwitchThemeButton />
+						<SwitchLanguageButton />
 						{!isAuthenticated ? (
 							<LoginButton onClick={() => navigate(routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.LOGIN))} />
 						) : (

@@ -1,22 +1,21 @@
-import { MenuRounded, NavigateNextRounded } from '@mui/icons-material'
+import { NavigateNextRounded } from '@mui/icons-material'
 import {
 	AppBar,
 	Box,
 	Breadcrumbs,
 	ButtonBase,
-	IconButton,
 	Stack,
 	Toolbar,
-	Tooltip,
 	Typography,
 	useMediaQuery,
 	useTheme,
 } from '@mui/material'
 import { useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import LanguageSwitcher from './commons/LanguageSwitcher'
-import ThemeSwitcher from './commons/ThemeSwitcher'
-import UserAvatarMenu from './commons/UserAvatarMenu'
+import MobileMenuButton from '../buttons/MobileMenuButton'
+import SwitchLanguageButton from '../buttons/SwitchLanguageButton'
+import SwitchThemeButton from '../buttons/SwitchThemeButton'
+import UserAvatarMenu from '../menus/UserAvatarMenu'
 
 const DashboardHeader = ({ onOpenDrawer, profile, userMenuItems = [], onLogout = () => {} }) => {
 	const theme = useTheme()
@@ -69,18 +68,7 @@ const DashboardHeader = ({ onOpenDrawer, profile, userMenuItems = [], onLogout =
 				}}
 			>
 				<Stack direction='row' alignItems='center' spacing={1.5} sx={{ flex: 1, minWidth: 0 }}>
-					{isDownMd && (
-						<Tooltip title='Open navigation'>
-							<IconButton
-								onClick={onOpenDrawer}
-								edge='start'
-								size='large'
-								sx={{ mr: 0.5, borderRadius: 2 }}
-							>
-								<MenuRounded />
-							</IconButton>
-						</Tooltip>
-					)}
+					{isDownMd && <MobileMenuButton onOpen={onOpenDrawer} />}
 
 					<Box role='navigation' sx={{ overflow: 'hidden', minWidth: 0 }}>
 						<Breadcrumbs
@@ -149,8 +137,8 @@ const DashboardHeader = ({ onOpenDrawer, profile, userMenuItems = [], onLogout =
 					</Box>
 				</Stack>
 				<Stack direction='row' alignItems='center' spacing={0.5}>
-					<ThemeSwitcher />
-					<LanguageSwitcher />
+					<SwitchThemeButton />
+					<SwitchLanguageButton />
 					<UserAvatarMenu profile={profile} items={userMenuItems} onLogout={onLogout} />
 				</Stack>
 			</Toolbar>

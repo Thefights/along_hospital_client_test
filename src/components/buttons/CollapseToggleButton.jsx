@@ -1,9 +1,11 @@
+import useTranslation from '@/hooks/useTranslation'
 import { useTheme } from '@emotion/react'
 import { ChevronLeftRounded, ChevronRightRounded } from '@mui/icons-material'
 import { alpha, Box, IconButton, Tooltip } from '@mui/material'
 
 const CollapseToggleButton = ({ collapsed, onClick }) => {
 	const theme = useTheme()
+	const { t } = useTranslation()
 
 	return (
 		<Box
@@ -17,12 +19,11 @@ const CollapseToggleButton = ({ collapsed, onClick }) => {
 				bgcolor: theme.palette.background.paper,
 			}}
 		>
-			<Tooltip title={collapsed ? 'Expand' : 'Collapse'} placement='top'>
+			<Tooltip title={collapsed ? t('tooltip.expand') : t('tooltip.collapse')} placement='top'>
 				<IconButton
 					onClick={onClick}
 					size='small'
 					sx={{
-						color: theme.palette.text.secondary,
 						border: `1px solid ${theme.palette.divider}`,
 						bgcolor: theme.palette.background.paper,
 						'&:hover': {

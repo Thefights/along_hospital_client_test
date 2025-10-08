@@ -111,7 +111,7 @@ const DashboardDrawer = ({
 
 	const footer = <CollapseToggleButton collapsed={collapsed} onClick={onToggleCollapse} />
 
-	const drawerContent = (
+	const drawerContent = (isMobile = false) => (
 		<Stack
 			sx={{
 				height: '100%',
@@ -121,8 +121,12 @@ const DashboardDrawer = ({
 			{header}
 			<Divider />
 			{body}
-			<Divider />
-			{footer}
+			{!isMobile && (
+				<>
+					<Divider />
+					{footer}
+				</>
+			)}
 		</Stack>
 	)
 
@@ -154,7 +158,7 @@ const DashboardDrawer = ({
 						},
 					}}
 				>
-					{drawerContent}
+					{drawerContent()}
 					{popover}
 				</Drawer>
 			) : (
@@ -173,7 +177,7 @@ const DashboardDrawer = ({
 						},
 					}}
 				>
-					{drawerContent}
+					{drawerContent(true)}
 					{popover}
 				</Drawer>
 			)}

@@ -186,7 +186,8 @@ const customTheme = (palette, otherComponents) => ({
 	components: {
 		MuiPaper: { styleOverrides: { root: { borderRadius: 12 } } },
 		MuiButtonBase: { defaultProps: { disableRipple: true } },
-		MuiDivider: { styleOverrides: { root: { borderColor: lightPalette.divider } } },
+		MuiDivider: { styleOverrides: { root: { borderColor: palette.divider } } },
+		MuiIconButton: { styleOverrides: { root: { color: palette.text.primary } } },
 		...otherComponents,
 	},
 })
@@ -219,6 +220,27 @@ export const hospitalDarkTheme = createTheme({
 					borderRadius: 0,
 				},
 			},
+		},
+		MuiTextField: {
+			variants: [
+				{
+					props: { type: 'date' },
+					style: {
+						'& input::-webkit-calendar-picker-indicator': { filter: 'invert(1)' },
+					},
+				},
+				{
+					props: { type: 'time' },
+					style: {
+						'& input::-webkit-calendar-picker-indicator': {
+							filter: 'invert(1)',
+							opacity: 0.9,
+						},
+						'& input::-webkit-clear-button': { display: 'none' },
+						'& input::-webkit-datetime-edit': { color: 'inherit' },
+					},
+				},
+			],
 		},
 	}),
 })

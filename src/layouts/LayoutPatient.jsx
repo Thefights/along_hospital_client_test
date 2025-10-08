@@ -5,7 +5,13 @@ import { routeUrls } from '@/configs/routeUrls'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
 import { setCartStore, setProfileStore } from '@/redux/reducers/userReducer'
-import { AssignmentOutlined, HistoryOutlined, LockReset, Person } from '@mui/icons-material'
+import {
+	AssignmentOutlined,
+	EventAvailable,
+	HistoryOutlined,
+	LockReset,
+	Person,
+} from '@mui/icons-material'
 import { Container, Stack } from '@mui/material'
 import { Outlet } from 'react-router-dom'
 
@@ -44,6 +50,11 @@ const LayoutPatient = () => {
 			label: t('header.user_menu.profile'),
 			url: routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.PROFILE),
 			icon: <Person />,
+		},
+		{
+			label: t('header.user_menu.appointments'),
+			url: routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.APPOINTMENT.INDEX),
+			icon: <EventAvailable />,
 		},
 		{
 			label: t('header.user_menu.medical_history'),

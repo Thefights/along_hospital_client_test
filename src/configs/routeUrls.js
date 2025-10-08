@@ -3,7 +3,7 @@ export const routeUrls = {
 		AUTH: (route = '') => `/auth${route}`,
 		PATIENT: (route = '') => `/patient${route}`,
 		DOCTOR: (route = '') => `/doctor${route}`,
-		MANAGER: (route = '') => `/admin${route}`,
+		MANAGER: (route = '') => `/manager${route}`,
 	},
 	HOME: {
 		INDEX: '/',
