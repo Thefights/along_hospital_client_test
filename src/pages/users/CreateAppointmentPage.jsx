@@ -9,7 +9,7 @@ import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
 import { setProfileStore } from '@/redux/reducers/userReducer'
 import { maxLen } from '@/utils/validateUtil'
-import { Grid, Paper, Skeleton } from '@mui/material'
+import { Grid, Paper } from '@mui/material'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -17,7 +17,7 @@ const CreateAppointmentPage = () => {
 	const { t } = useTranslation()
 
 	const [submitted, setSubmitted] = useState(false)
-	const getSpecialty = useFetch(ApiUrls.SPECIALTY.BASE)
+	const getSpecialty = useFetch(ApiUrls.SPECIALTY.INDEX)
 
 	const userProfile = useReduxStore({
 		url: ApiUrls.USER.PROFILE,
@@ -39,45 +39,49 @@ const CreateAppointmentPage = () => {
 		'outlined',
 		'medium'
 	)
-	const postAppointment = useAxiosSubmit(ApiUrls.APPOINTMENT.BASE, 'POST', values)
+	const postAppointment = useAxiosSubmit({
+		url: ApiUrls.APPOINTMENT.INDEX,
+		method: 'POST',
+		data: values,
+	})
 
 	const patientFields = [
 		{
 			key: 'fullName',
-			title: t('profile.full_name'),
+			title: t('profile.field.full_name'),
 			required: false,
 			props: { slotProps: { input: { readOnly: true } } },
 		},
 		{
 			key: 'email',
-			title: t('profile.email'),
+			title: t('profile.field.email'),
 			type: 'email',
 			required: false,
 			props: { slotProps: { input: { readOnly: true } } },
 		},
 		{
 			key: 'phone',
-			title: t('profile.phone'),
+			title: t('profile.field.phone'),
 			required: false,
 			props: { slotProps: { input: { readOnly: true } } },
 		},
 		{
 			key: 'address',
-			title: t('profile.address'),
+			title: t('profile.field.address'),
 			multiple: 3,
 			required: false,
 			props: { slotProps: { input: { readOnly: true } } },
 		},
 		{
 			key: 'dateOfBirth',
-			title: t('profile.date_of_birth'),
+			title: t('profile.field.date_of_birth'),
 			type: 'date',
 			props: { slotProps: { input: { readOnly: true } } },
 			required: false,
 		},
 		{
 			key: 'gender',
-			title: t('profile.gender'),
+			title: t('profile.field.gender'),
 			props: { slotProps: { input: { readOnly: true } } },
 			required: false,
 		},
@@ -88,17 +92,17 @@ const CreateAppointmentPage = () => {
 		{ key: 'time', title: t('text.time'), type: 'time' },
 		{
 			key: 'purpose',
-			title: t('appointment.purpose'),
+			title: t('appointment.field.purpose'),
 			multiple: 4,
 			validate: [maxLen(1000)],
 			required: false,
 		},
 		{
 			key: 'specialtyId',
-			title: t('appointment.specialty'),
+			title: t('appointment.field.specialty'),
 			type: 'select',
 			options: [
-				{ label: t('appointment.select_specialty'), value: '' },
+				{ label: t('appointment.field.select_specialty'), value: '' },
 				...(getSpecialty.data?.map((s) => ({ label: s.name, value: s.id })) || []),
 			],
 		},
@@ -128,17 +132,14 @@ const CreateAppointmentPage = () => {
 		>
 			<Grid container spacing={2}>
 				<Grid size={{ xs: 12, md: 6, lg: 7 }} my={2} px={4} py={2}>
-					{getSpecialty.loading ? (
-						<Skeleton></Skeleton>
-					) : (
-						<LeftCreateAppointmentSection
-							patientFields={patientFields}
-							appointmentFields={appointmentFields}
-							renderField={renderField}
-							handleSubmit={handleSubmit}
-							loading={postAppointment.loading}
-						/>
-					)}
+					<LeftCreateAppointmentSection
+						patientFields={patientFields}
+						appointmentFields={appointmentFields}
+						renderField={renderField}
+						handleSubmit={handleSubmit}
+						loadingGet={userProfile.loading || getSpecialty.loading}
+						loadingSubmit={postAppointment.loading}
+					/>
 				</Grid>
 				<Grid size={{ xs: 0, md: 6, lg: 5 }}>
 					<RightCreateAppointmentSection />

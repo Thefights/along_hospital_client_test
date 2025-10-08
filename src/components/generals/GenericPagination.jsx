@@ -3,15 +3,15 @@ import { MenuItem, Pagination, PaginationItem, Select, Stack, Typography } from 
 import { useEffect, useMemo } from 'react'
 
 export const GenericPagination = ({
-	count = 1,
+	totalPages = 1,
 	page = 1,
-	setPage = () => {},
+	setPage = (page) => {},
 	siblingCount = 2,
 	boundaryCount = 1,
 }) => {
 	return (
 		<Pagination
-			count={Math.max(count, 1)}
+			count={Math.max(totalPages, 1)}
 			page={Math.max(page, 1)}
 			onChange={(event, value) => setPage(value)}
 			showFirstButton
@@ -28,21 +28,21 @@ export const GenericPagination = ({
 }
 
 export const GenericTablePagination = ({
-	count = 1,
+	totalItems = 0,
 	page = 1,
-	setPage = () => {},
-	rowsPerPage,
-	setRowsPerPage = () => {},
+	setPage = (page) => {},
+	pageSize,
+	setPageSize = (pageSize) => {},
 	rowsPerPageOptions = [5, 10, 25],
 }) => {
 	const rowsPerPageNum = useMemo(
-		() => parseInt(rowsPerPage || rowsPerPageOptions?.[0] || 5, 10),
-		[rowsPerPage]
+		() => parseInt(pageSize || rowsPerPageOptions?.[0] || 5, 10),
+		[pageSize]
 	)
 
 	const totalPages = useMemo(() => {
-		return Math.max(Math.ceil((count || 0) / rowsPerPageNum), 1)
-	}, [count, rowsPerPageNum])
+		return Math.max(Math.ceil((totalItems || 0) / rowsPerPageNum), 1)
+	}, [totalItems, rowsPerPageNum])
 
 	useEffect(() => {
 		setPage(1)
@@ -56,7 +56,7 @@ export const GenericTablePagination = ({
 		<Stack direction='row' justifyContent='space-between' alignItems='center' flexWrap={'wrap'} m={2}>
 			<Stack spacing={1} direction='row' alignItems='center'>
 				<Typography>Rows per page:</Typography>
-				<Select size='small' value={rowsPerPageNum} onChange={(e) => setRowsPerPage(e.target.value)}>
+				<Select size='small' value={rowsPerPageNum} onChange={(e) => setPageSize(e.target.value)}>
 					{rowsPerPageOptions.map((option) => (
 						<MenuItem key={option} value={option}>
 							{option}
@@ -65,7 +65,7 @@ export const GenericTablePagination = ({
 				</Select>
 			</Stack>
 			<GenericPagination
-				count={totalPages}
+				totalPages={totalPages}
 				page={page}
 				setPage={setPage}
 				siblingCount={1}
@@ -74,3 +74,22 @@ export const GenericTablePagination = ({
 		</Stack>
 	)
 }
+
+// Usage example:
+
+/*
+<GenericPagination
+	totalPages={totalPages}
+	page={page}
+	setPage={setPage}
+/>
+
+<GenericTablePagination
+	totalItems={data?.length}
+	page={page}
+	setPage={setPage}
+	rowsPerPage={rowsPerPage}
+	setRowsPerPage={setRowsPerPage}
+	rowsPerPageOptions={[5, 10, 25]}
+/>
+*/

@@ -1,6 +1,5 @@
 import { useConfirm } from '@/hooks/useConfirm'
-import { Button, Slide } from '@mui/material'
-import { forwardRef } from 'react'
+import { Button } from '@mui/material'
 
 /**
  * @typedef {Object} CustomProps
@@ -50,15 +49,6 @@ const ConfirmationButton = ({
 		</Button>
 	)
 }
-
-const Down = forwardRef(function Down(props, ref) {
-	return <Slide direction='down' ref={ref} {...props} />
-})
-
-const Up = forwardRef(function Up(props, ref) {
-	return <Slide direction='up' ref={ref} {...props} />
-})
-
 export default ConfirmationButton
 
 /* <ConfirmationButton

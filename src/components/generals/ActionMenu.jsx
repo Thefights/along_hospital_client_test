@@ -1,3 +1,4 @@
+import useTranslation from '@/hooks/useTranslation'
 import { MoreHoriz } from '@mui/icons-material'
 import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from '@mui/material'
 import { useState } from 'react'
@@ -10,9 +11,10 @@ import { useState } from 'react'
  *   onClick?: () => void | Promise<void>
  * }>
  */
-
-const ActionMenu = ({ actions = [], itemSx = {}, ariaLabel = 'Row actions' }) => {
+const ActionMenu = ({ actions = [], itemSx = {}, ariaLabel }) => {
 	const [anchorEl, setAnchorEl] = useState(null)
+	const { t } = useTranslation()
+
 	const open = Boolean(anchorEl)
 	const close = () => setAnchorEl(null)
 
@@ -23,7 +25,7 @@ const ActionMenu = ({ actions = [], itemSx = {}, ariaLabel = 'Row actions' }) =>
 
 	return (
 		<>
-			<Tooltip title={ariaLabel}>
+			<Tooltip title={ariaLabel || t('tooltip.menu')}>
 				<IconButton
 					size='small'
 					onClick={(e) => setAnchorEl(e.currentTarget)}

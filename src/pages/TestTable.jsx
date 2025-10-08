@@ -44,7 +44,7 @@ const testData = [
 const TestTable = () => {
 	const [sort, setSort] = useState({ key: 'name', direction: 'asc' })
 	const [page, setPage] = useState(1)
-	const [rowsPerPage, setRowsPerPage] = useState(5)
+	const [pageSize, setPageSize] = useState(5)
 	const [currentStatusTab, setCurrentStatusTab] = useState()
 	const [selectedIds, setSelectedIds] = useState([])
 	const [selectedRow, setSelectedRow] = useState({})
@@ -53,11 +53,11 @@ const TestTable = () => {
 
 	const confirm = useConfirm()
 	const { t } = useTranslation()
-	const { loading, error, data } = useFetch(ApiUrls.USER.BASE, { sort, page, rowsPerPage }, [
-		sort,
-		page,
-		rowsPerPage,
-	])
+	const { loading, error, data } = useFetch(
+		ApiUrls.USER.INDEX,
+		{ sort, page, rowsPerPage: pageSize },
+		[sort, page, pageSize]
+	)
 
 	const statusTabs = useMemo(
 		() => [
@@ -199,11 +199,11 @@ const TestTable = () => {
 				loading={loading}
 			/>
 			<GenericTablePagination
-				count={data?.length}
+				totalItems={data?.length}
 				page={page}
 				setPage={setPage}
-				rowsPerPage={rowsPerPage}
-				setRowsPerPage={setRowsPerPage}
+				pageSize={pageSize}
+				setPageSize={setPageSize}
 			/>
 			<GenericFormDialog
 				open={openCreate}

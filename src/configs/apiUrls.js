@@ -3,15 +3,15 @@ export const ApiUrls = {
 		CURRENT_ACCOUNT: '/auth/current-account',
 	},
 	USER: {
-		BASE: `/user`,
+		INDEX: `/user`,
 		PROFILE: `/user/profile`,
 		CART: `/user/cart`,
 	},
 	SPECIALTY: {
-		BASE: `/specialty`,
+		INDEX: `/specialty`,
 	},
 	APPOINTMENT: {
-		BASE: `/appointment`,
+		INDEX: `/appointment`,
 		CANCEL: (id) => `/appointment/cancel/${id}`,
 		BASE_MANAGEMENT: `/appointment-management`,
 		GET_ALL_BY_DOCTOR_ID: (id) => `/appointment-management/doctor/${id}`,

@@ -55,6 +55,9 @@ const ValidationTextField = (
 	useImperativeHandle(ref, () => ({ validate: run }), [run])
 
 	const internalSlotProps = useMemo(() => {
+		if (type === 'select') {
+			return { select: { displayEmpty: true }, inputLabel: { shrink: true } }
+		}
 		if (type === 'date' || type === 'time' || type === 'file') {
 			return { inputLabel: { shrink: true } }
 		}
@@ -81,6 +84,7 @@ const ValidationTextField = (
 			required={required}
 			fullWidth
 			variant='outlined'
+			select={type === 'select'}
 			slotProps={mergedSlotProps}
 			{...restProps}
 		/>

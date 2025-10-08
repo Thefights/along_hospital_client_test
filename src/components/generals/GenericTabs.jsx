@@ -13,7 +13,6 @@ const GenericTab = ({ label, icon, active = false, onClick, disabled = false }) 
 				borderColor: active ? theme.palette.primary.light : '#C4C4C4',
 				color: active ? '#204888' : '#161616',
 				textTransform: 'none',
-				fontWeight: active ? 'bold' : 'normal',
 			})}
 			startIcon={icon}
 		>

@@ -1,10 +1,17 @@
 import Footer from '@/components/layouts/Footer'
 import Header from '@/components/layouts/Header'
 import { ApiUrls } from '@/configs/apiUrls'
+import { routeUrls } from '@/configs/routeUrls'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
 import { setCartStore, setProfileStore } from '@/redux/reducers/userReducer'
-import { AssignmentOutlined, HistoryOutlined, LockReset, Person } from '@mui/icons-material'
+import {
+	AssignmentOutlined,
+	EventAvailable,
+	HistoryOutlined,
+	LockReset,
+	Person,
+} from '@mui/icons-material'
 import { Container, Stack } from '@mui/material'
 import { Outlet } from 'react-router-dom'
 
@@ -28,57 +35,74 @@ const LayoutPatient = () => {
 		{
 			label: t('header.service'),
 			of: [
-				{ label: t('header.medical_service'), url: '/service' },
-				{ label: t('header.medicine'), url: '/medicine' },
-				{ label: t('header.doctor'), url: '/doctor' },
+				{ label: t('header.medical_service'), url: routeUrls.HOME.MEDICAL_SERVICE },
+				{ label: t('header.medicine'), url: routeUrls.HOME.MEDICINE },
+				{ label: t('header.doctor'), url: routeUrls.HOME.DOCTOR },
 			],
 		},
-		{ label: t('header.specialty'), url: '/specialty' },
-		{ label: t('header.blog'), url: '/blog' },
-		{ label: t('header.about_us'), url: '/about' },
+		{ label: t('header.specialty'), url: routeUrls.HOME.SPECIALTY },
+		{ label: t('header.blog'), url: routeUrls.HOME.BLOG },
+		{ label: t('header.about_us'), url: routeUrls.HOME.ABOUT_US },
 	]
 
 	const userMenuItems = [
-		{ label: t('header.user_menu.profile'), url: '/profile', icon: <Person /> },
+		{
+			label: t('header.user_menu.profile'),
+			url: routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.PROFILE),
+			icon: <Person />,
+		},
+		{
+			label: t('header.user_menu.appointments'),
+			url: routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.APPOINTMENT.INDEX),
+			icon: <EventAvailable />,
+		},
 		{
 			label: t('header.user_menu.medical_history'),
-			url: '/medical-history',
+			url: routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.MEDICAL_HISTORY),
 			icon: <AssignmentOutlined />,
 		},
-		{ label: t('header.user_menu.order_history'), url: '/order-history', icon: <HistoryOutlined /> },
-		{ label: t('header.user_menu.change_password'), url: '/change-password', icon: <LockReset /> },
+		{
+			label: t('header.user_menu.order_history'),
+			url: routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.ORDER_HISTORY),
+			icon: <HistoryOutlined />,
+		},
+		{
+			label: t('header.user_menu.change_password'),
+			url: routeUrls.BASE_ROUTE.PATIENT(routeUrls.AUTH.CHANGE_PASSWORD),
+			icon: <LockReset />,
+		},
 	]
 
 	const footerSections = [
 		{
 			title: t('footer.medical'),
 			links: [
-				{ label: t('footer.service'), url: '/service' },
-				{ label: t('footer.doctor'), url: '/doctor' },
-				{ label: t('footer.specialty'), url: '/specialty' },
+				{ label: t('footer.service'), url: routeUrls.HOME.MEDICAL_SERVICE },
+				{ label: t('footer.doctor'), url: routeUrls.HOME.DOCTOR },
+				{ label: t('footer.specialty'), url: routeUrls.HOME.SPECIALTY },
 			],
 		},
 		{
 			title: t('footer.resources'),
 			links: [
-				{ label: t('footer.blog'), url: '/blog' },
-				{ label: t('footer.medicine'), url: '/medicine' },
+				{ label: t('footer.blog'), url: routeUrls.HOME.BLOG },
+				{ label: t('footer.medicine'), url: routeUrls.HOME.MEDICINE },
 			],
 		},
 		{
 			title: t('footer.support'),
 			links: [
-				{ label: t('footer.contact_us'), url: '/contact' },
-				{ label: t('footer.faq'), url: '/faq' },
+				{ label: t('footer.contact_us'), url: routeUrls.HOME.CONTACT },
+				{ label: t('footer.faq'), url: routeUrls.HOME.FAQ },
 			],
 		},
 		{
 			title: t('footer.about'),
 			links: [
-				{ label: t('footer.our_hospital'), url: '/about' },
-				{ label: t('footer.career'), url: '/careers' },
-				{ label: t('footer.privacy_policy'), url: '/privacy-policy' },
-				{ label: t('footer.terms_of_service'), url: '/terms-of-service' },
+				{ label: t('footer.our_hospital'), url: routeUrls.HOME.ABOUT_US },
+				{ label: t('footer.career'), url: routeUrls.HOME.CAREER },
+				{ label: t('footer.privacy_policy'), url: routeUrls.HOME.PRIVACY_POLICY },
+				{ label: t('footer.terms_of_service'), url: routeUrls.HOME.TERMS_OF_SERVICE },
 			],
 		},
 	]

@@ -29,6 +29,22 @@ export const formatDatetimeToDDMMYYYY = (datetimeString) => {
 	return `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`
 }
 
+// Format DateTime -> 14:30:15 05/24/2024
+export const formatDatetimeToMMDDYYYY = (datetimeString) => {
+	if (!datetimeString) return ''
+
+	const date = new Date(datetimeString)
+	const day = String(date.getDate()).padStart(2, '0')
+	const month = String(date.getMonth() + 1).padStart(2, '0')
+	const year = date.getFullYear()
+
+	const hours = String(date.getHours()).padStart(2, '0')
+	const minutes = String(date.getMinutes()).padStart(2, '0')
+	const seconds = String(date.getSeconds()).padStart(2, '0')
+
+	return `${hours}:${minutes}:${seconds} ${month}/${day}/${year}`
+}
+
 // Format Date -> 24 May 2024
 export const formatDateWithLetterMonth = (dateString) => {
 	if (!dateString) return ''

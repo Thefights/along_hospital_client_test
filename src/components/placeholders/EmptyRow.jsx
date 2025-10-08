@@ -1,12 +1,12 @@
 import useTranslation from '@/hooks/useTranslation'
-import ArchiveTwoToneIcon from '@mui/icons-material/ArchiveTwoTone'
+import { ArchiveTwoTone } from '@mui/icons-material'
 import { Stack, TableCell, TableRow, Typography } from '@mui/material'
 
 const EmptyRow = ({
 	colSpan = 1,
 	title,
 	description,
-	icon = <ArchiveTwoToneIcon sx={{ fontSize: { xs: 72, sm: 96, md: 120 } }} />,
+	icon = <ArchiveTwoTone sx={{ fontSize: { xs: 72, sm: 96, md: 120 } }} />,
 	buttons,
 	minHeight = 200,
 }) => {

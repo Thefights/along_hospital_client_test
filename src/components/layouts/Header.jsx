@@ -1,16 +1,17 @@
 import SearchBar from '@/components/generals/SearchBar'
+import { routeUrls } from '@/configs/routeUrls'
 import useAuth from '@/hooks/useAuth'
-import { AppBar, Box, Stack, Toolbar, useMediaQuery, useTheme } from '@mui/material'
+import { alpha, AppBar, Box, Stack, Toolbar, useMediaQuery, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import AppointmentButton from './buttons/AppointmentButton'
-import CartButton from './buttons/CartButton'
-import LoginButton from './buttons/LoginButton'
-import MobileMenuButton from './buttons/MobileMenuButton'
-import LanguageSwitcher from './commons/LanguageSwitcher'
+import AppointmentButton from '../buttons/AppointmentButton'
+import CartButton from '../buttons/CartButton'
+import LoginButton from '../buttons/LoginButton'
+import MobileMenuButton from '../buttons/MobileMenuButton'
+import SwitchLanguageButton from '../buttons/SwitchLanguageButton'
+import SwitchThemeButton from '../buttons/SwitchThemeButton'
+import UserAvatarMenu from '../menus/UserAvatarMenu'
 import SystemLogoAndName from './commons/SystemLogoAndName'
-import ThemeSwitcher from './commons/ThemeSwitcher'
-import UserAvatarMenu from './commons/UserAvatarMenu'
 import MobileDrawer from './MobileDrawer'
 import NavItem from './navItems/NavItem'
 
@@ -38,14 +39,14 @@ const Header = ({
 				elevation={0}
 				sx={{
 					backdropFilter: 'saturate(180%) blur(8px)',
-					bgcolor: 'rgba(255,255,255,0.6)',
+					bgcolor: (theme) => alpha(theme.palette.background.paper, 0.6),
 					borderBottom: '1px solid',
 					borderColor: 'divider',
 				}}
 			>
 				<Toolbar sx={{ minHeight: 72 }}>
 					<Stack direction='row' alignItems='center' spacing={2} sx={{ flex: 1 }}>
-						<SystemLogoAndName onClick={() => navigate('/')} onlyShowIcon={isDownSm} />
+						<SystemLogoAndName onClick={() => navigate(routeUrls.HOME.INDEX)} onlyShowIcon={isDownSm} />
 
 						{!isDownMd && (
 							<Stack direction='row' spacing={0.5} sx={{ display: 'flex', ml: 2 }} role='menubar'>
@@ -62,14 +63,21 @@ const Header = ({
 								<SearchBar />
 							</Box>
 						)}
-						<ThemeSwitcher />
-						<LanguageSwitcher />
+						<SwitchThemeButton />
+						<SwitchLanguageButton />
 						{!isAuthenticated ? (
-							<LoginButton onClick={() => navigate('/login')} />
+							<LoginButton onClick={() => navigate(routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.LOGIN))} />
 						) : (
 							<>
-								<CartButton count={cartCount} onClick={() => navigate('/cart')} />
-								<AppointmentButton onClick={() => navigate('/appointment')} />
+								<CartButton
+									count={cartCount}
+									onClick={() => navigate(routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.CART))}
+								/>
+								<AppointmentButton
+									onClick={() =>
+										navigate(routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.APPOINTMENT.CREATE))
+									}
+								/>
 								<UserAvatarMenu items={userMenuItems} profile={profile} onLogout={logout} />
 							</>
 						)}

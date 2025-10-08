@@ -3,7 +3,7 @@ import { ArrowDropDown, Language } from '@mui/icons-material'
 import { ButtonBase, List, ListItemButton, ListItemText, Popover, Typography } from '@mui/material'
 import { useRef, useState } from 'react'
 
-const LanguageSwitcher = () => {
+const SwitchLanguageButton = () => {
 	const [open, setOpen] = useState(false)
 	const anchorRef = useRef(null)
 	const { language, setLanguage } = useTranslation()
@@ -56,4 +56,4 @@ const LanguageSwitcher = () => {
 	)
 }
 
-export default LanguageSwitcher
+export default SwitchLanguageButton

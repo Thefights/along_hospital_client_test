@@ -5,6 +5,18 @@ import useTranslation from '@/hooks/useTranslation'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from '@mui/material'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
+/**
+ * @param {Object} props
+ * @param {boolean} props.open
+ * @param {Function} props.onClose
+ * @param {string} [props.title='Form']
+ * @param {Array} props.fields
+ * @param {Object} [props.initialValues={}]
+ * @param {string} props.submitUrl
+ * @param {'POST'|'GET'|'PUT'|'DELETE'} [props.method='POST']
+ * @param {Object|string} [props.params={}]
+ * @param {string} [props.submitLabel]
+ */
 const GenericFormDialog = ({
 	open,
 	onClose,
@@ -32,7 +44,7 @@ const GenericFormDialog = ({
 	const [submitted, setSubmitted] = useState(false)
 	const { t } = useTranslation()
 	const { values, handleChange, setField, reset, registerRef, validateAll } = useForm(startValues)
-	const { loading, submit } = useAxiosSubmit(submitUrl, method, values, params)
+	const { loading, submit } = useAxiosSubmit({ url: submitUrl, method, data: values, params })
 	const { renderField, hasRequiredMissing } = useFieldRenderer(
 		values,
 		setField,
@@ -167,7 +179,4 @@ const handleSuccess = (res) => {
     onSuccess={(res) => handleSuccess(res)}
     onError={(e) => handleError(e)}
 />
-
-
-
 */
