@@ -9,8 +9,8 @@
         "add_row": "Add Row",
         "login": "Login"
     },
-
     "text": {
+        "all": "All",
         "no_data": "No data available...",
         "search": "Search...",
         "loading": "Loading...",
@@ -18,7 +18,6 @@
         "date": "Date",
         "time": "Time"
     },
-
     "error": {
         "required": "This field is required",
         "invalid_email": "Please enter a valid email",
@@ -33,28 +32,63 @@
         "max_number": "Maximum number is {max}",
         "fill_all_required": "Please fill all required fields"
     },
-
     "profile": {
-        "personal_information": "Personal Information",
-        "full_name": "Full Name",
-        "email": "Email",
-        "phone": "Phone",
-        "address": "Address",
-        "date_of_birth": "Date of Birth",
-        "gender": "Gender"
+        "title": {
+            "personal_information": "Personal Information"
+        },
+        "field": {
+            "full_name": "Full Name",
+            "email": "Email",
+            "phone": "Phone",
+            "address": "Address",
+            "date_of_birth": "Date of Birth",
+            "gender": "Gender",
+            "blood_type": "Blood Type",
+            "height_weight": "Height/Weight",
+            "specialty": "Specialty"
+        }
     },
-
     "appointment": {
-        "confirm_create_title": "Confirm create appointment",
-        "confirm_create_description": "Are you sure to create this appointment?",
-        "patient_info": "Patient Info",
-        "appointment_info": "Appointment Info",
-        "create_appointment": "Create Appointment",
-        "select_specialty": "Select Specialty",
-        "purpose": "Purpose",
-        "specialty": "Specialty"
+        "title": {
+            "patient_info": "Patient Info",
+            "appointment_info": "Appointment Info",
+            "doctor_info": "Doctor Info",
+            "create_appointment": "Create Appointment",
+            "appointment_history": "Appointment History",
+            "appointment_detail": "Appointment Detail",
+            "filters": "Filters",
+            "timelines": "Timelines"
+        },
+        "button": {
+            "cancel_appointment": "Cancel Appointment"
+        },
+        "field": {
+            "purpose": "Purpose",
+            "specialty": "Specialty",
+            "select_specialty": "Select Specialty",
+            "start_date": "Start Date",
+            "end_date": "End Date",
+            "doctor": "Doctor",
+            "select_doctor": "Select Doctor",
+            "search_doctor": "Search by Doctor name...",
+            "cancel_reason": "Cancel Reason",
+            "refuse_reason": "Refuse Reason"
+        },
+        "dialog": {
+            "confirm_create_title": "Create appointment?",
+            "confirm_create_description": "Are you sure to create this appointment?",
+            "confirm_cancel_title": "Cancel appointment?",
+            "confirm_cancel_description": "Please provide a reason for cancellation:"
+        },
+        "status": {
+            "upcoming": "Upcoming",
+            "scheduled": "Scheduled",
+            "confirmed": "Confirmed",
+            "completed": "Completed",
+            "cancelled": "Cancelled",
+            "refused": "Refused"
+        }
     },
-
     "header": {
         "home": "Home",
         "medicine": "Medicine",
@@ -73,28 +107,25 @@
             "logout": "Logout"
         }
     },
-
-    "footer":{
+    "footer": {
         "__________comment1": "For footer section links",
-        "medical":"Medical",
-        "resources":"Resources",
-        "support":"Support",
-        "about":"About",
-
+        "medical": "Medical",
+        "resources": "Resources",
+        "support": "Support",
+        "about": "About",
         "__________comment2": "For footer section titles",
-        "service":"Service", 
-        "doctor":"Doctor",
-        "specialty":"Specialty",
-        "blog":"Blog",
-        "medicine":"Medicine",
-        "contact_us":"Contact Us",
-        "faq":"FAQ",
-        "privacy_policy":"Privacy Policy",
-        "terms_of_service":"Terms of Service",
-        "our_hospital":"Our Hospital",
-        "career":"Career"
+        "service": "Service",
+        "doctor": "Doctor",
+        "specialty": "Specialty",
+        "blog": "Blog",
+        "medicine": "Medicine",
+        "contact_us": "Contact Us",
+        "faq": "FAQ",
+        "privacy_policy": "Privacy Policy",
+        "terms_of_service": "Terms of Service",
+        "our_hospital": "Our Hospital",
+        "career": "Career"
     },
-
     "done_care_about_this": {
         "delete_selected": "Delete {number} selected",
         "delete_title": "Delete selected users?",

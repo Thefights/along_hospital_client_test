@@ -4,10 +4,12 @@ import AppointmentDetailDrawer from '@/components/sections/manageAppointmentSect
 import AppointmentFilterBar from '@/components/sections/manageAppointmentSections/AppointmentFilterBar'
 import AppointmentListItem from '@/components/sections/manageAppointmentSections/AppointmentListItem'
 import useDebounce from '@/hooks/useDebounce'
+import useTranslation from '@/hooks/useTranslation'
 import { Box, Paper, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 
 const ManageAppointmentBasePage = ({
+	headerTitle = 'Manage Appointments',
 	totalAppointments = 0,
 	appointments = [],
 	appointmentSpecialties = [],
@@ -31,13 +33,15 @@ const ManageAppointmentBasePage = ({
 	const [searchTerm, setSearchTerm] = useState('')
 	useDebounce(() => setFilters({ ...filters, search: searchTerm, page: 1 }), 500, [searchTerm])
 
+	const { t } = useTranslation()
+
 	const statusTabs = [
-		{ key: '', title: 'All' },
-		{ key: 'scheduled', title: 'Scheduled' },
-		{ key: 'confirmed', title: 'Confirmed' },
-		{ key: 'completed', title: 'Completed' },
-		{ key: 'cancelled', title: 'Cancelled' },
-		{ key: 'refused', title: 'Refused' },
+		{ key: '', title: t('text.all') },
+		{ key: 'scheduled', title: t('appointment.status.scheduled') },
+		{ key: 'confirmed', title: t('appointment.status.confirmed') },
+		{ key: 'completed', title: t('appointment.status.completed') },
+		{ key: 'cancelled', title: t('appointment.status.cancelled') },
+		{ key: 'refused', title: t('appointment.status.refused') },
 	]
 
 	const onOpenDrawer = (appt) => {
@@ -55,10 +59,10 @@ const ManageAppointmentBasePage = ({
 					flexWrap='wrap'
 					rowGap={1}
 				>
-					<Typography variant='h5'>Appointment History</Typography>
+					<Typography variant='h5'>{headerTitle}</Typography>
 					<Stack direction='row' spacing={2}>
 						<Typography variant='body2' sx={{ color: 'text.secondary' }}>
-							[Upcoming:{' '}
+							[{t('appointment.status.upcoming')}:{' '}
 							{appointments?.reduce(
 								(acc, appt) =>
 									appt.appointmentStatus === 'Scheduled' || appt.appointmentStatus === 'Confirmed'
@@ -69,7 +73,7 @@ const ManageAppointmentBasePage = ({
 							]
 						</Typography>
 						<Typography variant='body2' sx={{ color: 'text.secondary' }}>
-							[Completed:{' '}
+							[{t('appointment.status.completed')}:{' '}
 							{appointments?.reduce(
 								(acc, appt) => (appt.appointmentStatus === 'Completed' ? acc + 1 : acc),
 								0

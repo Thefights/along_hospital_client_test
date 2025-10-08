@@ -9,8 +9,8 @@
         "add_row": "Thêm dòng",
         "login": "Đăng nhập"
     },
-
     "text": {
+        "all": "Tất cả",
         "no_data": "Không có dữ liệu...",
         "search": "Tìm kiếm...",
         "loading": "Đang tải...",
@@ -18,7 +18,6 @@
         "date": "Ngày",
         "time": "Thời gian"
     },
-
     "error": {
         "required": "Trường này là bắt buộc",
         "invalid_email": "Vui lòng nhập email hợp lệ",
@@ -33,28 +32,63 @@
         "max_number": "Số tối đa là {max}",
         "fill_all_required": "Vui lòng điền tất cả các trường bắt buộc"
     },
-
     "profile": {
-        "personal_information": "Thông tin cá nhân",
-        "full_name": "Họ và tên",
-        "email": "Email",
-        "phone": "Số điện thoại",
-        "address": "Địa chỉ",
-        "date_of_birth": "Ngày sinh",
-        "gender": "Giới tính"
+        "title": {
+            "personal_information": "Thông tin cá nhân"
+        },
+        "field": {
+            "full_name": "Họ và tên",
+            "email": "Email",
+            "phone": "Số điện thoại",
+            "address": "Địa chỉ",
+            "date_of_birth": "Ngày sinh",
+            "gender": "Giới tính",
+            "blood_type": "Nhóm máu",
+            "height_weight": "Chiều cao/Cân nặng",
+            "specialty": "Chuyên khoa"
+        }
     },
-
     "appointment": {
-        "confirm_create_title": "Xác nhận tạo cuộc hẹn",
-        "confirm_create_description": "Bạn có chắc chắn muốn tạo cuộc hẹn này không?",
-        "patient_info": "Thông tin bệnh nhân",
-        "appointment_info": "Thông tin cuộc hẹn",
-        "create_appointment": "Tạo Cuộc Hẹn",
-        "select_specialty": "Chọn chuyên khoa",
-        "purpose": "Mục đích",
-        "specialty": "Chuyên khoa"
+        "title": {
+            "patient_info": "Thông tin bệnh nhân",
+            "appointment_info": "Thông tin cuộc hẹn",
+            "doctor_info": "Thông tin bác sĩ",
+            "create_appointment": "Tạo cuộc hẹn",
+            "appointment_history": "Lịch sử cuộc hẹn",
+            "appointment_detail": "Chi tiết cuộc hẹn",
+            "filters": "Bộ lọc",
+            "timelines": "Dòng thời gian"
+        },
+        "button": {
+            "cancel_appointment": "Hủy cuộc hẹn"
+        },
+        "field": {
+            "purpose": "Mục đích",
+            "specialty": "Chuyên khoa",
+            "select_specialty": "Chọn chuyên khoa",
+            "start_date": "Ngày bắt đầu",
+            "end_date": "Ngày kết thúc",
+            "doctor": "Bác sĩ",
+            "select_doctor": "Chọn bác sĩ",
+            "search_doctor": "Tìm kiếm theo tên bác sĩ...",
+            "cancel_reason": "Lý do hủy",
+            "refuse_reason": "Lý do từ chối"
+        },
+        "dialog": {
+            "confirm_create_title": "Tạo cuộc hẹn?",
+            "confirm_create_description": "Bạn có chắc chắn muốn tạo cuộc hẹn này không?",
+            "confirm_cancel_title": "Hủy cuộc hẹn?",
+            "confirm_cancel_description": "Bạn có chắc chắn muốn hủy cuộc hẹn này không?"
+        },
+        "status": {
+            "upcoming": "Sắp tới",
+            "scheduled": "Đã lên lịch",
+            "confirmed": "Đã xác nhận",
+            "completed": "Đã hoàn thành",
+            "cancelled": "Đã hủy",
+            "refused": "Đã từ chối"
+        }
     },
-
     "header": {
         "home": "Trang chủ",
         "medicine": "Thuốc",
@@ -73,28 +107,25 @@
             "logout": "Đăng xuất"
         }
     },
-
-    "footer":{
+    "footer": {
         "__________comment1": "For footer section links",
-        "medical":"Y tế",
-        "resources":"Tài nguyên",
-        "support":"Hỗ trợ",
-        "about":"Về chúng tôi",
-        
+        "medical": "Y tế",
+        "resources": "Tài nguyên",
+        "support": "Hỗ trợ",
+        "about": "Về chúng tôi",
         "__________comment2": "For footer section titles",
-        "service":"Dịch vụ",
-        "doctor":"Bác sĩ",
-        "specialty":"Chuyên khoa",
-        "blog":"Blog",
-        "medicine":"Thuốc",
-        "contact_us":"Liên hệ",
-        "faq":"Câu hỏi thường gặp",
-        "privacy_policy":"Chính sách bảo mật",
-        "terms_of_service":"Điều khoản dịch vụ",
-        "our_hospital":"Bệnh viện của chúng tôi",
-        "career":"Nghề nghiệp"
+        "service": "Dịch vụ",
+        "doctor": "Bác sĩ",
+        "specialty": "Chuyên khoa",
+        "blog": "Blog",
+        "medicine": "Thuốc",
+        "contact_us": "Liên hệ",
+        "faq": "Câu hỏi thường gặp",
+        "privacy_policy": "Chính sách bảo mật",
+        "terms_of_service": "Điều khoản dịch vụ",
+        "our_hospital": "Bệnh viện của chúng tôi",
+        "career": "Nghề nghiệp"
     },
-
     "done_care_about_this": {
         "delete_selected": "Xóa {number} mục đã chọn",
         "delete_title": "Xóa người dùng đã chọn?",

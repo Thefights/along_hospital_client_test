@@ -45,7 +45,7 @@ function AppointmentDetailDrawer({ appointment, open, onClose, buttons }) {
 						justifyContent: 'space-between',
 					}}
 				>
-					<Typography variant='h6'>Appointment Detail</Typography>
+					<Typography variant='h6'>{t('appointment.title.appointment_detail')}</Typography>
 					<IconButton onClick={onClose} size='small'>
 						<CloseIcon />
 					</IconButton>
@@ -62,7 +62,7 @@ function AppointmentDetailDrawer({ appointment, open, onClose, buttons }) {
 								}}
 							>
 								<Stack direction='row' justifyContent='space-between' alignItems='center'>
-									<Typography variant='subtitle1'>Appointment Info</Typography>
+									<Typography variant='subtitle1'>{t('appointment.title.appointment_info')}</Typography>
 									<Chip
 										label={appointment?.appointmentStatus}
 										size='small'
@@ -71,10 +71,13 @@ function AppointmentDetailDrawer({ appointment, open, onClose, buttons }) {
 								</Stack>
 								<Divider sx={{ my: 1.5 }} />
 								<Stack spacing={1}>
-									<InfoRow label='Date & Time' value={formatDatetime(datetimeString)} />
-									<InfoRow label='Purpose' value={appointment?.purpose} />
-									<InfoRow label='Specialty' value={appointment?.specialty?.name} />
-									<InfoRow label='Doctor' value={appointment?.doctor?.name} />
+									<InfoRow
+										label={`${t('text.date')} & ${t('text.time')}`}
+										value={formatDatetime(datetimeString)}
+									/>
+									<InfoRow label={t('appointment.field.purpose')} value={appointment?.purpose} />
+									<InfoRow label={t('appointment.field.specialty')} value={appointment?.specialty?.name} />
+									<InfoRow label={t('appointment.field.doctor')} value={appointment?.doctor?.name} />
 								</Stack>
 							</Box>
 
@@ -86,7 +89,7 @@ function AppointmentDetailDrawer({ appointment, open, onClose, buttons }) {
 									bgcolor: 'background.paper',
 								}}
 							>
-								<Typography variant='subtitle1'>Patient Info</Typography>
+								<Typography variant='subtitle1'>{t('appointment.title.patient_info')}</Typography>
 								<Divider sx={{ my: 1.5 }} />
 								<Stack direction='row' spacing={2} alignItems='center' sx={{ mb: 1 }}>
 									<Avatar src={getImageFromCloud(appointment?.patient?.image)} />
@@ -100,17 +103,20 @@ function AppointmentDetailDrawer({ appointment, open, onClose, buttons }) {
 									</Stack>
 								</Stack>
 								<Stack spacing={1}>
-									<InfoRow label='Phone' value={appointment?.patient?.phone} />
-									<InfoRow label='DOB' value={formatDate(appointment?.patient?.dateOfBirth)} />
-									<InfoRow label='Gender' value={appointment?.patient?.gender} />
-									<InfoRow label='Address' value={appointment?.patient?.address} />
+									<InfoRow label={t('profile.field.phone')} value={appointment?.patient?.phone} />
 									<InfoRow
-										label='Height/Weight'
+										label={t('profile.field.date_of_birth')}
+										value={formatDate(appointment?.patient?.dateOfBirth)}
+									/>
+									<InfoRow label={t('profile.field.gender')} value={appointment?.patient?.gender} />
+									<InfoRow label={t('profile.field.address')} value={appointment?.patient?.address} />
+									<InfoRow
+										label={t('profile.field.height_weight')}
 										value={`${appointment?.patient?.height || '-'} cm / ${
 											appointment?.patient?.weight || '-'
 										} kg`}
 									/>
-									<InfoRow label='Blood Type' value={appointment?.patient?.bloodType} />
+									<InfoRow label={t('profile.field.blood_type')} value={appointment?.patient?.bloodType} />
 								</Stack>
 							</Box>
 
@@ -122,7 +128,7 @@ function AppointmentDetailDrawer({ appointment, open, onClose, buttons }) {
 									bgcolor: 'background.paper',
 								}}
 							>
-								<Typography variant='subtitle1'>Doctor Info</Typography>
+								<Typography variant='subtitle1'>{t('appointment.title.doctor_info')}</Typography>
 								<Divider sx={{ my: 1.5 }} />
 								<Stack direction='row' spacing={2} alignItems='center' sx={{ mb: 1 }}>
 									<Avatar src={appointment?.doctor?.image} />
@@ -136,8 +142,8 @@ function AppointmentDetailDrawer({ appointment, open, onClose, buttons }) {
 									</Stack>
 								</Stack>
 								<Stack spacing={1}>
-									<InfoRow label='Phone' value={appointment?.doctor?.phone} />
-									<InfoRow label='Specialty' value={appointment?.specialty?.name} />
+									<InfoRow label={t('profile.field.phone')} value={appointment?.doctor?.phone} />
+									<InfoRow label={t('profile.field.specialty')} value={appointment?.specialty?.name} />
 								</Stack>
 							</Box>
 
@@ -149,30 +155,36 @@ function AppointmentDetailDrawer({ appointment, open, onClose, buttons }) {
 									bgcolor: 'background.paper',
 								}}
 							>
-								<Typography variant='subtitle1'>Timeline</Typography>
+								<Typography variant='subtitle1'>{t('appointment.title.timelines')}</Typography>
 								<Divider sx={{ my: 1.5 }} />
 								<Stack spacing={1}>
 									<InfoRow
-										label='Confirmed'
+										label={t('appointment.status.confirmed')}
 										value={appointment?.confirmedDate ? formatDatetime(appointment?.confirmedDate) : '-'}
 									/>
 									<InfoRow
-										label='Completed'
+										label={t('appointment.status.completed')}
 										value={appointment?.completedDate ? formatDatetime(appointment?.completedDate) : '-'}
 									/>
 									<InfoRow
-										label='Cancelled'
+										label={t('appointment.status.cancelled')}
 										value={appointment?.cancelledDate ? formatDatetime(appointment?.cancelledDate) : '-'}
 									/>
 									<InfoRow
-										label='Refused'
+										label={t('appointment.status.refused')}
 										value={appointment?.refusedDate ? formatDatetime(appointment?.refusedDate) : '-'}
 									/>
 									{appointment?.cancelledReason && (
-										<InfoRow label='Cancel Reason' value={appointment?.cancelledReason} />
+										<InfoRow
+											label={t('appointment.field.cancel_reason')}
+											value={appointment?.cancelledReason}
+										/>
 									)}
 									{appointment?.refusedReason && (
-										<InfoRow label='Refuse Reason' value={appointment?.refusedReason} />
+										<InfoRow
+											label={t('appointment.field.refuse_reason')}
+											value={appointment?.refusedReason}
+										/>
 									)}
 								</Stack>
 							</Box>

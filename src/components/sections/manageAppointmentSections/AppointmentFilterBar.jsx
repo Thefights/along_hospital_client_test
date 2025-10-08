@@ -1,5 +1,6 @@
 import SearchBar from '@/components/generals/SearchBar'
 import ValidationTextField from '@/components/textFields/ValidationTextField'
+import useTranslation from '@/hooks/useTranslation'
 import { MenuItem, Stack, Typography } from '@mui/material'
 
 const AppointmentFilterBar = ({
@@ -11,6 +12,8 @@ const AppointmentFilterBar = ({
 	doctors,
 	showSpecialtiesAndDoctorsFilter = true,
 }) => {
+	const { t } = useTranslation()
+
 	return (
 		<Stack
 			spacing={1.5}
@@ -22,13 +25,13 @@ const AppointmentFilterBar = ({
 				borderRadius: 1,
 			}}
 		>
-			<Typography variant='caption'>Filters</Typography>
+			<Typography variant='caption'>{t('appointment.title.filters')}</Typography>
 
 			<Stack direction='row' spacing={2} alignItems='center'>
 				<ValidationTextField
 					type='date'
 					size='small'
-					label='Start'
+					label={t('appointment.field.start_date')}
 					required={false}
 					value={filters?.dateRange?.start}
 					onChange={(e) =>
@@ -42,7 +45,7 @@ const AppointmentFilterBar = ({
 				<ValidationTextField
 					type='date'
 					size='small'
-					label='End'
+					label={t('appointment.field.end_date')}
 					required={false}
 					value={filters?.dateRange?.end}
 					onChange={(e) =>
@@ -51,14 +54,14 @@ const AppointmentFilterBar = ({
 				/>
 				{showSpecialtiesAndDoctorsFilter && (
 					<ValidationTextField
-						label='Specialty'
+						label={t('appointment.field.specialty')}
 						value={filters?.specialty}
 						size='small'
 						required={false}
 						onChange={(e) => setFilters({ ...filters, specialty: e.target.value, page: 1 })}
 						type='select'
 					>
-						<MenuItem value=''>All</MenuItem>
+						<MenuItem value=''>{t('text.all')}</MenuItem>
 						{specialties?.map((s) => (
 							<MenuItem key={s.id} value={s.id}>
 								{s.name}
@@ -69,14 +72,14 @@ const AppointmentFilterBar = ({
 
 				{showSpecialtiesAndDoctorsFilter && (
 					<ValidationTextField
-						label='Doctor'
+						label={t('appointment.field.doctor')}
 						value={filters?.doctor}
 						size='small'
 						required={false}
 						onChange={(e) => setFilters({ ...filters, doctor: e.target.value, page: 1 })}
 						type='select'
 					>
-						<MenuItem value=''>All</MenuItem>
+						<MenuItem value=''>{t('text.all')}</MenuItem>
 						{doctors?.map((d) => (
 							<MenuItem key={d.id} value={d.id}>
 								{d.name}
@@ -85,7 +88,11 @@ const AppointmentFilterBar = ({
 					</ValidationTextField>
 				)}
 			</Stack>
-			<SearchBar placeholder='Search by doctor name...' value={searchTerm} setValue={setSearchTerm} />
+			<SearchBar
+				placeholder={t('appointment.field.search_doctor')}
+				value={searchTerm}
+				setValue={setSearchTerm}
+			/>
 		</Stack>
 	)
 }

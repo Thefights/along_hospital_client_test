@@ -4,6 +4,7 @@ import ValidationTextField from '@/components/textFields/ValidationTextField'
 import { ApiUrls } from '@/configs/apiUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
+import useTranslation from '@/hooks/useTranslation'
 import { Button, Stack, Typography } from '@mui/material'
 import { useCallback, useState } from 'react'
 
@@ -19,6 +20,8 @@ const PatientAppointmentHistoryPage = () => {
 		search: '',
 		page: 1,
 	})
+
+	const { t } = useTranslation()
 
 	const { search, ...rest } = filters
 	const getAppointments = useFetch(
@@ -47,6 +50,7 @@ const PatientAppointmentHistoryPage = () => {
 	return (
 		<>
 			<ManageAppointmentBasePage
+				headerTitle={t('appointment.title.appointment_history')}
 				filters={filters}
 				setFilters={setFilters}
 				selectedAppointment={selectedAppointment}
@@ -55,7 +59,7 @@ const PatientAppointmentHistoryPage = () => {
 					(selectedAppointment?.status === 'scheduled' ||
 						selectedAppointment?.status === 'confirmed') && (
 						<Button onClick={() => setOpenCancelDialog(true)} color='error' variant='contained'>
-							Cancel Appointment
+							{t('appointment.button.cancel_appointment')}
 						</Button>
 					)
 				}
@@ -72,10 +76,12 @@ const PatientAppointmentHistoryPage = () => {
 					setCancelReason('')
 				}}
 				onConfirm={handleCancelAppointment}
-				title={'Cancel Appointment?'}
+				title={t('appointment.dialog.confirm_cancel_title')}
 				description={
 					<Stack spacing={1}>
-						<Typography variant='subtitle2'>Please provide a reason for cancellation:</Typography>
+						<Typography variant='subtitle2'>
+							{t('appointment.dialog.confirm_cancel_description')}
+						</Typography>
 						<ValidationTextField
 							value={cancelReason}
 							onChange={(e) => setCancelReason(e.target.value)}
@@ -85,7 +91,7 @@ const PatientAppointmentHistoryPage = () => {
 						/>
 					</Stack>
 				}
-				confirmButtonText={'Cancel Appointment'}
+				confirmButtonText={t('appointment.button.cancel_appointment')}
 				confirmButtonColor='error'
 				confirmButtonLoading={cancelAppointment.loading}
 			/>
