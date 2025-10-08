@@ -57,47 +57,33 @@ export default function useFieldRenderer(
 		[values]
 	)
 
-	const renderStandard = (field) => (
-		<ValidationTextField
-			key={field.key}
-			variant={textFieldVariant}
-			ref={registerRef(field.key)}
-			name={field.key}
-			label={field.title}
-			required={field.required ?? true}
-			type={field.type || 'text'}
-			value={values[field.key] || ''}
-			onChange={handleChange}
-			validate={field.validate}
-			multiline={!!field.multiple}
-			rows={field.multiple}
-			size={textFieldSize}
-			{...(field.props || {})}
-		/>
-	)
-
-	const renderSelect = (field) => {
+	const renderStandard = (field) => {
 		const opts = normalizeOptions(field.options || [])
+
 		return (
 			<ValidationTextField
 				key={field.key}
 				variant={textFieldVariant}
 				ref={registerRef(field.key)}
 				name={field.key}
-				required={field.required ?? true}
 				label={field.title}
-				value={values[field.key]}
+				required={field.required ?? true}
+				type={field.type || 'text'}
+				value={values[field.key] || ''}
 				onChange={handleChange}
 				validate={field.validate}
-				select
+				multiline={!!field.multiple}
+				rows={field.multiple}
 				size={textFieldSize}
 				{...(field.props || {})}
 			>
-				{opts.map((opt) => (
-					<MenuItem key={String(opt.value)} value={opt.value} disabled={opt.disabled}>
-						{opt.label}
-					</MenuItem>
-				))}
+				{opts &&
+					opts.length > 0 &&
+					opts.map((opt) => (
+						<MenuItem key={String(opt.value)} value={opt.value} disabled={opt.disabled}>
+							{opt.label}
+						</MenuItem>
+					))}
 			</ValidationTextField>
 		)
 	}
@@ -343,7 +329,7 @@ export default function useFieldRenderer(
 		text: renderStandard,
 		number: renderStandard,
 		email: renderStandard,
-		select: renderSelect,
+		select: renderStandard,
 		image: renderImage,
 		object: renderObject,
 		array: renderArray,
