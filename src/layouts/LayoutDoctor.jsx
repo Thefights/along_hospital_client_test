@@ -1,23 +1,14 @@
 import DashboardDrawer from '@/components/layouts/DashboardDrawer'
-import { default as DashboardHeader } from '@/components/layouts/DashboardHeader'
-import { ApiUrls } from '@/configs/apiUrls'
+import DashboardHeader from '@/components/layouts/DashboardHeader'
 import useAuth from '@/hooks/useAuth'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
 import { setProfileStore } from '@/redux/reducers/userReducer'
-import {
-	DashboardRounded,
-	Inventory2Rounded,
-	LocalHospitalRounded,
-	PeopleAltRounded,
-	Person,
-	SettingsRounded,
-} from '@mui/icons-material'
 import { Container, Stack } from '@mui/material'
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 
-const LayoutManager = () => {
+const LayoutDoctor = () => {
 	const [collapsedDrawer, setCollapsedDrawer] = useState(false)
 	const [mobileOpen, setMobileOpen] = useState(false)
 	const { logout } = useAuth()
@@ -98,4 +89,4 @@ const LayoutManager = () => {
 	)
 }
 
-export default LayoutManager
+export default LayoutDoctor

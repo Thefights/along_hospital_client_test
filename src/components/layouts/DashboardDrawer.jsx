@@ -2,7 +2,7 @@ import { Box, Divider, Drawer, List, ListSubheader, Stack, useMediaQuery } from 
 import { alpha, useTheme } from '@mui/material/styles'
 import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import CollapseToggleButton from './buttons/CollapseToggleButton'
+import CollapseToggleButton from '../buttons/CollapseToggleButton'
 import SystemLogoAndName from './commons/SystemLogoAndName'
 import NavItemDashboard from './navItems/NavItemDashboard'
 import SubmenuListDashboardPopover from './navItems/SubmenuListDashboardPopover'

@@ -17,7 +17,7 @@ const CreateAppointmentPage = () => {
 	const { t } = useTranslation()
 
 	const [submitted, setSubmitted] = useState(false)
-	const getSpecialty = useFetch(ApiUrls.SPECIALTY.BASE)
+	const getSpecialty = useFetch(ApiUrls.SPECIALTY.INDEX)
 
 	const userProfile = useReduxStore({
 		url: ApiUrls.USER.PROFILE,
@@ -40,7 +40,7 @@ const CreateAppointmentPage = () => {
 		'medium'
 	)
 	const postAppointment = useAxiosSubmit({
-		url: ApiUrls.APPOINTMENT.BASE,
+		url: ApiUrls.APPOINTMENT.INDEX,
 		method: 'POST',
 		data: values,
 	})

@@ -1,12 +1,13 @@
 import SearchBar from '@/components/generals/SearchBar'
+import { routeUrls } from '@/configs/routeUrls'
 import useAuth from '@/hooks/useAuth'
 import { AppBar, Box, Stack, Toolbar, useMediaQuery, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import AppointmentButton from './buttons/AppointmentButton'
-import CartButton from './buttons/CartButton'
-import LoginButton from './buttons/LoginButton'
-import MobileMenuButton from './buttons/MobileMenuButton'
+import AppointmentButton from '../buttons/AppointmentButton'
+import CartButton from '../buttons/CartButton'
+import LoginButton from '../buttons/LoginButton'
+import MobileMenuButton from '../buttons/MobileMenuButton'
 import LanguageSwitcher from './commons/LanguageSwitcher'
 import SystemLogoAndName from './commons/SystemLogoAndName'
 import ThemeSwitcher from './commons/ThemeSwitcher'
@@ -45,7 +46,7 @@ const Header = ({
 			>
 				<Toolbar sx={{ minHeight: 72 }}>
 					<Stack direction='row' alignItems='center' spacing={2} sx={{ flex: 1 }}>
-						<SystemLogoAndName onClick={() => navigate('/')} onlyShowIcon={isDownSm} />
+						<SystemLogoAndName onClick={() => navigate(routeUrls.HOME.INDEX)} onlyShowIcon={isDownSm} />
 
 						{!isDownMd && (
 							<Stack direction='row' spacing={0.5} sx={{ display: 'flex', ml: 2 }} role='menubar'>
@@ -65,11 +66,18 @@ const Header = ({
 						<ThemeSwitcher />
 						<LanguageSwitcher />
 						{!isAuthenticated ? (
-							<LoginButton onClick={() => navigate('/login')} />
+							<LoginButton onClick={() => navigate(routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.LOGIN))} />
 						) : (
 							<>
-								<CartButton count={cartCount} onClick={() => navigate('/cart')} />
-								<AppointmentButton onClick={() => navigate('/appointment')} />
+								<CartButton
+									count={cartCount}
+									onClick={() => navigate(routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.CART))}
+								/>
+								<AppointmentButton
+									onClick={() =>
+										navigate(routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.APPOINTMENT.CREATE))
+									}
+								/>
 								<UserAvatarMenu items={userMenuItems} profile={profile} onLogout={logout} />
 							</>
 						)}

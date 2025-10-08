@@ -1,3 +1,4 @@
+import { routeUrls } from '@/configs/routeUrls'
 import LayoutPatient from '@/layouts/LayoutPatient'
 import CreateAppointmentPage from '@/pages/users/CreateAppointmentPage'
 import PatientAppointmentHistoryPage from '@/pages/users/PatientAppointmentHistoryPage'
@@ -10,9 +11,12 @@ const RoutePatient = () => {
 		<Routes>
 			<Route element={<ProtectedRoute allowRoles={[]} />}>
 				<Route element={<LayoutPatient />}>
-					<Route path='/profile' element={<ProfilePage />} />
-					<Route path='/appointment/create' element={<CreateAppointmentPage />} />
-					<Route path='/appointment' element={<PatientAppointmentHistoryPage />} />
+					<Route path={routeUrls.PATIENT.PROFILE} element={<ProfilePage />} />
+					<Route path={routeUrls.PATIENT.APPOINTMENT.CREATE} element={<CreateAppointmentPage />} />
+					<Route
+						path={routeUrls.PATIENT.APPOINTMENT.INDEX}
+						element={<PatientAppointmentHistoryPage />}
+					/>
 				</Route>
 			</Route>
 		</Routes>

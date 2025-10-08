@@ -5,6 +5,7 @@ import { Route, BrowserRouter as RouterProvider, Routes } from 'react-router-dom
 import { Slide, ToastContainer } from 'react-toastify'
 import AuthProvider from './configs/AuthProvider'
 import ConfirmationProvider from './configs/ConfirmationProvider'
+import { routeUrls } from './configs/routeUrls'
 import { hospitalDarkTheme, hospitalLightTheme } from './configs/themeConfig'
 import { useLocalStorage } from './hooks/useStorage'
 import NotFoundPage from './pages/commons/NotFoundPage'
@@ -26,8 +27,8 @@ function App() {
 						<ConfirmationProvider>
 							<Routes>
 								<Route path='/*' element={<RouteGuest />} />
-								<Route path='/user/*' element={<RoutePatient />} />
-								<Route path='/admin/*' element={<RouteManager />} />
+								<Route path={`${routeUrls.BASE_ROUTE.PATIENT()}/*`} element={<RoutePatient />} />
+								<Route path={`${routeUrls.BASE_ROUTE.MANAGER()}/*`} element={<RouteManager />} />
 								<Route path='/test' element={<TestTable />} />
 								<Route path='*' element={<NotFoundPage />} />
 							</Routes>

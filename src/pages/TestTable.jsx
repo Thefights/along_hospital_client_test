@@ -54,7 +54,7 @@ const TestTable = () => {
 	const confirm = useConfirm()
 	const { t } = useTranslation()
 	const { loading, error, data } = useFetch(
-		ApiUrls.USER.BASE,
+		ApiUrls.USER.INDEX,
 		{ sort, page, rowsPerPage: pageSize },
 		[sort, page, pageSize]
 	)
