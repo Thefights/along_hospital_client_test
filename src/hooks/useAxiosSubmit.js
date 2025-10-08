@@ -1,19 +1,29 @@
-// useAxiosSubmit.js
 import axiosConfig from '@/configs/axiosConfig'
 import { isPlainObject } from '@/utils/handleBooleanUtil'
 import { getObjectConvertingToFormData } from '@/utils/handleObjectUtil'
 import { appendPath, getTrimString } from '@/utils/handleStringUtil'
 import { useCallback, useState } from 'react'
 
-export function useAxiosSubmit(url = '', method = 'POST', data = {}, params = {}) {
+/**
+ * @param {Object} config
+ * @param {string} config.url
+ * @param {'POST'|'GET'|'PUT'|'DELETE'} [config.method='POST']
+ * @param {Object} [config.data={}]
+ * @param {Object|string} [config.params={}]
+ * @returns {{loading: boolean, error: Error|null, response: any|null, submit: function(): Promise<any>}}
+ */
+export function useAxiosSubmit({ url = '', method = 'POST', data = {}, params = {} }) {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(null)
 	const [response, setResponse] = useState(null)
 
 	const submit = useCallback(async () => {
+		if (loading) return Promise.resolve(null)
+
 		setLoading(true)
 		setError(null)
 		setResponse(null)
+
 		try {
 			const upper = String(method).toUpperCase()
 			const queryOnly = upper === 'GET' || upper === 'DELETE'
@@ -27,7 +37,6 @@ export function useAxiosSubmit(url = '', method = 'POST', data = {}, params = {}
 				const trimmed = getTrimString(data)
 				payload = getObjectConvertingToFormData(trimmed)
 			}
-
 			const response = await axiosConfig.request({
 				url: finalUrl,
 				method: upper,
@@ -39,11 +48,10 @@ export function useAxiosSubmit(url = '', method = 'POST', data = {}, params = {}
 			return response
 		} catch (err) {
 			setError(err)
-			throw err
 		} finally {
 			setLoading(false)
 		}
-	}, [url, method, params, data])
+	}, [loading, url, method, data, params])
 
 	return { loading, error, response, submit }
 }
@@ -57,7 +65,7 @@ const postUser = useAxiosSubmit('/api/user',
 )
 */
 
-// postUser.submit()
+// await postUser.submit()
 // postUser.loading
 // postUser.error
 // postUser.response

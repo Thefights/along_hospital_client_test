@@ -39,7 +39,11 @@ const CreateAppointmentPage = () => {
 		'outlined',
 		'medium'
 	)
-	const postAppointment = useAxiosSubmit(ApiUrls.APPOINTMENT.BASE, 'POST', values)
+	const postAppointment = useAxiosSubmit({
+		url: ApiUrls.APPOINTMENT.BASE,
+		method: 'POST',
+		data: values,
+	})
 
 	const patientFields = [
 		{
