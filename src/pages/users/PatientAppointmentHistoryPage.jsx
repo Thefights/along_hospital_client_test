@@ -35,7 +35,7 @@ const PatientAppointmentHistoryPage = () => {
 	)
 	const cancelAppointment = useAxiosSubmit({
 		url: ApiUrls.APPOINTMENT.CANCEL(selectedAppointment?.id),
-		method: 'POST',
+		method: 'PUT',
 		data: { reason: cancelReason },
 	})
 

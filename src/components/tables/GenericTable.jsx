@@ -13,14 +13,14 @@ import {
 } from '@mui/material'
 import { alpha, Box } from '@mui/system'
 import { useMemo } from 'react'
-import SkeletonTableRow from '../skeletons/SkeletonTableRow'
 import EmptyRow from '../placeholders/EmptyRow'
+import SkeletonTableRow from '../skeletons/SkeletonTableRow'
 
 const tableHeadCellStyle = (theme, canSort = false, sticky = false) => {
 	return {
 		position: 'relative',
 		fontWeight: 700,
-		color: '#444',
+		color: 'text.light',
 		bgcolor: alpha(theme.palette.primary.light, 0.04),
 		borderBottom: `1px solid ${theme.palette.divider}`,
 		userSelect: canSort ? 'none' : undefined,

@@ -71,7 +71,10 @@
             "timelines": "Timelines"
         },
         "button": {
-            "cancel_appointment": "Cancel Appointment"
+            "cancel_appointment": "Cancel Appointment",
+            "deny_assignment": "Deny Assignment",
+            "accept_assignment": "Accept Assignment",
+            "complete_appointment": "Complete Appointment"
         },
         "field": {
             "purpose": "Purpose",
@@ -89,7 +92,13 @@
             "confirm_create_title": "Create appointment?",
             "confirm_create_description": "Are you sure to create this appointment?",
             "confirm_cancel_title": "Cancel appointment?",
-            "confirm_cancel_description": "Please provide a reason for cancellation:"
+            "confirm_cancel_description": "Please provide a reason for cancellation:",
+            "confirm_deny_title": "Deny assignment?",
+            "confirm_deny_description": "Are your sure to deny this assignment? This action cannot be undone",
+            "confirm_accept_title": "Accept assignment?",
+            "confirm_accept_description": "Are your sure to accept this assignment?",
+            "confirm_complete_title": "Complete appointment?",
+            "confirm_complete_description": "Are you sure to mark this appointment as completed?"
         },
         "status": {
             "upcoming": "Upcoming",
