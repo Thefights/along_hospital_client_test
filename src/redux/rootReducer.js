@@ -1,10 +1,12 @@
 import { combineReducers } from '@reduxjs/toolkit'
 import authReducer from './reducers/authReducer'
-import userReducer from './reducers/userReducer'
+import managementReducer from './reducers/managementReducer'
+import patientReducer from './reducers/patientReducer'
 
 const rootReducer = combineReducers({
 	auth: authReducer,
-	user: userReducer,
+	patient: patientReducer,
+	management: managementReducer,
 })
 
 export default rootReducer

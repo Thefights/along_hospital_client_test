@@ -7,7 +7,7 @@ import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
-import { setProfileStore } from '@/redux/reducers/userReducer'
+import { setProfileStore } from '@/redux/reducers/patientReducer'
 import { maxLen } from '@/utils/validateUtil'
 import { Grid, Paper } from '@mui/material'
 import { useState } from 'react'
@@ -21,7 +21,7 @@ const CreateAppointmentPage = () => {
 
 	const userProfile = useReduxStore({
 		url: ApiUrls.USER.PROFILE,
-		selector: (state) => state.user.profile,
+		selector: (state) => state.patient.profile,
 		setStore: setProfileStore,
 	})
 	const { values, handleChange, setField, registerRef, validateAll } = useForm({
