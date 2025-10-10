@@ -9,9 +9,9 @@ const GenericTab = ({ label, icon, active = false, onClick, disabled = false }) 
 			disabled={disabled}
 			size='medium'
 			sx={(theme) => ({
-				bgcolor: active ? '#E0ECFC' : '#E4E4E4',
-				borderColor: active ? theme.palette.primary.light : '#C4C4C4',
-				color: active ? '#204888' : '#161616',
+				bgcolor: active ? theme.palette.background.lightBlue : theme.palette.background.lightGray,
+				borderColor: active ? theme.palette.text.blue.dark : theme.palette.text.secondary,
+				color: active ? theme.palette.text.blue.main : theme.palette.text.secondary,
 				textTransform: 'none',
 			})}
 			startIcon={icon}

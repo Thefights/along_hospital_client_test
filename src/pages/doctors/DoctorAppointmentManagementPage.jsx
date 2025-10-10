@@ -42,7 +42,7 @@ const DoctorAppointmentManagementPage = () => {
 
 	return (
 		<ManageAppointmentBasePage
-			headerTitle={t('appointment.title.appointment_history')}
+			headerTitle={t('appointment.title.appointment_management')}
 			filters={filters}
 			setFilters={setFilters}
 			selectedAppointment={selectedAppointment}
