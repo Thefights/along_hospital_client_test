@@ -6,7 +6,7 @@ import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
 import { useState } from 'react'
 
-const DoctorManageAppointmentPage = () => {
+const DoctorAppointmentManagementPage = () => {
 	const [selectedAppointment, setSelectedAppointment] = useState(null)
 	const [filters, setFilters] = useState({
 		dateRange: { start: '', end: '' },
@@ -90,4 +90,4 @@ const DoctorManageAppointmentPage = () => {
 	)
 }
 
-export default DoctorManageAppointmentPage
+export default DoctorAppointmentManagementPage
