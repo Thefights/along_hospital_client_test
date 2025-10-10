@@ -1,8 +1,8 @@
 import { routeUrls } from '@/configs/routeUrls'
 import LayoutPatient from '@/layouts/LayoutPatient'
-import CreateAppointmentPage from '@/pages/users/CreateAppointmentPage'
-import PatientAppointmentHistoryPage from '@/pages/users/PatientAppointmentHistoryPage'
-import ProfilePage from '@/pages/users/ProfilePage'
+import CreateAppointmentPage from '@/pages/patients/CreateAppointmentPage'
+import PatientAppointmentHistoryPage from '@/pages/patients/PatientAppointmentHistoryPage'
+import ProfilePage from '@/pages/patients/ProfilePage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 
