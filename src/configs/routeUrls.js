@@ -35,4 +35,8 @@ export const routeUrls = {
 			CREATE: '/appointments/create',
 		},
 	},
+	DOCTOR: {
+		DASHBOARD: '/',
+		MANAGE_APPOINTMENTS: '/appointments',
+	},
 }

@@ -11,6 +11,7 @@ import { useLocalStorage } from './hooks/useStorage'
 import NotFoundPage from './pages/commons/NotFoundPage'
 import TestTable from './pages/TestTable'
 import store from './redux/store'
+import RouteDoctor from './routes/RouteDoctor'
 import RouteGuest from './routes/RouteGuest'
 import RouteManager from './routes/RouteManager'
 import RoutePatient from './routes/RoutePatient'
@@ -29,6 +30,7 @@ function App() {
 								<Route path='/*' element={<RouteGuest />} />
 								<Route path={`${routeUrls.BASE_ROUTE.PATIENT()}/*`} element={<RoutePatient />} />
 								<Route path={`${routeUrls.BASE_ROUTE.MANAGER()}/*`} element={<RouteManager />} />
+								<Route path={`${routeUrls.BASE_ROUTE.DOCTOR()}/*`} element={<RouteDoctor />} />
 								<Route path='/test' element={<TestTable />} />
 								<Route path='*' element={<NotFoundPage />} />
 							</Routes>
