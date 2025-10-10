@@ -1,3 +1,4 @@
+import FilterButton from '@/components/buttons/FilterButton'
 import SearchBar from '@/components/generals/SearchBar'
 import ValidationTextField from '@/components/textFields/ValidationTextField'
 import useTranslation from '@/hooks/useTranslation'
@@ -6,10 +7,10 @@ import { MenuItem, Stack, Typography } from '@mui/material'
 const AppointmentFilterBar = ({
 	filters,
 	setFilters,
-	searchTerm,
-	setSearchTerm,
 	specialties,
 	doctors,
+	onFilterClick = () => {},
+	loading = false,
 	showSpecialtiesAndDoctorsFilter = true,
 }) => {
 	const { t } = useTranslation()
@@ -38,7 +39,6 @@ const AppointmentFilterBar = ({
 						setFilters({
 							...filters,
 							dateRange: { ...filters?.dateRange, start: e.target.value },
-							page: 1,
 						})
 					}
 				/>
@@ -49,7 +49,7 @@ const AppointmentFilterBar = ({
 					required={false}
 					value={filters?.dateRange?.end}
 					onChange={(e) =>
-						setFilters({ ...filters, dateRange: { ...filters?.dateRange, end: e.target.value }, page: 1 })
+						setFilters({ ...filters, dateRange: { ...filters?.dateRange, end: e.target.value } })
 					}
 				/>
 				{showSpecialtiesAndDoctorsFilter && (
@@ -58,7 +58,7 @@ const AppointmentFilterBar = ({
 						value={filters?.specialty}
 						size='small'
 						required={false}
-						onChange={(e) => setFilters({ ...filters, specialty: e.target.value, page: 1 })}
+						onChange={(e) => setFilters({ ...filters, specialty: e.target.value })}
 						type='select'
 					>
 						<MenuItem value=''>{t('text.all')}</MenuItem>
@@ -76,7 +76,7 @@ const AppointmentFilterBar = ({
 						value={filters?.doctor}
 						size='small'
 						required={false}
-						onChange={(e) => setFilters({ ...filters, doctor: e.target.value, page: 1 })}
+						onChange={(e) => setFilters({ ...filters, doctor: e.target.value })}
 						type='select'
 					>
 						<MenuItem value=''>{t('text.all')}</MenuItem>
@@ -88,11 +88,15 @@ const AppointmentFilterBar = ({
 					</ValidationTextField>
 				)}
 			</Stack>
-			<SearchBar
-				placeholder={t('appointment.field.search_doctor')}
-				value={searchTerm}
-				setValue={setSearchTerm}
-			/>
+			<Stack direction={'row'} spacing={2}>
+				<SearchBar
+					placeholder={t('appointment.field.search_doctor')}
+					value={filters?.search}
+					setValue={(searchTerm) => setFilters({ ...filters, search: searchTerm })}
+					widthPercent={80}
+				/>
+				<FilterButton onFilterClick={onFilterClick} loading={loading} sx={{ flexGrow: 1 }} />
+			</Stack>
 		</Stack>
 	)
 }

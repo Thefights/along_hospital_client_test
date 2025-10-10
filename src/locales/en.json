@@ -7,7 +7,8 @@
         "update": "Update",
         "delete": "Delete",
         "add_row": "Add Row",
-        "login": "Login"
+        "login": "Login",
+        "filter": "Filter"
     },
     "text": {
         "all": "All",

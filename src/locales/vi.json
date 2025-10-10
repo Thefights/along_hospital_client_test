@@ -7,13 +7,15 @@
         "update": "Cập nhật",
         "delete": "Xóa",
         "add_row": "Thêm dòng",
-        "login": "Đăng nhập"
+        "login": "Đăng nhập",
+        "filter": "Lọc"
     },
     "text": {
         "all": "Tất cả",
         "no_data": "Không có dữ liệu...",
         "search": "Tìm kiếm...",
         "loading": "Đang tải...",
+        "filter": "Lọc",
         "image_preview": "Xem trước hình ảnh",
         "date": "Ngày",
         "time": "Thời gian"

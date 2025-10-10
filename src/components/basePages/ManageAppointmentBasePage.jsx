@@ -3,12 +3,11 @@ import GenericTabs from '@/components/generals/GenericTabs'
 import AppointmentDetailDrawer from '@/components/sections/manageAppointmentSections/AppointmentDetailDrawerSection'
 import AppointmentFilterBar from '@/components/sections/manageAppointmentSections/AppointmentFilterBar'
 import AppointmentListItem from '@/components/sections/manageAppointmentSections/AppointmentListItem'
-import useDebounce from '@/hooks/useDebounce'
 import useTranslation from '@/hooks/useTranslation'
-import { Box, Paper, Stack, Typography } from '@mui/material'
+import { Paper, Stack, Typography } from '@mui/material'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import EmptyBox from '../placeholders/EmptyBox'
+import SkeletonBox from '../skeletons/SkeletonBox'
 
 const ManageAppointmentBasePage = ({
 	headerTitle = 'Manage Appointments',
@@ -16,7 +15,6 @@ const ManageAppointmentBasePage = ({
 	appointments = [],
 	appointmentSpecialties = [],
 	appointmentDoctors = [],
-	showSpecialtiesAndDoctorsFilter = true,
 	filters = {
 		dateRange: { start: '', end: '' },
 		status: '',
@@ -29,14 +27,14 @@ const ManageAppointmentBasePage = ({
 	setFilters,
 	selectedAppointment,
 	setSelectedAppointment,
+	onFilterClick = () => {},
+	loading = false,
+	showSpecialtiesAndDoctorsFilter = true,
 	drawerButtons = <React.Fragment />,
 }) => {
 	const [drawerOpen, setDrawerOpen] = useState(false)
-	const [searchTerm, setSearchTerm] = useState('')
-	useDebounce(() => setFilters({ ...filters, search: searchTerm, page: 1 }), 500, [searchTerm])
 
 	const { t } = useTranslation()
-	const navigate = useNavigate()
 
 	const statusTabs = [
 		{ key: '', title: t('text.all') },
@@ -89,21 +87,24 @@ const ManageAppointmentBasePage = ({
 				<AppointmentFilterBar
 					filters={filters}
 					setFilters={setFilters}
-					searchTerm={searchTerm}
-					setSearchTerm={setSearchTerm}
 					specialties={appointmentSpecialties}
 					doctors={appointmentDoctors}
+					onFilterClick={onFilterClick}
+					loading={loading}
 					showSpecialtiesAndDoctorsFilter={showSpecialtiesAndDoctorsFilter}
 				/>
 
-				<Stack spacing={2}>
+				<Stack spacing={2} sx={{ width: '100%' }}>
 					<GenericTabs
 						tabs={statusTabs}
 						currentTab={filters.status}
-						setCurrentTab={(status) => setFilters({ ...filters, status })}
+						setCurrentTab={(tab) => setFilters({ ...filters, status: tab.key, page: 1 })}
+						loading={loading}
 					/>
 					<Stack spacing={1}>
-						{appointments.length === 0 ? (
+						{loading ? (
+							<SkeletonBox numberOfBoxes={3} heights={[268 / 3]} />
+						) : appointments.length === 0 ? (
 							<EmptyBox minHeight={300} />
 						) : (
 							appointments.map((appt, index) => (
@@ -115,24 +116,26 @@ const ManageAppointmentBasePage = ({
 							))
 						)}
 					</Stack>
-					<Box sx={{ display: 'flex', justifyContent: 'center', pt: 1 }}>
+					<Stack justifyContent={'center'} px={2}>
 						{filters?.pageSize ? (
 							<GenericTablePagination
 								totalItems={totalAppointments}
 								page={filters.page}
 								setPage={(page) => setFilters({ ...filters, page })}
 								pageSize={filters.pageSize}
-								setPageSize={(pageSize) => setFilters({ ...filters, pageSize, page: 1 })}
+								setPageSize={(pageSize) => setFilters({ ...filters, pageSize })}
 								rowsPerPageOptions={[5, 10, 20]}
+								loading={loading}
 							/>
 						) : (
 							<GenericPagination
 								totalPages={Math.ceil(totalAppointments / 5)}
 								page={filters.page}
 								setPage={(page) => setFilters({ ...filters, page })}
+								loading={loading}
 							/>
 						)}
-					</Box>
+					</Stack>
 				</Stack>
 
 				<AppointmentDetailDrawer
