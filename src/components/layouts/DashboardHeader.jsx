@@ -50,7 +50,7 @@ const DashboardHeader = ({ onOpenDrawer, profile, userMenuItems = [], onLogout =
 
 	return (
 		<AppBar
-			position='static'
+			position='sticky'
 			elevation={0}
 			color='default'
 			sx={{

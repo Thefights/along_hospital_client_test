@@ -8,6 +8,7 @@ export const GenericPagination = ({
 	setPage = (page) => {},
 	siblingCount = 2,
 	boundaryCount = 1,
+	loading = false,
 }) => {
 	return (
 		<Pagination
@@ -20,6 +21,7 @@ export const GenericPagination = ({
 			color='primary'
 			siblingCount={siblingCount}
 			boundaryCount={boundaryCount}
+			disabled={loading}
 			renderItem={(item) => (
 				<PaginationItem slots={{ previous: ArrowBack, next: ArrowForward }} {...item} />
 			)}
@@ -34,9 +36,10 @@ export const GenericTablePagination = ({
 	pageSize,
 	setPageSize = (pageSize) => {},
 	rowsPerPageOptions = [5, 10, 25],
+	loading = false,
 }) => {
 	const rowsPerPageNum = useMemo(
-		() => parseInt(pageSize || rowsPerPageOptions?.[0] || 5, 10),
+		() => parseInt(pageSize ?? rowsPerPageOptions?.[0] ?? 5, 10),
 		[pageSize]
 	)
 
@@ -45,8 +48,8 @@ export const GenericTablePagination = ({
 	}, [totalItems, rowsPerPageNum])
 
 	useEffect(() => {
-		setPage(1)
-	}, [rowsPerPageNum, setPage])
+		if (page !== 1) setPage(1)
+	}, [rowsPerPageNum])
 
 	useEffect(() => {
 		if (page > totalPages) setPage(totalPages)
@@ -56,7 +59,12 @@ export const GenericTablePagination = ({
 		<Stack direction='row' justifyContent='space-between' alignItems='center' flexWrap={'wrap'} m={2}>
 			<Stack spacing={1} direction='row' alignItems='center'>
 				<Typography>Rows per page:</Typography>
-				<Select size='small' value={rowsPerPageNum} onChange={(e) => setPageSize(e.target.value)}>
+				<Select
+					size='small'
+					disabled={loading}
+					value={rowsPerPageNum}
+					onChange={(e) => setPageSize(e.target.value)}
+				>
 					{rowsPerPageOptions.map((option) => (
 						<MenuItem key={option} value={option}>
 							{option}
@@ -70,6 +78,7 @@ export const GenericTablePagination = ({
 				setPage={setPage}
 				siblingCount={1}
 				boundaryCount={2}
+				loading={loading}
 			/>
 		</Stack>
 	)
