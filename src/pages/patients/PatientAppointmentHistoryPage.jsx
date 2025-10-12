@@ -6,7 +6,7 @@ import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
 import { Box, Button, Stack, Typography } from '@mui/material'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 
 const PatientAppointmentHistoryPage = () => {
 	const [selectedAppointment, setSelectedAppointment] = useState(null)
@@ -32,16 +32,20 @@ const PatientAppointmentHistoryPage = () => {
 		url: ApiUrls.APPOINTMENT.CANCEL(selectedAppointment?.id),
 		method: 'PUT',
 		data: { reason: cancelReason },
+		onSuccess: async () => {
+			await getAppointments.fetch()
+			setSelectedAppointment(null)
+		},
 	})
 
-	const handleCancelAppointment = useCallback(async () => {
+	const handleCancelAppointment = async () => {
 		try {
 			await cancelAppointment.submit()
 		} finally {
 			setCancelReason('')
 			setOpenCancelDialog(false)
 		}
-	}, [cancelAppointment, setOpenCancelDialog, setCancelReason])
+	}
 
 	const onFilterClick = async () => {
 		setFilters((prev) => ({ ...prev, page: 1 }))

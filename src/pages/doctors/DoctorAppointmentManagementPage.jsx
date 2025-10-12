@@ -4,6 +4,7 @@ import { ApiUrls } from '@/configs/apiUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
+import { Stack } from '@mui/material'
 import { useState } from 'react'
 
 const DoctorAppointmentManagementPage = () => {
@@ -54,7 +55,7 @@ const DoctorAppointmentManagementPage = () => {
 			loading={getAppointments.loading}
 			drawerButtons={
 				selectedAppointment?.status === 'scheduled' ? (
-					<>
+					<Stack direction='row' spacing={2}>
 						<ConfirmationButton
 							confirmationTitle={t('appointment.dialog.confirm_accept_title')}
 							confirmationDescription={t('appointment.dialog.confirm_accept_description')}
@@ -73,7 +74,7 @@ const DoctorAppointmentManagementPage = () => {
 						>
 							{t('appointment.button.deny_assignment')}
 						</ConfirmationButton>
-					</>
+					</Stack>
 				) : selectedAppointment?.status === 'confirmed' ? (
 					<ConfirmationButton
 						confirmationTitle={t('appointment.dialog.confirm_complete_title')}
