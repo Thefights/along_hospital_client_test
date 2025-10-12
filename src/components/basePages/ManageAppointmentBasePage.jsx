@@ -124,7 +124,7 @@ const ManageAppointmentBasePage = ({
 								setPage={(page) => setFilters({ ...filters, page })}
 								pageSize={filters.pageSize}
 								setPageSize={(pageSize) => setFilters({ ...filters, pageSize })}
-								rowsPerPageOptions={[5, 10, 20]}
+								pageSizeOptions={[5, 10, 20]}
 								loading={loading}
 							/>
 						) : (

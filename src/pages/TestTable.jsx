@@ -1,4 +1,4 @@
-import GenericFormDialog from '@/components/dialogs/GenericFormDialog'
+import GenericFormDialog from '@/components/dialogs/commons/GenericFormDialog'
 import ActionMenu from '@/components/generals/ActionMenu'
 import ConfirmationButton from '@/components/generals/ConfirmationButton'
 import { GenericTablePagination } from '@/components/generals/GenericPagination'

@@ -35,11 +35,11 @@ export const GenericTablePagination = ({
 	setPage = (page) => {},
 	pageSize,
 	setPageSize = (pageSize) => {},
-	rowsPerPageOptions = [5, 10, 25],
+	pageSizeOptions = [5, 10, 25],
 	loading = false,
 }) => {
 	const rowsPerPageNum = useMemo(
-		() => parseInt(pageSize ?? rowsPerPageOptions?.[0] ?? 5, 10),
+		() => parseInt(pageSize ?? pageSizeOptions?.[0] ?? 5, 10),
 		[pageSize]
 	)
 
@@ -65,7 +65,7 @@ export const GenericTablePagination = ({
 					value={rowsPerPageNum}
 					onChange={(e) => setPageSize(e.target.value)}
 				>
-					{rowsPerPageOptions.map((option) => (
+					{pageSizeOptions.map((option) => (
 						<MenuItem key={option} value={option}>
 							{option}
 						</MenuItem>
@@ -97,8 +97,8 @@ export const GenericTablePagination = ({
 	totalItems={data?.length}
 	page={page}
 	setPage={setPage}
-	rowsPerPage={rowsPerPage}
-	setRowsPerPage={setRowsPerPage}
-	rowsPerPageOptions={[5, 10, 25]}
+	pageSize={pageSize}
+	setPageSize={setPageSize}
+	loading={loading}
 />
 */

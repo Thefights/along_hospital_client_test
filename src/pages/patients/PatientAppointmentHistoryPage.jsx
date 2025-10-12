@@ -1,5 +1,5 @@
 import ManageAppointmentBasePage from '@/components/basePages/ManageAppointmentBasePage'
-import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog'
+import ConfirmationDialog from '@/components/dialogs/commons/ConfirmationDialog'
 import ValidationTextField from '@/components/textFields/ValidationTextField'
 import { ApiUrls } from '@/configs/apiUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'

@@ -1,4 +1,4 @@
-import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog'
+import ConfirmationDialog from '@/components/dialogs/commons/ConfirmationDialog'
 import useTranslation from '@/hooks/useTranslation'
 import { createContext, useCallback, useMemo, useRef, useState } from 'react'
 
