@@ -11,7 +11,14 @@ import { useCallback, useState } from 'react'
  * @param {Object|string} [config.params={}]
  * @returns {{loading: boolean, error: Error|null, response: any|null, submit: function(overrideValues): Promise<any>}}
  */
-export function useAxiosSubmit({ url = '', method = 'POST', data = {}, params = {} }) {
+export function useAxiosSubmit({
+	url = '',
+	method = 'POST',
+	data = {},
+	params = {},
+	onSuccess = async (response) => Promise.resolve(response),
+	onError = async (error) => Promise.resolve(error),
+}) {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(null)
 	const [response, setResponse] = useState(null)
@@ -46,9 +53,11 @@ export function useAxiosSubmit({ url = '', method = 'POST', data = {}, params = 
 				})
 
 				setResponse(response)
+				await onSuccess(response)
 				return response
 			} catch (err) {
 				setError(err)
+				await onError(err)
 				return undefined
 			} finally {
 				setLoading(false)

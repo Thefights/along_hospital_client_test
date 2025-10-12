@@ -7,6 +7,13 @@ export const ApiUrls = {
 		PROFILE: `/user/profile`,
 		CART: `/user/cart`,
 	},
+	DOCTOR: {
+		INDEX: `/doctor`,
+		MANAGEMENT: {
+			INDEX: `/doctor-management`,
+			GET_ALL: `/doctor-management/all`,
+		},
+	},
 	SPECIALTY: {
 		INDEX: `/specialty`,
 	},

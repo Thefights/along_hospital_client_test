@@ -13,7 +13,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
  * @param {Object} [props.initialValues={}]
  * @param {string} [props.submitLabel]
  * @param {'primary'|'secondary'|'success'|'error'|'info'|'warning'} [props.submitButtonColor='primary']
- * @param {Function} [props.onSubmit=({ values, closeDialog, setField }) => Promise.resolve(values)]
+ * @param {'xs'|'sm'|'md'|'lg'|'xl'} [props.maxWidth='sm']
+ * @param {(params: {values: any, closeDialog: Function, setField: Function}) => Promise<any>} [props.onSubmit]
  */
 const GenericFormDialog = ({
 	open,
@@ -23,6 +24,7 @@ const GenericFormDialog = ({
 	initialValues = {},
 	submitLabel,
 	submitButtonColor = 'primary',
+	maxWidth = 'sm',
 	onSubmit = ({ values, closeDialog, setField }) => Promise.resolve(values),
 }) => {
 	const startValues = useMemo(() => {
@@ -79,13 +81,13 @@ const GenericFormDialog = ({
 	}, [fields, handleClose, onSubmit, setField, validateAll, values])
 
 	return (
-		<Dialog open={!!open} onClose={handleClose} fullWidth maxWidth='sm'>
+		<Dialog open={!!open} onClose={handleClose} fullWidth maxWidth={maxWidth}>
 			<DialogTitle>{title}</DialogTitle>
 			<DialogContent dividers>
 				<Stack spacing={2.25}>{fields.map(renderField)}</Stack>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={handleClose} color='secondary' disabled={loading}>
+				<Button onClick={handleClose} color='inherit' disabled={loading}>
 					{t('button.cancel')}
 				</Button>
 				<Button
@@ -95,7 +97,7 @@ const GenericFormDialog = ({
 					loading={loading}
 					loadingPosition='start'
 				>
-					{t('button.submit')}
+					{submitLabel || t('button.submit')}
 				</Button>
 			</DialogActions>
 		</Dialog>

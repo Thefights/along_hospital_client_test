@@ -11,7 +11,7 @@ const RouteDoctor = () => {
 				<Route element={<LayoutDoctor />}>
 					<Route path='/' element={<div>Dashboard</div>} />
 					<Route
-						path={routeUrls.DOCTOR.MANAGE_APPOINTMENTS}
+						path={routeUrls.DOCTOR.APPOINTMENT_MANAGEMENT}
 						element={<DoctorAppointmentManagementPage />}
 					/>
 				</Route>
