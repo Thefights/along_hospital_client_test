@@ -6,6 +6,7 @@ import GenericTabs from '@/components/generals/GenericTabs'
 import SearchBar from '@/components/generals/SearchBar'
 import GenericTable from '@/components/tables/GenericTable'
 import { ApiUrls } from '@/configs/apiUrls'
+import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useConfirm } from '@/hooks/useConfirm'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
@@ -53,11 +54,23 @@ const TestTable = () => {
 
 	const confirm = useConfirm()
 	const { t } = useTranslation()
-	const { loading, error, data } = useFetch(
-		ApiUrls.USER.INDEX,
-		{ sort, page, rowsPerPage: pageSize },
-		[sort, page, pageSize]
-	)
+	const { loading, error, data } = useFetch(ApiUrls.USER.INDEX, { sort, page, pageSize }, [
+		sort,
+		page,
+		pageSize,
+	])
+	const postTest = useAxiosSubmit({
+		url: ApiUrls.USER.INDEX,
+		method: 'POST',
+	})
+	const putTest = useAxiosSubmit({
+		url: ApiUrls.USER.INDEX,
+		method: 'PUT',
+	})
+	const deleteTest = useAxiosSubmit({
+		url: ApiUrls.USER.INDEX + `/${selectedRow.id}`,
+		method: 'DELETE',
+	})
 
 	const statusTabs = useMemo(
 		() => [
@@ -107,7 +120,7 @@ const TestTable = () => {
 									})
 
 									if (isConfirmed) {
-										alert(`Deleted id ${row.id}`)
+										await deleteTest.submit()
 									}
 								},
 							},
@@ -211,9 +224,10 @@ const TestTable = () => {
 				fields={upsertField}
 				submitLabel={t('button.create')}
 				submitButtonColor='success'
-				method='POST'
-				submitUrl='/users'
 				title={t('button.create') + ' User'}
+				onSubmit={async ({ values, closeDialog }) => {
+					if (await postTest.submit(values)) closeDialog()
+				}}
 			/>
 			<GenericFormDialog
 				open={openUpdate}
@@ -222,10 +236,11 @@ const TestTable = () => {
 				initialValues={selectedRow}
 				submitLabel={t('button.update')}
 				submitButtonColor='success'
-				method='PUT'
-				submitUrl={`/users`}
-				params={selectedRow.id}
 				title={t('button.update') + ' User'}
+				onSubmit={async ({ values, closeDialog }) => {
+					await putTest.submit(values)
+					closeDialog()
+				}}
 			/>
 		</Paper>
 	)

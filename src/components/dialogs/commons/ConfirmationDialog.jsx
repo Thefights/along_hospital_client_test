@@ -78,7 +78,7 @@ const ConfirmationDialog = ({
 					onClick={onConfirm}
 					variant='contained'
 					color={confirmButtonColor}
-					disabled={confirmButtonLoading}
+					loading={Boolean(confirmButtonLoading)}
 				>
 					{confirmButtonText}
 					{confirmButtonLoading && '...'}

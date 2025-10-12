@@ -1,4 +1,3 @@
-import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
@@ -12,10 +11,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
  * @param {string} [props.title='Form']
  * @param {Array} props.fields
  * @param {Object} [props.initialValues={}]
- * @param {string} props.submitUrl
- * @param {'POST'|'GET'|'PUT'|'DELETE'} [props.method='POST']
- * @param {Object|string} [props.params={}]
  * @param {string} [props.submitLabel]
+ * @param {'primary'|'secondary'|'success'|'error'|'info'|'warning'} [props.submitButtonColor='primary']
+ * @param {Function} [props.onSubmit=({ values, closeDialog, setField }) => Promise.resolve(values)]
  */
 const GenericFormDialog = ({
 	open,
@@ -23,13 +21,9 @@ const GenericFormDialog = ({
 	title = 'Form',
 	fields = [],
 	initialValues = {},
-	submitUrl = '',
-	method = 'POST',
-	params = {},
 	submitLabel,
 	submitButtonColor = 'primary',
-	onSuccess,
-	onError,
+	onSubmit = ({ values, closeDialog, setField }) => Promise.resolve(values),
 }) => {
 	const startValues = useMemo(() => {
 		const v = { ...initialValues }
@@ -42,9 +36,9 @@ const GenericFormDialog = ({
 	}, [fields, initialValues])
 
 	const [submitted, setSubmitted] = useState(false)
+	const [loading, setLoading] = useState(false)
 	const { t } = useTranslation()
 	const { values, handleChange, setField, reset, registerRef, validateAll } = useForm(startValues)
-	const { loading, submit } = useAxiosSubmit({ url: submitUrl, method, data: values, params })
 	const { renderField, hasRequiredMissing } = useFieldRenderer(
 		values,
 		setField,
@@ -72,14 +66,17 @@ const GenericFormDialog = ({
 		const missingField = hasRequiredMissing(fields)
 		if (missingField || !ok) return
 
+		if (typeof onSubmit !== 'function') return
+
+		setLoading(true)
 		try {
-			const res = await submit()
-			onSuccess?.(res)
-			handleClose()
+			await onSubmit({ values, closeDialog: handleClose, setField })
 		} catch (e) {
-			onError?.(e)
+			console.log(e)
+		} finally {
+			setLoading(false)
 		}
-	}, [handleClose, onError, onSuccess, submit, validateAll, values])
+	}, [fields, handleClose, onSubmit, setField, validateAll, values])
 
 	return (
 		<Dialog open={!!open} onClose={handleClose} fullWidth maxWidth='sm'>
@@ -91,8 +88,14 @@ const GenericFormDialog = ({
 				<Button onClick={handleClose} color='secondary' disabled={loading}>
 					{t('button.cancel')}
 				</Button>
-				<Button onClick={handleSubmit} color={submitButtonColor} variant='contained' disabled={loading}>
-					{loading ? t('button.submitting') + '...' : submitLabel ?? t('button.submit')}
+				<Button
+					onClick={handleSubmit}
+					color={submitButtonColor}
+					variant='contained'
+					loading={loading}
+					loadingPosition='start'
+				>
+					{t('button.submit')}
 				</Button>
 			</DialogActions>
 		</Dialog>
