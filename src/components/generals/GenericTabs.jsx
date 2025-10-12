@@ -9,9 +9,9 @@ const GenericTab = ({ label, icon, active = false, onClick, disabled = false }) 
 			disabled={disabled}
 			size='medium'
 			sx={(theme) => ({
-				bgcolor: active ? '#E0ECFC' : '#E4E4E4',
-				borderColor: active ? theme.palette.primary.light : '#C4C4C4',
-				color: active ? '#204888' : '#161616',
+				bgcolor: active ? theme.palette.background.lightBlue : theme.palette.background.lightGray,
+				borderColor: active ? theme.palette.text.blue.dark : theme.palette.text.secondary,
+				color: active ? theme.palette.text.blue.main : theme.palette.text.secondary,
 				textTransform: 'none',
 			})}
 			startIcon={icon}
@@ -23,21 +23,32 @@ const GenericTab = ({ label, icon, active = false, onClick, disabled = false }) 
 
 /**
  *
- * @param {Array<{key: string, title: string}>} tabs
- * @param {string} currentTab
- * @param {function} setCurrentTab
- * @param {'row' | 'column'} direction
- * @returns
+ * @typedef {Object} CustomProps
+ * @property {Array<{key: string, title: string, icon?: React.ReactNode, disabled?: boolean}>} props.tabs
+ * @property {{key: string, title: string}} props.currentTab
+ * @property {function} props.setCurrentTab
+ * @property {'row' | 'column'} props.direction
+ * @property {string | number} props.maxWidth
+ * @property {string | number} props.maxHeight
+ * @property {boolean} props.loading
  */
 const GenericTabs = ({
 	tabs = [],
 	currentTab,
-	setCurrentTab = () => {},
+	setCurrentTab = (tab) => {},
 	direction = 'row',
 	maxWidth = '100%',
 	maxHeight,
+	loading = false,
 }) => {
 	const defaultTab = useMemo(() => tabs[0] || { key: '', title: '' }, [tabs])
+
+	const isActive = (tab) => {
+		if (currentTab === undefined || currentTab === null) return false
+		if (typeof currentTab === 'string') return currentTab === tab.key
+		if (typeof currentTab === 'object') return currentTab.key === tab.key
+		return false
+	}
 
 	return (
 		<Stack
@@ -54,8 +65,8 @@ const GenericTabs = ({
 					key={tab.key}
 					label={tab.title}
 					icon={tab.icon}
-					active={(currentTab?.key || defaultTab.key) === tab.key}
-					disabled={tab.disabled}
+					active={isActive(tab)}
+					disabled={tab.disabled || loading}
 					onClick={() => setCurrentTab(tab)}
 				/>
 			))}

@@ -1,22 +1,66 @@
 import useTranslation from '@/hooks/useTranslation'
-import { Search } from '@mui/icons-material'
-import { InputAdornment, TextField } from '@mui/material'
+import { Close, Search } from '@mui/icons-material'
+import { Autocomplete, IconButton, InputAdornment, TextField } from '@mui/material'
 
-const SearchBar = ({ widthPercent = 100, value, setValue, placeholder }) => {
+const SearchBar = ({
+	widthPercent = 100,
+	value,
+	setValue,
+	placeholder,
+	options = [],
+	getOptionLabel = (opt) => opt?.label || opt,
+}) => {
 	const { t } = useTranslation()
+	const isAutocomplete = Array.isArray(options) && options.length > 0
 
-	return (
-		<TextField
+	const commonProps = {
+		sx: { width: widthPercent + '%' },
+		size: 'small',
+		placeholder: placeholder || t('text.search'),
+	}
+
+	return isAutocomplete ? (
+		<Autocomplete
+			freeSolo
+			options={options}
+			value={value}
+			onChange={(_, newValue) => setValue(newValue)}
+			getOptionLabel={getOptionLabel}
 			sx={{ width: widthPercent + '%' }}
+			renderInput={(params) => (
+				<TextField
+					{...params}
+					{...commonProps}
+					sx={{ width: '100%' }}
+					InputProps={{
+						...params.InputProps,
+						startAdornment: (
+							<InputAdornment position='start' sx={{ ml: 1 }}>
+								<Search />
+							</InputAdornment>
+						),
+						disableUnderline: true,
+					}}
+				/>
+			)}
+		/>
+	) : (
+		<TextField
+			{...commonProps}
 			value={value}
 			onChange={(e) => setValue(e.target.value)}
-			size='small'
-			placeholder={placeholder || t('text.search')}
 			slotProps={{
 				input: {
 					startAdornment: (
 						<InputAdornment position='start'>
 							<Search />
+						</InputAdornment>
+					),
+					endAdornment: value && value !== '' && (
+						<InputAdornment position='end'>
+							<IconButton size='small' disableTouchRipple onClick={() => setValue('')} sx={{ mr: -1 }}>
+								<Close sx={{ fontSize: '1.25rem' }} />
+							</IconButton>
 						</InputAdornment>
 					),
 				},

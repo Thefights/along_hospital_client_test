@@ -50,7 +50,7 @@ const DashboardHeader = ({ onOpenDrawer, profile, userMenuItems = [], onLogout =
 
 	return (
 		<AppBar
-			position='static'
+			position='sticky'
 			elevation={0}
 			color='default'
 			sx={{
@@ -83,9 +83,9 @@ const DashboardHeader = ({ onOpenDrawer, profile, userMenuItems = [], onLogout =
 							<ButtonBase
 								onClick={() => navigate('/')}
 								sx={{
+									borderRadius: 1,
 									px: 0.5,
 									py: 0.25,
-									borderRadius: 1,
 									display: 'inline-flex',
 									alignItems: 'center',
 									'&:focus-visible': {
@@ -94,7 +94,13 @@ const DashboardHeader = ({ onOpenDrawer, profile, userMenuItems = [], onLogout =
 									},
 								}}
 							>
-								<Typography variant='body2' sx={{ color: 'text.secondary', whiteSpace: 'nowrap' }}>
+								<Typography
+									variant='body2'
+									sx={{
+										color: location.pathname !== '/' ? 'text.blue.dark' : 'text.secondary',
+										whiteSpace: 'nowrap',
+									}}
+								>
 									Home
 								</Typography>
 							</ButtonBase>
@@ -103,11 +109,11 @@ const DashboardHeader = ({ onOpenDrawer, profile, userMenuItems = [], onLogout =
 									key={c.path}
 									onClick={() => navigate(c.path)}
 									sx={{
+										borderRadius: 1,
 										px: 0.5,
 										py: 0.25,
-										borderRadius: 1,
 										display: 'inline-flex',
-										maxWidth: '50vw',
+										alignItems: 'center',
 										'&:focus-visible': {
 											outline: `2px solid ${theme.palette.primary.main}`,
 											outlineOffset: 2,
@@ -118,7 +124,7 @@ const DashboardHeader = ({ onOpenDrawer, profile, userMenuItems = [], onLogout =
 										variant='body2'
 										noWrap
 										title={c.label}
-										sx={{ color: 'text.secondary', maxWidth: 'inherit' }}
+										sx={{ color: 'text.blue.dark', maxWidth: 'inherit' }}
 									>
 										{c.label}
 									</Typography>
@@ -126,10 +132,13 @@ const DashboardHeader = ({ onOpenDrawer, profile, userMenuItems = [], onLogout =
 							))}
 							<Typography
 								variant='body2'
-								aria-current='page'
 								noWrap
 								title={currentLabel}
-								sx={{ maxWidth: '50vw' }}
+								sx={{
+									px: 0.5,
+									py: 0.25,
+									lineHeight: '1.5rem',
+								}}
 							>
 								{currentLabel}
 							</Typography>

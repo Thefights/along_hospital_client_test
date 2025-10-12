@@ -4,7 +4,7 @@ import { ApiUrls } from '@/configs/apiUrls'
 import useAuth from '@/hooks/useAuth'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
-import { setProfileStore } from '@/redux/reducers/userReducer'
+import { setProfileStore } from '@/redux/reducers/patientReducer'
 import {
 	DashboardRounded,
 	Inventory2Rounded,
@@ -25,7 +25,7 @@ const LayoutManager = () => {
 
 	const profileStore = useReduxStore({
 		url: ApiUrls.USER.PROFILE,
-		selector: (s) => s.user.profile,
+		selector: (s) => s.patient.profile,
 		setStore: setProfileStore,
 	})
 

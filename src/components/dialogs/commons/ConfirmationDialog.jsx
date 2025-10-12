@@ -17,6 +17,20 @@ const Up = forwardRef(function Up(props, ref) {
 	return <Slide direction='up' ref={ref} {...props} />
 })
 
+/**
+ * @param {Object} props
+ * @param {boolean} props.open
+ * @param {Function} props.onClose
+ * @param {Function} [props.onCancel=props.onClose]
+ * @param {Function} props.onConfirm
+ * @param {string} [props.title]
+ * @param {React.ReactNode} [props.description]
+ * @param {string} [props.confirmButtonText='OK']
+ * @param {'primary'|'error'|'warning'|'info'|'success'} [props.confirmButtonColor='primary']
+ * @param {boolean} [props.confirmButtonLoading=false]
+ * @param {'xs'|'sm'|'md'|'lg'|'xl'} [props.dialogWidth='xs']
+ * @param {'top' | 'bottom' | 'center'} [props.dialogPosition='top']
+ */
 const ConfirmationDialog = ({
 	open,
 	onClose,
@@ -78,7 +92,7 @@ const ConfirmationDialog = ({
 					onClick={onConfirm}
 					variant='contained'
 					color={confirmButtonColor}
-					disabled={confirmButtonLoading}
+					loading={Boolean(confirmButtonLoading)}
 				>
 					{confirmButtonText}
 					{confirmButtonLoading && '...'}

@@ -35,4 +35,12 @@ export const routeUrls = {
 			CREATE: '/appointments/create',
 		},
 	},
+	DOCTOR: {
+		DASHBOARD: '/',
+		APPOINTMENT_MANAGEMENT: '/appointments',
+	},
+	MANAGER: {
+		DASHBOARD: '/',
+		APPOINTMENT_MANAGEMENT: '/appointments',
+	},
 }

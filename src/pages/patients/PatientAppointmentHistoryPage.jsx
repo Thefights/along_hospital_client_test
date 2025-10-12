@@ -1,13 +1,12 @@
 import ManageAppointmentBasePage from '@/components/basePages/ManageAppointmentBasePage'
-import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog'
-import SkeletonBox from '@/components/skeletons/SkeletonBox'
+import ConfirmationDialog from '@/components/dialogs/commons/ConfirmationDialog'
 import ValidationTextField from '@/components/textFields/ValidationTextField'
 import { ApiUrls } from '@/configs/apiUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
-import { Box, Button, Paper, Stack, Typography } from '@mui/material'
-import { useCallback, useState } from 'react'
+import { Box, Button, Stack, Typography } from '@mui/material'
+import { useState } from 'react'
 
 const PatientAppointmentHistoryPage = () => {
 	const [selectedAppointment, setSelectedAppointment] = useState(null)
@@ -24,57 +23,58 @@ const PatientAppointmentHistoryPage = () => {
 
 	const { t } = useTranslation()
 
-	const { search, ...rest } = filters
-	const getAppointments = useFetch(
-		ApiUrls.APPOINTMENT.INDEX,
-		{
-			...rest,
-			doctorName: search || undefined,
-		},
-		[filters]
-	)
+	const getAppointments = useFetch(ApiUrls.APPOINTMENT.INDEX, filters, [
+		filters.status,
+		filters.page,
+		filters.pageSize,
+	])
 	const cancelAppointment = useAxiosSubmit({
 		url: ApiUrls.APPOINTMENT.CANCEL(selectedAppointment?.id),
-		method: 'POST',
+		method: 'PUT',
 		data: { reason: cancelReason },
+		onSuccess: async () => {
+			await getAppointments.fetch()
+			setSelectedAppointment(null)
+		},
 	})
 
-	const handleCancelAppointment = useCallback(async () => {
+	const handleCancelAppointment = async () => {
 		try {
 			await cancelAppointment.submit()
 		} finally {
 			setCancelReason('')
 			setOpenCancelDialog(false)
 		}
-	}, [cancelAppointment, setOpenCancelDialog, setCancelReason])
+	}
+
+	const onFilterClick = async () => {
+		setFilters((prev) => ({ ...prev, page: 1 }))
+		await getAppointments.fetch()
+	}
 
 	return (
 		<Box my={3}>
-			{getAppointments.loading ? (
-				<Paper sx={{ p: 2 }}>
-					<SkeletonBox numberOfBoxes={4} heights={[50, 100, 300, 50]} />
-				</Paper>
-			) : (
-				<ManageAppointmentBasePage
-					headerTitle={t('appointment.title.appointment_history')}
-					filters={filters}
-					setFilters={setFilters}
-					selectedAppointment={selectedAppointment}
-					setSelectedAppointment={setSelectedAppointment}
-					drawerButtons={
-						(selectedAppointment?.status === 'scheduled' ||
-							selectedAppointment?.status === 'confirmed') && (
-							<Button onClick={() => setOpenCancelDialog(true)} color='error' variant='contained'>
-								{t('appointment.button.cancel_appointment')}
-							</Button>
-						)
-					}
-					totalAppointments={getAppointments.data?.totalCount || 0}
-					appointments={getAppointments.data?.collection || []}
-					appointmentSpecialties={getAppointments.data?.specialties || []}
-					appointmentDoctors={getAppointments.data?.doctors || []}
-				/>
-			)}
+			<ManageAppointmentBasePage
+				headerTitle={t('appointment.title.appointment_history')}
+				filters={filters}
+				setFilters={setFilters}
+				selectedAppointment={selectedAppointment}
+				setSelectedAppointment={setSelectedAppointment}
+				onFilterClick={onFilterClick}
+				totalAppointments={getAppointments.data?.totalCount || 0}
+				appointments={getAppointments.data?.collection || []}
+				appointmentSpecialties={getAppointments.data?.specialties || []}
+				appointmentDoctors={getAppointments.data?.doctors || []}
+				loading={getAppointments.loading}
+				drawerButtons={
+					(selectedAppointment?.status === 'scheduled' ||
+						selectedAppointment?.status === 'confirmed') && (
+						<Button onClick={() => setOpenCancelDialog(true)} color='error' variant='contained'>
+							{t('appointment.button.cancel_appointment')}
+						</Button>
+					)
+				}
+			/>
 			<ConfirmationDialog
 				key={selectedAppointment?.id}
 				open={openCancelDialog}

@@ -55,6 +55,8 @@ const lightPalette = {
 	background: {
 		default: '#F7FAFC',
 		paper: '#FFFFFF',
+		lightBlue: '#E3F2FD',
+		lightGray: '#F1F5F9',
 	},
 	text: {
 		primary: '#0F172A',
@@ -143,6 +145,8 @@ const darkPalette = {
 	background: {
 		default: '#0B1220',
 		paper: '#0F172A',
+		lightBlue: '#1E40AF',
+		lightGray: '#1E293B',
 	},
 	text: {
 		primary: '#E2E8F0',

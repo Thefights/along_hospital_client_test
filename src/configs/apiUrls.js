@@ -7,19 +7,28 @@ export const ApiUrls = {
 		PROFILE: `/user/profile`,
 		CART: `/user/cart`,
 	},
+	DOCTOR: {
+		INDEX: `/doctor`,
+		MANAGEMENT: {
+			INDEX: `/doctor-management`,
+			GET_ALL: `/doctor-management/all`,
+		},
+	},
 	SPECIALTY: {
 		INDEX: `/specialty`,
 	},
 	APPOINTMENT: {
 		INDEX: `/appointment`,
 		CANCEL: (id) => `/appointment/cancel/${id}`,
-		BASE_MANAGEMENT: `/appointment-management`,
-		GET_ALL_BY_DOCTOR_ID: (id) => `/appointment-management/doctor/${id}`,
-		ASSIGN_DOCTOR: (appointmentId, doctorId) =>
-			`/appointment-management/assign/${appointmentId}/doctor/${doctorId}`,
-		DENY_ASSIGNMENT: (appointmentId) => `/appointment-management/deny-assignment/${appointmentId}`,
-		CONFIRM: (id) => `/appointment-management/confirm/${id}`,
-		COMPLETE: (id) => `/appointment-management/complete/${id}`,
-		REFUSE: (id) => `/appointment-management/refuse/${id}`,
+		MANAGEMENT: {
+			INDEX: `/appointment-management`,
+			GET_ALL_BY_CURRENT_DOCTOR: `/appointment-management/doctor`,
+			ASSIGN_DOCTOR: (appointmentId, doctorId) =>
+				`/appointment-management/assign/${appointmentId}/doctor/${doctorId}`,
+			DENY_ASSIGNMENT: (appointmentId) => `/appointment-management/deny-assignment/${appointmentId}`,
+			CONFIRM: (id) => `/appointment-management/confirm/${id}`,
+			COMPLETE: (id) => `/appointment-management/complete/${id}`,
+			REFUSE: (id) => `/appointment-management/refuse/${id}`,
+		},
 	},
 }

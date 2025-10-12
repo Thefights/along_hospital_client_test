@@ -4,7 +4,7 @@ import { ApiUrls } from '@/configs/apiUrls'
 import { routeUrls } from '@/configs/routeUrls'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
-import { setCartStore, setProfileStore } from '@/redux/reducers/userReducer'
+import { setCartStore, setProfileStore } from '@/redux/reducers/patientReducer'
 import {
 	AssignmentOutlined,
 	EventAvailable,
@@ -24,7 +24,7 @@ const LayoutPatient = () => {
 
 	const cartCountStore = useReduxStore({
 		url: ApiUrls.USER.CART,
-		selector: (s) => s.user.cart,
+		selector: (s) => s.patient.cart,
 		setStore: setCartStore,
 		dataToGet: (cart) => cart?.cartDetails?.length || 0,
 	})
