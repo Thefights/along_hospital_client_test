@@ -32,7 +32,7 @@ const DoctorPickerDialog = ({ open, onClose, onSubmit }) => {
 					type: 'select',
 					options: [
 						{ value: '', label: t('dialog.doctor_picker.title'), disabled: true },
-						getDoctorStore.data,
+						...getDoctorStore.data,
 					],
 				},
 			]}

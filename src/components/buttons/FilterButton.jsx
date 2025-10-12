@@ -5,7 +5,7 @@ import { Button } from '@mui/material'
 /**
  * @typedef {Object} CustomProps
  * @property {function} props.onFilterClick
- * /
+ */
 
 /**
  * @param {import('@mui/material').ButtonProps & CustomProps} props

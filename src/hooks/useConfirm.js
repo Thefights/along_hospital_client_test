@@ -4,7 +4,7 @@ import { useContext } from 'react'
 /**
  * @typedef {Object} ConfirmOptions
  * @property {string} title
- * @property {string|import('react').ReactNode=} description
+ * @property {string|import('react').ReactNode} description
  * @property {import('@mui/material').ButtonProps['color']} confirmColor
  * @property {string} confirmText
  * @property {import('@mui/material').DialogProps['maxWidth']} width
