@@ -1,4 +1,6 @@
+import { routeUrls } from '@/configs/routeUrls'
 import LayoutManager from '@/layouts/LayoutManager'
+import ManagerAppointmentManagementPage from '@/pages/managers/ManagerAppointmentManagementPage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 
@@ -7,7 +9,11 @@ const RouteManager = () => {
 		<Routes>
 			<Route element={<ProtectedRoute allowRoles={[]} />}>
 				<Route element={<LayoutManager />}>
-					<Route path='/' element={<div>Dashboard</div>} />
+					<Route path={routeUrls.MANAGER.DASHBOARD} element={<div>Dashboard</div>} />
+					<Route
+						path={routeUrls.MANAGER.APPOINTMENT_MANAGEMENT}
+						element={<ManagerAppointmentManagementPage />}
+					/>
 				</Route>
 			</Route>
 		</Routes>

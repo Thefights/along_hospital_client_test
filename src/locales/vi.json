@@ -18,7 +18,13 @@
         "filter": "Lọc",
         "image_preview": "Xem trước hình ảnh",
         "date": "Ngày",
-        "time": "Thời gian"
+        "time": "Thời gian",
+        "role": {
+            "manager": "Quản lý",
+            "doctor": "Bác sĩ",
+            "patient": "Bệnh nhân",
+            "guest": "Khách"
+        }
     },
     "tooltip": {
         "menu": "Menu",
@@ -30,6 +36,12 @@
         "switch_light": "Chuyển sang chế độ sáng",
         "collapse": "Thu gọn",
         "expand": "Mở rộng"
+    },
+    "dialog": {
+        "doctor_picker": {
+            "title": "Chọn bác sĩ",
+            "confirm_button": "Chọn"
+        }
     },
     "error": {
         "required": "Trường này là bắt buộc",
@@ -77,7 +89,9 @@
             "cancel_appointment": "Hủy cuộc hẹn",
             "deny_assignment": "Từ chối cuộc hẹn",
             "accept_assignment": "Chấp nhận cuộc hẹn",
-            "complete_appointment": "Hoàn thành cuộc hẹn"
+            "complete_appointment": "Hoàn thành cuộc hẹn",
+            "assign_doctor": "Chỉ định bác sĩ",
+            "refuse_appointment": "Từ chối cuộc hẹn"
         },
         "field": {
             "purpose": "Mục đích",
@@ -101,7 +115,9 @@
             "confirm_accept_title": "Chấp nhận cuộc hẹn?",
             "confirm_accept_description": "Bạn có chắc chắn muốn chấp nhận cuộc hẹn này không?",
             "confirm_complete_title": "Hoàn thành cuộc hẹn?",
-            "confirm_complete_description": "Bạn có chắc chắn muốn đánh dấu cuộc hẹn này là đã hoàn thành không?"
+            "confirm_complete_description": "Bạn có chắc chắn muốn đánh dấu cuộc hẹn này là đã hoàn thành không?",
+            "confirm_refuse_title": "Từ chối cuộc hẹn?",
+            "confirm_refuse_description": "Vui lòng cung cấp lý do từ chối:"
         },
         "status": {
             "upcoming": "Sắp tới",

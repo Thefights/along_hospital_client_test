@@ -17,7 +17,13 @@
         "loading": "Loading...",
         "image_preview": "Image Preview",
         "date": "Date",
-        "time": "Time"
+        "time": "Time",
+        "role": {
+            "manager": "Manager",
+            "doctor": "Doctor",
+            "patient": "Patient",
+            "guest": "Guest"
+        }
     },
     "tooltip": {
         "menu": "Menu",
@@ -29,6 +35,12 @@
         "switch_light": "Switch to light mode",
         "collapse": "Collapse",
         "expand": "Expand"
+    },
+    "dialog": {
+        "doctor_picker": {
+            "title": "Select Doctor",
+            "confirm_button": "Select"
+        }
     },
     "error": {
         "required": "This field is required",
@@ -76,7 +88,9 @@
             "cancel_appointment": "Cancel Appointment",
             "deny_assignment": "Deny Assignment",
             "accept_assignment": "Accept Assignment",
-            "complete_appointment": "Complete Appointment"
+            "complete_appointment": "Complete Appointment",
+            "assign_doctor": "Assign Doctor",
+            "refuse_appointment": "Refuse Appointment"
         },
         "field": {
             "purpose": "Purpose",
@@ -100,7 +114,9 @@
             "confirm_accept_title": "Accept assignment?",
             "confirm_accept_description": "Are your sure to accept this assignment?",
             "confirm_complete_title": "Complete appointment?",
-            "confirm_complete_description": "Are you sure to mark this appointment as completed?"
+            "confirm_complete_description": "Are you sure to mark this appointment as completed?",
+            "confirm_refuse_title": "Refuse assignment?",
+            "confirm_refuse_description": "Please provide a reason for refusal:"
         },
         "status": {
             "upcoming": "Upcoming",
