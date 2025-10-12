@@ -70,10 +70,11 @@ const ManagerAppointmentManagementPage = () => {
 				setFilters={setFilters}
 				selectedAppointment={selectedAppointment}
 				setSelectedAppointment={setSelectedAppointment}
+				onFilterClick={onFilterClick}
 				totalAppointments={getAppointments.data?.totalCount || 0}
 				appointments={getAppointments.data?.collection || []}
-				onFilterClick={onFilterClick}
-				showSpecialtiesAndDoctorsFilter={false}
+				appointmentSpecialties={getAppointments.data?.specialties || []}
+				appointmentDoctors={getAppointments.data?.doctors || []}
 				loading={getAppointments.loading}
 				drawerButtons={
 					selectedAppointment?.status === 'scheduled' ? (

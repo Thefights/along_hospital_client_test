@@ -61,6 +61,11 @@ const PatientAppointmentHistoryPage = () => {
 				selectedAppointment={selectedAppointment}
 				setSelectedAppointment={setSelectedAppointment}
 				onFilterClick={onFilterClick}
+				totalAppointments={getAppointments.data?.totalCount || 0}
+				appointments={getAppointments.data?.collection || []}
+				appointmentSpecialties={getAppointments.data?.specialties || []}
+				appointmentDoctors={getAppointments.data?.doctors || []}
+				loading={getAppointments.loading}
 				drawerButtons={
 					(selectedAppointment?.status === 'scheduled' ||
 						selectedAppointment?.status === 'confirmed') && (
@@ -69,11 +74,6 @@ const PatientAppointmentHistoryPage = () => {
 						</Button>
 					)
 				}
-				totalAppointments={getAppointments.data?.totalCount || 0}
-				appointments={getAppointments.data?.collection || []}
-				appointmentSpecialties={getAppointments.data?.specialties || []}
-				appointmentDoctors={getAppointments.data?.doctors || []}
-				loading={getAppointments.loading}
 			/>
 			<ConfirmationDialog
 				key={selectedAppointment?.id}

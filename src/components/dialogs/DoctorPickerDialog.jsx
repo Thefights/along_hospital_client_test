@@ -30,7 +30,10 @@ const DoctorPickerDialog = ({ open, onClose, onSubmit }) => {
 					key: 'doctorId',
 					title: t('text.role.doctor'),
 					type: 'select',
-					options: getDoctorStore.data,
+					options: [
+						{ value: '', label: t('dialog.doctor_picker.title'), disabled: true },
+						getDoctorStore.data,
+					],
 				},
 			]}
 			submitLabel={t('dialog.doctor_picker.confirm_button')}
