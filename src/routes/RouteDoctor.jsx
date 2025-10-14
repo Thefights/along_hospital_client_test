@@ -1,6 +1,6 @@
 import { routeUrls } from '@/configs/routeUrls'
 import LayoutDoctor from '@/layouts/LayoutDoctor'
-import DoctorAppointmentManagementPage from '@/pages/doctors/DoctorAppointmentManagementPage'
+import DoctorAppointmentManagementPage from '@/pages/doctors/doctorAppointmentManagementPage/DoctorAppointmentManagementPage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 

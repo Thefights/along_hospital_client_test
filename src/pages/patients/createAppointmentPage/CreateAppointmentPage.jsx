@@ -1,5 +1,5 @@
-import LeftCreateAppointmentSection from '@/components/sections/createAppointmentSections/LeftCreateAppointmentSection'
-import RightCreateAppointmentSection from '@/components/sections/createAppointmentSections/RightCreateAppointmentSection'
+import LeftCreateAppointmentSection from '@/pages/patients/createAppointmentPage/sections/LeftCreateAppointmentSection'
+import RightCreateAppointmentSection from '@/pages/patients/createAppointmentPage/sections/RightCreateAppointmentSection'
 import { ApiUrls } from '@/configs/apiUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'

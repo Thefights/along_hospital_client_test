@@ -18,7 +18,7 @@ import { Outlet } from 'react-router-dom'
 const LayoutPatient = () => {
 	const profileStore = useReduxStore({
 		url: ApiUrls.USER.PROFILE,
-		selector: (s) => s.user.profile,
+		selector: (s) => s.patient.profile,
 		setStore: setProfileStore,
 	})
 
