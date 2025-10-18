@@ -1,4 +1,4 @@
-import { EnumConfig } from '@/configs/enumConfig'
+import useEnum from '@/hooks/useEnum'
 import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
@@ -47,6 +47,7 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 
 	const [submitted, setSubmitted] = useState(false)
 	const { t } = useTranslation()
+	const _enum = useEnum()
 
 	const { values, setField, handleChange, registerRef, validateAll } = useForm(defaultValues)
 	const { renderField, hasRequiredMissing } = useFieldRenderer(
@@ -60,12 +61,12 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 	)
 
 	const basicInfoFields = [
-		{ key: 'dateOfBirth', title: 'DOB', type: 'date' },
+		{ key: 'dateOfBirth', title: t('profile.field.date_of_birth'), type: 'date' },
 		{
 			key: 'gender',
 			title: t('profile.field.gender'),
 			type: 'select',
-			options: EnumConfig.genderOptions,
+			options: _enum.genderOptions,
 		},
 		{ key: 'phone', title: t('profile.field.phone'), validate: [maxLen(15)], type: 'tel' },
 		{
@@ -100,7 +101,7 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 			key: 'bloodType',
 			title: t('profile.field.blood_type'),
 			type: 'select',
-			options: EnumConfig.bloodTypeOptions,
+			options: _enum.bloodTypeOptions,
 		},
 	]
 	const allergyFields = [
@@ -109,7 +110,7 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 			key: 'severityLevel',
 			title: t('profile.field.allergy.severity'),
 			type: 'select',
-			options: EnumConfig.severityLevelOptions,
+			options: _enum.severityLevelOptions,
 		},
 		{
 			key: 'reaction',

@@ -1,4 +1,4 @@
-import { EnumConfig } from '@/configs/enumConfig'
+import useEnum from '@/hooks/useEnum'
 import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
@@ -34,6 +34,7 @@ const DoctorInfoDialog = ({ open, onClose, doctorInfo = {} }) => {
 	}
 
 	const { t } = useTranslation()
+	const _enum = useEnum()
 
 	const { values, setField, handleChange, registerRef } = useForm(defaultValues)
 	const { renderField } = useFieldRenderer(
@@ -47,12 +48,12 @@ const DoctorInfoDialog = ({ open, onClose, doctorInfo = {} }) => {
 	)
 
 	const basicInfoFields = [
-		{ key: 'dateOfBirth', title: 'DOB', type: 'date' },
+		{ key: 'dateOfBirth', title: t('profile.field.date_of_birth'), type: 'date' },
 		{
 			key: 'gender',
 			title: t('profile.field.gender'),
 			type: 'select',
-			options: EnumConfig.genderOptions,
+			options: _enum.genderOptions,
 		},
 		{ key: 'phone', title: t('profile.field.phone'), validate: [maxLen(15)], type: 'tel' },
 		{
