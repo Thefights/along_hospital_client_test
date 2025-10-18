@@ -149,7 +149,7 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 
 		onSave(values)
 	}
-	console.log(values.bloodType)
+
 	return (
 		<Dialog open={open} onClose={onClose} maxWidth='md' fullWidth scroll='body'>
 			<DialogTitle

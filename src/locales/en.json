@@ -54,6 +54,10 @@
                 "reaction": "Reaction",
                 "add_allergy": "Add Allergy"
             }
+        },
+        "doctor_info": {
+            "basic_info": "Basic Info",
+            "professional_info": "Professional Info"
         }
     },
     "enum": {
@@ -103,6 +107,9 @@
                 "severity": "Severity",
                 "reaction": "Reaction"
             },
+            "hire_date": "Hire Date",
+            "department": "Department",
+            "qualification": "Qualification",
             "specialty": "Specialty"
         }
     },

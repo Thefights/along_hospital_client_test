@@ -55,6 +55,10 @@
                 "reaction": "Phản ứng",
                 "add_allergy": "Thêm dị ứng"
             }
+        },
+        "doctor_info": {
+            "basic_info": "Thông tin cơ bản",
+            "professional_info": "Thông tin chuyên môn"
         }
     },
     "enum": {
@@ -104,6 +108,9 @@
                 "severity": "Mức độ",
                 "reaction": "Phản ứng"
             },
+            "hire_date": "Ngày tuyển dụng",
+            "department": "Khoa",
+            "qualification": "Trình độ",
             "specialty": "Chuyên khoa"
         }
     },
