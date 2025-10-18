@@ -32,7 +32,7 @@ const ChildFieldRenderField = ({
 			{...(child.props || {})}
 		>
 			<MenuItem value='' disabled>
-				{t('text.select_options')}
+				-- {t('text.select_options')} --
 			</MenuItem>
 			{opts &&
 				opts.length > 0 &&
