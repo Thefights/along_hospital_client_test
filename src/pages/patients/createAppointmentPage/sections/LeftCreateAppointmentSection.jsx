@@ -1,6 +1,5 @@
 import ConfirmationButton from '@/components/generals/ConfirmationButton'
 import SkeletonTextField from '@/components/skeletons/SkeletonTextField'
-import { defaultScrollbarStyle } from '@/configs/defaultStylesConfig'
 import useTranslation from '@/hooks/useTranslation'
 import { Divider, Stack, Typography } from '@mui/material'
 
@@ -19,15 +18,7 @@ const LeftCreateAppointmentSection = ({
 			<Typography variant='h4' sx={{ color: 'text.primary' }}>
 				{t('appointment.title.create_appointment')}
 			</Typography>
-			<Stack
-				spacing={3}
-				px={2}
-				maxHeight={500}
-				overflow={'auto'}
-				sx={{
-					...defaultScrollbarStyle,
-				}}
-			>
+			<Stack spacing={3} px={2} maxHeight={500} overflow={'auto'}>
 				{loadingGet ? (
 					<SkeletonTextField numberOfRow={patientFields?.length || 0} withTitle withLabel />
 				) : (
