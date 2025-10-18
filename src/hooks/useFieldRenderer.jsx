@@ -4,7 +4,7 @@ import ImageRenderField from '@/components/fieldRenderers/ImageRenderField'
 import ImageTileRenderField from '@/components/fieldRenderers/ImageTileRenderField'
 import ValidationTextField from '@/components/textFields/ValidationTextField'
 import { isStringArray } from '@/utils/handleBooleanUtil'
-import { normalizeOptions } from '@/utils/handleObjectUtil'
+import { getObjectValueFromStringPath, normalizeOptions } from '@/utils/handleObjectUtil'
 import { Delete } from '@mui/icons-material'
 import { Box, Button, IconButton, MenuItem, Stack, Typography } from '@mui/material'
 import { useCallback, useEffect, useRef } from 'react'
@@ -69,14 +69,17 @@ export default function useFieldRenderer(
 				label={field.title}
 				required={field.required ?? true}
 				type={field.type || 'text'}
-				value={values[field.key] || ''}
+				value={getObjectValueFromStringPath(values, field.key) || ''}
 				onChange={handleChange}
 				validate={field.validate}
 				multiline={!!field.multiple}
-				rows={field.multiple}
+				minRows={field.multiple}
 				size={textFieldSize}
 				{...(field.props || {})}
 			>
+				<MenuItem value='' disabled>
+					{t('text.select_options')}
+				</MenuItem>
 				{opts &&
 					opts.length > 0 &&
 					opts.map((opt) => (

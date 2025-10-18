@@ -192,6 +192,77 @@ const customTheme = (palette, otherComponents) => ({
 		MuiButtonBase: { defaultProps: { disableRipple: true } },
 		MuiDivider: { styleOverrides: { root: { borderColor: palette.divider } } },
 		MuiIconButton: { styleOverrides: { root: { color: palette.text.primary } } },
+		MuiFormLabel: {
+			styleOverrides: {
+				root: {
+					color: palette.text.secondary,
+					opacity: 0.9,
+					'&.Mui-focused': { color: palette.primary.main, opacity: 1 },
+					'&.Mui-error': { color: palette.error.main, opacity: 1 },
+					'&.Mui-disabled': {
+						color: palette.text.secondary,
+						opacity: 0.7,
+					},
+				},
+			},
+		},
+		MuiFormControl: {
+			styleOverrides: {
+				root: {
+					'&:has(.MuiOutlinedInput-root input[readonly]) .MuiInputLabel-root': {
+						color: palette.info.main,
+						opacity: 1,
+					},
+				},
+			},
+		},
+		MuiInputBase: {
+			styleOverrides: {
+				root: {
+					'&.Mui-disabled': {
+						opacity: 1,
+						backgroundColor:
+							palette.action?.disabledBackground || (palette.mode === 'dark' ? '#0F172A' : '#F3F4F6'),
+					},
+					'&.Mui-disabled .MuiInputBase-input': {
+						color: palette.text.secondary,
+						WebkitTextFillColor: palette.text.secondary,
+					},
+				},
+				input: {
+					'&.Mui-disabled': {
+						color: palette.text.secondary,
+						WebkitTextFillColor: palette.text.secondary,
+					},
+					'&[readonly]': {
+						backgroundColor: palette.mode === 'dark' ? 'rgba(255,255,255,0.03)' : '#F8FAFC',
+						cursor: 'default',
+						caretColor: 'transparent',
+					},
+				},
+			},
+		},
+
+		MuiOutlinedInput: {
+			styleOverrides: {
+				root: {
+					'&.Mui-disabled .MuiOutlinedInput-notchedOutline': {
+						borderColor: palette.divider,
+					},
+					'&:has(input[readonly])': {
+						backgroundColor: palette.mode === 'dark' ? 'rgba(255,255,255,0.03)' : '#F8FAFF',
+					},
+					'&:has(input[readonly]) .MuiOutlinedInput-notchedOutline': {
+						borderColor: palette.primary.main,
+					},
+				},
+				input: {
+					'&[readonly]': {
+						color: palette.text.primary,
+					},
+				},
+			},
+		},
 		...otherComponents,
 	},
 })
