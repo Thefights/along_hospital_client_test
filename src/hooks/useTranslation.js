@@ -6,8 +6,8 @@ export default function useTranslation() {
 	const [language, setLanguage] = useLocalStorage('language', 'en')
 	const fallbackLanguage = 'en'
 
-	const dict = useMemo(() => translations[language] ?? {}, [language])
-	const fallbackDict = useMemo(() => translations[fallbackLanguage] ?? {}, [])
+	const dict = useMemo(() => resolveDict(translations, language) ?? {}, [language])
+	const fallbackDict = useMemo(() => resolveDict(translations, fallbackLanguage) ?? {}, [])
 
 	const t = useCallback(
 		(key, params) => {
@@ -27,15 +27,13 @@ export default function useTranslation() {
 }
 
 export const getTranslation = (key, params) => {
-	let language = window?.localStorage?.getItem('language') || '"en"'
-	const fallbackLanguage = 'en'
-
+	let language = window?.localStorage?.getItem('language') || 'en'
 	try {
-		language = language.toLowerCase().slice(1, -1)
+		language = JSON.parse(language)
 	} catch {}
 
-	const dict = translations[language]
-	const fallbackDict = translations[fallbackLanguage]
+	const dict = resolveDict(translations, language)
+	const fallbackDict = resolveDict(translations, 'en')
 
 	const keys = key.split('.')
 	const val = getNestedTranslation(dict, keys) || getNestedTranslation(fallbackDict, keys) || key
@@ -52,6 +50,11 @@ function getNestedTranslation(dict, keys) {
 function interpolate(str, params) {
 	if (!params || typeof str !== 'string') return str
 	return str.replace(/\{(\w+)\}/g, (_, k) => (k in params ? String(params[k]) : `{${k}}`))
+}
+
+function resolveDict(mod, lang) {
+	const m = mod?.[lang]
+	return m && m.default ? m.default : m || {}
 }
 
 // Usage example:

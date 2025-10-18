@@ -1,4 +1,3 @@
-// useForm.js
 import { useCallback, useRef, useState } from 'react'
 
 export function useForm(initialValues = {}) {
@@ -8,7 +7,25 @@ export function useForm(initialValues = {}) {
 
 	const handleChange = useCallback((e) => {
 		const { name, value } = e.target
-		setValues((prev) => ({ ...prev, [name]: value }))
+		const keys = name.split('.')
+
+		setValues((prev) => {
+			const newValues = { ...prev }
+			let nested = newValues
+
+			for (let i = 0; i < keys.length - 1; i++) {
+				const key = keys[i]
+				if (Array.isArray(nested[key])) {
+					nested[key] = [...nested[key]]
+				} else {
+					nested[key] = { ...nested[key] }
+				}
+				nested = nested[key]
+			}
+
+			nested[keys[keys.length - 1]] = value
+			return newValues
+		})
 	}, [])
 
 	const setField = useCallback((name, value) => {

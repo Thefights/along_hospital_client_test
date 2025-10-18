@@ -1,11 +1,13 @@
 {
     "button": {
+        "close": "Close",
         "submit": "Submit",
         "submitting": "Submitting",
         "cancel": "Cancel",
         "create": "Create",
         "update": "Update",
         "delete": "Delete",
+        "save": "Save",
         "add_row": "Add Row",
         "login": "Login",
         "filter": "Filter"
@@ -16,6 +18,7 @@
         "search": "Search...",
         "loading": "Loading...",
         "image_preview": "Image Preview",
+        "select_options": "Select options",
         "date": "Date",
         "time": "Time",
         "role": {
@@ -40,6 +43,33 @@
         "doctor_picker": {
             "title": "Select Doctor",
             "confirm_button": "Select"
+        },
+        "patient_info": {
+            "basic_info": "Basic Info",
+            "health_info": "Health Info",
+            "allergies": "Allergies",
+            "allergy_table": {
+                "name": "Name",
+                "severity": "Severity Level",
+                "reaction": "Reaction",
+                "add_allergy": "Add Allergy"
+            }
+        },
+        "doctor_info": {
+            "basic_info": "Basic Info",
+            "professional_info": "Professional Info"
+        }
+    },
+    "enum": {
+        "severity_level": {
+            "mild": "Mild",
+            "moderate": "Moderate",
+            "severe": "Severe"
+        },
+        "gender": {
+            "male": "Male",
+            "female": "Female",
+            "other": "Other"
         }
     },
     "error": {
@@ -67,8 +97,19 @@
             "address": "Address",
             "date_of_birth": "Date of Birth",
             "gender": "Gender",
-            "blood_type": "Blood Type",
+            "height": "Height",
+            "weight": "Weight",
             "height_weight": "Height/Weight",
+            "blood_type": "Blood Type",
+            "allergy": {
+                "allergy": "Allergy",
+                "name": "Name",
+                "severity": "Severity",
+                "reaction": "Reaction"
+            },
+            "hire_date": "Hire Date",
+            "department": "Department",
+            "qualification": "Qualification",
             "specialty": "Specialty"
         }
     },

@@ -40,17 +40,27 @@ const ValidationTextField = (
 
 	const allRules = useMemo(() => [...builtinRules, ...userRules], [builtinRules, userRules])
 
-	const run = useCallback(() => {
-		for (const r of allRules) {
-			const res = r(value)
-			if (res !== true) {
-				setError(res)
-				return false
+	const runWith = useCallback(
+		(val, { skipEmpty = false } = {}) => {
+			const isEmpty = val === '' || val === undefined || val === null
+			if (skipEmpty && isEmpty) {
+				setError('')
+				return true
 			}
-		}
-		setError('')
-		return true
-	}, [value, allRules])
+			for (const r of allRules) {
+				const res = r(val)
+				if (res !== true) {
+					setError(res)
+					return false
+				}
+			}
+			setError('')
+			return true
+		},
+		[allRules]
+	)
+
+	const run = useCallback(() => runWith(value), [runWith, value])
 
 	useImperativeHandle(ref, () => ({ validate: run }), [run])
 
@@ -74,8 +84,8 @@ const ValidationTextField = (
 			label={label}
 			value={value ?? undefined}
 			onChange={(e) => {
+				runWith(e.target.value, { skipEmpty: true })
 				onChange?.(e)
-				run()
 			}}
 			onBlur={run}
 			error={!!error}
