@@ -9,3 +9,12 @@ export const defaultAppointmentStatusStyle = (theme, status) => {
 	const p = map[status] || theme.palette.primary
 	return { bg: p.softBg || p.main + '1A', border: p.softBorder || p.main + '33', color: p.main }
 }
+
+export const defaultMedicalHistoryStatusStyle = (status) => {
+	const map = {
+		draft: 'warning',
+		processed: 'info',
+		paid: 'success',
+	}
+	return map[status] || 'primary'
+}
