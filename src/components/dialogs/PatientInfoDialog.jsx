@@ -58,6 +58,7 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 		'outlined',
 		'small'
 	)
+
 	const basicInfoFields = [
 		{ key: 'dateOfBirth', title: 'DOB', type: 'date' },
 		{
@@ -118,6 +119,8 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 			required: false,
 		},
 	]
+	const fields = [...basicInfoFields, ...healthInfoFields, ...allergyFields]
+
 	const height = parseFloat(values.height)
 	const weight = parseFloat(values.weight)
 	const bmi = height && weight ? (weight / (height / 100) ** 2).toFixed(1) : null
@@ -135,8 +138,6 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 			values.allergies.filter((a) => a.id !== id)
 		)
 	}
-
-	const fields = [...basicInfoFields, ...healthInfoFields, ...allergyFields]
 
 	const handleSave = () => {
 		setSubmitted(true)

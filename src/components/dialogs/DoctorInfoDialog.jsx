@@ -4,7 +4,7 @@ import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
 import { isEmail, maxLen } from '@/utils/validateUtil'
-import { Bloodtype, Close } from '@mui/icons-material'
+import { Close, School } from '@mui/icons-material'
 import {
 	Avatar,
 	Chip,
@@ -16,7 +16,6 @@ import {
 	Stack,
 	Typography,
 } from '@mui/material'
-import { useState } from 'react'
 
 const DoctorInfoDialog = ({ open, onClose, doctorInfo = {} }) => {
 	const defaultValues = {
@@ -34,19 +33,19 @@ const DoctorInfoDialog = ({ open, onClose, doctorInfo = {} }) => {
 		specialty: doctorInfo.specialty || '',
 	}
 
-	const [submitted, setSubmitted] = useState(false)
 	const { t } = useTranslation()
 
-	const { values, setField, handleChange, registerRef, validateAll } = useForm(defaultValues)
-	const { renderField, hasRequiredMissing } = useFieldRenderer(
+	const { values, setField, handleChange, registerRef } = useForm(defaultValues)
+	const { renderField } = useFieldRenderer(
 		values,
 		setField,
 		handleChange,
 		registerRef,
-		submitted,
+		false,
 		'outlined',
 		'small'
 	)
+
 	const basicInfoFields = [
 		{ key: 'dateOfBirth', title: 'DOB', type: 'date' },
 		{
@@ -71,7 +70,6 @@ const DoctorInfoDialog = ({ open, onClose, doctorInfo = {} }) => {
 			required: false,
 		},
 	]
-
 	const professionalInfoFields = [
 		{
 			key: 'hireDate',
@@ -106,11 +104,11 @@ const DoctorInfoDialog = ({ open, onClose, doctorInfo = {} }) => {
 				<Stack direction='row' spacing={2} alignItems='center'>
 					<Avatar src={getImageFromCloud(values.image)} sx={{ width: 80, height: 80 }} />
 					<Typography variant='h6'>{values.name}</Typography>
-					{values.bloodType && (
+					{values.specialty && (
 						<Chip
-							label={`${t('profile.field.blood_type')}: ${values.bloodType}`}
-							icon={<Bloodtype />}
-							color='error'
+							label={`${t('profile.field.specialty')}: ${values.specialty}`}
+							icon={<School />}
+							color='success'
 							size='small'
 						/>
 					)}
