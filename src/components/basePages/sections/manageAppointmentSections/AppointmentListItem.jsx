@@ -1,4 +1,4 @@
-import { defaultStatusStyle } from '@/configs/defaultStylesConfig'
+import { defaultAppointmentStatusStyle } from '@/configs/defaultStylesConfig'
 import useTranslation from '@/hooks/useTranslation'
 import { formatDatetimeToDDMMYYYY, formatDatetimeToMMDDYYYY } from '@/utils/formatDateUtil'
 import { Box, Card, CardActionArea, CardContent, Chip, Stack, Typography } from '@mui/material'
@@ -7,7 +7,7 @@ import { useTheme } from '@mui/material/styles'
 const AppointmentListItem = ({ appointment, onClick }) => {
 	const { language } = useTranslation()
 	const theme = useTheme()
-	const s = defaultStatusStyle(theme, appointment?.appointmentStatus)
+	const s = defaultAppointmentStatusStyle(theme, appointment?.appointmentStatus)
 	const dateString = appointment ? `${appointment?.date}T${appointment?.time}` : null
 	return (
 		<Card
