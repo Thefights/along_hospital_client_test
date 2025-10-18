@@ -1,5 +1,3 @@
-import LeftCreateAppointmentSection from '@/pages/patients/createAppointmentPage/sections/LeftCreateAppointmentSection'
-import RightCreateAppointmentSection from '@/pages/patients/createAppointmentPage/sections/RightCreateAppointmentSection'
 import { ApiUrls } from '@/configs/apiUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
@@ -7,6 +5,8 @@ import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
+import LeftCreateAppointmentSection from '@/pages/patients/createAppointmentPage/sections/LeftCreateAppointmentSection'
+import RightCreateAppointmentSection from '@/pages/patients/createAppointmentPage/sections/RightCreateAppointmentSection'
 import { setProfileStore } from '@/redux/reducers/patientReducer'
 import { maxLen } from '@/utils/validateUtil'
 import { Grid, Paper } from '@mui/material'
@@ -50,39 +50,33 @@ const CreateAppointmentPage = () => {
 			key: 'fullName',
 			title: t('profile.field.full_name'),
 			required: false,
-			props: { slotProps: { input: { readOnly: true } } },
 		},
 		{
 			key: 'email',
 			title: t('profile.field.email'),
 			type: 'email',
 			required: false,
-			props: { slotProps: { input: { readOnly: true } } },
 		},
 		{
 			key: 'phone',
 			title: t('profile.field.phone'),
 			required: false,
-			props: { slotProps: { input: { readOnly: true } } },
 		},
 		{
 			key: 'address',
 			title: t('profile.field.address'),
 			multiple: 3,
 			required: false,
-			props: { slotProps: { input: { readOnly: true } } },
 		},
 		{
 			key: 'dateOfBirth',
 			title: t('profile.field.date_of_birth'),
 			type: 'date',
-			props: { slotProps: { input: { readOnly: true } } },
 			required: false,
 		},
 		{
 			key: 'gender',
 			title: t('profile.field.gender'),
-			props: { slotProps: { input: { readOnly: true } } },
 			required: false,
 		},
 	]

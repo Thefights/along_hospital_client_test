@@ -35,7 +35,9 @@ const LeftCreateAppointmentSection = ({
 						<Typography variant='h6' sx={{ mb: 2, color: 'text.primary' }}>
 							{t('appointment.title.patient_info')}
 						</Typography>
-						<Stack spacing={2}>{patientFields.map((f) => renderField(f))}</Stack>
+						<Stack spacing={2}>
+							{patientFields.map((f) => renderField({ ...f, props: { disabled: true } }))}
+						</Stack>
 					</>
 				)}
 
