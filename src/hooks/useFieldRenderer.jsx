@@ -8,7 +8,7 @@ import { getObjectValueFromStringPath, normalizeOptions } from '@/utils/handleOb
 import { Delete } from '@mui/icons-material'
 import { Box, Button, IconButton, MenuItem, Stack, Typography } from '@mui/material'
 import { useCallback, useEffect, useRef } from 'react'
-import useFileUrls from './useFileUrls'
+import useFileUrls from './helpers/useFileUrls'
 import useTranslation from './useTranslation'
 
 export default function useFieldRenderer(

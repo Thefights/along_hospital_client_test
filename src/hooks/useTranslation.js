@@ -6,8 +6,8 @@ export default function useTranslation() {
 	const [language, setLanguage] = useLocalStorage('language', 'en')
 	const fallbackLanguage = 'en'
 
-	const dict = useMemo(() => translations[language] ?? {}, [language])
-	const fallbackDict = useMemo(() => translations[fallbackLanguage] ?? {}, [])
+	const dict = useMemo(() => resolveDict(translations, language) ?? {}, [language])
+	const fallbackDict = useMemo(() => resolveDict(translations, fallbackLanguage) ?? {}, [])
 
 	const t = useCallback(
 		(key, params) => {
