@@ -153,7 +153,7 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 	}
 
 	return (
-		<Dialog open={open} onClose={onClose} maxWidth='md' fullWidth scroll='body'>
+		<Dialog open={open} onClose={onClose} maxWidth='md' fullWidth scroll='paper'>
 			<DialogTitle
 				sx={{ p: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
 			>
