@@ -1,11 +1,13 @@
 {
     "button": {
+        "close": "Đóng",
         "submit": "Gửi",
         "submitting": "Đang gửi",
         "cancel": "Hủy",
         "create": "Tạo",
         "update": "Cập nhật",
         "delete": "Xóa",
+        "save": "Lưu",
         "add_row": "Thêm dòng",
         "login": "Đăng nhập",
         "filter": "Lọc"
@@ -17,6 +19,7 @@
         "loading": "Đang tải...",
         "filter": "Lọc",
         "image_preview": "Xem trước hình ảnh",
+        "select_options": "Chọn tùy chọn",
         "date": "Ngày",
         "time": "Thời gian",
         "role": {
@@ -41,6 +44,29 @@
         "doctor_picker": {
             "title": "Chọn bác sĩ",
             "confirm_button": "Chọn"
+        },
+        "patient_info": {
+            "basic_info": "Thông tin cơ bản",
+            "health_info": "Thông tin sức khỏe",
+            "allergies": "Dị ứng",
+            "allergy_table": {
+                "name": "Tên",
+                "severity": "Mức độ nghiêm trọng",
+                "reaction": "Phản ứng",
+                "add_allergy": "Thêm dị ứng"
+            }
+        }
+    },
+    "enum": {
+        "severity_level": {
+            "mild": "Nhẹ",
+            "moderate": "Trung bình",
+            "severe": "Nghiêm trọng"
+        },
+        "gender": {
+            "male": "Nam",
+            "female": "Nữ",
+            "other": "Khác"
         }
     },
     "error": {
@@ -68,8 +94,16 @@
             "address": "Địa chỉ",
             "date_of_birth": "Ngày sinh",
             "gender": "Giới tính",
-            "blood_type": "Nhóm máu",
+            "height": "Chiều cao",
+            "weight": "Cân nặng",
             "height_weight": "Chiều cao/Cân nặng",
+            "blood_type": "Nhóm máu",
+            "allergy": {
+                "allergy": "Dị ứng",
+                "name": "Tên",
+                "severity": "Mức độ",
+                "reaction": "Phản ứng"
+            },
             "specialty": "Chuyên khoa"
         }
     },
