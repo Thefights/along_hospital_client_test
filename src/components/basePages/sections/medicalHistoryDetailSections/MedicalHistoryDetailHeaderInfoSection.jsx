@@ -76,7 +76,7 @@ const MedicalHistoryDetailHeaderInfoSection = ({
 						<Stack direction='row' spacing={1} alignItems='center'>
 							<Avatar src={getImageFromCloud(medicalHistory?.doctor?.avatar)} />
 							<Button variant='text' onClick={onClickDoctorInfo}>
-								{medicalHistory?.doctor?.name ?? 'Test'}
+								{medicalHistory?.doctor?.name}
 							</Button>
 						</Stack>
 						{userInfoMappingFields.map((field) => (

@@ -13,6 +13,8 @@ const MedicalHistoryDetailPrescriptionSection = ({
 	const { t } = useTranslation()
 
 	const hasPrescription = Boolean(prescription)
+	const isDoctor = role === 'Doctor'
+	const isDraft = medicalHistoryStatus === 'Draft'
 
 	return (
 		<Paper sx={{ p: 3, borderRadius: 2, height: '100%' }}>
@@ -24,7 +26,7 @@ const MedicalHistoryDetailPrescriptionSection = ({
 					<Typography color='text.secondary'>
 						{t('medical_history.placeholder.no_prescription')}
 					</Typography>
-					{role === 'Doctor' && medicalHistoryStatus === 'Draft' && (
+					{isDoctor && isDraft && (
 						<Button variant='contained' onClick={onClickCreatePrescription}>
 							{t('medical_history.button.create_prescription')}
 						</Button>
@@ -68,12 +70,12 @@ const MedicalHistoryDetailPrescriptionSection = ({
 								</Paper>
 							))}
 					</Stack>
-					{role === 'Doctor' && medicalHistoryStatus === 'Draft' && (
+					{isDoctor && isDraft && (
 						<Button variant='contained' onClick={onClickUpdatePrescription}>
 							{t('medical_history.button.update_prescription')}
 						</Button>
 					)}
-					{medicalHistoryStatus !== 'Draft' && (
+					{!isDraft && (
 						<Button variant='outlined' onClick={onClickPrintPrescription}>
 							{t('medical_history.button.print_prescription')}
 						</Button>

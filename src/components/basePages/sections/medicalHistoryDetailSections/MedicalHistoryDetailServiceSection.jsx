@@ -22,8 +22,10 @@ const MedicalHistoryDetailServiceSection = ({
 	onDeleteMedicalHistoryService = (medicalServiceId) => {},
 }) => {
 	const confirm = useConfirm()
-
 	const { t } = useTranslation()
+
+	const isDoctor = role === 'Doctor'
+	const isDraft = medicalHistoryStatus === 'Draft'
 
 	const handleDelete = async (medicalServiceId) => {
 		const confirmed = await confirm({
@@ -93,7 +95,7 @@ const MedicalHistoryDetailServiceSection = ({
 					</TableBody>
 				</Table>
 			</TableContainer>
-			{role === 'Doctor' && medicalHistoryStatus === 'Draft' && (
+			{isDoctor && isDraft && (
 				<Button variant='contained' onClick={onOpenCreateMedicalHistoryService} sx={{ mt: 2 }}>
 					{t('medical_history.button.add_service')}
 				</Button>

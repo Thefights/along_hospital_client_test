@@ -13,7 +13,13 @@ const MedicalHistoryDetailComplaintSection = ({
 	const _enum = useEnum()
 
 	const hasComplaint = Boolean(complaint)
-	const isComplaintDone = complaint?.complaintResolveStatus === 'Resolved'
+
+	const isPatientRole = role === 'Patient'
+	const isManagerRole = role === 'Manager'
+
+	const isResolvedStatus = complaint?.complaintResolveStatus === 'Resolved'
+	const isDraftStatus = complaint?.complaintResolveStatus === 'Draft'
+	const isClosedStatus = complaint?.complaintResolveStatus === 'Closed'
 
 	return (
 		<Paper sx={{ p: 3, borderRadius: 2, height: '100%' }}>
@@ -23,7 +29,7 @@ const MedicalHistoryDetailComplaintSection = ({
 			{!hasComplaint ? (
 				<Stack alignItems='center' justifyContent='center' spacing={2} sx={{ py: 4 }}>
 					<Typography color='text.secondary'>{t('medical_history.placeholder.no_complaint')}</Typography>
-					{role === 'Patient' && (
+					{isPatientRole && (
 						<Button variant='contained' onClick={onClickCreateComplaint}>
 							{t('medical_history.button.create_complaint')}
 						</Button>
@@ -38,21 +44,22 @@ const MedicalHistoryDetailComplaintSection = ({
 						{t('medical_history.field.complaint.content')}: {complaint?.Content}
 					</Typography>
 					<Typography variant='body2'>
-						{t('medical_history.field.complaint.response')}: {isComplaintDone ? complaint?.response : '-'}
+						{t('medical_history.field.complaint.response')}:{' '}
+						{isResolvedStatus ? complaint?.response : '-'}
 					</Typography>
 					<Typography variant='body2'>
 						{t('medical_history.field.complaint.type')}: {complaint?.complaintType}
 					</Typography>
 					<Typography variant='body2'>
 						{t('medical_history.field.complaint.resolve_status')}:{' '}
-						{complaint?.complaintResolveStatus === 'Drafted'
+						{isDraftStatus
 							? getEnumLabelByValue(_enum.complaintResolveStatusOptions, 'Pending')
 							: getEnumLabelByValue(
 									_enum.complaintResolveStatusOptions,
 									complaint?.complaintResolveStatus
 							  )}
 					</Typography>
-					{role === 'Manager' && !isComplaintDone && complaint?.complaintResolveStatus !== 'Closed' && (
+					{isManagerRole && !isResolvedStatus && !isClosedStatus && (
 						<Button variant='contained' sx={{ mt: 2 }} onClick={onClickRespondComplaint}>
 							{t('medical_history.button.respond_complaint')}
 						</Button>
