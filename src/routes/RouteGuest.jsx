@@ -3,6 +3,8 @@ import LayoutGuest from '@/layouts/LayoutGuest'
 import LayoutPatient from '@/layouts/LayoutPatient'
 import HomePage from '@/pages/guests/HomePage'
 import LoginPage from '@/pages/guests/LoginPage'
+import TestDialog from '@/pages/TestDialog'
+import TestTable from '@/pages/TestTable'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 
@@ -15,6 +17,8 @@ const RouteGuest = () => {
 				{/* This is route with layout */}
 				<Route element={auth?.role !== null ? <LayoutPatient /> : <LayoutGuest />}>
 					<Route path='/' index element={<HomePage />} />
+					<Route path='/test' element={<TestTable />} />
+					<Route path='/test2' element={<TestDialog />} />
 				</Route>
 
 				{/* This is route without layout */}
