@@ -7,7 +7,7 @@ import { setMedicalServicesStore } from '@/redux/reducers/managementReducer'
 import { numberHigherThan } from '@/utils/validateUtil'
 import { Stack, Typography } from '@mui/material'
 
-const CreateMedicalHistoryServiceDialog = ({ open, onClose, onSubmit = (values) => {} }) => {
+const CreateMedicalHistoryDetailDialog = ({ open, onClose, onSubmit = (values) => {} }) => {
 	const { t } = useTranslation()
 	const medicalServiceStore = useReduxStore({
 		url: ApiUrls.MEDICAL_SERVICE.MANAGEMENT.GET_ALL,
@@ -18,7 +18,7 @@ const CreateMedicalHistoryServiceDialog = ({ open, onClose, onSubmit = (values) 
 	const fields = [
 		{
 			key: 'medicalServiceId',
-			title: 'Medicine Service',
+			title: t('medical_history.field.medical_history_detail.medical_service'),
 			type: 'select',
 			options: medicalServiceStore?.data || [],
 			renderOption: (option) => (
@@ -40,7 +40,7 @@ const CreateMedicalHistoryServiceDialog = ({ open, onClose, onSubmit = (values) 
 		},
 		{
 			key: 'quantity',
-			title: 'Quantity',
+			title: t('medical_history.field.medical_history_detail.quantity'),
 			type: 'number',
 			validate: [numberHigherThan(1)],
 		},
@@ -50,7 +50,7 @@ const CreateMedicalHistoryServiceDialog = ({ open, onClose, onSubmit = (values) 
 		<GenericFormDialog
 			open={open}
 			onClose={onClose}
-			title='Add new Medical Service'
+			title={t('medical_history.dialog.title.add_medical_service')}
 			fields={fields}
 			onSubmit={({ values }) => onSubmit(values)}
 			submitButtonColor='primary'
@@ -59,4 +59,4 @@ const CreateMedicalHistoryServiceDialog = ({ open, onClose, onSubmit = (values) 
 	)
 }
 
-export default CreateMedicalHistoryServiceDialog
+export default CreateMedicalHistoryDetailDialog

@@ -1,3 +1,4 @@
+import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
 import { Avatar, Button, Divider, Paper, Stack, Typography } from '@mui/material'
 
@@ -9,29 +10,33 @@ const MedicalHistoryDetailPrescriptionSection = ({
 	onClickUpdatePrescription,
 	onClickPrintPrescription,
 }) => {
+	const { t } = useTranslation()
+
 	const hasPrescription = Boolean(prescription)
 
 	return (
 		<Paper sx={{ p: 3, borderRadius: 2, height: '100%' }}>
 			<Typography variant='h6' gutterBottom>
-				Prescription
+				{t('medical_history.title.prescription')}
 			</Typography>
 			{!hasPrescription ? (
 				<Stack alignItems='center' justifyContent='center' spacing={2} sx={{ py: 4 }}>
-					<Typography color='text.secondary'>No prescription yet</Typography>
+					<Typography color='text.secondary'>
+						{t('medical_history.placeholder.no_prescription')}
+					</Typography>
 					{role === 'Doctor' && medicalHistoryStatus === 'Draft' && (
 						<Button variant='contained' onClick={onClickCreatePrescription}>
-							Create Prescription
+							{t('medical_history.button.create_prescription')}
 						</Button>
 					)}
 				</Stack>
 			) : (
 				<Stack spacing={2}>
 					<Typography variant='body2' color='text.secondary'>
-						Doctor Note: {prescription?.doctorNote}
+						{t('medical_history.field.prescription.doctor_note')}: {prescription?.doctorNote}
 					</Typography>
 					<Typography variant='body2' color='text.secondary'>
-						Medication Days: {prescription?.medicationDays}
+						{t('medical_history.field.prescription.medication_days')}: {prescription?.medicationDays}
 					</Typography>
 					<Divider />
 					<Stack spacing={2}>
@@ -52,10 +57,12 @@ const MedicalHistoryDetailPrescriptionSection = ({
 									<Stack spacing={0.5}>
 										<Typography variant='subtitle2'>{m.medicineName}</Typography>
 										<Typography variant='body2' color='text.secondary'>
-											Brand: {m.medicineBrand}
+											{t('medical_history.field.prescription.medicine_brand')}: {m.medicineBrand}
 										</Typography>
 										<Typography variant='body2' color='text.secondary'>
-											Unit: {m.medicineUnit} | Dosage: {m.dosage} | Freq/Day: {m.frequencyPerDay}
+											{t('medical_history.field.prescription.medicine_unit')}: {m.medicineUnit} |{' '}
+											{t('medical_history.field.prescription.dosage')}: {m.dosage} |{' '}
+											{t('medical_history.field.prescription.frequency_per_day')}: {m.frequencyPerDay}
 										</Typography>
 									</Stack>
 								</Paper>
@@ -63,12 +70,12 @@ const MedicalHistoryDetailPrescriptionSection = ({
 					</Stack>
 					{role === 'Doctor' && medicalHistoryStatus === 'Draft' && (
 						<Button variant='contained' onClick={onClickUpdatePrescription}>
-							Update Prescription
+							{t('medical_history.button.update_prescription')}
 						</Button>
 					)}
 					{medicalHistoryStatus !== 'Draft' && (
 						<Button variant='outlined' onClick={onClickPrintPrescription}>
-							Print Prescription
+							{t('medical_history.button.print_prescription')}
 						</Button>
 					)}
 				</Stack>

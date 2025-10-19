@@ -73,12 +73,23 @@
             "female": "Nữ",
             "other": "Khác"
         },
+        "medical_history_status": {
+            "draft": "Bản nháp",
+            "processed": "Đã xử lý",
+            "paid": "Đã thanh toán"
+        },
         "complaint_topic": {
             "service": "Dịch vụ",
             "billing": "Thanh toán",
             "doctor": "Bác sĩ",
             "medicine": "Thuốc",
             "others": "Khác"
+        },
+        "complaint_resolve_status": {
+            "pending": "Đang chờ xử lý",
+            "drafted": "Đã soạn thảo",
+            "resolved": "Đã giải quyết",
+            "closed": "Đã đóng"
         }
     },
     "error": {
@@ -120,6 +131,18 @@
             "department": "Khoa",
             "qualification": "Trình độ",
             "specialty": "Chuyên khoa"
+        }
+    },
+    "medicine": {
+        "field": {
+            "name": "Tên thuốc",
+            "brand": "Thương hiệu",
+            "medicine_unit": "Đơn vị",
+            "images": "Hình ảnh",
+            "medicine_category": {
+                "name": "Danh mục thuốc",
+                "description": "Mô tả"
+            }
         }
     },
     "appointment": {
@@ -175,6 +198,76 @@
             "completed": "Đã hoàn thành",
             "cancelled": "Đã hủy",
             "refused": "Đã từ chối"
+        }
+    },
+    "medical_history": {
+        "title": {
+            "medical_history_information": "Thông tin lịch sử y tế",
+            "service_details": "Chi tiết dịch vụ y tế",
+            "prescription": "Đơn thuốc",
+            "complaint": "Khiếu nại"
+        },
+        "placeholder": {
+            "no_service": "Không có dịch vụ y tế nào được ghi nhận",
+            "no_prescription": "Không có đơn thuốc nào được ghi nhận",
+            "no_complaint": "Không có khiếu nại nào được ghi nhận"
+        },
+        "field": {
+            "id": "ID lịch sử y tế",
+            "status": "Trạng thái lịch sử y tế",
+            "diagnosis": "Chẩn đoán",
+            "completed_date": "Ngày hoàn thành",
+            "follow_up_appointment_date": "Ngày hẹn tái khám",
+            "medical_history_detail": {
+                "medical_service": "Dịch vụ y tế",
+                "service_name": "Tên dịch vụ",
+                "description": "Mô tả",
+                "quantity": "Số lượng",
+                "unit_price": "Giá đơn vị",
+                "total_price": "Tổng giá",
+                "grand_total": "Tổng cộng"
+            },
+            "prescription": {
+                "doctor_note": "Ghi chú của bác sĩ",
+                "medication_days": "Số ngày dùng thuốc",
+                "prescription_details": "Chi tiết đơn thuốc",
+                "prescription_detail": {
+                    "medicine": "Thuốc",
+                    "dosage": "Liều lượng (mỗi lần)",
+                    "frequency_per_day": "Tần suất (mỗi ngày)"
+                }
+            },
+            "complaint": {
+                "topic": "Chủ đề khiếu nại",
+                "content": "Nội dung",
+                "resolve_status": "Trạng thái giải quyết khiếu nại",
+                "response": "Phản hồi",
+                "type": "Loại khiếu nại"
+            }
+        },
+        "button": {
+            "add_service": "Thêm dịch vụ y tế",
+            "create_prescription": "Tạo đơn thuốc",
+            "update_prescription": "Cập nhật đơn thuốc",
+            "print_prescription": "In đơn thuốc",
+            "create_complaint": "Tạo khiếu nại",
+            "respond_complaint": "Phản hồi khiếu nại",
+            "save_as_draft": "Lưu dưới dạng bản nháp",
+            "close_complaint": "Đóng khiếu nại"
+        },
+        "dialog": {
+            "title": {
+                "update_medical_history": "Cập nhật lịch sử y tế",
+                "add_medical_service": "Thêm dịch vụ y tế",
+                "create_prescription": "Tạo đơn thuốc",
+                "upsert_prescription": "Cập nhật đơn thuốc",
+                "create_complaint": "Tạo khiếu nại",
+                "respond_complaint": "Phản hồi khiếu nại"
+            },
+            "confirm": {
+                "delete_service_title": "Xóa dịch vụ y tế?",
+                "delete_service_description": "Bạn có chắc chắn muốn xóa dịch vụ y tế này khỏi lịch sử y tế không? Hành động này không thể hoàn tác"
+            }
         }
     },
     "header": {

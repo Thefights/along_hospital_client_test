@@ -1,5 +1,8 @@
 import { defaultMedicalHistoryStatusStyle } from '@/configs/defaultStylesConfig'
+import useEnum from '@/hooks/useEnum'
+import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
+import { getEnumLabelByValue } from '@/utils/handleStringUtil'
 import { Avatar, Button, Chip, Grid, Paper, Stack, Typography, useTheme } from '@mui/material'
 
 const MedicalHistoryDetailHeaderInfoSection = ({
@@ -8,26 +11,28 @@ const MedicalHistoryDetailHeaderInfoSection = ({
 	onClickDoctorInfo,
 }) => {
 	const theme = useTheme()
+	const { t } = useTranslation()
+	const _enum = useEnum()
 
 	const userInfoMappingFields = [
-		{ key: 'phone', title: 'Phone' },
-		{ key: 'email', title: 'Email' },
-		{ key: 'gender', title: 'Gender' },
-		{ key: 'age', title: 'Age' },
+		{ key: 'phone', title: t('profile.field.phone') },
+		{ key: 'email', title: t('profile.field.email') },
+		{ key: 'gender', title: t('profile.field.gender') },
+		{ key: 'dateOfBirth', title: t('profile.field.date_of_birth') },
 	]
 
 	const medicalHistoryMappingFields = [
-		{ key: 'medicalHistoryId', title: 'Medical History ID' },
-		{ key: 'medicalHistoryStatus', title: 'Medical History Status' },
-		{ key: 'diagnosis', title: 'Diagnosis' },
-		{ key: 'completedDate', title: 'Completed Date' },
-		{ key: 'followUpAppointmentDate', title: 'Follow-up Date' },
+		{ key: 'medicalHistoryId', title: t('medical_history.field.id') },
+		{ key: 'medicalHistoryStatus', title: t('medical_history.field.status') },
+		{ key: 'diagnosis', title: t('medical_history.field.diagnosis') },
+		{ key: 'completedDate', title: t('medical_history.field.completed_date') },
+		{ key: 'followUpAppointmentDate', title: t('medical_history.field.follow_up_appointment_date') },
 	]
 
 	return (
 		<Paper sx={{ p: 3, borderRadius: 2 }}>
 			<Typography variant='h6' gutterBottom>
-				Medical History Information
+				{t('medical_history.title.medical_history_information')}
 			</Typography>
 			<Grid container alignItems='stretch' spacing={2}>
 				<Grid size={{ xs: 12, md: 4 }}>
@@ -105,7 +110,11 @@ const MedicalHistoryDetailHeaderInfoSection = ({
 									</Typography>
 									{field.key === 'medicalHistoryStatus' ? (
 										<Chip
-											label={medicalHistory?.[field.key] || '-'}
+											label={
+												getEnumLabelByValue(_enum.medicalHistoryStatusOptions, medicalHistory?.[field.key]) ||
+												'-'
+											}
+											size='small'
 											color={defaultMedicalHistoryStatusStyle(medicalHistory?.[field.key])}
 											sx={{ px: 1.25, borderRadius: 2 }}
 										/>

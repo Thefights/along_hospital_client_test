@@ -1,4 +1,6 @@
+import { ApiUrls } from '@/configs/apiUrls'
 import useAuth from '@/hooks/useAuth'
+import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
 import { Box, Button, Grid, Paper, Stack } from '@mui/material'
 import { useState } from 'react'
@@ -7,7 +9,7 @@ import { useParams } from 'react-router-dom'
 import DoctorInfoDialog from '../dialogs/DoctorInfoDialog'
 import PatientInfoDialog from '../dialogs/PatientInfoDialog'
 import CreateComplaintDialog from './sections/medicalHistoryDetailSections/dialogs/CreateComplaintDialog'
-import CreateMedicalHistoryServiceDialog from './sections/medicalHistoryDetailSections/dialogs/CreateMedicalHistoryServiceDialog'
+import CreateMedicalHistoryDetailDialog from './sections/medicalHistoryDetailSections/dialogs/CreateMedicalHistoryDetailDialog'
 import RespondComplaintDialog from './sections/medicalHistoryDetailSections/dialogs/RespondComplaintDialog'
 import UpsertPrescriptionDialog from './sections/medicalHistoryDetailSections/dialogs/UpsertPrescriptionDialog'
 import MedicalHistoryDetailComplaintSection from './sections/medicalHistoryDetailSections/MedicalHistoryDetailComplaintSection'
@@ -17,6 +19,8 @@ import MedicalHistoryDetailServiceSection from './sections/medicalHistoryDetailS
 
 const MedicalHistoryDetailBasePage = () => {
 	const { id } = useParams()
+
+	const [selectedMedicalServiceId, setSelectedMedicalServiceId] = useState(0)
 
 	const [openPatientInfo, setOpenPatientInfo] = useState(false)
 	const [openDoctorInfo, setOpenDoctorInfo] = useState(false)
@@ -28,7 +32,47 @@ const MedicalHistoryDetailBasePage = () => {
 
 	const { auth } = useAuth()
 	const role = auth?.role
-	const { loading, data: medicalHistory } = useFetch(`/medical-histories/${id}`, {}, [id])
+
+	const {
+		loading,
+		data: medicalHistory,
+		fetch: reFetchMedicalHistory,
+	} = useFetch(`/medical-history/${id}`, {}, [id])
+
+	const addNewMedicalHistoryService = useAxiosSubmit({
+		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.MEDICAL_HISTORY_DETAIL(id),
+		method: 'POST',
+	})
+	const deleteMedicalHistoryService = useAxiosSubmit({
+		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.MEDICAL_HISTORY_DETAIL(id, selectedMedicalServiceId),
+		method: 'DELETE',
+	})
+
+	const createComplaint = useAxiosSubmit({
+		url: ApiUrls.MEDICAL_HISTORY.CREATE_COMPLAINT(id),
+		method: 'POST',
+	})
+	const responseAsDraftComplaint = useAxiosSubmit({
+		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.COMPLAINT.DRAFT(id),
+		method: 'PUT',
+	})
+	const responseAsResolveComplaint = useAxiosSubmit({
+		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.COMPLAINT.RESOLVE(id),
+		method: 'PUT',
+	})
+	const closeComplaint = useAxiosSubmit({
+		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.COMPLAINT.CLOSE(id),
+		method: 'PUT',
+	})
+
+	const createPrescription = useAxiosSubmit({
+		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.PRESCRIPTION(id),
+		method: 'POST',
+	})
+	const updatePrescription = useAxiosSubmit({
+		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.PRESCRIPTION(id),
+		method: 'PUT',
+	})
 
 	return (
 		<Box sx={{ p: 3 }}>
@@ -44,7 +88,15 @@ const MedicalHistoryDetailBasePage = () => {
 						medicalHistoryDetails={medicalHistory?.medicalHistoryDetails}
 						medicalHistoryStatus={medicalHistory?.medicalHistoryStatus}
 						role={role}
-						onClickCreateMedicalHistoryService={() => setOpenCreateMedicalHistoryService(true)}
+						onOpenCreateMedicalHistoryService={() => setOpenCreateMedicalHistoryService(true)}
+						onDeleteMedicalHistoryService={async (medicalServiceId) => {
+							setSelectedMedicalServiceId(medicalServiceId)
+							const response = await deleteMedicalHistoryService.submit()
+							if (response) {
+								setSelectedMedicalServiceId(0)
+								await reFetchMedicalHistory()
+							}
+						}}
 					/>
 				</Fade>
 
@@ -119,22 +171,65 @@ const MedicalHistoryDetailBasePage = () => {
 			<CreateComplaintDialog
 				open={openCreateComplaint}
 				onClose={() => setOpenCreateComplaint(false)}
+				onSubmit={async (values) => {
+					const response = await createComplaint.submit(values)
+					if (response) {
+						setOpenCreateComplaint(false)
+					}
+				}}
 			/>
 			<RespondComplaintDialog
 				open={openRespondComplaint}
 				onClose={() => setOpenRespondComplaint(false)}
+				onSubmit={async (values) => {
+					const response = await responseAsResolveComplaint.submit(values)
+					if (response) {
+						setOpenRespondComplaint(false)
+					}
+				}}
+				onSaveDraft={async (values) => {
+					const response = await responseAsDraftComplaint.submit(values)
+					if (response) {
+						setOpenRespondComplaint(false)
+					}
+				}}
+				onCloseComplaint={async () => {
+					const response = await closeComplaint.submit()
+					if (response) {
+						setOpenRespondComplaint(false)
+					}
+				}}
 			/>
 			<UpsertPrescriptionDialog
 				open={openCreatePrescription}
 				onClose={() => setOpenCreatePrescription(false)}
+				onSubmit={async (values) => {
+					const response = await createPrescription.submit(values)
+					if (response) {
+						setOpenCreatePrescription(false)
+					}
+				}}
 			/>
 			<UpsertPrescriptionDialog
 				open={openUpdatePrescription}
+				initialValues={medicalHistory?.prescription}
 				onClose={() => setOpenUpdatePrescription(false)}
+				onSubmit={async (values) => {
+					const response = await updatePrescription.submit(values)
+					if (response) {
+						setOpenUpdatePrescription(false)
+					}
+				}}
 			/>
-			<CreateMedicalHistoryServiceDialog
+			<CreateMedicalHistoryDetailDialog
 				open={openCreateMedicalHistoryService}
 				onClose={() => setOpenCreateMedicalHistoryService(false)}
+				onSubmit={async (values) => {
+					const response = await addNewMedicalHistoryService.submit(values)
+					if (response) {
+						setOpenCreateMedicalHistoryService(false)
+					}
+				}}
 			/>
 		</Box>
 	)

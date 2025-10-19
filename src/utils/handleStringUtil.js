@@ -31,3 +31,13 @@ export const appendPath = (baseUrl, tail) => {
 	const url = [base.replace(/\/+$/, ''), ...cleaned].join('/')
 	return query ? `${url}?${query}` : url
 }
+
+export const getEnumLabelByValue = (enumArray, value) => {
+	if (!Array.isArray(enumArray)) return null
+	const found = enumArray.find((item) => {
+		if (typeof item === 'string') return item === value
+		if (item && typeof item === 'object' && 'value' in item) return item.value === value
+		return false
+	})
+	return found ? found.label ?? found : null
+}

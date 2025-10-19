@@ -18,6 +18,7 @@
         "no_data": "No data available...",
         "search": "Search...",
         "loading": "Loading...",
+        "filter": "Filter",
         "image_preview": "Image Preview",
         "select_options": "Select options",
         "date": "Date",
@@ -72,12 +73,23 @@
             "female": "Female",
             "other": "Other"
         },
+        "medical_history_status": {
+            "draft": "Draft",
+            "processed": "Processed",
+            "paid": "Paid"
+        },
         "complaint_topic": {
             "service": "Service",
             "billing": "Billing",
             "doctor": "Doctor",
             "medicine": "Medicine",
             "others": "Others"
+        },
+        "complaint_resolve_status": {
+            "pending": "Pending",
+            "drafted": "Drafted",
+            "resolved": "Resolved",
+            "closed": "Closed"
         }
     },
     "error": {
@@ -119,6 +131,18 @@
             "department": "Department",
             "qualification": "Qualification",
             "specialty": "Specialty"
+        }
+    },
+    "medicine": {
+        "field": {
+            "name": "Medicine Name",
+            "brand": "Brand",
+            "images": "Images",
+            "unit": "Unit",
+            "medicine_category": {
+                "name": "Medicine Category",
+                "description": "Description"
+            }
         }
     },
     "appointment": {
@@ -174,6 +198,76 @@
             "completed": "Completed",
             "cancelled": "Cancelled",
             "refused": "Refused"
+        }
+    },
+    "medical_history": {
+        "title": {
+            "medical_history_information": "Medical History Information",
+            "service_details": "Service Details",
+            "prescription": "Prescription",
+            "complaint": "Complaint"
+        },
+        "placeholder": {
+            "no_service": "No medical services recorded",
+            "no_prescription": "No prescriptions recorded",
+            "no_complaint": "No complaints recorded"
+        },
+        "field": {
+            "id": "Medical History ID",
+            "status": "Medical History Status",
+            "diagnosis": "Diagnosis",
+            "completed_date": "Completed Date",
+            "follow_up_appointment_date": "Follow-up Appointment Date",
+            "medical_history_detail": {
+                "medical_service": "Medical Service",
+                "service_name": "Service Name",
+                "description": "Description",
+                "quantity": "Quantity",
+                "unit_price": "Unit Price",
+                "total_price": "Total Price",
+                "grand_total": "Grand Total"
+            },
+            "prescription": {
+                "doctor_note": "Doctor's Note",
+                "medication_days": "Medication Days",
+                "prescription_details": "Prescription Details",
+                "prescription_detail": {
+                    "medicine": "Medicine",
+                    "dosage": "Dosage (per time)",
+                    "frequency_per_day": "Frequency (per day)"
+                }
+            },
+            "complaint": {
+                "topic": "Complaint Topic",
+                "content": "Content",
+                "resolve_status": "Complaint Resolve Status",
+                "response": "Response",
+                "type": "Complaint Type"
+            }
+        },
+        "button": {
+            "add_service": "Add Service",
+            "create_prescription": "Create Prescription",
+            "update_prescription": "Update Prescription",
+            "print_prescription": "Print Prescription",
+            "create_complaint": "Create Complaint",
+            "respond_complaint": "Respond to Complaint",
+            "save_as_draft": "Save as Draft",
+            "close_complaint": "Close Complaint"
+        },
+        "dialog": {
+            "title": {
+                "update_medical_history": "Update Medical History",
+                "add_medical_service": "Add Medical Service",
+                "create_prescription": "Create Prescription",
+                "upsert_prescription": "Upsert Prescription",
+                "create_complaint": "Create Complaint",
+                "respond_complaint": "Respond to Complaint"
+            },
+            "confirm": {
+                "delete_service_title": "Delete medical service?",
+                "delete_service_description": "Are you sure you want to delete this medical service from the medical history? This action cannot be undone"
+            }
         }
     },
     "header": {

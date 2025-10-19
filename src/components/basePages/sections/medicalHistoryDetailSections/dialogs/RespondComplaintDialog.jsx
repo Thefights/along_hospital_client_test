@@ -10,27 +10,29 @@ const RespondComplaintDialog = ({
 	onSubmit = (values) => {},
 }) => {
 	const { t } = useTranslation()
-	const fields = [{ key: 'response', title: 'Response Content', multiple: 2 }]
+	const fields = [
+		{ key: 'response', title: t('medical_history.field.complaint.response'), multiple: 2 },
+	]
 
 	return (
 		<GenericFormDialog
 			open={open}
 			onClose={onClose}
 			fields={fields}
-			title='Respond to Complaint'
+			title={t('medical_history.dialog.title.respond_complaint')}
 			initialValues={{ response: initialResponse }}
 			submitButtonColor='primary'
 			submitLabel={t('button.submit')}
 			onSubmit={({ values }) => onSubmit(values)}
 			additionalButtons={[
 				{
-					label: 'Save as draft',
+					label: t('medical_history.button.save_as_draft'),
 					color: 'info',
 					variant: 'outlined',
 					onClick: ({ values }) => onSaveDraft(values),
 				},
 				{
-					label: 'Close Complaint',
+					label: t('medical_history.button.close_complaint'),
 					color: 'error',
 					variant: 'outlined',
 					onClick: onReject,

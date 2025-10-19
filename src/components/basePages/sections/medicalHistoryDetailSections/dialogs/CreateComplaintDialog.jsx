@@ -9,11 +9,16 @@ const CreateComplaintDialog = ({ open, onClose, onSubmit = (values) => {} }) => 
 	const fields = [
 		{
 			key: 'complaintTopic',
-			title: 'Complaint Topic',
+			title: t('medical_history.field.complaint.topic'),
 			type: 'select',
 			options: complaintTopicOptions,
 		},
-		{ key: 'content', title: 'Complaint Content', type: 'textArea', multiple: 3 },
+		{
+			key: 'content',
+			title: t('medical_history.field.complaint.content'),
+			type: 'textArea',
+			multiple: 3,
+		},
 	]
 
 	return (
@@ -21,7 +26,7 @@ const CreateComplaintDialog = ({ open, onClose, onSubmit = (values) => {} }) => 
 			open={open}
 			onClose={onClose}
 			fields={fields}
-			title='Create Complaint'
+			title={t('medical_history.dialog.title.create_complaint')}
 			submitLabel={t('button.create')}
 			submitButtonColor='primary'
 			onSubmit={({ values }) => onSubmit(values)}

@@ -19,21 +19,27 @@ const UpsertPrescriptionDialog = ({ open, onClose, initialValues, onSubmit = (va
 	})
 
 	const fields = [
-		{ key: 'doctorNote', title: 'Doctor Note', type: 'text', multiple: 2, validate: [maxLen(1000)] },
+		{
+			key: 'doctorNote',
+			title: t('medical_history.field.prescription.doctor_note'),
+			type: 'text',
+			multiple: 2,
+			validate: [maxLen(1000)],
+		},
 		{
 			key: 'medicationDays',
-			title: 'Medication Days',
+			title: t('medical_history.field.prescription.medication_days'),
 			type: 'number',
 			validate: [numberHigherThan(1)],
 		},
 		{
 			key: 'prescriptionDetails',
-			title: 'Prescription Details',
+			title: t('medical_history.field.prescription.prescription_details'),
 			type: 'array',
 			of: [
 				{
 					key: 'medicineId',
-					title: 'Medicine',
+					title: t('medical_history.field.prescription.prescription_detail.medicine'),
 					type: 'select',
 					options: medicineStore.data || [],
 					renderOption: (option) => (
@@ -41,9 +47,12 @@ const UpsertPrescriptionDialog = ({ open, onClose, initialValues, onSubmit = (va
 							<Avatar src={getImageFromCloud(option.image)} alt={option.name} />
 							<Stack sx={{ width: '100%' }}>
 								{[
-									{ key: 'name', label: 'Name' },
-									{ key: 'brand', label: 'Brand' },
-									{ key: 'unit', label: 'Unit' },
+									{
+										key: 'name',
+										label: t('medicine.field.name'),
+									},
+									{ key: 'brand', label: t('medicine.field.brand') },
+									{ key: 'unit', label: t('medicine.field.unit') },
 								].map((field) => (
 									<Stack direction={'row'} justifyContent={'space-between'}>
 										<Typography variant='body2' color='text.secondary'>
@@ -60,13 +69,13 @@ const UpsertPrescriptionDialog = ({ open, onClose, initialValues, onSubmit = (va
 				},
 				{
 					key: 'dosage',
-					title: 'Dosage (per time)',
+					title: t('medical_history.field.prescription.prescription_detail.dosage'),
 					type: 'number',
 					validate: [numberHigherThan(0)],
 				},
 				{
 					key: 'frequencyPerDay',
-					title: 'Frequency (per day)',
+					title: t('medical_history.field.prescription.prescription_detail.frequency_per_day'),
 					type: 'number',
 					validate: [numberHigherThan(0)],
 				},
@@ -78,7 +87,11 @@ const UpsertPrescriptionDialog = ({ open, onClose, initialValues, onSubmit = (va
 		<GenericFormDialog
 			open={open}
 			onClose={onClose}
-			title={initialValues ? 'Update prescription' : 'Create prescription'}
+			title={
+				initialValues
+					? t('medical_history.dialog.title.update_prescription')
+					: t('medical_history.dialog.title.create_prescription')
+			}
 			fields={fields}
 			initialValues={initialValues}
 			onSubmit={({ values }) => onSubmit(values)}

@@ -18,40 +18,46 @@ const MedicalHistoryDetailServiceSection = ({
 	medicalHistoryDetails,
 	role,
 	medicalHistoryStatus,
-	onClickCreateMedicalHistoryService,
-	onDeleteMedicalHistoryService,
+	onOpenCreateMedicalHistoryService,
+	onDeleteMedicalHistoryService = (medicalServiceId) => {},
 }) => {
 	const confirm = useConfirm()
 
 	const { t } = useTranslation()
 
-	const handleDelete = async (serviceId) => {
+	const handleDelete = async (medicalServiceId) => {
 		const confirmed = await confirm({
-			title: 'Confirm Delete',
-			description: 'Are you sure you want to delete this service?',
+			title: t('medical_history.dialog.confirm.delete_service_title'),
+			description: t('medical_history.dialog.confirm.delete_service_description'),
 			confirmColor: 'error',
 			confirmText: t('button.delete'),
 		})
 
 		if (confirmed) {
-			onDeleteMedicalHistoryService(serviceId)
+			onDeleteMedicalHistoryService(medicalServiceId)
 		}
 	}
 
 	return (
 		<Paper sx={{ p: 3, borderRadius: 2 }}>
 			<Typography variant='h6' gutterBottom>
-				Service Details
+				{t('medical_history.title.service_details')}
 			</Typography>
 			<TableContainer>
 				<Table>
 					<TableHead>
 						<TableRow>
-							<TableCell>Service Name</TableCell>
-							<TableCell>Description</TableCell>
-							<TableCell align='right'>Qty</TableCell>
-							<TableCell align='right'>Unit Price</TableCell>
-							<TableCell align='right'>Total</TableCell>
+							<TableCell>{t('medical_history.field.medical_history_detail.service_name')}</TableCell>
+							<TableCell>{t('medical_history.field.medical_history_detail.description')}</TableCell>
+							<TableCell align='right'>
+								{t('medical_history.field.medical_history_detail.quantity')}
+							</TableCell>
+							<TableCell align='right'>
+								{t('medical_history.field.medical_history_detail.unit_price')}
+							</TableCell>
+							<TableCell align='right'>
+								{t('medical_history.field.medical_history_detail.total_price')}
+							</TableCell>
 							<TableCell></TableCell>
 						</TableRow>
 					</TableHead>
@@ -74,7 +80,9 @@ const MedicalHistoryDetailServiceSection = ({
 							))}
 						<TableRow>
 							<TableCell colSpan={4} align='right'>
-								<Typography fontWeight={600}>Grand Total</Typography>
+								<Typography fontWeight={600}>
+									{t('medical_history.field.medical_history_detail.grand_total')}
+								</Typography>
 							</TableCell>
 							<TableCell align='right'>
 								<Typography fontWeight={600}>
@@ -86,8 +94,8 @@ const MedicalHistoryDetailServiceSection = ({
 				</Table>
 			</TableContainer>
 			{role === 'Doctor' && medicalHistoryStatus === 'Draft' && (
-				<Button variant='contained' onClick={onClickCreateMedicalHistoryService} sx={{ mt: 2 }}>
-					Add Service
+				<Button variant='contained' onClick={onOpenCreateMedicalHistoryService} sx={{ mt: 2 }}>
+					{t('medical_history.button.add_service')}
 				</Button>
 			)}
 		</Paper>
