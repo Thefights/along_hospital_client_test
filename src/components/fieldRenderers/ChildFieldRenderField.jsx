@@ -38,7 +38,7 @@ const ChildFieldRenderField = ({
 				opts.length > 0 &&
 				opts.map((opt) => (
 					<MenuItem key={String(opt.value)} value={opt.value} disabled={opt.disabled}>
-						{opt.label}
+						{child.renderOption ? child.renderOption(opt) : opt.label}
 					</MenuItem>
 				))}
 		</ValidationTextField>
