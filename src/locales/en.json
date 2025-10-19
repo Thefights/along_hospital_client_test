@@ -71,6 +71,13 @@
             "male": "Male",
             "female": "Female",
             "other": "Other"
+        },
+        "complaint_topic": {
+            "service": "Service",
+            "billing": "Billing",
+            "doctor": "Doctor",
+            "medicine": "Medicine",
+            "others": "Others"
         }
     },
     "error": {

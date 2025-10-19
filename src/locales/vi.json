@@ -72,6 +72,13 @@
             "male": "Nam",
             "female": "Nữ",
             "other": "Khác"
+        },
+        "complaint_topic": {
+            "service": "Dịch vụ",
+            "billing": "Thanh toán",
+            "doctor": "Bác sĩ",
+            "medicine": "Thuốc",
+            "others": "Khác"
         }
     },
     "error": {
