@@ -7,6 +7,8 @@
         "add": "Thêm",
         "create": "Tạo",
         "update": "Cập nhật",
+        "complete": "Hoàn thành",
+        "confirm": "Xác nhận",
         "delete": "Xóa",
         "save": "Lưu",
         "add_row": "Thêm dòng",
@@ -87,7 +89,7 @@
         },
         "complaint_resolve_status": {
             "pending": "Đang chờ xử lý",
-            "drafted": "Đã soạn thảo",
+            "draft": "Đã soạn thảo",
             "resolved": "Đã giải quyết",
             "closed": "Đã đóng"
         }
@@ -253,7 +255,11 @@
             "create_complaint": "Tạo khiếu nại",
             "respond_complaint": "Phản hồi khiếu nại",
             "save_as_draft": "Lưu dưới dạng bản nháp",
-            "close_complaint": "Đóng khiếu nại"
+            "close_complaint": "Đóng khiếu nại",
+            "update_medical_history": "Cập nhật lịch sử y tế",
+            "complete_medical_history": "Hoàn thành lịch sử y tế",
+            "payment": "Thanh toán",
+            "print_invoice": "In hóa đơn"
         },
         "dialog": {
             "title": {
@@ -266,7 +272,9 @@
             },
             "confirm": {
                 "delete_service_title": "Xóa dịch vụ y tế?",
-                "delete_service_description": "Bạn có chắc chắn muốn xóa dịch vụ y tế này khỏi lịch sử y tế không? Hành động này không thể hoàn tác"
+                "delete_service_description": "Bạn có chắc chắn muốn xóa dịch vụ y tế này khỏi lịch sử y tế không? Hành động này không thể hoàn tác",
+                "complete_medical_history_title": "Hoàn thành lịch sử y tế?",
+                "complete_medical_history_description": "Bạn có chắc chắn muốn đánh dấu lịch sử y tế này là đã hoàn thành không?"
             }
         }
     },
