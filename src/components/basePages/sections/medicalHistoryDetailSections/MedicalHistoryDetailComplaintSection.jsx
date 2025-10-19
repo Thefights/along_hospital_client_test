@@ -8,6 +8,8 @@ const MedicalHistoryDetailComplaintSection = ({
 }) => {
 	const hasComplaint = Boolean(complaint)
 
+	const isComplaintDone = complaint?.complaintResolveStatus === 'Resolved'
+
 	return (
 		<Paper sx={{ p: 3, borderRadius: 2, height: '100%' }}>
 			<Typography variant='h6' gutterBottom>
@@ -26,10 +28,17 @@ const MedicalHistoryDetailComplaintSection = ({
 				<Stack spacing={1}>
 					<Typography variant='body2'>Topic: {complaint?.complaintTopic}</Typography>
 					<Typography variant='body2'>Content: {complaint?.Content}</Typography>
-					<Typography variant='body2'>Response: {complaint?.response}</Typography>
+					<Typography variant='body2'>
+						Response: {isComplaintDone ? complaint?.response : '-'}
+					</Typography>
 					<Typography variant='body2'>Type: {complaint?.complaintType}</Typography>
-					<Typography variant='body2'>Status: {complaint?.complaintResolveStatus}</Typography>
-					{role === 'Manager' && (
+					<Typography variant='body2'>
+						Status:{' '}
+						{complaint?.complaintResolveStatus === 'Drafted'
+							? 'Pending'
+							: complaint?.complaintResolveStatus}
+					</Typography>
+					{role === 'Manager' && !isComplaintDone && complaint?.complaintResolveStatus !== 'Closed' && (
 						<Button variant='contained' sx={{ mt: 2 }} onClick={onClickRespondComplaint}>
 							Respond
 						</Button>

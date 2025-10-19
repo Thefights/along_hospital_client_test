@@ -20,8 +20,8 @@ const MedicalHistoryDetailHeaderInfoSection = ({
 		{ key: 'medicalHistoryId', title: 'Medical History ID' },
 		{ key: 'medicalHistoryStatus', title: 'Medical History Status' },
 		{ key: 'diagnosis', title: 'Diagnosis' },
-		{ key: 'completedDate', title: 'Completed' },
-		{ key: 'followUpAppointmentDate', title: 'Follow-up' },
+		{ key: 'completedDate', title: 'Completed Date' },
+		{ key: 'followUpAppointmentDate', title: 'Follow-up Date' },
 	]
 
 	return (
@@ -99,13 +99,7 @@ const MedicalHistoryDetailHeaderInfoSection = ({
 					>
 						<Stack spacing={1} width='100%' alignItems={{ xs: 'flex-start', md: 'flex-end' }}>
 							{medicalHistoryMappingFields.map((field) => (
-								<Stack
-									direction={'row'}
-									width='100%'
-									justifyContent={'space-between'}
-									alignItems={'center'}
-									key={field.key}
-								>
+								<Stack direction={'row'} width='100%' justifyContent={'space-between'} key={field.key}>
 									<Typography variant='body2' color='text.secondary'>
 										{field.title}:
 									</Typography>
