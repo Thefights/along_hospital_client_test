@@ -9,7 +9,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
  * @param {object} [params={}]
  * @param {Array} [dependencies=[]]
  * @param {boolean} [fetchOnMount=true]
- * @returns {{loading:boolean, error:Error|null, data:any, fetch:function}}
+ * @returns {{loading:boolean, error:Error|null, data:any, setData:function, fetch: () => Promise<void>}}
  */
 export default function useFetch(url, params = {}, dependencies = [], fetchOnMount = true) {
 	const [loading, setLoading] = useState(false)
@@ -59,5 +59,5 @@ export default function useFetch(url, params = {}, dependencies = [], fetchOnMou
 		}
 	}, [...dependencies])
 
-	return { loading, error, data, fetch: fetchData }
+	return { loading, error, data, setData, fetch: fetchData }
 }

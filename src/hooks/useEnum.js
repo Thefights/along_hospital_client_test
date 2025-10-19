@@ -33,7 +33,7 @@ export default function useEnum() {
 
 		complaintResolveStatusOptions: [
 			{ value: 'Pending', label: t('enum.complaint_resolve_status.pending') },
-			{ value: 'Drafted', label: t('enum.complaint_resolve_status.drafted') },
+			{ value: 'Draft', label: t('enum.complaint_resolve_status.draft') },
 			{ value: 'Resolved', label: t('enum.complaint_resolve_status.resolved') },
 			{ value: 'Closed', label: t('enum.complaint_resolve_status.closed') },
 		],
