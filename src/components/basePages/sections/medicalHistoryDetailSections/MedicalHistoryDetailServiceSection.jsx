@@ -1,3 +1,4 @@
+import SkeletonTableRow from '@/components/skeletons/SkeletonTableRow'
 import { useConfirm } from '@/hooks/useConfirm'
 import useTranslation from '@/hooks/useTranslation'
 import { Delete } from '@mui/icons-material'
@@ -18,6 +19,7 @@ const MedicalHistoryDetailServiceSection = ({
 	medicalHistoryDetails,
 	role,
 	medicalHistoryStatus,
+	loading = false,
 	onOpenCreateMedicalHistoryService,
 	onDeleteMedicalHistoryService = (medicalServiceId) => {},
 }) => {
@@ -64,7 +66,10 @@ const MedicalHistoryDetailServiceSection = ({
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{medicalHistoryDetails &&
+						{loading ? (
+							<SkeletonTableRow colSpan={6} lineCount={2} rows={2} />
+						) : (
+							medicalHistoryDetails &&
 							medicalHistoryDetails.length > 0 &&
 							medicalHistoryDetails.map((service) => (
 								<TableRow key={`${service.medicalHistoryId}-${service.medicalServiceId}`}>
@@ -79,7 +84,9 @@ const MedicalHistoryDetailServiceSection = ({
 										</IconButton>
 									</TableCell>
 								</TableRow>
-							))}
+							))
+						)}
+
 						<TableRow>
 							<TableCell colSpan={4} align='right'>
 								<Typography fontWeight={600}>

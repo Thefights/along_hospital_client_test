@@ -4,6 +4,7 @@
         "submit": "Gửi",
         "submitting": "Đang gửi",
         "cancel": "Hủy",
+        "back": "Quay lại",
         "add": "Thêm",
         "create": "Tạo",
         "update": "Cập nhật",
@@ -17,7 +18,6 @@
     },
     "text": {
         "all": "Tất cả",
-        "no_data": "Không có dữ liệu...",
         "search": "Tìm kiếm...",
         "loading": "Đang tải...",
         "filter": "Lọc",
@@ -30,6 +30,10 @@
             "doctor": "Bác sĩ",
             "patient": "Bệnh nhân",
             "guest": "Khách"
+        },
+        "placeholder": {
+            "no_data": "Không có dữ liệu...",
+            "no_data_subtitle": "Không có gì để hiển thị ở đây"
         }
     },
     "tooltip": {

@@ -1,3 +1,4 @@
+import SkeletonBox from '@/components/skeletons/SkeletonBox'
 import { defaultMedicalHistoryStatusStyle } from '@/configs/defaultStylesConfig'
 import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
@@ -9,6 +10,7 @@ const MedicalHistoryDetailHeaderInfoSection = ({
 	medicalHistory,
 	onClickPatientInfo,
 	onClickDoctorInfo,
+	loading = false,
 }) => {
 	const theme = useTheme()
 	const { t } = useTranslation()
@@ -28,6 +30,23 @@ const MedicalHistoryDetailHeaderInfoSection = ({
 		{ key: 'completedDate', title: t('medical_history.field.completed_date') },
 		{ key: 'followUpAppointmentDate', title: t('medical_history.field.follow_up_appointment_date') },
 	]
+
+	if (loading) {
+		return (
+			<Paper sx={{ p: 3, borderRadius: 2 }}>
+				<Typography variant='h6' gutterBottom>
+					{t('medical_history.title.medical_history_information')}
+				</Typography>
+				<Grid container alignItems='stretch' spacing={2}>
+					{[1, 2, 3].map(() => (
+						<Grid size={{ xs: 12, md: 4 }} key={Math.random()}>
+							<SkeletonBox numberOfBoxes={1} heights={[200]} rounded />
+						</Grid>
+					))}
+				</Grid>
+			</Paper>
+		)
+	}
 
 	return (
 		<Paper sx={{ p: 3, borderRadius: 2 }}>

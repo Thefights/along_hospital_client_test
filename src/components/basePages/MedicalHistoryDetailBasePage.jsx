@@ -6,10 +6,11 @@ import useTranslation from '@/hooks/useTranslation'
 import { Box, Button, Grid, Paper, Stack } from '@mui/material'
 import { useState } from 'react'
 import { Fade, Slide } from 'react-awesome-reveal'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import DoctorInfoDialog from '../dialogs/DoctorInfoDialog'
 import PatientInfoDialog from '../dialogs/PatientInfoDialog'
 import ConfirmationButton from '../generals/ConfirmationButton'
+import EmptyPage from '../placeholders/EmptyPage'
 import CreateComplaintDialog from './sections/medicalHistoryDetailSections/dialogs/CreateComplaintDialog'
 import CreateMedicalHistoryDetailDialog from './sections/medicalHistoryDetailSections/dialogs/CreateMedicalHistoryDetailDialog'
 import RespondComplaintDialog from './sections/medicalHistoryDetailSections/dialogs/RespondComplaintDialog'
@@ -23,6 +24,7 @@ import MedicalHistoryDetailServiceSection from './sections/medicalHistoryDetailS
 const MedicalHistoryDetailBasePage = () => {
 	const { id } = useParams()
 	const { t } = useTranslation()
+	const navigate = useNavigate()
 
 	const [selectedMedicalServiceId, setSelectedMedicalServiceId] = useState(0)
 
@@ -97,6 +99,10 @@ const MedicalHistoryDetailBasePage = () => {
 	const isProcessedStatus = medicalHistory?.medicalHistoryStatus === 'Processed'
 	const isPaidStatus = medicalHistory?.medicalHistoryStatus === 'Paid'
 
+	if (!loading && !medicalHistory) {
+		return <EmptyPage showButton />
+	}
+
 	return (
 		<Box sx={{ p: 3 }}>
 			<Stack spacing={2}>
@@ -104,6 +110,7 @@ const MedicalHistoryDetailBasePage = () => {
 					medicalHistory={medicalHistory}
 					onClickPatientInfo={() => setOpenPatientInfo(true)}
 					onClickDoctorInfo={() => setOpenDoctorInfo(true)}
+					loading={loading}
 				/>
 
 				<Fade>
@@ -111,6 +118,7 @@ const MedicalHistoryDetailBasePage = () => {
 						medicalHistoryDetails={medicalHistory?.medicalHistoryDetails}
 						medicalHistoryStatus={medicalHistory?.medicalHistoryStatus}
 						role={role}
+						loading={loading}
 						onOpenCreateMedicalHistoryService={() => setOpenAddMedicalHistoryService(true)}
 						onDeleteMedicalHistoryService={async (medicalServiceId) => {
 							setSelectedMedicalServiceId(medicalServiceId)
@@ -135,6 +143,7 @@ const MedicalHistoryDetailBasePage = () => {
 								prescription={medicalHistory?.prescription}
 								medicalHistoryStatus={medicalHistory?.medicalHistoryStatus}
 								role={role}
+								loading={loading}
 								onClickCreatePrescription={() => setOpenCreatePrescription(true)}
 								onClickUpdatePrescription={() => setOpenUpdatePrescription(true)}
 								onClickPrintPrescription={() => {}}
@@ -147,6 +156,7 @@ const MedicalHistoryDetailBasePage = () => {
 							<MedicalHistoryDetailComplaintSection
 								complaint={medicalHistory?.complaint}
 								role={role}
+								loading={loading}
 								onClickCreateComplaint={() => setOpenCreateComplaint(true)}
 								onClickRespondComplaint={() => setOpenRespondComplaint(true)}
 							/>

@@ -1,3 +1,4 @@
+import SkeletonBox from '@/components/skeletons/SkeletonBox'
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
 import { Avatar, Button, Divider, Paper, Stack, Typography } from '@mui/material'
@@ -6,6 +7,7 @@ const MedicalHistoryDetailPrescriptionSection = ({
 	prescription,
 	role,
 	medicalHistoryStatus,
+	loading = false,
 	onClickCreatePrescription,
 	onClickUpdatePrescription,
 	onClickPrintPrescription,
@@ -15,6 +17,17 @@ const MedicalHistoryDetailPrescriptionSection = ({
 	const hasPrescription = Boolean(prescription)
 	const isDoctor = role === 'Doctor'
 	const isDraft = medicalHistoryStatus === 'Draft'
+
+	if (loading) {
+		return (
+			<Paper sx={{ p: 3, borderRadius: 2, height: '100%' }}>
+				<Typography variant='h6' gutterBottom>
+					{t('medical_history.title.prescription')}
+				</Typography>
+				<SkeletonBox numberOfBoxes={4} heights={[30, 30, 200, 30]} />
+			</Paper>
+		)
+	}
 
 	return (
 		<Paper sx={{ p: 3, borderRadius: 2, height: '100%' }}>

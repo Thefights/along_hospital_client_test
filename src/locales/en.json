@@ -4,6 +4,7 @@
         "submit": "Submit",
         "submitting": "Submitting",
         "cancel": "Cancel",
+        "back": "Back",
         "add": "Add",
         "create": "Create",
         "update": "Update",
@@ -17,7 +18,6 @@
     },
     "text": {
         "all": "All",
-        "no_data": "No data available...",
         "search": "Search...",
         "loading": "Loading...",
         "filter": "Filter",
@@ -30,6 +30,10 @@
             "doctor": "Doctor",
             "patient": "Patient",
             "guest": "Guest"
+        },
+        "placeholder": {
+            "no_data": "No data available...",
+            "no_data_subtitle": "There is nothing to display here"
         }
     },
     "tooltip": {

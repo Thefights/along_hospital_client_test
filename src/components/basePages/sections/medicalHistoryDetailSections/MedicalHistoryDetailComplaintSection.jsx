@@ -1,3 +1,4 @@
+import SkeletonBox from '@/components/skeletons/SkeletonBox'
 import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
 import { getEnumLabelByValue } from '@/utils/handleStringUtil'
@@ -6,6 +7,7 @@ import { Button, Paper, Stack, Typography } from '@mui/material'
 const MedicalHistoryDetailComplaintSection = ({
 	complaint,
 	role,
+	loading = false,
 	onClickCreateComplaint,
 	onClickRespondComplaint,
 }) => {
@@ -20,6 +22,17 @@ const MedicalHistoryDetailComplaintSection = ({
 	const isResolvedStatus = complaint?.complaintResolveStatus === 'Resolved'
 	const isDraftStatus = complaint?.complaintResolveStatus === 'Draft'
 	const isClosedStatus = complaint?.complaintResolveStatus === 'Closed'
+
+	if (loading) {
+		return (
+			<Paper sx={{ p: 3, borderRadius: 2, height: '100%' }}>
+				<Typography variant='h6' gutterBottom>
+					{t('medical_history.title.complaint')}
+				</Typography>
+				<SkeletonBox numberOfBoxes={5} heights={[30, 30, 30, 30, 30]} />
+			</Paper>
+		)
+	}
 
 	return (
 		<Paper sx={{ p: 3, borderRadius: 2, height: '100%' }}>
