@@ -18,3 +18,14 @@ export const defaultMedicalHistoryStatusStyle = (status) => {
 	}
 	return map[status] || 'primary'
 }
+
+export const defaultLineClampStyle = (lines = 2) => ({
+	overflow: 'hidden',
+	textOverflow: 'ellipsis',
+	width: '100%',
+	display: '-webkit-box',
+	WebkitLineClamp: lines,
+	lineClamp: lines,
+	WordBreak: 'break-word',
+	WebkitBoxOrient: 'vertical',
+})

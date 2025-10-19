@@ -6,6 +6,7 @@ const initState = {
 	medicineCategories: [],
 	departments: [],
 	specialties: [],
+	medicalServices: [],
 }
 
 const managerSlice = createSlice({
@@ -27,6 +28,9 @@ const managerSlice = createSlice({
 		setSpecialtiesStore: (state, action) => {
 			state.specialties = action.payload
 		},
+		setMedicalServicesStore: (state, action) => {
+			state.medicalServices = action.payload
+		},
 	},
 })
 
@@ -36,6 +40,7 @@ export const {
 	setMedicineCategoriesStore,
 	setDepartmentsStore,
 	setSpecialtiesStore,
+	setMedicalServicesStore,
 } = managerSlice.actions
 
 export default managerSlice.reducer

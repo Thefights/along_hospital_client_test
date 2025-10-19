@@ -45,3 +45,15 @@ export const numberRange = (min, max) => (v) => {
 	if (max != null && n > max) return getTranslation('error.max_number', { max })
 	return true
 }
+
+export const numberHigherThan = (min) => (v) => {
+	if (v == null || v === '') return true
+	const n = Number(v)
+	return n > min ? true : getTranslation('error.min_number', { min })
+}
+
+export const numberLessThan = (max) => (v) => {
+	if (v == null || v === '') return true
+	const n = Number(v)
+	return n < max ? true : getTranslation('error.max_number', { max })
+}
