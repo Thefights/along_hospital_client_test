@@ -9,7 +9,7 @@ import { maxLen, numberHigherThan } from '@/utils/validateUtil'
 import { Avatar, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
 
-const UpsertPrescriptionDialog = ({ open, onClose, initialValues, onSubmit = () => {} }) => {
+const UpsertPrescriptionDialog = ({ open, onClose, initialValues, onSubmit = (values) => {} }) => {
 	const { t } = useTranslation()
 
 	const medicineStore = useReduxStore({
@@ -81,7 +81,7 @@ const UpsertPrescriptionDialog = ({ open, onClose, initialValues, onSubmit = () 
 			title={initialValues ? 'Update prescription' : 'Create prescription'}
 			fields={fields}
 			initialValues={initialValues}
-			onSubmit={onSubmit}
+			onSubmit={({ values }) => onSubmit(values)}
 			submitButtonColor={initialValues ? 'success' : 'primary'}
 			submitLabel={initialValues ? t('button.update') : t('button.create')}
 			maxWidth='lg'

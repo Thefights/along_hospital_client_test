@@ -7,7 +7,7 @@ import { setMedicalServicesStore } from '@/redux/reducers/managementReducer'
 import { numberHigherThan } from '@/utils/validateUtil'
 import { Stack, Typography } from '@mui/material'
 
-const CreateMedicalHistoryServiceDialog = ({ open, onClose, onSubmit }) => {
+const CreateMedicalHistoryServiceDialog = ({ open, onClose, onSubmit = (values) => {} }) => {
 	const { t } = useTranslation()
 	const medicalServiceStore = useReduxStore({
 		url: ApiUrls.MEDICAL_SERVICE.MANAGEMENT.GET_ALL,
@@ -52,7 +52,7 @@ const CreateMedicalHistoryServiceDialog = ({ open, onClose, onSubmit }) => {
 			onClose={onClose}
 			title='Add new Medical Service'
 			fields={fields}
-			onSubmit={onSubmit}
+			onSubmit={({ values }) => onSubmit(values)}
 			submitButtonColor='primary'
 			submitLabel={t('button.add')}
 		/>

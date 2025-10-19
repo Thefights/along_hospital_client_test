@@ -2,7 +2,7 @@ import GenericFormDialog from '@/components/dialogs/commons/GenericFormDialog'
 import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
 
-const CreateComplaintDialog = ({ open, onClose, onSubmit = () => {} }) => {
+const CreateComplaintDialog = ({ open, onClose, onSubmit = (values) => {} }) => {
 	const { t } = useTranslation()
 	const { complaintTopicOptions } = useEnum()
 
@@ -24,7 +24,7 @@ const CreateComplaintDialog = ({ open, onClose, onSubmit = () => {} }) => {
 			title='Create Complaint'
 			submitLabel={t('button.create')}
 			submitButtonColor='primary'
-			onSubmit={onSubmit}
+			onSubmit={({ values }) => onSubmit(values)}
 		/>
 	)
 }
