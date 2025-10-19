@@ -28,6 +28,8 @@ const ChildFieldRenderField = ({
 			multiline={!!child.multiple}
 			minRows={child.multiple}
 			size={textFieldSize}
+			type={child.type || 'text'}
+			select={child.type === 'select'}
 			sx={{ minWidth: 220, flex: 1 }}
 			{...(child.props || {})}
 		>
@@ -36,11 +38,13 @@ const ChildFieldRenderField = ({
 			</MenuItem>
 			{opts &&
 				opts.length > 0 &&
-				opts.map((opt) => (
-					<MenuItem key={String(opt.value)} value={opt.value} disabled={opt.disabled}>
-						{child.renderOption ? child.renderOption(opt) : opt.label}
-					</MenuItem>
-				))}
+				opts.map((opt) => {
+					return (
+						<MenuItem key={String(opt.value)} value={opt.value} disabled={opt.disabled}>
+							{child.renderOption ? child.renderOption(opt.value) : opt.label}
+						</MenuItem>
+					)
+				})}
 		</ValidationTextField>
 	)
 }
