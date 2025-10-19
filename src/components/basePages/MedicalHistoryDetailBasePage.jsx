@@ -3,13 +3,12 @@ import useAuth from '@/hooks/useAuth'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
-import { Box, Button, Grid, Paper, Stack } from '@mui/material'
+import { Box, Grid, Stack } from '@mui/material'
 import { useState } from 'react'
 import { Fade, Slide } from 'react-awesome-reveal'
 import { useNavigate, useParams } from 'react-router-dom'
 import DoctorInfoDialog from '../dialogs/DoctorInfoDialog'
 import PatientInfoDialog from '../dialogs/PatientInfoDialog'
-import ConfirmationButton from '../generals/ConfirmationButton'
 import EmptyPage from '../placeholders/EmptyPage'
 import CreateComplaintDialog from './sections/medicalHistoryDetailSections/dialogs/CreateComplaintDialog'
 import CreateMedicalHistoryDetailDialog from './sections/medicalHistoryDetailSections/dialogs/CreateMedicalHistoryDetailDialog'
@@ -17,6 +16,7 @@ import RespondComplaintDialog from './sections/medicalHistoryDetailSections/dial
 import UpdateMedicalHistoryDialog from './sections/medicalHistoryDetailSections/dialogs/UpdateMedicalHistoryDialog'
 import UpsertPrescriptionDialog from './sections/medicalHistoryDetailSections/dialogs/UpsertPrescriptionDialog'
 import MedicalHistoryDetailComplaintSection from './sections/medicalHistoryDetailSections/MedicalHistoryDetailComplaintSection'
+import MedicalHistoryDetailFooterSection from './sections/medicalHistoryDetailSections/MedicalHistoryDetailFooterSection'
 import MedicalHistoryDetailHeaderInfoSection from './sections/medicalHistoryDetailSections/MedicalHistoryDetailHeaderInfoSection'
 import MedicalHistoryDetailPrescriptionSection from './sections/medicalHistoryDetailSections/MedicalHistoryDetailPrescriptionSection'
 import MedicalHistoryDetailServiceSection from './sections/medicalHistoryDetailSections/MedicalHistoryDetailServiceSection'
@@ -164,63 +164,22 @@ const MedicalHistoryDetailBasePage = () => {
 					</Grid>
 				</Grid>
 
-				<Paper
-					sx={{
-						position: 'sticky',
-						bottom: 15,
-						p: 2,
-						borderTop: '1px solid',
-						borderColor: 'divider',
-						backgroundColor: 'background.lightBlue',
-					}}
-					elevation={3}
-				>
-					<Stack
-						direction={{ xs: 'column', sm: 'row' }}
-						spacing={1.5}
-						justifyContent='flex-start'
-						alignItems='center'
-					>
-						{isDoctorRole && isDraftStatus && (
-							<>
-								<Button
-									variant='outlined'
-									color='success'
-									onClick={() => setOpenUpdateMedicalHistory(true)}
-								>
-									{t('medical_history.button.update_medical_history')}
-								</Button>
-								<ConfirmationButton
-									confirmationTitle={t('medical_history.dialog.confirm.complete_medical_history_title')}
-									confirmationDescription={t(
-										'medical_history.dialog.confirm.complete_medical_history_description'
-									)}
-									confirmButtonColor='secondary'
-									confirmButtonText={t('button.complete')}
-									variant='contained'
-									color='secondary'
-									onConfirm={async () => {
-										var response = await completeMedicalHistory.submit()
-										if (response) {
-											setMedicalHistory((prev) => ({
-												...prev,
-												medicalHistoryStatus: 'Completed',
-											}))
-										}
-									}}
-								>
-									{t('medical_history.button.complete_medical_history')}
-								</ConfirmationButton>
-							</>
-						)}
-						{isProcessedStatus && (
-							<Button variant='contained'>{t('medical_history.button.payment')}</Button>
-						)}
-						{isPaidStatus && (
-							<Button variant='contained'>{t('medical_history.button.print_invoice')}</Button>
-						)}
-					</Stack>
-				</Paper>
+				{medicalHistory && (
+					<MedicalHistoryDetailFooterSection
+						role={role}
+						medicalHistoryStatus={medicalHistory?.medicalHistoryStatus}
+						onClickUpdateMedicalHistory={() => setOpenUpdateMedicalHistory(true)}
+						onClickCompleteMedicalHistory={async () => {
+							var response = await completeMedicalHistory.submit()
+							if (response) {
+								setMedicalHistory((prev) => ({
+									...prev,
+									medicalHistoryStatus: 'Completed',
+								}))
+							}
+						}}
+					/>
+				)}
 			</Stack>
 
 			<PatientInfoDialog
