@@ -54,7 +54,7 @@ const UpsertPrescriptionDialog = ({ open, onClose, initialValues, onSubmit = (va
 									{ key: 'brand', label: t('medicine.field.brand') },
 									{ key: 'unit', label: t('medicine.field.unit') },
 								].map((field) => (
-									<Stack direction={'row'} justifyContent={'space-between'}>
+									<Stack key={field.key} direction={'row'} justifyContent={'space-between'}>
 										<Typography variant='body2' color='text.secondary'>
 											{field.label}
 										</Typography>

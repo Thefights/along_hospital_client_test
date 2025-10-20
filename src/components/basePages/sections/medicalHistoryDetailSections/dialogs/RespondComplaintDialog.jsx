@@ -6,7 +6,7 @@ const RespondComplaintDialog = ({
 	onClose,
 	initialResponse,
 	onSaveDraft = (values) => {},
-	onReject = () => {},
+	onCloseComplaint = () => {},
 	onSubmit = (values) => {},
 }) => {
 	const { t } = useTranslation()
@@ -35,7 +35,7 @@ const RespondComplaintDialog = ({
 					label: t('medical_history.button.close_complaint'),
 					color: 'error',
 					variant: 'outlined',
-					onClick: onReject,
+					onClick: onCloseComplaint,
 				},
 			]}
 		/>

@@ -39,5 +39,5 @@ export const getEnumLabelByValue = (enumArray, value) => {
 		if (item && typeof item === 'object' && 'value' in item) return item.value === value
 		return false
 	})
-	return found ? found.label ?? found : null
+	return found ? found.label ?? (typeof found === 'string' ? found : String(value)) : null
 }

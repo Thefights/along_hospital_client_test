@@ -72,12 +72,13 @@ const MedicalHistoryDetailPrescriptionSection = ({
 									<Stack spacing={0.5}>
 										<Typography variant='subtitle2'>{m.medicineName}</Typography>
 										<Typography variant='body2' color='text.secondary'>
-											{t('medical_history.field.prescription.medicine_brand')}: {m.medicineBrand}
+											{t('medicine.field.brand')}: {m.medicineBrand}
 										</Typography>
 										<Typography variant='body2' color='text.secondary'>
-											{t('medical_history.field.prescription.medicine_unit')}: {m.medicineUnit} |{' '}
-											{t('medical_history.field.prescription.dosage')}: {m.dosage} |{' '}
-											{t('medical_history.field.prescription.frequency_per_day')}: {m.frequencyPerDay}
+											{t('medicine.field.unit')}: {m.medicineUnit} |{' '}
+											{t('medical_history.field.prescription.prescription_detail.dosage')}: {m.dosage} |{' '}
+											{t('medical_history.field.prescription.prescription_detail.frequency_per_day')}:{' '}
+											{m.frequencyPerDay}
 										</Typography>
 									</Stack>
 								</Paper>

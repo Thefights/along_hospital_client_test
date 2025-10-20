@@ -17,8 +17,12 @@ const RouteGuest = () => {
 				{/* This is route with layout */}
 				<Route element={auth?.role !== null ? <LayoutPatient /> : <LayoutGuest />}>
 					<Route path='/' index element={<HomePage />} />
-					<Route path='/test' element={<TestTable />} />
-					<Route path='/test2' element={<TestDialog />} />
+					{process.env.NODE_ENV === 'development' && (
+						<>
+							<Route path='/test' element={<TestTable />} />
+							<Route path='/test2' element={<TestDialog />} />
+						</>
+					)}
 				</Route>
 
 				{/* This is route without layout */}

@@ -2,11 +2,10 @@ import { ApiUrls } from '@/configs/apiUrls'
 import useAuth from '@/hooks/useAuth'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
-import useTranslation from '@/hooks/useTranslation'
 import { Box, Grid, Stack } from '@mui/material'
 import { useState } from 'react'
 import { Fade, Slide } from 'react-awesome-reveal'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import DoctorInfoDialog from '../dialogs/DoctorInfoDialog'
 import PatientInfoDialog from '../dialogs/PatientInfoDialog'
 import EmptyPage from '../placeholders/EmptyPage'
@@ -23,8 +22,6 @@ import MedicalHistoryDetailServiceSection from './sections/medicalHistoryDetailS
 
 const MedicalHistoryDetailBasePage = () => {
 	const { id } = useParams()
-	const { t } = useTranslation()
-	const navigate = useNavigate()
 
 	const [selectedMedicalServiceId, setSelectedMedicalServiceId] = useState(0)
 
@@ -92,12 +89,6 @@ const MedicalHistoryDetailBasePage = () => {
 		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.PRESCRIPTION(id),
 		method: 'PUT',
 	})
-
-	const isDoctorRole = role === 'Doctor'
-
-	const isDraftStatus = medicalHistory?.medicalHistoryStatus === 'Draft'
-	const isProcessedStatus = medicalHistory?.medicalHistoryStatus === 'Processed'
-	const isPaidStatus = medicalHistory?.medicalHistoryStatus === 'Paid'
 
 	if (!loading && !medicalHistory) {
 		return <EmptyPage showButton />
@@ -174,7 +165,7 @@ const MedicalHistoryDetailBasePage = () => {
 							if (response) {
 								setMedicalHistory((prev) => ({
 									...prev,
-									medicalHistoryStatus: 'Completed',
+									medicalHistoryStatus: 'Processed',
 								}))
 							}
 						}}
@@ -225,6 +216,7 @@ const MedicalHistoryDetailBasePage = () => {
 			<RespondComplaintDialog
 				open={openRespondComplaint}
 				onClose={() => setOpenRespondComplaint(false)}
+				initialResponse={medicalHistory?.complaint?.response}
 				onSubmit={async (values) => {
 					const response = await responseAsResolveComplaint.submit(values)
 					if (response) {

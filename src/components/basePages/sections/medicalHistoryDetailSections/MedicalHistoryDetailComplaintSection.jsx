@@ -54,7 +54,7 @@ const MedicalHistoryDetailComplaintSection = ({
 						{t('medical_history.field.complaint.topic')}: {complaint?.complaintTopic}
 					</Typography>
 					<Typography variant='body2'>
-						{t('medical_history.field.complaint.content')}: {complaint?.Content}
+						{t('medical_history.field.complaint.content')}: {complaint?.content}
 					</Typography>
 					<Typography variant='body2'>
 						{t('medical_history.field.complaint.response')}:{' '}

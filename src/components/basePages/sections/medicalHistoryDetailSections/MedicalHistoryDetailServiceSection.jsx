@@ -79,9 +79,11 @@ const MedicalHistoryDetailServiceSection = ({
 									<TableCell align='right'>${service.unitPrice}</TableCell>
 									<TableCell align='right'>${service.totalPrice}</TableCell>
 									<TableCell>
-										<IconButton onClick={() => handleDelete(service.medicalServiceId)}>
-											<Delete color='error' />
-										</IconButton>
+										{isDoctor && isDraft && (
+											<IconButton onClick={() => handleDelete(service.medicalServiceId)}>
+												<Delete color='error' />
+											</IconButton>
+										)}
 									</TableCell>
 								</TableRow>
 							))
