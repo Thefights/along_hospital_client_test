@@ -63,7 +63,7 @@ const LayoutPatient = () => {
 		},
 		{
 			label: t('header.meeting_room'),
-			url: routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.APPOINTMENT.MEETING_ROOM),
+			url: routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.APPOINTMENT.JOIN_MEETING_ROOM),
 		},
 	]
 
