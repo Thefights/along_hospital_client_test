@@ -1,17 +1,17 @@
 import useTranslation from '@/hooks/useTranslation'
-import { Camera } from '@mui/icons-material'
+import { MeetingRoom } from '@mui/icons-material'
 import { IconButton, Tooltip } from '@mui/material'
 
-const VideoConsultantButton = ({ onClick }) => {
+const MeetingRoomButton = ({ onClick }) => {
 	const { t } = useTranslation()
 
 	return (
-		<Tooltip title={t('tooltip.video_consultation')}>
+		<Tooltip title={t('tooltip.meeting_room')}>
 			<IconButton onClick={onClick}>
-				<Camera />
+				<MeetingRoom />
 			</IconButton>
 		</Tooltip>
 	)
 }
 
-export default VideoConsultantButton
+export default MeetingRoomButton
