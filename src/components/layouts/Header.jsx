@@ -10,6 +10,7 @@ import LoginButton from '../buttons/LoginButton'
 import MobileMenuButton from '../buttons/MobileMenuButton'
 import SwitchLanguageButton from '../buttons/SwitchLanguageButton'
 import SwitchThemeButton from '../buttons/SwitchThemeButton'
+import VideoConsultantButton from '../buttons/VideoConsultantButton'
 import UserAvatarMenu from '../menus/UserAvatarMenu'
 import SystemLogoAndName from './commons/SystemLogoAndName'
 import MobileDrawer from './MobileDrawer'
@@ -78,6 +79,7 @@ const Header = ({
 										navigate(routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.APPOINTMENT.CREATE))
 									}
 								/>
+								<VideoConsultantButton onClick={() => navigate(routeUrls.PATIENT.VIDEO_CONSULTATION)} />
 								<UserAvatarMenu items={userMenuItems} profile={profile} onLogout={logout} />
 							</>
 						)}

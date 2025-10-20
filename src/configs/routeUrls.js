@@ -34,6 +34,7 @@ export const routeUrls = {
 			INDEX: '/appointments',
 			CREATE: '/appointments/create',
 		},
+		VIDEO_CONSULTATION: '/video-consultation',
 	},
 	DOCTOR: {
 		DASHBOARD: '/',
