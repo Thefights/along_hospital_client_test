@@ -45,7 +45,9 @@
         "switch_dark": "Chuyển sang chế độ tối",
         "switch_light": "Chuyển sang chế độ sáng",
         "collapse": "Thu gọn",
-        "expand": "Mở rộng"
+        "expand": "Mở rộng",
+        "video_consultation": "Tư vấn qua video",
+        "meeting_room": "Phòng tư vấn"
     },
     "dialog": {
         "doctor_picker": {
@@ -346,6 +348,10 @@
         "specialty": "Chuyên khoa",
         "blog": "Blog",
         "about_us": "Về chúng tôi",
+        "video_consultation": "Tư vấn qua video",
+        "meeting_room": "Phòng tư vấn",
+        "booking": "Đặt lịch",
+        "More": "Thêm",
         "user_menu": {
             "profile": "Hồ sơ",
             "appointments": "Cuộc hẹn",

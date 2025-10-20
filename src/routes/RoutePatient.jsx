@@ -2,6 +2,7 @@ import { routeUrls } from '@/configs/routeUrls'
 import LayoutPatient from '@/layouts/LayoutPatient'
 import CreateAppointmentPage from '@/pages/patients/createAppointmentPage/CreateAppointmentPage'
 import CreateVideoConsultationPage from '@/pages/patients/createVideoConsultationPage/createVideoConsultationPage'
+import MeetingRoomPage from '@/pages/patients/meetingRoomPage/MeetingRoomPage'
 import PatientAppointmentHistoryPage from '@/pages/patients/patientAppointmentHistoryPage/PatientAppointmentHistoryPage'
 import ProfilePage from '@/pages/patients/ProfilePage'
 import { Route, Routes } from 'react-router-dom'
@@ -18,8 +19,10 @@ const RoutePatient = () => {
 						path={routeUrls.PATIENT.APPOINTMENT.INDEX}
 						element={<PatientAppointmentHistoryPage />}
 					/>
+					<Route path={routeUrls.PATIENT.APPOINTMENT.MEETING_ROOM} element={<MeetingRoomPage />} />
+					<Route path={routeUrls.PATIENT.VIDEO_CONSULTATION} element={<CreateVideoConsultationPage />} />
+					<Route path={routeUrls.PATIENT.APPOINTMENT.MEETING_ROOM} element={<MeetingRoomPage />} />
 				</Route>
-				<Route path={routeUrls.PATIENT.VIDEO_CONSULTATION} element={<CreateVideoConsultationPage />} />
 			</Route>
 		</Routes>
 	)

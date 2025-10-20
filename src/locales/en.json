@@ -46,7 +46,8 @@
         "switch_light": "Switch to light mode",
         "collapse": "Collapse",
         "expand": "Expand",
-        "video_consultation": "Video Consultation"
+        "video_consultation": "Video Consultation",
+        "meeting_room": "Meeting Room"
     },
     "dialog": {
         "doctor_picker": {
@@ -348,6 +349,10 @@
         "blog": "Blog",
         "about_us": "About Us",
         "video_consultation": "Video Consultation",
+        "meeting_room": "Meeting Room",
+        "booking": "Booking",
+        "more": "More",
+        "appointment": "Appointment",
         "user_menu": {
             "profile": "Profile",
             "appointments": "Appointments",
@@ -381,5 +386,34 @@
         "delete_selected": "Delete {number} selected",
         "delete_title": "Delete selected users?",
         "delete_description": "Are you sure you want to delete {number} selected item(s)? This action cannot be undone."
-    }
+    },
+    "meeting_room": {
+        "title": {
+            "waiting_room": "Waiting Room",
+            "consultation_room": "Consultation Room",
+            "join_meeting": "Join Meeting",
+            "placeholder_meeting_id": "Enter Meeting ID"
+        },
+        "subtitle": {
+            "waiting_room": "Please wait for the doctor to start the consultation.",
+            "consultation_room": "You are now in the consultation room.",
+            "enter_meeting": "Enter the meeting room to join the consultation."
+        },
+        "button": {
+            "join_consultation": "Join Consultation",
+            "leave_consultation": "Leave Consultation",
+            "end_consultation": "End Consultation",
+            "mute_audio": "Mute Audio",
+            "unmute_audio": "Unmute Audio",
+            "disable_video": "Disable Video",
+            "enable_video": "Enable Video",
+            "share_screen": "Share Screen",
+            "stop_sharing": "Stop Sharing"
+        },
+        "notification": {
+            "consultation_ended": "The consultation has ended.",
+            "user_joined": "{user} has joined the consultation.",
+            "user_left": "{user} has left the consultation."
+        }
+    }   
 }

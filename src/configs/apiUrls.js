@@ -34,6 +34,8 @@ export const ApiUrls = {
 	APPOINTMENT: {
 		INDEX: `/appointment`,
 		CANCEL: (id) => `/appointment/cancel/${id}`,
+		MEETING_ROOM: `/appointment/meeting-room`,
+		MEETING_ROOM_TOKEN: (id) => `/appointment/meeting-room-token/${id}`,
 		MANAGEMENT: {
 			INDEX: `/appointment-management`,
 			GET_ALL_BY_CURRENT_DOCTOR: `/appointment-management/doctor`,

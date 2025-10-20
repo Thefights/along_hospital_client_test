@@ -33,6 +33,8 @@ export const routeUrls = {
 		APPOINTMENT: {
 			INDEX: '/appointments',
 			CREATE: '/appointments/create',
+			MEETING_ROOM: `/appointments/meeting-room`,
+			MEETING_ROOM_TOKEN: (id) => `/appointments/meeting-room-token/${id}`,
 		},
 		VIDEO_CONSULTATION: '/video-consultation',
 	},
