@@ -392,7 +392,10 @@
             "waiting_room": "Waiting Room",
             "consultation_room": "Consultation Room",
             "join_meeting": "Join Meeting",
-            "placeholder_meeting_id": "Enter Meeting ID"
+            "placeholder_meeting_id": "Enter Meeting ID",
+            "appointment_time" : "Appointment Time:",
+            "duration": "Duration:",
+            "note": "Please ensure you have a stable internet connection and a quiet environment for the best consultation experience."
         },
         "subtitle": {
             "waiting_room": "Please wait for the doctor to start the consultation.",
@@ -414,6 +417,11 @@
             "consultation_ended": "The consultation has ended.",
             "user_joined": "{user} has joined the consultation.",
             "user_left": "{user} has left the consultation."
+        },
+        "message": {
+            "waiting_for_doctor": "Waiting for the doctor to start the consultation...",
+            "consultation_in_progress": "Consultation in progress.",
+            "please_enter_meeting_id": "Please enter a valid Meeting ID to join."
         }
     }   
 }
