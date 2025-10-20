@@ -95,6 +95,12 @@ const fields = [
 - Locale files in `src/locales/` (en.json, vi.json)
 - Translation keys follow dot notation: `t('header.home')`
 
+#### Usage Rules (Important)
+- Always call `t()` with a key only, without params. Example: `t('header.home')`.
+- If you add any new translation key in code, you MUST also add that key to BOTH `src/locales/en.json` and `src/locales/vi.json` in the same structure.
+- Prefer grouping keys under meaningful namespaces (e.g., `meeting_room.*`, `appointment.*`, `header.*`).
+- Do not inline literal UI strings in components; use translation keys instead.
+
 ## Development Commands
 
 ```bash
