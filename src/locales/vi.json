@@ -362,6 +362,18 @@
             "logout": "Đăng xuất"
         }
     },
+        "meeting_room": {
+            "duration_left": "Còn 30 phút",
+            "remote_placeholder": "Video từ đối tác",
+            "mic": "Micro",
+            "camera": "Camera",
+            "chat": "Trò chuyện",
+            "chat_title": "Trò chuyện",
+            "no_messages": "Chưa có tin nhắn",
+            "chat_input_placeholder": "Nhập tin nhắn...",
+            "end_call": "Kết thúc",
+            "create_medical_history": "Tạo hồ sơ bệnh án"
+        },
     "footer": {
         "__________comment1": "For footer section links",
         "medical": "Y tế",

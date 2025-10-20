@@ -395,7 +395,8 @@
             "placeholder_meeting_id": "Enter Meeting ID",
             "appointment_time" : "Appointment Time:",
             "duration": "Duration:",
-            "note": "Please ensure you have a stable internet connection and a quiet environment for the best consultation experience."
+            "note": "Please ensure you have a stable internet connection and a quiet environment for the best consultation experience.",
+            "duration_left": "Duration Left"
         },
         "subtitle": {
             "waiting_room": "Please wait for the doctor to start the consultation.",
@@ -422,6 +423,15 @@
             "waiting_for_doctor": "Waiting for the doctor to start the consultation...",
             "consultation_in_progress": "Consultation in progress.",
             "please_enter_meeting_id": "Please enter a valid Meeting ID to join."
-        }
+        },
+        "remote_placeholder": "Remote video",
+        "mic": "Microphone",
+        "camera": "Camera",
+        "chat": "Chat",
+        "chat_title": "Chat",
+        "no_messages": "No messages yet",
+        "chat_input_placeholder": "Type a message...",
+        "end_call": "End Call",
+        "create_medical_history": "Create Medical History"
     }   
 }
