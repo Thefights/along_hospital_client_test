@@ -45,7 +45,8 @@
         "switch_dark": "Switch to dark mode",
         "switch_light": "Switch to light mode",
         "collapse": "Collapse",
-        "expand": "Expand"
+        "expand": "Expand",
+        "video_consultation": "Video Consultation"
     },
     "dialog": {
         "doctor_picker": {
@@ -206,6 +207,61 @@
             "refused": "Refused"
         }
     },
+    "video_consultation": {
+        "title": {
+            "patient_info": "Patient Info",
+            "appointment_info": "Video Consultation Info",
+            "doctor_info": "Doctor Info",
+            "create_appointment": "Register Video Consultation",
+            "appointment_history": "Appointment History",
+            "appointment_management": "Appointment Management",
+            "appointment_detail": "Appointment Detail",
+            "filters": "Filters",
+            "timelines": "Timelines"
+        },
+        "button": {
+            "cancel_appointment": "Cancel video consultation",
+            "deny_assignment": "Deny Assignment",
+            "accept_assignment": "Accept Assignment",
+            "complete_appointment": "Complete video consultation",
+            "assign_doctor": "Assign Doctor",
+            "refuse_appointment": "Refuse video consultation"
+        },
+        "field": {
+            "purpose": "Purpose",
+            "specialty": "Specialty",
+            "select_specialty": "Select Specialty",
+            "start_date": "Start Date",
+            "end_date": "End Date",
+            "doctor": "Doctor",
+            "select_doctor": "Select Doctor",
+            "search_doctor": "Search by Doctor name...",
+            "cancel_reason": "Cancel Reason",
+            "refuse_reason": "Refuse Reason"
+        },
+        "dialog": {
+            "confirm_create_title": "Create video consultation?",
+            "confirm_create_description": "Are you sure to create this video consultation?",
+            "confirm_cancel_title": "Cancel video consultation?",
+            "confirm_cancel_description": "Please provide a reason for cancellation:",
+            "confirm_deny_title": "Deny assignment?",
+            "confirm_deny_description": "Are your sure to deny this assignment? This action cannot be undone",
+            "confirm_accept_title": "Accept assignment?",
+            "confirm_accept_description": "Are your sure to accept this assignment?",
+            "confirm_complete_title": "Complete video consultation?",
+            "confirm_complete_description": "Are you sure to mark this video consultation as completed?",
+            "confirm_refuse_title": "Refuse assignment?",
+            "confirm_refuse_description": "Please provide a reason for refusal:"
+        },
+        "status": {
+            "upcoming": "Upcoming",
+            "scheduled": "Scheduled",
+            "confirmed": "Confirmed",
+            "completed": "Completed",
+            "cancelled": "Cancelled",
+            "refused": "Refused"
+        }
+    },
     "medical_history": {
         "title": {
             "medical_history_information": "Medical History Information",
@@ -291,6 +347,7 @@
         "specialty": "Specialty",
         "blog": "Blog",
         "about_us": "About Us",
+        "video_consultation": "Video Consultation",
         "user_menu": {
             "profile": "Profile",
             "appointments": "Appointments",

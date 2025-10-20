@@ -206,6 +206,61 @@
             "refused": "Đã từ chối"
         }
     },
+    "video_consultation": {
+        "title": {
+            "patient_info": "Thông tin bệnh nhân",
+            "appointment_info": "Thông tin cuộc hẹn tư vấn qua video",
+            "doctor_info": "Thông tin bác sĩ",
+            "create_appointment": "Tạo cuộc hẹn tư vấn qua video",
+            "appointment_history": "Lịch sử cuộc hẹn",
+            "appointment_management": "Quản lý cuộc hẹn",
+            "appointment_detail": "Chi tiết cuộc hẹn",
+            "filters": "Bộ lọc",
+            "timelines": "Dòng thời gian"
+        },
+        "button": {
+            "cancel_appointment": "Hủy cuộc hẹn",
+            "deny_assignment": "Từ chối cuộc hẹn",
+            "accept_assignment": "Chấp nhận cuộc hẹn",
+            "complete_appointment": "Hoàn thành cuộc hẹn",
+            "assign_doctor": "Chỉ định bác sĩ",
+            "refuse_appointment": "Từ chối cuộc hẹn"
+        },
+        "field": {
+            "purpose": "Mục đích",
+            "specialty": "Chuyên khoa",
+            "select_specialty": "Chọn chuyên khoa",
+            "start_date": "Ngày bắt đầu",
+            "end_date": "Ngày kết thúc",
+            "doctor": "Bác sĩ",
+            "select_doctor": "Chọn bác sĩ",
+            "search_doctor": "Tìm kiếm theo tên bác sĩ...",
+            "cancel_reason": "Lý do hủy",
+            "refuse_reason": "Lý do từ chối"
+        },
+        "dialog": {
+            "confirm_create_title": "Tạo cuộc hẹn tư vấn qua video?",
+            "confirm_create_description": "Bạn có chắc chắn muốn tạo cuộc hẹn này không?",
+            "confirm_cancel_title": "Hủy cuộc hẹn tư vấn qua video?",
+            "confirm_cancel_description": "Bạn có chắc chắn muốn hủy cuộc hẹn này không?",
+            "confirm_deny_title": "Từ chối cuộc hẹn tư vấn qua video?",
+            "confirm_deny_description": "Bạn có chắc chắn muốn từ chối cuộc hẹn này không? Hành động này không thể hoàn tác",
+            "confirm_accept_title": "Chấp nhận cuộc hẹn tư vấn qua video?",
+            "confirm_accept_description": "Bạn có chắc chắn muốn chấp nhận cuộc hẹn này không?",
+            "confirm_complete_title": "Hoàn thành cuộc hẹn tư vấn qua video?",
+            "confirm_complete_description": "Bạn có chắc chắn muốn đánh dấu cuộc hẹn này là đã hoàn thành không?",
+            "confirm_refuse_title": "Từ chối cuộc hẹn tư vấn qua video?",
+            "confirm_refuse_description": "Vui lòng cung cấp lý do từ chối:"
+        },
+        "status": {
+            "upcoming": "Sắp tới",
+            "scheduled": "Đã lên lịch",
+            "confirmed": "Đã xác nhận",
+            "completed": "Đã hoàn thành",
+            "cancelled": "Đã hủy",
+            "refused": "Đã từ chối"
+        }
+    },
     "medical_history": {
         "title": {
             "medical_history_information": "Thông tin lịch sử y tế",
