@@ -15,6 +15,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
  * @param {'primary'|'secondary'|'success'|'error'|'info'|'warning'} [props.submitButtonColor='primary']
  * @param {'xs'|'sm'|'md'|'lg'|'xl'} [props.maxWidth='sm']
  * @param {(params: {values: any, closeDialog: Function, setField: Function}) => Promise<any>} [props.onSubmit]
+ * @param {Array<{label: string,
+ *  color?: 'primary'|'secondary'|'success'|'error'|'info'|'warning',
+ *  variant?: 'text'|'outlined'|'contained',
+ *  onClick: ({ values, closeDialog, setField }) => void}>} [props.additionalButtons]
  */
 const GenericFormDialog = ({
 	open,
@@ -26,6 +30,7 @@ const GenericFormDialog = ({
 	submitButtonColor = 'primary',
 	maxWidth = 'sm',
 	onSubmit = ({ values, closeDialog, setField }) => Promise.resolve(values),
+	additionalButtons = [],
 }) => {
 	const startValues = useMemo(() => {
 		const v = { ...initialValues }
@@ -90,6 +95,20 @@ const GenericFormDialog = ({
 				<Button onClick={handleClose} color='inherit' disabled={loading}>
 					{t('button.cancel')}
 				</Button>
+				{additionalButtons &&
+					additionalButtons.length > 0 &&
+					additionalButtons.map((btn, idx) => (
+						<Button
+							key={idx}
+							onClick={() => btn.onClick({ values, closeDialog: handleClose, setField })}
+							color={btn.color || 'primary'}
+							variant={btn.variant || 'contained'}
+							loading={loading}
+							loadingPosition='start'
+						>
+							{btn.label}
+						</Button>
+					))}
 				<Button
 					onClick={handleSubmit}
 					color={submitButtonColor}
@@ -163,12 +182,9 @@ const handleSuccess = (res) => {
     open={createDialogOpen}
     onClose={() => setCreateDialogOpen(false)}
     fields={fields}
-    submitUrl={submitUrl}
-    method='POST'
     submitLabel={submitLabel}
     submitButtonColor={submitButtonColor}
-    onSuccess={(res) => handleSuccess(res)}
-    onError={(e) => handleError(e)}
+	onSubmit={() => console.log('Created')}
 />
 
 <GenericFormDialog
@@ -176,12 +192,16 @@ const handleSuccess = (res) => {
     onClose={() => setUpdateDialogOpen(false)}
 	initialValues={initialValues}
     fields={fields}
-    submitUrl={submitUrl}
-    method='PUT'
-    params={1} // This is Id 1
     submitLabel={submitLabel}
     submitButtonColor={submitButtonColor}
-    onSuccess={(res) => handleSuccess(res)}
-    onError={(e) => handleError(e)}
+	onSubmit={() => console.log('Updated')}
+	additionalButtons={[
+		{
+			label: 'Delete',
+			color: 'error',
+			variant: 'contained',
+			onClick: () => console.log('Deleted'),
+		},
+	]}
 />
 */

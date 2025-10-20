@@ -17,6 +17,20 @@ export const ApiUrls = {
 	SPECIALTY: {
 		INDEX: `/specialty`,
 	},
+	MEDICINE: {
+		INDEX: `/medicine`,
+		MANAGEMENT: {
+			INDEX: `/medicine-management`,
+			GET_ALL: `/medicine-management/all`,
+		},
+	},
+	MEDICAL_SERVICE: {
+		INDEX: `/medical-service`,
+		MANAGEMENT: {
+			INDEX: `/medical-service-management`,
+			GET_ALL: `/medical-service-management/all`,
+		},
+	},
 	APPOINTMENT: {
 		INDEX: `/appointment`,
 		CANCEL: (id) => `/appointment/cancel/${id}`,
@@ -29,6 +43,29 @@ export const ApiUrls = {
 			CONFIRM: (id) => `/appointment-management/confirm/${id}`,
 			COMPLETE: (id) => `/appointment-management/complete/${id}`,
 			REFUSE: (id) => `/appointment-management/refuse/${id}`,
+		},
+	},
+	MEDICAL_HISTORY: {
+		INDEX: `/medical-history`,
+		CREATE_COMPLAINT: (medicalHistoryId) => `/medical-history/${medicalHistoryId}/complaint`,
+		MANAGEMENT: {
+			INDEX: `/medical-history-management`,
+			GET_ALL_BY_CURRENT_DOCTOR: `/medical-history-management/doctor`,
+			COMPLETE: (medicalHistoryId) => `/medical-history-management/complete/${medicalHistoryId}`,
+			MEDICAL_HISTORY_DETAIL: (medicalHistoryId, medicalServiceId = null) =>
+				`/medical-history-management/${medicalHistoryId}/detail${
+					medicalServiceId ? `/${medicalServiceId}` : ''
+				}`,
+			PRESCRIPTION: (medicalHistoryId) =>
+				`/medical-history-management/${medicalHistoryId}/prescription`,
+			COMPLAINT: {
+				DRAFT: (medicalHistoryId) => `/medical-history-management/${medicalHistoryId}/complaint/draft`,
+				RESOLVE: (medicalHistoryId) =>
+					`/medical-history-management/${medicalHistoryId}/complaint/resolve`,
+				CLOSE: (medicalHistoryId) => `/medical-history-management/${medicalHistoryId}/complaint/close`,
+				CLASSIFY: (medicalHistoryId) =>
+					`/medical-history-management/${medicalHistoryId}/complaint/classify`,
+			},
 		},
 	},
 }

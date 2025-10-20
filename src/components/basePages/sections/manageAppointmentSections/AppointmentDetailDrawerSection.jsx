@@ -1,4 +1,4 @@
-import { defaultStatusStyle } from '@/configs/defaultStylesConfig'
+import { defaultAppointmentStatusStyle } from '@/configs/defaultStylesConfig'
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
 import {
@@ -15,7 +15,7 @@ import InfoRow from './AppointmentInfoRow'
 function AppointmentDetailDrawer({ appointment, open, onClose, buttons }) {
 	const { t, language } = useTranslation()
 	const theme = useTheme()
-	const s = appointment ? defaultStatusStyle(theme, appointment?.appointmentStatus) : {}
+	const s = appointment ? defaultAppointmentStatusStyle(theme, appointment?.appointmentStatus) : {}
 	const datetimeString = appointment ? `${appointment?.date}T${appointment?.time}` : null
 
 	const formatDatetime = (datetimeString) => {

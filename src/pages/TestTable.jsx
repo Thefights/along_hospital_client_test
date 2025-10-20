@@ -162,6 +162,18 @@ const TestTable = () => {
 					{ key: 'value', title: 'Value', validate: [maxLen(255)] },
 				],
 			},
+			{
+				key: 'customSelect',
+				title: 'Custom Select',
+				type: 'select',
+				options: [
+					{ label: 'Option 1', value: 'opt1' },
+					{ label: 'Option 2', value: 'opt2' },
+				],
+				renderOption: (opt) => (
+					<span style={{ fontWeight: opt.value === 'opt1' ? 'bold' : 'normal' }}>{opt.label}</span>
+				),
+			},
 		],
 		[]
 	)

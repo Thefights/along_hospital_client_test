@@ -1,0 +1,62 @@
+import GenericFormDialog from '@/components/dialogs/commons/GenericFormDialog'
+import { ApiUrls } from '@/configs/apiUrls'
+import { defaultLineClampStyle } from '@/configs/defaultStylesConfig'
+import useReduxStore from '@/hooks/useReduxStore'
+import useTranslation from '@/hooks/useTranslation'
+import { setMedicalServicesStore } from '@/redux/reducers/managementReducer'
+import { numberHigherThan } from '@/utils/validateUtil'
+import { Stack, Typography } from '@mui/material'
+
+const CreateMedicalHistoryDetailDialog = ({ open, onClose, onSubmit = (values) => {} }) => {
+	const { t } = useTranslation()
+	const medicalServiceStore = useReduxStore({
+		url: ApiUrls.MEDICAL_SERVICE.MANAGEMENT.GET_ALL,
+		selector: (state) => state.management.medicalServices,
+		setStore: setMedicalServicesStore,
+	})
+
+	const fields = [
+		{
+			key: 'medicalServiceId',
+			title: t('medical_history.field.medical_history_detail.medical_service'),
+			type: 'select',
+			options: medicalServiceStore?.data || [],
+			renderOption: (option) => (
+				<Stack direction={'row'} justifyContent={'space-between'} alignItems={'stretch'}>
+					<Stack>
+						<Typography variant='subtitle1'>{option?.name}</Typography>
+						<Typography variant='subtitle2' color='text.secondary'>
+							{option?.specialtyName}
+						</Typography>
+						<Typography variant='caption' color='text.secondary' sx={{ ...defaultLineClampStyle(2) }}>
+							{option?.description}
+						</Typography>
+					</Stack>
+					<Typography variant='subtitle2' color='primary'>
+						${option?.price ?? 0}
+					</Typography>
+				</Stack>
+			),
+		},
+		{
+			key: 'quantity',
+			title: t('medical_history.field.medical_history_detail.quantity'),
+			type: 'number',
+			validate: [numberHigherThan(1)],
+		},
+	]
+
+	return (
+		<GenericFormDialog
+			open={open}
+			onClose={onClose}
+			title={t('medical_history.dialog.title.add_medical_service')}
+			fields={fields}
+			onSubmit={({ values }) => onSubmit(values)}
+			submitButtonColor='primary'
+			submitLabel={t('button.add')}
+		/>
+	)
+}
+
+export default CreateMedicalHistoryDetailDialog

@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material'
+import { alpha, createTheme } from '@mui/material'
 import { common } from '@mui/material/colors'
 
 const lightPalette = {
@@ -188,6 +188,23 @@ const customTheme = (palette, otherComponents) => ({
 	},
 	shape: { borderRadius: 12 },
 	components: {
+		MuiCssBaseline: {
+			styleOverrides: (theme) => ({
+				'::-webkit-scrollbar': {
+					width: 8,
+				},
+				'::-webkit-scrollbar-thumb': {
+					backgroundColor: alpha(theme.palette.text.primary, 0.1),
+					borderRadius: 4,
+				},
+				'::-webkit-scrollbar-thumb:hover': {
+					backgroundColor: alpha(theme.palette.text.primary, 0.3),
+				},
+				'::-webkit-scrollbar-corner': {
+					background: 'transparent',
+				},
+			}),
+		},
 		MuiPaper: { styleOverrides: { root: { borderRadius: 12 } } },
 		MuiButtonBase: { defaultProps: { disableRipple: true } },
 		MuiDivider: { styleOverrides: { root: { borderColor: palette.divider } } },

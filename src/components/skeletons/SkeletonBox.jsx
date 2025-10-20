@@ -1,12 +1,12 @@
 import { Skeleton, Stack } from '@mui/material'
 
-const SkeletonBox = ({ numberOfBoxes = 3, heights = [100, 200, 300] }) => {
+const SkeletonBox = ({ numberOfBoxes = 3, heights = [100, 200, 300], rounded = false }) => {
 	return (
 		<Stack spacing={2}>
 			{Array.from({ length: numberOfBoxes }).map((_, index) => (
 				<Skeleton
 					key={index}
-					variant='rectangular'
+					variant={rounded ? 'rounded' : 'rectangular'}
 					width='100%'
 					height={heights[index % heights.length] || 200}
 				/>

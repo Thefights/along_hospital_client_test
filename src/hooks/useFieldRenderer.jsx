@@ -84,7 +84,7 @@ export default function useFieldRenderer(
 					opts.length > 0 &&
 					opts.map((opt) => (
 						<MenuItem key={String(opt.value)} value={opt.value} disabled={opt.disabled}>
-							{opt.label}
+							{field.renderOption ? field.renderOption(opt.value) : opt.label}
 						</MenuItem>
 					))}
 			</ValidationTextField>
@@ -299,7 +299,7 @@ export default function useFieldRenderer(
 		return (
 			<Stack key={field.key} spacing={1.25}>
 				<Typography variant='subtitle2'>{field.title}</Typography>
-				<Stack spacing={1}>
+				<Stack spacing={2}>
 					{rows.map((_, idx) => (
 						<Stack key={idx} direction='row' spacing={1} alignItems='center'>
 							<Stack direction='row' spacing={1} sx={{ flex: 1, flexWrap: 'wrap' }}>
@@ -365,6 +365,11 @@ const fields = [
 	{ key: 'age', title: 'Age', type: 'number', validate: [numberRange(0, 100)] },
 	// Select field with options
 	{ key: 'role', title: 'Role', type: 'select', options: ['Admin', 'User', { label: 'Guest', value: 'guest', disabled: true }] },
+	// Select with custom renderOption
+	{ key: 'customSelect', title: 'Custom Select', type: 'select', options: [
+		{ label: 'Option 1', value: 'opt1' },
+		{ label: 'Option 2', value: 'opt2' },
+	], renderOption: (opt) => (<span style={{ fontWeight: opt.value === 'opt1' ? 'bold' : 'normal' }}>{opt}</span>) },
 	// Image upload field with required false
 	{ key: 'avatar', title: 'Avatar', type: 'image', required: false },
 	// Image upload field allowing multiple images (max 3)
@@ -387,6 +392,7 @@ const initialValues = {
 	description: 'Description here',
 	age: '25',
 	role: 'User',
+	customSelect: 'opt1',
 	avatar: '/avatar.jpg',
 	images: ['/image1.jpg', '/image2.jpg'],
 	address: { city: 'City Name', country: 'Country Name' },
