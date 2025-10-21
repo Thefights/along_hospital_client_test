@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import { ArrowBack, ArrowForward } from '@mui/icons-material'
 import { MenuItem, Pagination, PaginationItem, Select, Stack, Typography } from '@mui/material'
 import { useEffect, useMemo } from 'react'
@@ -40,7 +42,7 @@ export const GenericTablePagination = ({
 }) => {
 	const rowsPerPageNum = useMemo(
 		() => parseInt(pageSize ?? pageSizeOptions?.[0] ?? 5, 10),
-		[pageSize]
+		[pageSize, pageSizeOptions]
 	)
 
 	const totalPages = useMemo(() => {
@@ -49,11 +51,11 @@ export const GenericTablePagination = ({
 
 	useEffect(() => {
 		if (page !== 1) setPage(1)
-	}, [rowsPerPageNum])
+	}, [rowsPerPageNum, setPage])
 
 	useEffect(() => {
 		if (page > totalPages) setPage(totalPages)
-	}, [page, totalPages])
+	}, [page, totalPages, setPage])
 
 	return (
 		<Stack direction='row' justifyContent='space-between' alignItems='center' flexWrap={'wrap'} m={2}>

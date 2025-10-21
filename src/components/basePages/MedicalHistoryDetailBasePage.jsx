@@ -8,7 +8,6 @@ import { Fade, Slide } from 'react-awesome-reveal'
 import { useParams } from 'react-router-dom'
 import DoctorInfoDialog from '../dialogs/DoctorInfoDialog'
 import PatientInfoDialog from '../dialogs/PatientInfoDialog'
-import EmptyPage from '../placeholders/EmptyPage'
 import CreateComplaintDialog from './sections/medicalHistoryDetailSections/dialogs/CreateComplaintDialog'
 import CreateMedicalHistoryDetailDialog from './sections/medicalHistoryDetailSections/dialogs/CreateMedicalHistoryDetailDialog'
 import RespondComplaintDialog from './sections/medicalHistoryDetailSections/dialogs/RespondComplaintDialog'
@@ -90,9 +89,9 @@ const MedicalHistoryDetailBasePage = () => {
 		method: 'PUT',
 	})
 
-	if (!loading && !medicalHistory) {
-		return <EmptyPage showButton />
-	}
+	// if (!loading && !medicalHistory) {
+	// 	return <EmptyPage showButton />
+	// }
 
 	return (
 		<Box sx={{ p: 3 }}>
