@@ -78,8 +78,8 @@ const PatientAppointmentHistoryPage = () => {
 				specialties={specialtiesStore.data || []}
 				loading={getAppointments.loading}
 				drawerButtons={
-					(selectedAppointment?.status === EnumConfig.AppointmentStatus.Scheduled ||
-						selectedAppointment?.status === EnumConfig.AppointmentStatus.Confirmed) && (
+					(selectedAppointment?.appointmentStatus === EnumConfig.AppointmentStatus.Scheduled ||
+						selectedAppointment?.appointmentStatus === EnumConfig.AppointmentStatus.Confirmed) && (
 						<Button onClick={() => setOpenCancelDialog(true)} color='error' variant='contained'>
 							{t('appointment.button.cancel_appointment')}
 						</Button>

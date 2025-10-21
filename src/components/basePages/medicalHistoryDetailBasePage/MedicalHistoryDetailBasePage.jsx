@@ -1,4 +1,5 @@
 import { ApiUrls } from '@/configs/apiUrls'
+import { EnumConfig } from '@/configs/enumConfig'
 import useAuth from '@/hooks/useAuth'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
@@ -19,7 +20,7 @@ import MedicalHistoryDetailHeaderInfoSection from './sections/MedicalHistoryDeta
 import MedicalHistoryDetailPrescriptionSection from './sections/MedicalHistoryDetailPrescriptionSection'
 import MedicalHistoryDetailServiceSection from './sections/MedicalHistoryDetailServiceSection'
 
-const MedicalHistoryDetailBasePage = () => {
+const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX }) => {
 	const { id } = useParams()
 
 	const [selectedMedicalServiceId, setSelectedMedicalServiceId] = useState(0)
@@ -43,7 +44,7 @@ const MedicalHistoryDetailBasePage = () => {
 		loading,
 		data: medicalHistory,
 		setData: setMedicalHistory,
-	} = useFetch(`/medical-history/${id}`, {}, [id])
+	} = useFetch(`${fetchUrl}/${id}`, {}, [id])
 
 	const updateMedicalHistory = useAxiosSubmit({
 		url: `${ApiUrls.MEDICAL_HISTORY.MANAGEMENT.INDEX}/${medicalHistory?.id}`,
@@ -164,7 +165,7 @@ const MedicalHistoryDetailBasePage = () => {
 							if (response) {
 								setMedicalHistory((prev) => ({
 									...prev,
-									medicalHistoryStatus: 'Processed',
+									medicalHistoryStatus: EnumConfig.MedicalHistoryStatus.Completed,
 								}))
 							}
 						}}
@@ -222,7 +223,11 @@ const MedicalHistoryDetailBasePage = () => {
 						setOpenRespondComplaint(false)
 						setMedicalHistory((prev) => ({
 							...prev,
-							complaint: { ...prev.complaint, response: values.response, status: 'Resolved' },
+							complaint: {
+								...prev.complaint,
+								response: values.response,
+								status: EnumConfig.ComplaintResolveStatus.Resolved,
+							},
 						}))
 					}
 				}}
@@ -232,7 +237,11 @@ const MedicalHistoryDetailBasePage = () => {
 						setOpenRespondComplaint(false)
 						setMedicalHistory((prev) => ({
 							...prev,
-							complaint: { ...prev.complaint, response: values.response, status: 'Draft' },
+							complaint: {
+								...prev.complaint,
+								response: values.response,
+								status: EnumConfig.ComplaintResolveStatus.Draft,
+							},
 						}))
 					}
 				}}
@@ -242,7 +251,7 @@ const MedicalHistoryDetailBasePage = () => {
 						setOpenRespondComplaint(false)
 						setMedicalHistory((prev) => ({
 							...prev,
-							complaint: { ...prev.complaint, status: 'Closed' },
+							complaint: { ...prev.complaint, status: EnumConfig.ComplaintResolveStatus.Closed },
 						}))
 					}
 				}}

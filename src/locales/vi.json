@@ -209,7 +209,7 @@
             "confirm_create_title": "Tạo cuộc hẹn?",
             "confirm_create_description": "Bạn có chắc chắn muốn tạo cuộc hẹn này không?",
             "confirm_cancel_title": "Hủy cuộc hẹn?",
-            "confirm_cancel_description": "Bạn có chắc chắn muốn hủy cuộc hẹn này không?",
+            "confirm_cancel_description": "Vui lòng cung cấp lý do hủy:",
             "confirm_deny_title": "Từ chối cuộc hẹn?",
             "confirm_deny_description": "Bạn có chắc chắn muốn từ chối cuộc hẹn này không? Hành động này không thể hoàn tác",
             "confirm_accept_title": "Chấp nhận cuộc hẹn?",

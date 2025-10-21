@@ -68,7 +68,7 @@ const DoctorAppointmentManagementPage = () => {
 			onFilterClick={onFilterClick}
 			loading={getAppointments.loading}
 			drawerButtons={
-				selectedAppointment?.status === EnumConfig.AppointmentStatus.Scheduled ? (
+				selectedAppointment?.appointmentStatus === EnumConfig.AppointmentStatus.Scheduled ? (
 					<Stack direction='row' spacing={2}>
 						<ConfirmationButton
 							confirmationTitle={t('appointment.dialog.confirm_accept_title')}
@@ -89,7 +89,7 @@ const DoctorAppointmentManagementPage = () => {
 							{t('appointment.button.deny_assignment')}
 						</ConfirmationButton>
 					</Stack>
-				) : selectedAppointment?.status === EnumConfig.AppointmentStatus.Confirmed ? (
+				) : selectedAppointment?.appointmentStatus === EnumConfig.AppointmentStatus.Confirmed ? (
 					<ConfirmationButton
 						confirmationTitle={t('appointment.dialog.confirm_complete_title')}
 						confirmationDescription={t('appointment.dialog.confirm_complete_description')}

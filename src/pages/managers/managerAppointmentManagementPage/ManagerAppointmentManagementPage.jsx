@@ -90,7 +90,7 @@ const ManagerAppointmentManagementPage = () => {
 				specialties={specialtiesStore.data || []}
 				loading={getAppointments.loading}
 				drawerButtons={
-					selectedAppointment?.status === EnumConfig.AppointmentStatus.Scheduled ? (
+					selectedAppointment?.appointmentStatus === EnumConfig.AppointmentStatus.Scheduled ? (
 						<Stack direction='row' spacing={2}>
 							<Button onClick={() => setOpenDoctorPickerDialog(true)} variant='contained' color='info'>
 								{t('appointment.button.assign_doctor')}

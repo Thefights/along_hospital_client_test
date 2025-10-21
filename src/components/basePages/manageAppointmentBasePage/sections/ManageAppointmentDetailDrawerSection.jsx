@@ -54,19 +54,19 @@ const ManageAppointmentDetailDrawerSection = ({ appointment, open, onClose, butt
 
 	const appointmentTimelinesRows = [
 		{
-			label: t('appointment.status.confirmed'),
+			label: t('enum.appointment_status.confirmed'),
 			value: appointment?.confirmedDate ? formatDatetime(appointment?.confirmedDate) : '-',
 		},
 		{
-			label: t('appointment.status.completed'),
+			label: t('enum.appointment_status.completed'),
 			value: appointment?.completedDate ? formatDatetime(appointment?.completedDate) : '-',
 		},
 		{
-			label: t('appointment.status.cancelled'),
+			label: t('enum.appointment_status.cancelled'),
 			value: appointment?.cancelledDate ? formatDatetime(appointment?.cancelledDate) : '-',
 		},
 		{
-			label: t('appointment.status.refused'),
+			label: t('enum.appointment_status.refused'),
 			value: appointment?.refusedDate ? formatDatetime(appointment?.refusedDate) : '-',
 		},
 		{ label: t('appointment.field.cancel_reason'), value: appointment?.cancelledReason },
