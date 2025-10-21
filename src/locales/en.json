@@ -432,6 +432,21 @@
         "no_messages": "No messages yet",
         "chat_input_placeholder": "Type a message...",
         "end_call": "End Call",
-        "create_medical_history": "Create Medical History"
+        "create_medical_history": "Create Medical History",
+        "consultation_complete_title": "Consultation Complete",
+        "consultation_complete_subtitle": "Thank you for using our telemedicine service",
+        "consultation_summary_title": "Consultation Summary",
+        "chief_complaint": "Chief Complaint",
+        "sample_chief_complaint": "Recurring headaches for the past 2 weeks",
+        "diagnosis": "Diagnosis",
+        "sample_diagnosis": "Tension-type headache",
+        "recommendations": "Recommendations",
+        "sample_rec_1": "Take prescribed medication as directed",
+        "sample_rec_2": "Maintain regular sleep schedule",
+        "sample_rec_3": "Stay hydrated and reduce screen time",
+        "sample_rec_4": "Follow up in 2 weeks if symptoms persist",
+        "schedule_follow_up": "Schedule Follow-up",
+        "back_to_home": "Back To Home",
+        "summary_notice": "A copy of the summary will be sent to your registered email address"
     }   
 }
