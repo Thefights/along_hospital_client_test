@@ -1,6 +1,8 @@
+import { routeUrls } from '@/configs/routeUrls'
 import useAuth from '@/hooks/useAuth'
 import LayoutGuest from '@/layouts/LayoutGuest'
 import LayoutPatient from '@/layouts/LayoutPatient'
+import BlogPage from '@/pages/guests/BlogPage'
 import HomePage from '@/pages/guests/HomePage'
 import LoginPage from '@/pages/guests/LoginPage'
 import TestDialog from '@/pages/TestDialog'
@@ -17,6 +19,7 @@ const RouteGuest = () => {
 				{/* This is route with layout */}
 				<Route element={auth?.role !== null ? <LayoutPatient /> : <LayoutGuest />}>
 					<Route path='/' index element={<HomePage />} />
+					<Route path={routeUrls.HOME.BLOG} element={<BlogPage />} />
 					{process.env.NODE_ENV === 'development' && (
 						<>
 							<Route path='/test' element={<TestTable />} />
