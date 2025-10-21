@@ -1,4 +1,5 @@
 import { ApiUrls } from '@/configs/apiUrls'
+import { EnumConfig } from '@/configs/enumConfig'
 import useAuth from '@/hooks/useAuth'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
@@ -6,20 +7,20 @@ import { Box, Grid, Stack } from '@mui/material'
 import { useState } from 'react'
 import { Fade, Slide } from 'react-awesome-reveal'
 import { useParams } from 'react-router-dom'
-import DoctorInfoDialog from '../dialogs/DoctorInfoDialog'
-import PatientInfoDialog from '../dialogs/PatientInfoDialog'
-import CreateComplaintDialog from './sections/medicalHistoryDetailSections/dialogs/CreateComplaintDialog'
-import CreateMedicalHistoryDetailDialog from './sections/medicalHistoryDetailSections/dialogs/CreateMedicalHistoryDetailDialog'
-import RespondComplaintDialog from './sections/medicalHistoryDetailSections/dialogs/RespondComplaintDialog'
-import UpdateMedicalHistoryDialog from './sections/medicalHistoryDetailSections/dialogs/UpdateMedicalHistoryDialog'
-import UpsertPrescriptionDialog from './sections/medicalHistoryDetailSections/dialogs/UpsertPrescriptionDialog'
-import MedicalHistoryDetailComplaintSection from './sections/medicalHistoryDetailSections/MedicalHistoryDetailComplaintSection'
-import MedicalHistoryDetailFooterSection from './sections/medicalHistoryDetailSections/MedicalHistoryDetailFooterSection'
-import MedicalHistoryDetailHeaderInfoSection from './sections/medicalHistoryDetailSections/MedicalHistoryDetailHeaderInfoSection'
-import MedicalHistoryDetailPrescriptionSection from './sections/medicalHistoryDetailSections/MedicalHistoryDetailPrescriptionSection'
-import MedicalHistoryDetailServiceSection from './sections/medicalHistoryDetailSections/MedicalHistoryDetailServiceSection'
+import DoctorInfoDialog from '../../dialogs/DoctorInfoDialog'
+import PatientInfoDialog from '../../dialogs/PatientInfoDialog'
+import CreateComplaintDialog from './sections/dialogs/CreateComplaintDialog'
+import CreateMedicalHistoryDetailDialog from './sections/dialogs/CreateMedicalHistoryDetailDialog'
+import RespondComplaintDialog from './sections/dialogs/RespondComplaintDialog'
+import UpdateMedicalHistoryDialog from './sections/dialogs/UpdateMedicalHistoryDialog'
+import UpsertPrescriptionDialog from './sections/dialogs/UpsertPrescriptionDialog'
+import MedicalHistoryDetailComplaintSection from './sections/MedicalHistoryDetailComplaintSection'
+import MedicalHistoryDetailFooterSection from './sections/MedicalHistoryDetailFooterSection'
+import MedicalHistoryDetailHeaderInfoSection from './sections/MedicalHistoryDetailHeaderInfoSection'
+import MedicalHistoryDetailPrescriptionSection from './sections/MedicalHistoryDetailPrescriptionSection'
+import MedicalHistoryDetailServiceSection from './sections/MedicalHistoryDetailServiceSection'
 
-const MedicalHistoryDetailBasePage = () => {
+const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX }) => {
 	const { id } = useParams()
 
 	const [selectedMedicalServiceId, setSelectedMedicalServiceId] = useState(0)
@@ -43,7 +44,7 @@ const MedicalHistoryDetailBasePage = () => {
 		loading,
 		data: medicalHistory,
 		setData: setMedicalHistory,
-	} = useFetch(`/medical-history/${id}`, {}, [id])
+	} = useFetch(`${fetchUrl}/${id}`, {}, [id])
 
 	const updateMedicalHistory = useAxiosSubmit({
 		url: `${ApiUrls.MEDICAL_HISTORY.MANAGEMENT.INDEX}/${medicalHistory?.id}`,
@@ -164,7 +165,7 @@ const MedicalHistoryDetailBasePage = () => {
 							if (response) {
 								setMedicalHistory((prev) => ({
 									...prev,
-									medicalHistoryStatus: 'Processed',
+									medicalHistoryStatus: EnumConfig.MedicalHistoryStatus.Processed,
 								}))
 							}
 						}}
@@ -222,7 +223,11 @@ const MedicalHistoryDetailBasePage = () => {
 						setOpenRespondComplaint(false)
 						setMedicalHistory((prev) => ({
 							...prev,
-							complaint: { ...prev.complaint, response: values.response, status: 'Resolved' },
+							complaint: {
+								...prev.complaint,
+								response: values.response,
+								status: EnumConfig.ComplaintResolveStatus.Resolved,
+							},
 						}))
 					}
 				}}
@@ -232,7 +237,11 @@ const MedicalHistoryDetailBasePage = () => {
 						setOpenRespondComplaint(false)
 						setMedicalHistory((prev) => ({
 							...prev,
-							complaint: { ...prev.complaint, response: values.response, status: 'Draft' },
+							complaint: {
+								...prev.complaint,
+								response: values.response,
+								status: EnumConfig.ComplaintResolveStatus.Draft,
+							},
 						}))
 					}
 				}}
@@ -242,7 +251,7 @@ const MedicalHistoryDetailBasePage = () => {
 						setOpenRespondComplaint(false)
 						setMedicalHistory((prev) => ({
 							...prev,
-							complaint: { ...prev.complaint, status: 'Closed' },
+							complaint: { ...prev.complaint, status: EnumConfig.ComplaintResolveStatus.Closed },
 						}))
 					}
 				}}

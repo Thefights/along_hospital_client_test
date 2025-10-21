@@ -13,6 +13,13 @@ export const EnumConfig = {
 	},
 
 	// For appointments
+	AppointmentStatus: {
+		Scheduled: 'Scheduled',
+		Confirmed: 'Confirmed',
+		Completed: 'Completed',
+		Cancelled: 'Cancelled',
+		Refused: 'Refused',
+	},
 	AppointmentType: {
 		Consultation: 'Consultation',
 		FollowUp: 'Follow-up',

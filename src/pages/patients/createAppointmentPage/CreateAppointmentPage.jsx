@@ -87,13 +87,13 @@ const CreateAppointmentPage = () => {
 	const appointmentFields = [
 		{
 			key: 'appointmentType',
-			title: t('appointment.field.appointment_type'),
+			title: t('appointment.field.type'),
 			type: 'select',
 			options: _enum.appointmentTypeOptions,
 		},
 		{
 			key: 'appointmentMeetingType',
-			title: t('appointment.field.appointment_meeting_type'),
+			title: t('appointment.field.meeting_type'),
 			type: 'select',
 			options: _enum.appointmentMeetingTypeOptions,
 		},

@@ -25,6 +25,7 @@
         "select_options": "Select options",
         "date": "Date",
         "time": "Time",
+        "rows_per_page": "Rows per page",
         "role": {
             "manager": "Manager",
             "doctor": "Doctor",
@@ -73,6 +74,13 @@
             "male": "Male",
             "female": "Female",
             "other": "Other"
+        },
+        "appointment_status": {
+            "scheduled": "Scheduled",
+            "confirmed": "Confirmed",
+            "completed": "Completed",
+            "cancelled": "Cancelled",
+            "refused": "Refused"
         },
         "appointment_type": {
             "consultation": "Consultation",
@@ -171,7 +179,9 @@
             "appointment_management": "Appointment Management",
             "appointment_detail": "Appointment Detail",
             "filters": "Filters",
-            "timelines": "Timelines"
+            "timelines": "Timelines",
+            "upcoming": "Upcoming",
+            "completed": "Completed"
         },
         "button": {
             "cancel_appointment": "Cancel Appointment",
@@ -184,8 +194,9 @@
         "field": {
             "purpose": "Purpose",
             "specialty": "Specialty",
-            "appointment_type": "Appointment Type",
-            "appointment_meeting_type": "Appointment Meeting Type",
+            "status": "Status",
+            "type": "Type",
+            "meeting_type": "Meeting Type",
             "start_date": "Start Date",
             "end_date": "End Date",
             "doctor": "Doctor",
@@ -207,14 +218,6 @@
             "confirm_complete_description": "Are you sure to mark this appointment as completed?",
             "confirm_refuse_title": "Refuse assignment?",
             "confirm_refuse_description": "Please provide a reason for refusal:"
-        },
-        "status": {
-            "upcoming": "Upcoming",
-            "scheduled": "Scheduled",
-            "confirmed": "Confirmed",
-            "completed": "Completed",
-            "cancelled": "Cancelled",
-            "refused": "Refused"
         }
     },
     "medical_history": {

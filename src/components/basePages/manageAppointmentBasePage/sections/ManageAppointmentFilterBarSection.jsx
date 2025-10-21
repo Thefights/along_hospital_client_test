@@ -6,7 +6,7 @@ import useAuth from '@/hooks/useAuth'
 import useTranslation from '@/hooks/useTranslation'
 import { MenuItem, Stack, Typography } from '@mui/material'
 
-const AppointmentFilterBar = ({
+const ManageAppointmentFilterBarSection = ({
 	filters,
 	setFilters,
 	specialties,
@@ -84,4 +84,4 @@ const AppointmentFilterBar = ({
 	)
 }
 
-export default AppointmentFilterBar
+export default ManageAppointmentFilterBarSection

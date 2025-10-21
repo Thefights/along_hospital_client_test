@@ -11,6 +11,13 @@ export default function useEnum() {
 		],
 
 		// For appointments
+		appointmentStatusOptions: [
+			{ value: EnumConfig.AppointmentStatus.Scheduled, label: t('enum.appointment_status.scheduled') },
+			{ value: EnumConfig.AppointmentStatus.Confirmed, label: t('enum.appointment_status.confirmed') },
+			{ value: EnumConfig.AppointmentStatus.Completed, label: t('enum.appointment_status.completed') },
+			{ value: EnumConfig.AppointmentStatus.Cancelled, label: t('enum.appointment_status.cancelled') },
+			{ value: EnumConfig.AppointmentStatus.Refused, label: t('enum.appointment_status.refused') },
+		],
 		appointmentTypeOptions: [
 			{
 				value: EnumConfig.AppointmentType.Consultation,

@@ -1,4 +1,4 @@
-import MedicalHistoryDetailBasePage from '@/components/basePages/MedicalHistoryDetailBasePage'
+import MedicalHistoryDetailBasePage from '@/components/basePages/medicalHistoryDetailBasePage/MedicalHistoryDetailBasePage'
 
 const TestDialog = () => {
 	return <MedicalHistoryDetailBasePage />

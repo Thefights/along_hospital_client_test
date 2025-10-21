@@ -51,12 +51,13 @@ const GenericTabs = ({
 	return (
 		<Stack
 			width={'100%'}
-			spacing={1}
+			gap={1}
 			justifyContent={'flex-start'}
 			alignItems={'center'}
 			direction={direction}
 			maxWidth={maxWidth}
 			maxHeight={maxHeight}
+			flexWrap={'wrap'}
 		>
 			{tabs.map((tab) => (
 				<GenericTab

@@ -1,27 +1,21 @@
-import AppointmentDetailDrawer from '@/components/basePages/sections/manageAppointmentSections/AppointmentDetailDrawerSection'
-import AppointmentFilterBar from '@/components/basePages/sections/manageAppointmentSections/AppointmentFilterBar'
-import AppointmentListItem from '@/components/basePages/sections/manageAppointmentSections/AppointmentListItem'
+import ManageAppointmentDetailDrawerSection from '@/components/basePages/manageAppointmentBasePage/sections/ManageAppointmentDetailDrawerSection'
+import ManageAppointmentFilterBarSection from '@/components/basePages/manageAppointmentBasePage/sections/ManageAppointmentFilterBarSection'
+import ManageAppointmentListItemSection from '@/components/basePages/manageAppointmentBasePage/sections/ManageAppointmentListItemSection'
 import { GenericPagination, GenericTablePagination } from '@/components/generals/GenericPagination'
-import GenericTabs from '@/components/generals/GenericTabs'
+import { EnumConfig } from '@/configs/enumConfig'
 import useTranslation from '@/hooks/useTranslation'
 import { Paper, Stack, Typography } from '@mui/material'
 import React, { useState } from 'react'
-import EmptyBox from '../placeholders/EmptyBox'
-import SkeletonBox from '../skeletons/SkeletonBox'
+import EmptyBox from '../../placeholders/EmptyBox'
+import SkeletonBox from '../../skeletons/SkeletonBox'
+import ManageAppointmentTabsSection from './sections/ManageAppointmentTabsSection'
 
 const ManageAppointmentBasePage = ({
 	headerTitle = 'Manage Appointments',
 	totalAppointments = 0,
 	appointments = [],
 	specialties = [],
-	filters = {
-		dateRange: { start: '', end: '' },
-		status: '',
-		specialty: '',
-		search: '',
-		page: 1,
-		pageSize: 5,
-	},
+	filters,
 	setFilters,
 	selectedAppointment,
 	setSelectedAppointment,
@@ -32,15 +26,6 @@ const ManageAppointmentBasePage = ({
 	const [drawerOpen, setDrawerOpen] = useState(false)
 
 	const { t } = useTranslation()
-
-	const statusTabs = [
-		{ key: '', title: t('text.all') },
-		{ key: 'scheduled', title: t('appointment.status.scheduled') },
-		{ key: 'confirmed', title: t('appointment.status.confirmed') },
-		{ key: 'completed', title: t('appointment.status.completed') },
-		{ key: 'cancelled', title: t('appointment.status.cancelled') },
-		{ key: 'refused', title: t('appointment.status.refused') },
-	]
 
 	const onOpenDrawer = (appt) => {
 		setSelectedAppointment(appt)
@@ -60,10 +45,11 @@ const ManageAppointmentBasePage = ({
 					<Typography variant='h5'>{headerTitle}</Typography>
 					<Stack direction='row' spacing={2}>
 						<Typography variant='body2' sx={{ color: 'text.secondary' }}>
-							[{t('appointment.status.upcoming')}:{' '}
+							[{t('appointment.title.upcoming')}:{' '}
 							{appointments?.reduce(
 								(acc, appt) =>
-									appt.appointmentStatus === 'Scheduled' || appt.appointmentStatus === 'Confirmed'
+									appt.appointmentStatus === EnumConfig.AppointmentStatus.Scheduled ||
+									appt.appointmentStatus === EnumConfig.AppointmentStatus.Confirmed
 										? acc + 1
 										: acc,
 								0
@@ -71,9 +57,10 @@ const ManageAppointmentBasePage = ({
 							]
 						</Typography>
 						<Typography variant='body2' sx={{ color: 'text.secondary' }}>
-							[{t('appointment.status.completed')}:{' '}
+							[{t('appointment.title.completed')}:{' '}
 							{appointments?.reduce(
-								(acc, appt) => (appt.appointmentStatus === 'Completed' ? acc + 1 : acc),
+								(acc, appt) =>
+									appt.appointmentStatus === EnumConfig.AppointmentStatus.Completed ? acc + 1 : acc,
 								0
 							)}
 							]
@@ -81,7 +68,7 @@ const ManageAppointmentBasePage = ({
 					</Stack>
 				</Stack>
 
-				<AppointmentFilterBar
+				<ManageAppointmentFilterBarSection
 					filters={filters}
 					setFilters={setFilters}
 					specialties={specialties}
@@ -90,12 +77,7 @@ const ManageAppointmentBasePage = ({
 				/>
 
 				<Stack spacing={2} sx={{ width: '100%' }}>
-					<GenericTabs
-						tabs={statusTabs}
-						currentTab={filters.status}
-						setCurrentTab={(tab) => setFilters({ ...filters, status: tab.key, page: 1 })}
-						loading={loading}
-					/>
+					<ManageAppointmentTabsSection filters={filters} setFilters={setFilters} loading={loading} />
 					<Stack spacing={1}>
 						{loading ? (
 							<SkeletonBox numberOfBoxes={3} heights={[268 / 3]} />
@@ -103,7 +85,7 @@ const ManageAppointmentBasePage = ({
 							<EmptyBox minHeight={300} />
 						) : (
 							appointments.map((appt, index) => (
-								<AppointmentListItem
+								<ManageAppointmentListItemSection
 									key={appt?.id || index}
 									appointment={appt}
 									onClick={() => onOpenDrawer(appt)}
@@ -133,7 +115,7 @@ const ManageAppointmentBasePage = ({
 					</Stack>
 				</Stack>
 
-				<AppointmentDetailDrawer
+				<ManageAppointmentDetailDrawerSection
 					appointment={selectedAppointment}
 					open={drawerOpen}
 					onClose={() => setDrawerOpen(false)}

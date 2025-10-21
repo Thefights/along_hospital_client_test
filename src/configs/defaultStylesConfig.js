@@ -1,10 +1,12 @@
+import { EnumConfig } from './enumConfig'
+
 export const defaultAppointmentStatusStyle = (theme, status) => {
 	const map = {
-		scheduled: theme.palette.info,
-		confirmed: theme.palette.primary,
-		completed: theme.palette.success,
-		cancelled: theme.palette.error,
-		refused: theme.palette.warning,
+		[EnumConfig.AppointmentStatus.Scheduled]: theme.palette.info,
+		[EnumConfig.AppointmentStatus.Confirmed]: theme.palette.primary,
+		[EnumConfig.AppointmentStatus.Completed]: theme.palette.success,
+		[EnumConfig.AppointmentStatus.Cancelled]: theme.palette.error,
+		[EnumConfig.AppointmentStatus.Refused]: theme.palette.warning,
 	}
 	const p = map[status] || theme.palette.primary
 	return { bg: p.softBg || p.main + '1A', border: p.softBorder || p.main + '33', color: p.main }
@@ -12,9 +14,9 @@ export const defaultAppointmentStatusStyle = (theme, status) => {
 
 export const defaultMedicalHistoryStatusStyle = (status) => {
 	const map = {
-		draft: 'warning',
-		processed: 'info',
-		paid: 'success',
+		[EnumConfig.MedicalHistoryStatus.Draft]: 'warning',
+		[EnumConfig.MedicalHistoryStatus.Processed]: 'info',
+		[EnumConfig.MedicalHistoryStatus.Paid]: 'success',
 	}
 	return map[status] || 'primary'
 }
