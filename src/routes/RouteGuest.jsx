@@ -24,9 +24,6 @@ const RouteGuest = () => {
 						</>
 					)}
 				</Route>
-
-				{/* This is route without layout */}
-				<Route path='/login' element={<LoginPage />} />
 			</Route>
 		</Routes>
 	)
