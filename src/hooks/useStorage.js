@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react'
-import secureLocalStorage from 'react-secure-storage'
 
 export function useLocalStorage(key, defaultValue) {
 	return useStorage(key, defaultValue, window.localStorage, 'local')
@@ -9,16 +8,22 @@ export function useSessionStorage(key, defaultValue) {
 	return useStorage(key, defaultValue, window.sessionStorage, 'session')
 }
 
-export function useSecureStorage(key, defaultValue) {
-	return useStorage(key, defaultValue, secureLocalStorage, 'secure')
-}
-
+/**
+ * @template T
+ * @param {string} key
+ * @param {T} defaultValue
+ * @param {Storage} storageObject
+ * @param {string} type
+ * @returns {[value: T, setValue: (value: T) => void, removeValue: () => void]}
+ */
 function useStorage(key, defaultValue, storageObject, type) {
 	const [value, setValue] = useState(() => {
 		try {
 			const jsonValue = storageObject.getItem(key)
 			if (jsonValue != null) return JSON.parse(jsonValue)
-		} catch {}
+		} catch {
+			/* empty */
+		}
 		return typeof defaultValue === 'function' ? defaultValue() : defaultValue
 	})
 

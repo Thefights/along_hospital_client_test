@@ -1,5 +1,6 @@
 import { ApiUrls } from '@/configs/apiUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
+import useEnum from '@/hooks/useEnum'
 import useFetch from '@/hooks/useFetch'
 import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
@@ -15,15 +16,17 @@ import { toast } from 'react-toastify'
 
 const CreateAppointmentPage = () => {
 	const { t } = useTranslation()
+	const _enum = useEnum()
 
 	const [submitted, setSubmitted] = useState(false)
-	const getSpecialty = useFetch(ApiUrls.SPECIALTY.INDEX)
 
+	const getSpecialty = useFetch(ApiUrls.SPECIALTY.INDEX)
 	const userProfile = useReduxStore({
 		url: ApiUrls.USER.PROFILE,
 		selector: (state) => state.patient.profile,
 		setStore: setProfileStore,
 	})
+
 	const { values, handleChange, setField, registerRef, validateAll } = useForm({
 		date: '',
 		time: '',
@@ -82,6 +85,18 @@ const CreateAppointmentPage = () => {
 	]
 
 	const appointmentFields = [
+		{
+			key: 'appointmentType',
+			title: t('appointment.field.type'),
+			type: 'select',
+			options: _enum.appointmentTypeOptions,
+		},
+		{
+			key: 'appointmentMeetingType',
+			title: t('appointment.field.meeting_type'),
+			type: 'select',
+			options: _enum.appointmentMeetingTypeOptions,
+		},
 		{ key: 'date', title: t('text.date'), type: 'date' },
 		{ key: 'time', title: t('text.time'), type: 'time' },
 		{
@@ -95,10 +110,7 @@ const CreateAppointmentPage = () => {
 			key: 'specialtyId',
 			title: t('appointment.field.specialty'),
 			type: 'select',
-			options: [
-				{ label: t('appointment.field.select_specialty'), value: '' },
-				...(getSpecialty.data?.map((s) => ({ label: s.name, value: s.id })) || []),
-			],
+			options: getSpecialty.data?.map((s) => ({ label: s.name, value: s.id })) || [],
 		},
 	]
 

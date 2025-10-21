@@ -1,4 +1,5 @@
 import SkeletonBox from '@/components/skeletons/SkeletonBox'
+import { EnumConfig } from '@/configs/enumConfig'
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
 import { Avatar, Button, Divider, Paper, Stack, Typography } from '@mui/material'
@@ -15,8 +16,8 @@ const MedicalHistoryDetailPrescriptionSection = ({
 	const { t } = useTranslation()
 
 	const hasPrescription = Boolean(prescription)
-	const isDoctor = role === 'Doctor'
-	const isDraft = medicalHistoryStatus === 'Draft'
+	const isDoctor = role === EnumConfig.Role.Doctor
+	const isDraft = medicalHistoryStatus === EnumConfig.MedicalHistoryStatus.Draft
 
 	if (loading) {
 		return (

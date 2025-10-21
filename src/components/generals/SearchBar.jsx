@@ -9,6 +9,7 @@ const SearchBar = ({
 	placeholder,
 	options = [],
 	getOptionLabel = (opt) => opt?.label || opt,
+	onEnterDown = () => {},
 }) => {
 	const { t } = useTranslation()
 	const isAutocomplete = Array.isArray(options) && options.length > 0
@@ -26,6 +27,12 @@ const SearchBar = ({
 			value={value}
 			onChange={(_, newValue) => setValue(newValue)}
 			getOptionLabel={getOptionLabel}
+			onKeyDown={(e) => {
+				if (e.key === 'Enter') {
+					e.preventDefault()
+					onEnterDown?.()
+				}
+			}}
 			sx={{ width: widthPercent + '%' }}
 			renderInput={(params) => (
 				<TextField
@@ -49,6 +56,12 @@ const SearchBar = ({
 			{...commonProps}
 			value={value}
 			onChange={(e) => setValue(e.target.value)}
+			onKeyDown={(e) => {
+				if (e.key === 'Enter') {
+					e.preventDefault()
+					onEnterDown?.()
+				}
+			}}
 			slotProps={{
 				input: {
 					startAdornment: (

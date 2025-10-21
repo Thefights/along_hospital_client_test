@@ -7,7 +7,11 @@ import { setMedicalServicesStore } from '@/redux/reducers/managementReducer'
 import { numberHigherThan } from '@/utils/validateUtil'
 import { Stack, Typography } from '@mui/material'
 
-const CreateMedicalHistoryDetailDialog = ({ open, onClose, onSubmit = (values) => {} }) => {
+const CreateMedicalHistoryDetailDialog = ({
+	open,
+	onClose,
+	onSubmit = (values) => Promise.resolve(values),
+}) => {
 	const { t } = useTranslation()
 	const medicalServiceStore = useReduxStore({
 		url: ApiUrls.MEDICAL_SERVICE.MANAGEMENT.GET_ALL,

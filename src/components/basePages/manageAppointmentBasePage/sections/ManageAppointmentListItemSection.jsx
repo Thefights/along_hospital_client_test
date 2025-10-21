@@ -4,7 +4,7 @@ import { formatDatetimeToDDMMYYYY, formatDatetimeToMMDDYYYY } from '@/utils/form
 import { Box, Card, CardActionArea, CardContent, Chip, Stack, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 
-const AppointmentListItem = ({ appointment, onClick }) => {
+const ManageAppointmentListItemSection = ({ appointment, onClick }) => {
 	const { language } = useTranslation()
 	const theme = useTheme()
 	const s = defaultAppointmentStatusStyle(theme, appointment?.appointmentStatus)
@@ -48,4 +48,4 @@ const AppointmentListItem = ({ appointment, onClick }) => {
 	)
 }
 
-export default AppointmentListItem
+export default ManageAppointmentListItemSection
