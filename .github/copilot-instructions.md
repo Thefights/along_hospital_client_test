@@ -97,7 +97,7 @@ const fields = [
 
 #### Usage Rules (Important)
 - Always call `t()` with a key only, without params. Example: `t('header.home')`.
-- If you add any new translation key in code, you MUST also add that key to BOTH `src/locales/en.json` and `src/locales/vi.json` in the same structure.
+- For now, when adding new translation keys, add them to `src/locales/en.json` only. Vietnamese updates can be done later.
 - Prefer grouping keys under meaningful namespaces (e.g., `meeting_room.*`, `appointment.*`, `header.*`).
 - Do not inline literal UI strings in components; use translation keys instead.
 
