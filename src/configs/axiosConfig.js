@@ -1,10 +1,9 @@
 import { getEnv } from '@/utils/commons'
 import axios from 'axios'
-import secureLocalStorage from 'react-secure-storage'
 import { toast } from 'react-toastify'
 
 const axiosConfig = axios.create({
-	baseURL: getEnv('VITE_BASE_API_URL', 'https://localhost:8080'),
+	baseURL: getEnv('VITE_BASE_API_URL', 'https://localhost:5000/api/v1'),
 	headers: {
 		'Content-Type': 'multipart/form-data',
 		'Access-Control-Allow-Origin': '*',
@@ -14,9 +13,9 @@ const axiosConfig = axios.create({
 
 axiosConfig.interceptors.request.use(
 	(request) => {
-		const auth = secureLocalStorage.getItem('auth')
-		if (auth && auth.token) {
-			request.headers.Authorization = `Bearer ${auth.token}`
+		const token = localStorage.getItem('token')
+		if (token) {
+			request.headers.Authorization = `Bearer ${token}`
 		}
 		return request
 	},
@@ -25,11 +24,9 @@ axiosConfig.interceptors.request.use(
 
 axiosConfig.interceptors.response.use(
 	(response) => {
-		switch (response.status) {
-			case 201:
-			case 204:
-				toast.success(response.data.message || 'Success')
-				break
+		const { message } = response.data
+		if (message) {
+			toast.success(message)
 		}
 
 		return response.data

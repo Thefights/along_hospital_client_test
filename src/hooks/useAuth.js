@@ -1,6 +1,18 @@
 import { AuthContext } from '@/configs/AuthProvider'
 import { useContext } from 'react'
 
+/**
+ * @typedef {import('@/redux/store').RootState} RootState
+ */
+
+/**
+ * @returns {{
+ *  auth: RootState['auth'],
+ * 	hasRole: (required: (string|number)[]) => boolean,
+ * 	login: (token: string, role: string) => void,
+ * 	logout: () => void
+ * }}
+ */
 export default function useAuth() {
 	const ctx = useContext(AuthContext)
 	if (!ctx) throw new Error('useAuth must be used within AuthProvider')
