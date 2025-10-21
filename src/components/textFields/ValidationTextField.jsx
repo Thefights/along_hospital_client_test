@@ -36,7 +36,7 @@ const ValidationTextField = (
 		if (type === 'number') rs.push(isNumber())
 
 		return rs
-	}, [type])
+	}, [required, type])
 
 	const allRules = useMemo(() => [...builtinRules, ...userRules], [builtinRules, userRules])
 

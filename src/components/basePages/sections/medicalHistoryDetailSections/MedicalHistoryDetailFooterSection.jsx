@@ -1,4 +1,5 @@
 import ConfirmationButton from '@/components/generals/ConfirmationButton'
+import { EnumConfig } from '@/configs/enumConfig'
 import useTranslation from '@/hooks/useTranslation'
 import { Button, Paper, Stack } from '@mui/material'
 
@@ -12,10 +13,10 @@ const MedicalHistoryDetailFooterSection = ({
 }) => {
 	const { t } = useTranslation()
 
-	const isDoctorRole = role === 'Doctor'
-	const isDraftStatus = medicalHistoryStatus === 'Draft'
-	const isProcessedStatus = medicalHistoryStatus === 'Processed'
-	const isPaidStatus = medicalHistoryStatus === 'Paid'
+	const isDoctorRole = role === EnumConfig.Role.Doctor
+	const isDraftStatus = medicalHistoryStatus === EnumConfig.MedicalHistoryStatus.Draft
+	const isProcessedStatus = medicalHistoryStatus === EnumConfig.MedicalHistoryStatus.Processed
+	const isPaidStatus = medicalHistoryStatus === EnumConfig.MedicalHistoryStatus.Paid
 
 	return (
 		<Paper

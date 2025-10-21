@@ -69,15 +69,25 @@
         }
     },
     "enum": {
-        "severity_level": {
-            "mild": "Mild",
-            "moderate": "Moderate",
-            "severe": "Severe"
-        },
         "gender": {
             "male": "Male",
             "female": "Female",
             "other": "Other"
+        },
+        "appointment_type": {
+            "consultation": "Consultation",
+            "follow_up": "Follow-up",
+            "routine_checkup": "Routine Check-up",
+            "emergency": "Emergency"
+        },
+        "appointment_meeting_type": {
+            "in_person": "In-person",
+            "telehealth": "Telehealth"
+        },
+        "severity_level": {
+            "mild": "Mild",
+            "moderate": "Moderate",
+            "severe": "Severe"
         },
         "medical_history_status": {
             "draft": "Draft",
@@ -174,12 +184,13 @@
         "field": {
             "purpose": "Purpose",
             "specialty": "Specialty",
-            "select_specialty": "Select Specialty",
+            "appointment_type": "Appointment Type",
+            "appointment_meeting_type": "Appointment Meeting Type",
             "start_date": "Start Date",
             "end_date": "End Date",
             "doctor": "Doctor",
-            "select_doctor": "Select Doctor",
             "search_doctor": "Search by Doctor name...",
+            "search_patient": "Search by Patient name...",
             "cancel_reason": "Cancel Reason",
             "refuse_reason": "Refuse Reason"
         },

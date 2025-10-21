@@ -3,19 +3,24 @@ import ConfirmationButton from '@/components/generals/ConfirmationButton'
 import { ApiUrls } from '@/configs/apiUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
+import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
+import { setSpecialtiesStore } from '@/redux/reducers/managementReducer'
 import { Stack } from '@mui/material'
 import { useState } from 'react'
 
 const DoctorAppointmentManagementPage = () => {
 	const [selectedAppointment, setSelectedAppointment] = useState(null)
 	const [filters, setFilters] = useState({
-		dateRange: { start: '', end: '' },
+		startDate: '',
+		endDate: '',
 		status: '',
+		specialtyId: '',
 		search: '',
 		page: 1,
 		pageSize: 5,
 	})
+
 	const { t } = useTranslation()
 
 	const getAppointments = useFetch(
@@ -23,6 +28,12 @@ const DoctorAppointmentManagementPage = () => {
 		filters,
 		[filters.status, filters.page, filters.pageSize]
 	)
+	const specialtiesStore = useReduxStore({
+		url: ApiUrls.SPECIALTY.GET_ALL,
+		selector: (state) => state.management.specialties,
+		setStore: setSpecialtiesStore,
+	})
+
 	const confirmAppointment = useAxiosSubmit({
 		url: ApiUrls.APPOINTMENT.MANAGEMENT.CONFIRM(selectedAppointment?.id),
 		method: 'PUT',
@@ -50,8 +61,8 @@ const DoctorAppointmentManagementPage = () => {
 			setSelectedAppointment={setSelectedAppointment}
 			totalAppointments={getAppointments.data?.totalCount || 0}
 			appointments={getAppointments.data?.collection || []}
+			specialties={specialtiesStore.data || []}
 			onFilterClick={onFilterClick}
-			showSpecialtiesAndDoctorsFilter={false}
 			loading={getAppointments.loading}
 			drawerButtons={
 				selectedAppointment?.status === 'scheduled' ? (

@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import SkeletonTableRow from '@/components/skeletons/SkeletonTableRow'
+import { EnumConfig } from '@/configs/enumConfig'
 import { useConfirm } from '@/hooks/useConfirm'
 import useTranslation from '@/hooks/useTranslation'
 import { Delete } from '@mui/icons-material'
@@ -26,8 +28,8 @@ const MedicalHistoryDetailServiceSection = ({
 	const confirm = useConfirm()
 	const { t } = useTranslation()
 
-	const isDoctor = role === 'Doctor'
-	const isDraft = medicalHistoryStatus === 'Draft'
+	const isDoctor = role === EnumConfig.Role.Doctor
+	const isDraft = medicalHistoryStatus === EnumConfig.MedicalHistoryStatus.Draft
 
 	const handleDelete = async (medicalServiceId) => {
 		const confirmed = await confirm({

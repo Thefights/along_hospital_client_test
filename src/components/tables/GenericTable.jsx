@@ -79,7 +79,7 @@ const GenericTable = ({
 			widthsPct: finalPct,
 			totalMinWidthPx: totalMin,
 		}
-	}, [fields, defaultMinWidthPx])
+	}, [fields, defaultMinWidthPx, stickyHeader])
 
 	const makeHeaderCell = (f, i) => {
 		const active = sort?.key === f.key

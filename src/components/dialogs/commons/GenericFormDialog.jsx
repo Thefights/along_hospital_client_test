@@ -29,7 +29,8 @@ const GenericFormDialog = ({
 	submitLabel,
 	submitButtonColor = 'primary',
 	maxWidth = 'sm',
-	onSubmit = ({ values, closeDialog, setField }) => Promise.resolve(values),
+	onSubmit = ({ values, closeDialog, setField }) =>
+		Promise.resolve({ values, closeDialog, setField }),
 	additionalButtons = [],
 }) => {
 	const startValues = useMemo(() => {
@@ -60,7 +61,7 @@ const GenericFormDialog = ({
 			setSubmitted(false)
 			reset(startValues)
 		}
-	}, [open])
+	}, [open, reset, startValues])
 
 	const handleClose = useCallback(() => {
 		reset(startValues)
@@ -83,7 +84,7 @@ const GenericFormDialog = ({
 		} finally {
 			setLoading(false)
 		}
-	}, [fields, handleClose, onSubmit, setField, validateAll, values])
+	}, [fields, handleClose, hasRequiredMissing, onSubmit, setField, validateAll, values])
 
 	return (
 		<Dialog open={!!open} onClose={handleClose} fullWidth maxWidth={maxWidth}>
