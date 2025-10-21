@@ -2,28 +2,20 @@ import ManageAppointmentDetailDrawerSection from '@/components/basePages/manageA
 import ManageAppointmentFilterBarSection from '@/components/basePages/manageAppointmentBasePage/sections/ManageAppointmentFilterBarSection'
 import ManageAppointmentListItemSection from '@/components/basePages/manageAppointmentBasePage/sections/ManageAppointmentListItemSection'
 import { GenericPagination, GenericTablePagination } from '@/components/generals/GenericPagination'
-import GenericTabs from '@/components/generals/GenericTabs'
 import { EnumConfig } from '@/configs/enumConfig'
-import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
 import { Paper, Stack, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import EmptyBox from '../../placeholders/EmptyBox'
 import SkeletonBox from '../../skeletons/SkeletonBox'
+import ManageAppointmentTabsSection from './sections/ManageAppointmentTabsSection'
 
 const ManageAppointmentBasePage = ({
 	headerTitle = 'Manage Appointments',
 	totalAppointments = 0,
 	appointments = [],
 	specialties = [],
-	filters = {
-		dateRange: { start: '', end: '' },
-		status: '',
-		specialty: '',
-		search: '',
-		page: 1,
-		pageSize: 5,
-	},
+	filters,
 	setFilters,
 	selectedAppointment,
 	setSelectedAppointment,
@@ -34,12 +26,6 @@ const ManageAppointmentBasePage = ({
 	const [drawerOpen, setDrawerOpen] = useState(false)
 
 	const { t } = useTranslation()
-	const _enum = useEnum()
-
-	const statusTabs = [
-		{ key: '', title: t('text.all') },
-		..._enum.appointmentStatusOptions.map((status) => ({ key: status.value, title: status.label })),
-	]
 
 	const onOpenDrawer = (appt) => {
 		setSelectedAppointment(appt)
@@ -91,12 +77,7 @@ const ManageAppointmentBasePage = ({
 				/>
 
 				<Stack spacing={2} sx={{ width: '100%' }}>
-					<GenericTabs
-						tabs={statusTabs}
-						currentTab={filters.status}
-						setCurrentTab={(tab) => setFilters({ ...filters, status: tab.key, page: 1 })}
-						loading={loading}
-					/>
+					<ManageAppointmentTabsSection filters={filters} setFilters={setFilters} loading={loading} />
 					<Stack spacing={1}>
 						{loading ? (
 							<SkeletonBox numberOfBoxes={3} heights={[268 / 3]} />

@@ -2,6 +2,7 @@ import ManageAppointmentBasePage from '@/components/basePages/manageAppointmentB
 import ConfirmationDialog from '@/components/dialogs/commons/ConfirmationDialog'
 import ValidationTextField from '@/components/textFields/ValidationTextField'
 import { ApiUrls } from '@/configs/apiUrls'
+import { EnumConfig } from '@/configs/enumConfig'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
 import useReduxStore from '@/hooks/useReduxStore'
@@ -18,6 +19,8 @@ const PatientAppointmentHistoryPage = () => {
 		startDate: '',
 		endDate: '',
 		status: '',
+		type: '',
+		meetingType: '',
 		specialtyId: '',
 		search: '',
 		page: 1,
@@ -75,8 +78,8 @@ const PatientAppointmentHistoryPage = () => {
 				specialties={specialtiesStore.data || []}
 				loading={getAppointments.loading}
 				drawerButtons={
-					(selectedAppointment?.status === 'scheduled' ||
-						selectedAppointment?.status === 'confirmed') && (
+					(selectedAppointment?.status === EnumConfig.AppointmentStatus.Scheduled ||
+						selectedAppointment?.status === EnumConfig.AppointmentStatus.Confirmed) && (
 						<Button onClick={() => setOpenCancelDialog(true)} color='error' variant='contained'>
 							{t('appointment.button.cancel_appointment')}
 						</Button>

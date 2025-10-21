@@ -194,8 +194,9 @@
         "field": {
             "purpose": "Mục đích",
             "specialty": "Chuyên khoa",
-            "appointment_type": "Loại cuộc hẹn",
-            "appointment_meeting_type": "Hình thức cuộc hẹn",
+            "status": "Trạng thái",
+            "type": "Loại",
+            "meeting_type": "Hình thức",
             "start_date": "Ngày bắt đầu",
             "end_date": "Ngày kết thúc",
             "doctor": "Bác sĩ",

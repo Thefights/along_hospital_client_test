@@ -3,6 +3,7 @@ import ConfirmationDialog from '@/components/dialogs/commons/ConfirmationDialog'
 import DoctorPickerDialog from '@/components/dialogs/DoctorPickerDialog'
 import ValidationTextField from '@/components/textFields/ValidationTextField'
 import { ApiUrls } from '@/configs/apiUrls'
+import { EnumConfig } from '@/configs/enumConfig'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
 import useReduxStore from '@/hooks/useReduxStore'
@@ -21,6 +22,8 @@ const ManagerAppointmentManagementPage = () => {
 		startDate: '',
 		endDate: '',
 		status: '',
+		type: '',
+		meetingType: '',
 		specialtyId: '',
 		search: '',
 		page: 1,
@@ -87,7 +90,7 @@ const ManagerAppointmentManagementPage = () => {
 				specialties={specialtiesStore.data || []}
 				loading={getAppointments.loading}
 				drawerButtons={
-					selectedAppointment?.status === 'scheduled' ? (
+					selectedAppointment?.status === EnumConfig.AppointmentStatus.Scheduled ? (
 						<Stack direction='row' spacing={2}>
 							<Button onClick={() => setOpenDoctorPickerDialog(true)} variant='contained' color='info'>
 								{t('appointment.button.assign_doctor')}

@@ -1,6 +1,7 @@
 import ManageAppointmentBasePage from '@/components/basePages/manageAppointmentBasePage/ManageAppointmentBasePage'
 import ConfirmationButton from '@/components/generals/ConfirmationButton'
 import { ApiUrls } from '@/configs/apiUrls'
+import { EnumConfig } from '@/configs/enumConfig'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
 import useReduxStore from '@/hooks/useReduxStore'
@@ -15,6 +16,8 @@ const DoctorAppointmentManagementPage = () => {
 		startDate: '',
 		endDate: '',
 		status: '',
+		type: '',
+		meetingType: '',
 		specialtyId: '',
 		search: '',
 		page: 1,
@@ -65,7 +68,7 @@ const DoctorAppointmentManagementPage = () => {
 			onFilterClick={onFilterClick}
 			loading={getAppointments.loading}
 			drawerButtons={
-				selectedAppointment?.status === 'scheduled' ? (
+				selectedAppointment?.status === EnumConfig.AppointmentStatus.Scheduled ? (
 					<Stack direction='row' spacing={2}>
 						<ConfirmationButton
 							confirmationTitle={t('appointment.dialog.confirm_accept_title')}
@@ -86,7 +89,7 @@ const DoctorAppointmentManagementPage = () => {
 							{t('appointment.button.deny_assignment')}
 						</ConfirmationButton>
 					</Stack>
-				) : selectedAppointment?.status === 'confirmed' ? (
+				) : selectedAppointment?.status === EnumConfig.AppointmentStatus.Confirmed ? (
 					<ConfirmationButton
 						confirmationTitle={t('appointment.dialog.confirm_complete_title')}
 						confirmationDescription={t('appointment.dialog.confirm_complete_description')}
