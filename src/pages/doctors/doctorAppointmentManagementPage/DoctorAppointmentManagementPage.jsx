@@ -1,4 +1,4 @@
-import ManageAppointmentBasePage from '@/components/basePages/ManageAppointmentBasePage'
+import ManageAppointmentBasePage from '@/components/basePages/manageAppointmentBasePage/ManageAppointmentBasePage'
 import ConfirmationButton from '@/components/generals/ConfirmationButton'
 import { ApiUrls } from '@/configs/apiUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'

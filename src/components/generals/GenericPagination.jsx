@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
+import useTranslation from '@/hooks/useTranslation'
 import { ArrowBack, ArrowForward } from '@mui/icons-material'
 import { MenuItem, Pagination, PaginationItem, Select, Stack, Typography } from '@mui/material'
 import { useEffect, useMemo } from 'react'
@@ -40,6 +41,8 @@ export const GenericTablePagination = ({
 	pageSizeOptions = [5, 10, 25],
 	loading = false,
 }) => {
+	const { t } = useTranslation()
+
 	const rowsPerPageNum = useMemo(
 		() => parseInt(pageSize ?? pageSizeOptions?.[0] ?? 5, 10),
 		[pageSize, pageSizeOptions]
@@ -60,7 +63,7 @@ export const GenericTablePagination = ({
 	return (
 		<Stack direction='row' justifyContent='space-between' alignItems='center' flexWrap={'wrap'} m={2}>
 			<Stack spacing={1} direction='row' alignItems='center'>
-				<Typography>Rows per page:</Typography>
+				<Typography>{t('text.rows_per_page')}:</Typography>
 				<Select
 					size='small'
 					disabled={loading}

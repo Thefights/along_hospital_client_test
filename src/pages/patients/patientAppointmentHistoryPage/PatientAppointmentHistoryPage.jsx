@@ -1,4 +1,4 @@
-import ManageAppointmentBasePage from '@/components/basePages/ManageAppointmentBasePage'
+import ManageAppointmentBasePage from '@/components/basePages/manageAppointmentBasePage/ManageAppointmentBasePage'
 import ConfirmationDialog from '@/components/dialogs/commons/ConfirmationDialog'
 import ValidationTextField from '@/components/textFields/ValidationTextField'
 import { ApiUrls } from '@/configs/apiUrls'

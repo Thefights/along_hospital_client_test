@@ -25,6 +25,7 @@
         "select_options": "Chọn tùy chọn",
         "date": "Ngày",
         "time": "Thời gian",
+        "rows_per_page": "Số dòng mỗi trang",
         "role": {
             "manager": "Quản lý",
             "doctor": "Bác sĩ",
@@ -73,6 +74,13 @@
             "male": "Nam",
             "female": "Nữ",
             "other": "Khác"
+        },
+        "appointment_status": {
+            "scheduled": "Đã lên lịch",
+            "confirmed": "Đã xác nhận",
+            "completed": "Đã hoàn thành",
+            "cancelled": "Đã hủy",
+            "refused": "Đã từ chối"
         },
         "appointment_type": {
             "consultation": "Tư vấn",
@@ -171,7 +179,9 @@
             "appointment_management": "Quản lý cuộc hẹn",
             "appointment_detail": "Chi tiết cuộc hẹn",
             "filters": "Bộ lọc",
-            "timelines": "Dòng thời gian"
+            "timelines": "Dòng thời gian",
+            "upcoming": "Sắp tới",
+            "completed": "Đã hoàn thành"
         },
         "button": {
             "cancel_appointment": "Hủy cuộc hẹn",
@@ -207,14 +217,6 @@
             "confirm_complete_description": "Bạn có chắc chắn muốn đánh dấu cuộc hẹn này là đã hoàn thành không?",
             "confirm_refuse_title": "Từ chối cuộc hẹn?",
             "confirm_refuse_description": "Vui lòng cung cấp lý do từ chối:"
-        },
-        "status": {
-            "upcoming": "Sắp tới",
-            "scheduled": "Đã lên lịch",
-            "confirmed": "Đã xác nhận",
-            "completed": "Đã hoàn thành",
-            "cancelled": "Đã hủy",
-            "refused": "Đã từ chối"
         }
     },
     "medical_history": {

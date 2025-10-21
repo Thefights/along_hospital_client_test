@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { defaultAppointmentStatusStyle } from '@/configs/defaultStylesConfig'
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
@@ -10,9 +11,8 @@ import {
 import CloseIcon from '@mui/icons-material/Close'
 import { Avatar, Box, Chip, Divider, Drawer, IconButton, Stack, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import InfoRow from './AppointmentInfoRow'
 
-function AppointmentDetailDrawer({ appointment, open, onClose, buttons }) {
+const ManageAppointmentDetailDrawerSection = ({ appointment, open, onClose, buttons }) => {
 	const { t, language } = useTranslation()
 	const theme = useTheme()
 	const s = appointment ? defaultAppointmentStatusStyle(theme, appointment?.appointmentStatus) : {}
@@ -27,6 +27,51 @@ function AppointmentDetailDrawer({ appointment, open, onClose, buttons }) {
 	const formatDate = (dateString) => {
 		return language === 'en' ? formatDateToMMDDYYYY(dateString) : formatDateToDDMMYYYY(dateString)
 	}
+
+	const appointmentInfoRows = [
+		{ label: `${t('text.date')} & ${t('text.time')}`, value: formatDatetime(datetimeString) },
+		{ label: t('appointment.field.purpose'), value: appointment?.purpose },
+		{ label: t('appointment.field.specialty'), value: appointment?.specialty?.name },
+		{ label: t('appointment.field.doctor'), value: appointment?.doctor?.name },
+	]
+
+	const patientInfoRows = [
+		{ label: t('profile.field.phone'), value: appointment?.patient?.phone },
+		{ label: t('profile.field.date_of_birth'), value: formatDate(appointment?.patient?.dateOfBirth) },
+		{ label: t('profile.field.gender'), value: appointment?.patient?.gender },
+		{ label: t('profile.field.address'), value: appointment?.patient?.address },
+		{
+			label: t('profile.field.height_weight'),
+			value: `${appointment?.patient?.height || '-'} cm / ${appointment?.patient?.weight || '-'} kg`,
+		},
+		{ label: t('profile.field.blood_type'), value: appointment?.patient?.bloodType },
+	]
+
+	const doctorInfoRows = [
+		{ label: t('profile.field.phone'), value: appointment?.doctor?.phone },
+		{ label: t('profile.field.specialty'), value: appointment?.specialty?.name },
+	]
+
+	const appointmentTimelinesRows = [
+		{
+			label: t('appointment.status.confirmed'),
+			value: appointment?.confirmedDate ? formatDatetime(appointment?.confirmedDate) : '-',
+		},
+		{
+			label: t('appointment.status.completed'),
+			value: appointment?.completedDate ? formatDatetime(appointment?.completedDate) : '-',
+		},
+		{
+			label: t('appointment.status.cancelled'),
+			value: appointment?.cancelledDate ? formatDatetime(appointment?.cancelledDate) : '-',
+		},
+		{
+			label: t('appointment.status.refused'),
+			value: appointment?.refusedDate ? formatDatetime(appointment?.refusedDate) : '-',
+		},
+		{ label: t('appointment.field.cancel_reason'), value: appointment?.cancelledReason },
+		{ label: t('appointment.field.refuse_reason'), value: appointment?.refusedReason },
+	]
 
 	return (
 		<Drawer
@@ -71,13 +116,9 @@ function AppointmentDetailDrawer({ appointment, open, onClose, buttons }) {
 								</Stack>
 								<Divider sx={{ my: 1.5 }} />
 								<Stack spacing={1}>
-									<InfoRow
-										label={`${t('text.date')} & ${t('text.time')}`}
-										value={formatDatetime(datetimeString)}
-									/>
-									<InfoRow label={t('appointment.field.purpose')} value={appointment?.purpose} />
-									<InfoRow label={t('appointment.field.specialty')} value={appointment?.specialty?.name} />
-									<InfoRow label={t('appointment.field.doctor')} value={appointment?.doctor?.name} />
+									{appointmentInfoRows.map((row, index) => (
+										<InfoRow key={index} label={row.label} value={row.value} />
+									))}
 								</Stack>
 							</Box>
 
@@ -103,20 +144,9 @@ function AppointmentDetailDrawer({ appointment, open, onClose, buttons }) {
 									</Stack>
 								</Stack>
 								<Stack spacing={1}>
-									<InfoRow label={t('profile.field.phone')} value={appointment?.patient?.phone} />
-									<InfoRow
-										label={t('profile.field.date_of_birth')}
-										value={formatDate(appointment?.patient?.dateOfBirth)}
-									/>
-									<InfoRow label={t('profile.field.gender')} value={appointment?.patient?.gender} />
-									<InfoRow label={t('profile.field.address')} value={appointment?.patient?.address} />
-									<InfoRow
-										label={t('profile.field.height_weight')}
-										value={`${appointment?.patient?.height || '-'} cm / ${
-											appointment?.patient?.weight || '-'
-										} kg`}
-									/>
-									<InfoRow label={t('profile.field.blood_type')} value={appointment?.patient?.bloodType} />
+									{patientInfoRows.map((row, index) => (
+										<InfoRow key={index} label={row.label} value={row.value} />
+									))}
 								</Stack>
 							</Box>
 
@@ -142,8 +172,9 @@ function AppointmentDetailDrawer({ appointment, open, onClose, buttons }) {
 									</Stack>
 								</Stack>
 								<Stack spacing={1}>
-									<InfoRow label={t('profile.field.phone')} value={appointment?.doctor?.phone} />
-									<InfoRow label={t('profile.field.specialty')} value={appointment?.specialty?.name} />
+									{doctorInfoRows.map((row, index) => (
+										<InfoRow key={index} label={row.label} value={row.value} />
+									))}
 								</Stack>
 							</Box>
 
@@ -158,34 +189,9 @@ function AppointmentDetailDrawer({ appointment, open, onClose, buttons }) {
 								<Typography variant='subtitle1'>{t('appointment.title.timelines')}</Typography>
 								<Divider sx={{ my: 1.5 }} />
 								<Stack spacing={1}>
-									<InfoRow
-										label={t('appointment.status.confirmed')}
-										value={appointment?.confirmedDate ? formatDatetime(appointment?.confirmedDate) : '-'}
-									/>
-									<InfoRow
-										label={t('appointment.status.completed')}
-										value={appointment?.completedDate ? formatDatetime(appointment?.completedDate) : '-'}
-									/>
-									<InfoRow
-										label={t('appointment.status.cancelled')}
-										value={appointment?.cancelledDate ? formatDatetime(appointment?.cancelledDate) : '-'}
-									/>
-									<InfoRow
-										label={t('appointment.status.refused')}
-										value={appointment?.refusedDate ? formatDatetime(appointment?.refusedDate) : '-'}
-									/>
-									{appointment?.cancelledReason && (
-										<InfoRow
-											label={t('appointment.field.cancel_reason')}
-											value={appointment?.cancelledReason}
-										/>
-									)}
-									{appointment?.refusedReason && (
-										<InfoRow
-											label={t('appointment.field.refuse_reason')}
-											value={appointment?.refusedReason}
-										/>
-									)}
+									{appointmentTimelinesRows.map((row, index) => (
+										<InfoRow key={index} label={row.label} value={row.value} />
+									))}
 								</Stack>
 							</Box>
 						</Stack>
@@ -207,4 +213,15 @@ function AppointmentDetailDrawer({ appointment, open, onClose, buttons }) {
 	)
 }
 
-export default AppointmentDetailDrawer
+const InfoRow = ({ label, value }) => (
+	<Stack direction='row' justifyContent='space-between' alignItems='start'>
+		<Typography variant='body2' sx={{ color: 'text.secondary' }}>
+			{label}
+		</Typography>
+		<Typography variant='body2' sx={{ ml: 2, textAlign: 'right' }}>
+			{value || '-'}
+		</Typography>
+	</Stack>
+)
+
+export default ManageAppointmentDetailDrawerSection
