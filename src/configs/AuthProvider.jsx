@@ -1,4 +1,7 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable react-hooks/exhaustive-deps */
 import useReduxStore from '@/hooks/useReduxStore'
+import { useLocalStorage } from '@/hooks/useStorage'
 import { resetAuthStore, setAuthStore } from '@/redux/reducers/authReducer'
 import { createContext, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
@@ -8,6 +11,7 @@ export const AuthContext = createContext(null)
 
 const AuthProvider = ({ children }) => {
 	const dispatch = useDispatch()
+	const [_, setToken, removeToken] = useLocalStorage('token')
 
 	const authStore = useReduxStore({
 		url: ApiUrls.AUTH.CURRENT_ACCOUNT,
@@ -15,11 +19,13 @@ const AuthProvider = ({ children }) => {
 		setStore: setAuthStore,
 	})
 
-	const login = (payload) => {
-		dispatch(setAuthStore(payload))
+	const login = async (token) => {
+		setToken(token)
+		await authStore.fetch()
 	}
 
 	const logout = () => {
+		removeToken()
 		dispatch(resetAuthStore())
 	}
 
