@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { getObjectValueFromStringPath } from '@/utils/handleObjectUtil'
 import { ArrowDownward, ArrowUpward, UnfoldMore } from '@mui/icons-material'
 import {
@@ -42,15 +43,30 @@ const tableHeadCellStyle = (theme, canSort = false, sticky = false) => {
 	}
 }
 
+// jsdoc type
+/**
+ * @param {Object} props
+ * @param {Array<Object>} props.data
+ * @param {Array<{key: string, title: string, width?: number, minWidthPx?: number, isNumeric?: boolean, sortable?: boolean, fixedColumn?: boolean, render?: (value: any, row: Object, rowIndex: number) => React.ReactNode}>} props.fields
+ * @param {string} props.rowKey
+ * @param {{key: string|null, direction: 'asc'|'desc'}} props.sort
+ * @param {(params: {key: string, direction: 'asc'|'desc'}) => void} props.setSort
+ * @param {boolean} [props.canSelectRows=false]
+ * @param {Array<any>} [props.selectedRows=[]]
+ * @param {(selectedRows: Array<any>) => void} [props.setSelectedRows]
+ * @param {boolean} [props.loading=false]
+ * @param {boolean} [props.stickyHeader=false]
+ * @param {number} [props.defaultMinWidthPx=140]
+ */
 const GenericTable = ({
 	data = [],
 	fields = [],
 	rowKey,
 	sort = { key: null, direction: 'asc' },
-	setSort = () => {},
+	setSort = ({ key, direction } = {}) => {},
 	canSelectRows = false,
 	selectedRows = [],
-	setSelectedRows = () => {},
+	setSelectedRows = (selectedRows) => {},
 	loading = false,
 	stickyHeader = false,
 	defaultMinWidthPx = 140,
@@ -79,7 +95,7 @@ const GenericTable = ({
 			widthsPct: finalPct,
 			totalMinWidthPx: totalMin,
 		}
-	}, [fields, defaultMinWidthPx])
+	}, [fields, defaultMinWidthPx, stickyHeader])
 
 	const makeHeaderCell = (f, i) => {
 		const active = sort?.key === f.key

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import useTranslation from '@/hooks/useTranslation'
 import { normalizeOptions } from '@/utils/handleObjectUtil'
 import { MenuItem } from '@mui/material'

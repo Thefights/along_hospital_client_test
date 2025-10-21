@@ -25,7 +25,7 @@ const EmptyRow = ({
 					{icon}
 					<Stack spacing={0.75}>
 						<Typography variant='h6' sx={{ fontWeight: 600 }}>
-							{title || t('text.no_data')}
+							{title || t('text.placeholder.no_data')}
 						</Typography>
 						{description && (
 							<Typography variant='body2' color='text.secondary'>

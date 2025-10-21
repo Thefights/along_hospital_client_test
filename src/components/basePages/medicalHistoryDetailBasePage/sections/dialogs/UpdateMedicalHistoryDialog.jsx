@@ -5,7 +5,7 @@ const UpdateMedicalHistoryDialog = ({
 	open,
 	onClose,
 	medicalHistory = {},
-	onSubmit = (values) => {},
+	onSubmit = (values) => Promise.resolve(values),
 }) => {
 	const { t } = useTranslation()
 

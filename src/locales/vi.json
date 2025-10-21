@@ -25,6 +25,7 @@
         "select_options": "Chọn tùy chọn",
         "date": "Ngày",
         "time": "Thời gian",
+        "rows_per_page": "Số dòng mỗi trang",
         "role": {
             "manager": "Quản lý",
             "doctor": "Bác sĩ",
@@ -69,15 +70,32 @@
         }
     },
     "enum": {
-        "severity_level": {
-            "mild": "Nhẹ",
-            "moderate": "Trung bình",
-            "severe": "Nghiêm trọng"
-        },
         "gender": {
             "male": "Nam",
             "female": "Nữ",
             "other": "Khác"
+        },
+        "appointment_status": {
+            "scheduled": "Đã lên lịch",
+            "confirmed": "Đã xác nhận",
+            "completed": "Đã hoàn thành",
+            "cancelled": "Đã hủy",
+            "refused": "Đã từ chối"
+        },
+        "appointment_type": {
+            "consultation": "Tư vấn",
+            "follow_up": "Tái khám",
+            "routine_checkup": "Kiểm tra định kỳ",
+            "emergency": "Cấp cứu"
+        },
+        "appointment_meeting_type": {
+            "in_person": "Trực tiếp",
+            "telehealth": "Y tế từ xa"
+        },
+        "severity_level": {
+            "mild": "Nhẹ",
+            "moderate": "Trung bình",
+            "severe": "Nghiêm trọng"
         },
         "medical_history_status": {
             "draft": "Bản nháp",
@@ -161,7 +179,9 @@
             "appointment_management": "Quản lý cuộc hẹn",
             "appointment_detail": "Chi tiết cuộc hẹn",
             "filters": "Bộ lọc",
-            "timelines": "Dòng thời gian"
+            "timelines": "Dòng thời gian",
+            "upcoming": "Sắp tới",
+            "completed": "Đã hoàn thành"
         },
         "button": {
             "cancel_appointment": "Hủy cuộc hẹn",
@@ -174,12 +194,14 @@
         "field": {
             "purpose": "Mục đích",
             "specialty": "Chuyên khoa",
-            "select_specialty": "Chọn chuyên khoa",
+            "status": "Trạng thái",
+            "type": "Loại",
+            "meeting_type": "Hình thức",
             "start_date": "Ngày bắt đầu",
             "end_date": "Ngày kết thúc",
             "doctor": "Bác sĩ",
-            "select_doctor": "Chọn bác sĩ",
             "search_doctor": "Tìm kiếm theo tên bác sĩ...",
+            "search_patient": "Tìm kiếm theo tên bệnh nhân...",
             "cancel_reason": "Lý do hủy",
             "refuse_reason": "Lý do từ chối"
         },
@@ -187,7 +209,7 @@
             "confirm_create_title": "Tạo cuộc hẹn?",
             "confirm_create_description": "Bạn có chắc chắn muốn tạo cuộc hẹn này không?",
             "confirm_cancel_title": "Hủy cuộc hẹn?",
-            "confirm_cancel_description": "Bạn có chắc chắn muốn hủy cuộc hẹn này không?",
+            "confirm_cancel_description": "Vui lòng cung cấp lý do hủy:",
             "confirm_deny_title": "Từ chối cuộc hẹn?",
             "confirm_deny_description": "Bạn có chắc chắn muốn từ chối cuộc hẹn này không? Hành động này không thể hoàn tác",
             "confirm_accept_title": "Chấp nhận cuộc hẹn?",
@@ -196,14 +218,6 @@
             "confirm_complete_description": "Bạn có chắc chắn muốn đánh dấu cuộc hẹn này là đã hoàn thành không?",
             "confirm_refuse_title": "Từ chối cuộc hẹn?",
             "confirm_refuse_description": "Vui lòng cung cấp lý do từ chối:"
-        },
-        "status": {
-            "upcoming": "Sắp tới",
-            "scheduled": "Đã lên lịch",
-            "confirmed": "Đã xác nhận",
-            "completed": "Đã hoàn thành",
-            "cancelled": "Đã hủy",
-            "refused": "Đã từ chối"
         }
     },
     "medical_history": {

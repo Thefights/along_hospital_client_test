@@ -1,10 +1,13 @@
-import ManageAppointmentBasePage from '@/components/basePages/ManageAppointmentBasePage'
+import ManageAppointmentBasePage from '@/components/basePages/manageAppointmentBasePage/ManageAppointmentBasePage'
 import ConfirmationDialog from '@/components/dialogs/commons/ConfirmationDialog'
 import ValidationTextField from '@/components/textFields/ValidationTextField'
 import { ApiUrls } from '@/configs/apiUrls'
+import { EnumConfig } from '@/configs/enumConfig'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
+import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
+import { setSpecialtiesStore } from '@/redux/reducers/managementReducer'
 import { Box, Button, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 
@@ -13,12 +16,15 @@ const PatientAppointmentHistoryPage = () => {
 	const [openCancelDialog, setOpenCancelDialog] = useState(false)
 	const [cancelReason, setCancelReason] = useState('')
 	const [filters, setFilters] = useState({
-		dateRange: { start: '', end: '' },
+		startDate: '',
+		endDate: '',
 		status: '',
-		specialty: '',
-		doctor: '',
+		type: '',
+		meetingType: '',
+		specialtyId: '',
 		search: '',
 		page: 1,
+		pageSize: 5,
 	})
 
 	const { t } = useTranslation()
@@ -28,6 +34,12 @@ const PatientAppointmentHistoryPage = () => {
 		filters.page,
 		filters.pageSize,
 	])
+	const specialtiesStore = useReduxStore({
+		url: ApiUrls.SPECIALTY.GET_ALL,
+		selector: (state) => state.management.specialties,
+		setStore: setSpecialtiesStore,
+	})
+
 	const cancelAppointment = useAxiosSubmit({
 		url: ApiUrls.APPOINTMENT.CANCEL(selectedAppointment?.id),
 		method: 'PUT',
@@ -63,12 +75,11 @@ const PatientAppointmentHistoryPage = () => {
 				onFilterClick={onFilterClick}
 				totalAppointments={getAppointments.data?.totalCount || 0}
 				appointments={getAppointments.data?.collection || []}
-				appointmentSpecialties={getAppointments.data?.specialties || []}
-				appointmentDoctors={getAppointments.data?.doctors || []}
+				specialties={specialtiesStore.data || []}
 				loading={getAppointments.loading}
 				drawerButtons={
-					(selectedAppointment?.status === 'scheduled' ||
-						selectedAppointment?.status === 'confirmed') && (
+					(selectedAppointment?.appointmentStatus === EnumConfig.AppointmentStatus.Scheduled ||
+						selectedAppointment?.appointmentStatus === EnumConfig.AppointmentStatus.Confirmed) && (
 						<Button onClick={() => setOpenCancelDialog(true)} color='error' variant='contained'>
 							{t('appointment.button.cancel_appointment')}
 						</Button>

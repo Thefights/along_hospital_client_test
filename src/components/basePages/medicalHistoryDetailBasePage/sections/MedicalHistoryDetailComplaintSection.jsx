@@ -1,4 +1,5 @@
 import SkeletonBox from '@/components/skeletons/SkeletonBox'
+import { EnumConfig } from '@/configs/enumConfig'
 import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
 import { getEnumLabelByValue } from '@/utils/handleStringUtil'
@@ -16,12 +17,14 @@ const MedicalHistoryDetailComplaintSection = ({
 
 	const hasComplaint = Boolean(complaint)
 
-	const isPatientRole = role === 'Patient'
-	const isManagerRole = role === 'Manager'
+	const isPatientRole = role === EnumConfig.Role.Patient
+	const isManagerRole = role === EnumConfig.Role.Manager
 
-	const isResolvedStatus = complaint?.complaintResolveStatus === 'Resolved'
-	const isDraftStatus = complaint?.complaintResolveStatus === 'Draft'
-	const isClosedStatus = complaint?.complaintResolveStatus === 'Closed'
+	const isResolvedStatus =
+		complaint?.complaintResolveStatus === EnumConfig.ComplaintResolveStatus.Resolved
+	const isDraftStatus = complaint?.complaintResolveStatus === EnumConfig.ComplaintResolveStatus.Draft
+	const isClosedStatus =
+		complaint?.complaintResolveStatus === EnumConfig.ComplaintResolveStatus.Closed
 
 	if (loading) {
 		return (

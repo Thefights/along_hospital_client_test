@@ -1,11 +1,14 @@
-import ManageAppointmentBasePage from '@/components/basePages/ManageAppointmentBasePage'
+import ManageAppointmentBasePage from '@/components/basePages/manageAppointmentBasePage/ManageAppointmentBasePage'
 import ConfirmationDialog from '@/components/dialogs/commons/ConfirmationDialog'
 import DoctorPickerDialog from '@/components/dialogs/DoctorPickerDialog'
 import ValidationTextField from '@/components/textFields/ValidationTextField'
 import { ApiUrls } from '@/configs/apiUrls'
+import { EnumConfig } from '@/configs/enumConfig'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
+import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
+import { setSpecialtiesStore } from '@/redux/reducers/managementReducer'
 import { Button, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 
@@ -16,12 +19,17 @@ const ManagerAppointmentManagementPage = () => {
 	const [openRefuseDialog, setOpenRefuseDialog] = useState(false)
 	const [refuseReason, setRefuseReason] = useState('')
 	const [filters, setFilters] = useState({
-		dateRange: { start: '', end: '' },
+		startDate: '',
+		endDate: '',
 		status: '',
+		type: '',
+		meetingType: '',
+		specialtyId: '',
 		search: '',
 		page: 1,
 		pageSize: 5,
 	})
+
 	const { t } = useTranslation()
 
 	const getAppointments = useFetch(ApiUrls.APPOINTMENT.MANAGEMENT.INDEX, filters, [
@@ -29,6 +37,12 @@ const ManagerAppointmentManagementPage = () => {
 		filters.page,
 		filters.pageSize,
 	])
+	const specialtiesStore = useReduxStore({
+		url: ApiUrls.SPECIALTY.GET_ALL,
+		selector: (state) => state.management.specialties,
+		setStore: setSpecialtiesStore,
+	})
+
 	const assignDoctorToAppointment = useAxiosSubmit({
 		url: ApiUrls.APPOINTMENT.MANAGEMENT.ASSIGN_DOCTOR(selectedAppointment?.id, selectedDoctor?.id),
 		method: 'PUT',
@@ -73,11 +87,10 @@ const ManagerAppointmentManagementPage = () => {
 				onFilterClick={onFilterClick}
 				totalAppointments={getAppointments.data?.totalCount || 0}
 				appointments={getAppointments.data?.collection || []}
-				appointmentSpecialties={getAppointments.data?.specialties || []}
-				appointmentDoctors={getAppointments.data?.doctors || []}
+				specialties={specialtiesStore.data || []}
 				loading={getAppointments.loading}
 				drawerButtons={
-					selectedAppointment?.status === 'scheduled' ? (
+					selectedAppointment?.appointmentStatus === EnumConfig.AppointmentStatus.Scheduled ? (
 						<Stack direction='row' spacing={2}>
 							<Button onClick={() => setOpenDoctorPickerDialog(true)} variant='contained' color='info'>
 								{t('appointment.button.assign_doctor')}

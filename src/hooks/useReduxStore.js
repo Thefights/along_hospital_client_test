@@ -41,5 +41,5 @@ export default function useReduxStore({
 
 	const data = useMemo(() => dataToGet(storeData), [storeData, dataToGet])
 
-	return { loading, error, data }
+	return { loading, error, data, fetch }
 }

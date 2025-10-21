@@ -1,5 +1,5 @@
+/* eslint-disable no-unused-vars */
 import { Button, Stack } from '@mui/material'
-import { useMemo } from 'react'
 
 const GenericTab = ({ label, icon, active = false, onClick, disabled = false }) => {
 	return (
@@ -41,8 +41,6 @@ const GenericTabs = ({
 	maxHeight,
 	loading = false,
 }) => {
-	const defaultTab = useMemo(() => tabs[0] || { key: '', title: '' }, [tabs])
-
 	const isActive = (tab) => {
 		if (currentTab === undefined || currentTab === null) return false
 		if (typeof currentTab === 'string') return currentTab === tab.key
@@ -53,12 +51,13 @@ const GenericTabs = ({
 	return (
 		<Stack
 			width={'100%'}
-			spacing={1}
+			gap={1}
 			justifyContent={'flex-start'}
 			alignItems={'center'}
 			direction={direction}
 			maxWidth={maxWidth}
 			maxHeight={maxHeight}
+			flexWrap={'wrap'}
 		>
 			{tabs.map((tab) => (
 				<GenericTab
