@@ -37,6 +37,14 @@ export default function useEnum() {
 			{ value: 'Resolved', label: t('enum.complaint_resolve_status.resolved') },
 			{ value: 'Closed', label: t('enum.complaint_resolve_status.closed') },
 		],
+
+		blogTypeOptions: [
+			{ value: 'Health', label: t('blogPage.blogType.Health') },
+			{ value: 'News', label: t('blogPage.blogType.News') },
+			{ value: 'Promotion', label: t('blogPage.blogType.Promotion') },
+			{ value: 'Guide', label: t('blogPage.blogType.Guide') },
+			{ value: 'Other', label: t('blogPage.blogType.Other') },
+		],
 	}
 }
 
