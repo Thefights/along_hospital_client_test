@@ -324,5 +324,26 @@
         "delete_selected": "Delete {number} selected",
         "delete_title": "Delete selected users?",
         "delete_description": "Are you sure you want to delete {number} selected item(s)? This action cannot be undone."
+    },
+    "blogPage": {
+        "titleLabel": "Title",
+        "typeLabel": "Type",
+        "apply": "Apply",
+        "applyConfirmTitle": "Apply filters?",
+        "applyConfirmDescription": "Apply selected filters?",
+        "readMore": "Read more →",
+        "noPosts": "No blog posts found.",
+        "noPostsSubtitle": "Try adjusting your filters or check back later for new content.",
+        "headerSubtitle": "Hospital news & health articles",
+        "untitled": "Untitled",
+        "imageAlt": "Blog image",
+        "pageInfo": "Page {current} / {total}",
+        "blogType": {
+            "Health": "Health",
+            "News": "News",
+            "Promotion": "Promotion",
+            "Guide": "Guide",
+            "Other": "Other"
+        }
     }
 }

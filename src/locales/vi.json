@@ -324,5 +324,26 @@
         "delete_selected": "Xóa {number} mục đã chọn",
         "delete_title": "Xóa người dùng đã chọn?",
         "delete_description": "Bạn có chắc chắn muốn xóa {number} mục đã chọn không? Hành động này không thể hoàn tác."
+    },
+    "blogPage": {
+        "titleLabel": "Tiêu đề",
+        "typeLabel": "Loại",
+        "apply": "Áp dụng",
+        "applyConfirmTitle": "Áp dụng bộ lọc?",
+        "applyConfirmDescription": "Bạn có chắc muốn áp dụng bộ lọc?",
+        "readMore": "Đọc thêm →",
+        "noPosts": "Không có bài viết nào",
+        "noPostsSubtitle": "Thử điều chỉnh bộ lọc của bạn hoặc quay lại sau để xem nội dung mới.",
+        "headerSubtitle": "Tin tức bệnh viện & bài viết chăm sóc sức khỏe",
+        "untitled": "Không có tiêu đề",
+        "imageAlt": "Hình bài viết",
+        "pageInfo": "Trang {current} / {total}",
+        "blogType": {
+            "Health": "Sức khỏe",
+            "News": "Tin tức",
+            "Promotion": "Khuyến mãi",
+            "Guide": "Hướng dẫn",
+            "Other": "Khác"
+        }
     }
 }
