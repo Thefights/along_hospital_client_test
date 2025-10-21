@@ -165,7 +165,7 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 							if (response) {
 								setMedicalHistory((prev) => ({
 									...prev,
-									medicalHistoryStatus: EnumConfig.MedicalHistoryStatus.Completed,
+									medicalHistoryStatus: EnumConfig.MedicalHistoryStatus.Processed,
 								}))
 							}
 						}}
