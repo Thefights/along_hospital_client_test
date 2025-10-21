@@ -63,7 +63,7 @@ const GenericTable = ({
 	fields = [],
 	rowKey,
 	sort = { key: null, direction: 'asc' },
-	setSort = ({ key, direction }) => {},
+	setSort = ({ key, direction } = {}) => {},
 	canSelectRows = false,
 	selectedRows = [],
 	setSelectedRows = (selectedRows) => {},

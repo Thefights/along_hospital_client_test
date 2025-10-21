@@ -9,7 +9,7 @@ import { useContext } from 'react'
  * @returns {{
  *  auth: RootState['auth'],
  * 	hasRole: (required: (string|number)[]) => boolean,
- * 	login: (token: string, role: string) => void,
+ * 	login: (token: string) => Promise<void>,
  * 	logout: () => void
  * }}
  */
