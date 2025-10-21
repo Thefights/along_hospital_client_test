@@ -89,9 +89,9 @@ const MedicalHistoryDetailBasePage = () => {
 		method: 'PUT',
 	})
 
-	// if (!loading && !medicalHistory) {
-	// 	return <EmptyPage showButton />
-	// }
+	if (!loading && !medicalHistory) {
+		return <EmptyPage showButton />
+	}
 
 	return (
 		<Box sx={{ p: 3 }}>
