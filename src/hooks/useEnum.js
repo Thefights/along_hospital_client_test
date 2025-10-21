@@ -3,26 +3,38 @@ import useTranslation from './useTranslation'
 export default function useEnum() {
 	const { t } = useTranslation()
 	return {
-		bloodTypeOptions: ['O', 'A', 'B', 'AB'],
-
 		genderOptions: [
 			{ value: 'Male', label: t('enum.gender.male') },
 			{ value: 'Female', label: t('enum.gender.female') },
 			{ value: 'Other', label: t('enum.gender.other') },
 		],
 
+		// For appointments
+		appointmentTypeOptions: [
+			{ value: 'Consultation', label: t('enum.appointment_type.consultation') },
+			{ value: 'Follow-up', label: t('enum.appointment_type.follow_up') },
+			{ value: 'Routine Check-up', label: t('enum.appointment_type.routine_checkup') },
+			{ value: 'Emergency', label: t('enum.appointment_type.emergency') },
+		],
+		appointmentMeetingTypeOptions: [
+			{ value: 'In-Person', label: t('enum.appointment_meeting_type.in_person') },
+			{ value: 'Telehealth', label: t('enum.appointment_meeting_type.telehealth') },
+		],
+
+		// For medical history
+		bloodTypeOptions: ['O', 'A', 'B', 'AB'],
 		severityLevelOptions: [
 			{ value: 'Mild', label: t('enum.severity_level.mild') },
 			{ value: 'Moderate', label: t('enum.severity_level.moderate') },
 			{ value: 'Severe', label: t('enum.severity_level.severe') },
 		],
-
 		medicalHistoryStatusOptions: [
 			{ value: 'Draft', label: t('enum.medical_history_status.draft') },
 			{ value: 'Processed', label: t('enum.medical_history_status.processed') },
 			{ value: 'Paid', label: t('enum.medical_history_status.paid') },
 		],
 
+		// For complaints
 		complaintTopicOptions: [
 			{ value: 'Service', label: t('enum.complaint_topic.service') },
 			{ value: 'Billing', label: t('enum.complaint_topic.billing') },
@@ -30,7 +42,6 @@ export default function useEnum() {
 			{ value: 'Medicine', label: t('enum.complaint_topic.medicine') },
 			{ value: 'Others', label: t('enum.complaint_topic.others') },
 		],
-
 		complaintResolveStatusOptions: [
 			{ value: 'Pending', label: t('enum.complaint_resolve_status.pending') },
 			{ value: 'Draft', label: t('enum.complaint_resolve_status.draft') },

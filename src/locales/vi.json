@@ -69,15 +69,25 @@
         }
     },
     "enum": {
-        "severity_level": {
-            "mild": "Nhẹ",
-            "moderate": "Trung bình",
-            "severe": "Nghiêm trọng"
-        },
         "gender": {
             "male": "Nam",
             "female": "Nữ",
             "other": "Khác"
+        },
+        "appointment_type": {
+            "consultation": "Tư vấn",
+            "follow_up": "Tái khám",
+            "routine_checkup": "Kiểm tra định kỳ",
+            "emergency": "Cấp cứu"
+        },
+        "appointment_meeting_type": {
+            "in_person": "Trực tiếp",
+            "telehealth": "Y tế từ xa"
+        },
+        "severity_level": {
+            "mild": "Nhẹ",
+            "moderate": "Trung bình",
+            "severe": "Nghiêm trọng"
         },
         "medical_history_status": {
             "draft": "Bản nháp",
@@ -174,12 +184,13 @@
         "field": {
             "purpose": "Mục đích",
             "specialty": "Chuyên khoa",
-            "select_specialty": "Chọn chuyên khoa",
+            "appointment_type": "Loại cuộc hẹn",
+            "appointment_meeting_type": "Hình thức cuộc hẹn",
             "start_date": "Ngày bắt đầu",
             "end_date": "Ngày kết thúc",
             "doctor": "Bác sĩ",
-            "select_doctor": "Chọn bác sĩ",
             "search_doctor": "Tìm kiếm theo tên bác sĩ...",
+            "search_patient": "Tìm kiếm theo tên bệnh nhân...",
             "cancel_reason": "Lý do hủy",
             "refuse_reason": "Lý do từ chối"
         },

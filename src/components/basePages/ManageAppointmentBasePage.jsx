@@ -1,8 +1,8 @@
-import { GenericPagination, GenericTablePagination } from '@/components/generals/GenericPagination'
-import GenericTabs from '@/components/generals/GenericTabs'
 import AppointmentDetailDrawer from '@/components/basePages/sections/manageAppointmentSections/AppointmentDetailDrawerSection'
 import AppointmentFilterBar from '@/components/basePages/sections/manageAppointmentSections/AppointmentFilterBar'
 import AppointmentListItem from '@/components/basePages/sections/manageAppointmentSections/AppointmentListItem'
+import { GenericPagination, GenericTablePagination } from '@/components/generals/GenericPagination'
+import GenericTabs from '@/components/generals/GenericTabs'
 import useTranslation from '@/hooks/useTranslation'
 import { Paper, Stack, Typography } from '@mui/material'
 import React, { useState } from 'react'
@@ -13,13 +13,11 @@ const ManageAppointmentBasePage = ({
 	headerTitle = 'Manage Appointments',
 	totalAppointments = 0,
 	appointments = [],
-	appointmentSpecialties = [],
-	appointmentDoctors = [],
+	specialties = [],
 	filters = {
 		dateRange: { start: '', end: '' },
 		status: '',
 		specialty: '',
-		doctor: '',
 		search: '',
 		page: 1,
 		pageSize: 5,
@@ -29,7 +27,6 @@ const ManageAppointmentBasePage = ({
 	setSelectedAppointment,
 	onFilterClick = () => {},
 	loading = false,
-	showSpecialtiesAndDoctorsFilter = true,
 	drawerButtons = <React.Fragment />,
 }) => {
 	const [drawerOpen, setDrawerOpen] = useState(false)
@@ -87,11 +84,9 @@ const ManageAppointmentBasePage = ({
 				<AppointmentFilterBar
 					filters={filters}
 					setFilters={setFilters}
-					specialties={appointmentSpecialties}
-					doctors={appointmentDoctors}
+					specialties={specialties}
 					onFilterClick={onFilterClick}
 					loading={loading}
-					showSpecialtiesAndDoctorsFilter={showSpecialtiesAndDoctorsFilter}
 				/>
 
 				<Stack spacing={2} sx={{ width: '100%' }}>

@@ -1,6 +1,7 @@
 import FilterButton from '@/components/buttons/FilterButton'
 import SearchBar from '@/components/generals/SearchBar'
 import ValidationTextField from '@/components/textFields/ValidationTextField'
+import useAuth from '@/hooks/useAuth'
 import useTranslation from '@/hooks/useTranslation'
 import { MenuItem, Stack, Typography } from '@mui/material'
 
@@ -8,12 +9,13 @@ const AppointmentFilterBar = ({
 	filters,
 	setFilters,
 	specialties,
-	doctors,
 	onFilterClick = () => {},
 	loading = false,
-	showSpecialtiesAndDoctorsFilter = true,
 }) => {
 	const { t } = useTranslation()
+	const { auth } = useAuth()
+	const role = auth?.role
+	const isDoctor = role === 'Doctor'
 
 	return (
 		<Stack
@@ -34,11 +36,11 @@ const AppointmentFilterBar = ({
 					size='small'
 					label={t('appointment.field.start_date')}
 					required={false}
-					value={filters?.dateRange?.start}
+					value={filters?.startDate}
 					onChange={(e) =>
 						setFilters({
 							...filters,
-							dateRange: { ...filters?.dateRange, start: e.target.value },
+							startDate: e.target.value,
 						})
 					}
 				/>
@@ -47,50 +49,30 @@ const AppointmentFilterBar = ({
 					size='small'
 					label={t('appointment.field.end_date')}
 					required={false}
-					value={filters?.dateRange?.end}
-					onChange={(e) =>
-						setFilters({ ...filters, dateRange: { ...filters?.dateRange, end: e.target.value } })
-					}
+					value={filters?.endDate}
+					onChange={(e) => setFilters({ ...filters, endDate: e.target.value })}
 				/>
-				{showSpecialtiesAndDoctorsFilter && (
-					<ValidationTextField
-						label={t('appointment.field.specialty')}
-						value={filters?.specialty}
-						size='small'
-						required={false}
-						onChange={(e) => setFilters({ ...filters, specialty: e.target.value })}
-						type='select'
-					>
-						<MenuItem value=''>{t('text.all')}</MenuItem>
-						{specialties?.map((s) => (
-							<MenuItem key={s.id} value={s.id}>
-								{s.name}
-							</MenuItem>
-						))}
-					</ValidationTextField>
-				)}
-
-				{showSpecialtiesAndDoctorsFilter && (
-					<ValidationTextField
-						label={t('appointment.field.doctor')}
-						value={filters?.doctor}
-						size='small'
-						required={false}
-						onChange={(e) => setFilters({ ...filters, doctor: e.target.value })}
-						type='select'
-					>
-						<MenuItem value=''>{t('text.all')}</MenuItem>
-						{doctors?.map((d) => (
-							<MenuItem key={d.id} value={d.id}>
-								{d.name}
-							</MenuItem>
-						))}
-					</ValidationTextField>
-				)}
+				<ValidationTextField
+					label={t('appointment.field.specialty')}
+					value={filters?.specialtyId}
+					size='small'
+					required={false}
+					onChange={(e) => setFilters({ ...filters, specialtyId: e.target.value })}
+					type='select'
+				>
+					<MenuItem value=''>{t('text.all')}</MenuItem>
+					{specialties?.map((s) => (
+						<MenuItem key={s.id} value={s.id}>
+							{s.name}
+						</MenuItem>
+					))}
+				</ValidationTextField>
 			</Stack>
 			<Stack direction={'row'} spacing={2}>
 				<SearchBar
-					placeholder={t('appointment.field.search_doctor')}
+					placeholder={
+						isDoctor ? t('appointment.field.search_patient') : t('appointment.field.search_doctor')
+					}
 					value={filters?.search}
 					setValue={(searchTerm) => setFilters({ ...filters, search: searchTerm })}
 					widthPercent={80}
