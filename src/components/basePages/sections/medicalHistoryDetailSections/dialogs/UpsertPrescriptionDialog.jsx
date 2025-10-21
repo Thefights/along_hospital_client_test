@@ -9,7 +9,12 @@ import { maxLen, numberHigherThan } from '@/utils/validateUtil'
 import { Avatar, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
 
-const UpsertPrescriptionDialog = ({ open, onClose, initialValues, onSubmit = (values) => {} }) => {
+const UpsertPrescriptionDialog = ({
+	open,
+	onClose,
+	initialValues,
+	onSubmit = (values) => Promise.resolve(values),
+}) => {
 	const { t } = useTranslation()
 
 	const medicineStore = useReduxStore({

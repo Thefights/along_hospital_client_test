@@ -1,6 +1,7 @@
 import FilterButton from '@/components/buttons/FilterButton'
 import SearchBar from '@/components/generals/SearchBar'
 import ValidationTextField from '@/components/textFields/ValidationTextField'
+import { EnumConfig } from '@/configs/enumConfig'
 import useAuth from '@/hooks/useAuth'
 import useTranslation from '@/hooks/useTranslation'
 import { MenuItem, Stack, Typography } from '@mui/material'
@@ -15,7 +16,7 @@ const AppointmentFilterBar = ({
 	const { t } = useTranslation()
 	const { auth } = useAuth()
 	const role = auth?.role
-	const isDoctor = role === 'Doctor'
+	const isDoctor = role === EnumConfig.Role.Doctor
 
 	return (
 		<Stack

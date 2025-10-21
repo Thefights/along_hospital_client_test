@@ -5,9 +5,9 @@ const RespondComplaintDialog = ({
 	open,
 	onClose,
 	initialResponse,
-	onSaveDraft = (values) => {},
+	onSaveDraft = (values) => Promise.resolve(values),
 	onCloseComplaint = () => {},
-	onSubmit = (values) => {},
+	onSubmit = (values) => Promise.resolve(values),
 }) => {
 	const { t } = useTranslation()
 	const fields = [
