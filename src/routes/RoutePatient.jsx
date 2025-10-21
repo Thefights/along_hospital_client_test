@@ -2,8 +2,9 @@ import { routeUrls } from '@/configs/routeUrls'
 import LayoutPatient from '@/layouts/LayoutPatient'
 import CreateAppointmentPage from '@/pages/patients/createAppointmentPage/CreateAppointmentPage'
 import CreateVideoConsultationPage from '@/pages/patients/createVideoConsultationPage/createVideoConsultationPage'
+import EndMeetingRoomPage from '@/pages/patients/meetingRoomPage/endMeetingRoomPage/EndMeetingRoomPage'
 import JoinMeetingRoomPage from '@/pages/patients/meetingRoomPage/JoinMeetingRoomPage'
-import MeetingRoomPage from '@/pages/patients/meetingRoomPage/MeetingRoomPage'
+import MeetingRoomPage from '@/pages/patients/meetingRoomPage/meetingRoomPage/MeetingRoomPage'
 import PatientAppointmentHistoryPage from '@/pages/patients/patientAppointmentHistoryPage/PatientAppointmentHistoryPage'
 import ProfilePage from '@/pages/patients/ProfilePage'
 import { Route, Routes } from 'react-router-dom'
@@ -24,11 +25,11 @@ const RoutePatient = () => {
 						path={routeUrls.PATIENT.APPOINTMENT.JOIN_MEETING_ROOM}
 						element={<JoinMeetingRoomPage />}
 					/>
-					<Route path={routeUrls.PATIENT.VIDEO_CONSULTATION} element={<CreateVideoConsultationPage />} />
 					<Route
-						path={routeUrls.PATIENT.APPOINTMENT.JOIN_MEETING_ROOM}
-						element={<JoinMeetingRoomPage />}
+						path={routeUrls.PATIENT.APPOINTMENT.JOIN_MEETING_ROOM + '/complete'}
+						element={<EndMeetingRoomPage />}
 					/>
+					<Route path={routeUrls.PATIENT.VIDEO_CONSULTATION} element={<CreateVideoConsultationPage />} />
 				</Route>
 				<Route
 					path={routeUrls.PATIENT.APPOINTMENT.MEETING_ROOM_TOKEN(':id')}
