@@ -29,7 +29,8 @@ const GenericFormDialog = ({
 	submitLabel,
 	submitButtonColor = 'primary',
 	maxWidth = 'sm',
-	onSubmit = ({ values, closeDialog, setField }) => Promise.resolve(values, closeDialog, setField),
+	onSubmit = ({ values, closeDialog, setField }) =>
+		Promise.resolve({ values, closeDialog, setField }),
 	additionalButtons = [],
 }) => {
 	const startValues = useMemo(() => {
