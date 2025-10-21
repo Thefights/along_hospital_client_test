@@ -1,35 +1,42 @@
 /* eslint-disable no-unused-vars */
 import { defaultAppointmentStatusStyle } from '@/configs/defaultStylesConfig'
+import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
 import {
-	formatDatetimeToDDMMYYYY,
-	formatDatetimeToMMDDYYYY,
-	formatDateToDDMMYYYY,
-	formatDateToMMDDYYYY,
+	formatDateAndTimeBasedOnCurrentLanguage,
+	formatDatetimeStringBasedOnCurrentLanguage,
 } from '@/utils/formatDateUtil'
+import { getEnumLabelByValue } from '@/utils/handleStringUtil'
 import CloseIcon from '@mui/icons-material/Close'
 import { Avatar, Box, Chip, Divider, Drawer, IconButton, Stack, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 
 const ManageAppointmentDetailDrawerSection = ({ appointment, open, onClose, buttons }) => {
-	const { t, language } = useTranslation()
+	const { t } = useTranslation()
+	const _enum = useEnum()
 	const theme = useTheme()
-	const s = appointment ? defaultAppointmentStatusStyle(theme, appointment?.appointmentStatus) : {}
-	const datetimeString = appointment ? `${appointment?.date}T${appointment?.time}` : null
 
-	const formatDatetime = (datetimeString) => {
-		return language === 'en'
-			? formatDatetimeToMMDDYYYY(datetimeString)
-			: formatDatetimeToDDMMYYYY(datetimeString)
-	}
-
-	const formatDate = (dateString) => {
-		return language === 'en' ? formatDateToMMDDYYYY(dateString) : formatDateToDDMMYYYY(dateString)
-	}
+	const styleForStatus = appointment
+		? defaultAppointmentStatusStyle(theme, appointment?.appointmentStatus)
+		: {}
 
 	const appointmentInfoRows = [
-		{ label: `${t('text.date')} & ${t('text.time')}`, value: formatDatetime(datetimeString) },
+		{
+			label: t('appointment.field.type'),
+			value: getEnumLabelByValue(_enum.appointmentTypeOptions, appointment?.appointmentType),
+		},
+		{
+			label: t('appointment.field.meeting_type'),
+			value: getEnumLabelByValue(
+				_enum.appointmentMeetingTypeOptions,
+				appointment?.appointmentMeetingType
+			),
+		},
+		{
+			label: `${t('text.date')} & ${t('text.time')}`,
+			value: formatDateAndTimeBasedOnCurrentLanguage(appointment?.date, appointment?.time),
+		},
 		{ label: t('appointment.field.purpose'), value: appointment?.purpose },
 		{ label: t('appointment.field.specialty'), value: appointment?.specialty?.name },
 		{ label: t('appointment.field.doctor'), value: appointment?.doctor?.name },
@@ -37,7 +44,10 @@ const ManageAppointmentDetailDrawerSection = ({ appointment, open, onClose, butt
 
 	const patientInfoRows = [
 		{ label: t('profile.field.phone'), value: appointment?.patient?.phone },
-		{ label: t('profile.field.date_of_birth'), value: formatDate(appointment?.patient?.dateOfBirth) },
+		{
+			label: t('profile.field.date_of_birth'),
+			value: formatDateAndTimeBasedOnCurrentLanguage(appointment?.patient?.dateOfBirth),
+		},
 		{ label: t('profile.field.gender'), value: appointment?.patient?.gender },
 		{ label: t('profile.field.address'), value: appointment?.patient?.address },
 		{
@@ -49,25 +59,33 @@ const ManageAppointmentDetailDrawerSection = ({ appointment, open, onClose, butt
 
 	const doctorInfoRows = [
 		{ label: t('profile.field.phone'), value: appointment?.doctor?.phone },
-		{ label: t('profile.field.specialty'), value: appointment?.specialty?.name },
+		{ label: t('profile.field.specialty'), value: appointment?.doctor?.specialtyName },
 	]
 
 	const appointmentTimelinesRows = [
 		{
 			label: t('enum.appointment_status.confirmed'),
-			value: appointment?.confirmedDate ? formatDatetime(appointment?.confirmedDate) : '-',
+			value: appointment?.confirmedDate
+				? formatDatetimeStringBasedOnCurrentLanguage(appointment?.confirmedDate)
+				: '-',
 		},
 		{
 			label: t('enum.appointment_status.completed'),
-			value: appointment?.completedDate ? formatDatetime(appointment?.completedDate) : '-',
+			value: appointment?.completedDate
+				? formatDatetimeStringBasedOnCurrentLanguage(appointment?.completedDate)
+				: '-',
 		},
 		{
 			label: t('enum.appointment_status.cancelled'),
-			value: appointment?.cancelledDate ? formatDatetime(appointment?.cancelledDate) : '-',
+			value: appointment?.cancelledDate
+				? formatDatetimeStringBasedOnCurrentLanguage(appointment?.cancelledDate)
+				: '-',
 		},
 		{
 			label: t('enum.appointment_status.refused'),
-			value: appointment?.refusedDate ? formatDatetime(appointment?.refusedDate) : '-',
+			value: appointment?.refusedDate
+				? formatDatetimeStringBasedOnCurrentLanguage(appointment?.refusedDate)
+				: '-',
 		},
 		{ label: t('appointment.field.cancel_reason'), value: appointment?.cancelledReason },
 		{ label: t('appointment.field.refuse_reason'), value: appointment?.refusedReason },
@@ -109,9 +127,16 @@ const ManageAppointmentDetailDrawerSection = ({ appointment, open, onClose, butt
 								<Stack direction='row' justifyContent='space-between' alignItems='center'>
 									<Typography variant='subtitle1'>{t('appointment.title.appointment_info')}</Typography>
 									<Chip
-										label={appointment?.appointmentStatus}
+										label={getEnumLabelByValue(
+											_enum.appointmentStatusOptions,
+											appointment?.appointmentStatus
+										)}
 										size='small'
-										sx={{ bgcolor: s.bg, color: s.color, border: `1px solid ${s.border}` }}
+										sx={{
+											bgcolor: styleForStatus.bg,
+											color: styleForStatus.color,
+											border: `1px solid ${styleForStatus.border}`,
+										}}
 									/>
 								</Stack>
 								<Divider sx={{ my: 1.5 }} />
@@ -215,7 +240,7 @@ const ManageAppointmentDetailDrawerSection = ({ appointment, open, onClose, butt
 
 const InfoRow = ({ label, value }) => (
 	<Stack direction='row' justifyContent='space-between' alignItems='start'>
-		<Typography variant='body2' sx={{ color: 'text.secondary' }}>
+		<Typography variant='body2' sx={{ color: 'text.secondary', whiteSpace: 'nowrap' }}>
 			{label}
 		</Typography>
 		<Typography variant='body2' sx={{ ml: 2, textAlign: 'right' }}>

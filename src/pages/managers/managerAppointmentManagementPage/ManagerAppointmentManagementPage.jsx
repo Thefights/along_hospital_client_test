@@ -32,11 +32,7 @@ const ManagerAppointmentManagementPage = () => {
 
 	const { t } = useTranslation()
 
-	const getAppointments = useFetch(ApiUrls.APPOINTMENT.MANAGEMENT.INDEX, filters, [
-		filters.status,
-		filters.page,
-		filters.pageSize,
-	])
+	const getAppointments = useFetch(ApiUrls.APPOINTMENT.MANAGEMENT.INDEX, filters, [filters])
 	const specialtiesStore = useReduxStore({
 		url: ApiUrls.SPECIALTY.GET_ALL,
 		selector: (state) => state.management.specialties,
@@ -71,9 +67,8 @@ const ManagerAppointmentManagementPage = () => {
 		}
 	}
 
-	const onFilterClick = async () => {
-		setFilters((prev) => ({ ...prev, page: 1 }))
-		await getAppointments.fetch()
+	const onFilterClick = async (values) => {
+		setFilters((prev) => ({ ...prev, page: 1, ...values }))
 	}
 
 	return (

@@ -29,7 +29,7 @@ const DoctorAppointmentManagementPage = () => {
 	const getAppointments = useFetch(
 		ApiUrls.APPOINTMENT.MANAGEMENT.GET_ALL_BY_CURRENT_DOCTOR,
 		filters,
-		[filters.status, filters.page, filters.pageSize]
+		[filters]
 	)
 	const specialtiesStore = useReduxStore({
 		url: ApiUrls.SPECIALTY.GET_ALL,
@@ -50,9 +50,8 @@ const DoctorAppointmentManagementPage = () => {
 		method: 'PUT',
 	})
 
-	const onFilterClick = async () => {
-		setFilters((prev) => ({ ...prev, page: 1 }))
-		await getAppointments.fetch()
+	const onFilterClick = async (values) => {
+		setFilters((prev) => ({ ...prev, page: 1, ...values }))
 	}
 
 	return (
@@ -84,6 +83,7 @@ const DoctorAppointmentManagementPage = () => {
 							confirmationDescription={t('appointment.dialog.confirm_deny_description')}
 							confirmButtonColor='error'
 							confirmButtonText={t('appointment.button.deny_assignment')}
+							color='error'
 							loading={denyAssignment.loading}
 						>
 							{t('appointment.button.deny_assignment')}
@@ -95,6 +95,7 @@ const DoctorAppointmentManagementPage = () => {
 						confirmationDescription={t('appointment.dialog.confirm_complete_description')}
 						confirmButtonColor='primary'
 						confirmButtonText={t('appointment.button.complete_appointment')}
+						color='success'
 						loading={completeAppointment.loading}
 					>
 						{t('appointment.button.complete_appointment')}

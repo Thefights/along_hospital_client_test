@@ -69,7 +69,10 @@ const MedicalHistoryDetailComplaintSection = ({
 					<Typography variant='body2'>
 						{t('medical_history.field.complaint.resolve_status')}:{' '}
 						{isDraftStatus
-							? getEnumLabelByValue(_enum.complaintResolveStatusOptions, 'Pending')
+							? getEnumLabelByValue(
+									_enum.complaintResolveStatusOptions,
+									EnumConfig.ComplaintResolveStatus.Pending
+							  )
 							: getEnumLabelByValue(
 									_enum.complaintResolveStatusOptions,
 									complaint?.complaintResolveStatus
