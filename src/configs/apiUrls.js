@@ -1,6 +1,17 @@
 export const ApiUrls = {
 	AUTH: {
-		CURRENT_ACCOUNT: '/auth/current-account',
+		// Auth service endpoints
+		LOGIN: '/auth/login',
+		LOGIN_GOOGLE: '/auth/login/google',
+		REGISTER: '/auth/register',
+		REGISTER_RESEND_LINK: '/auth/register/resend-link',
+		REGISTER_VERIFY: '/auth/register/verify', // POST with ?token=...
+		REFRESH: '/auth/refresh',
+		FORGOT_PASSWORD: '/auth/forgot-password',
+		FORGOT_PASSWORD_RESET: '/auth/forgot-password/reset', // POST with ?token=...
+		LOGOUT: '/auth/logout',
+		CURRENT_ACCOUNT: '/auth/me',
+		COMPLETE_PROFILE: '/auth/complete-profile',
 	},
 	USER: {
 		INDEX: `/user`,

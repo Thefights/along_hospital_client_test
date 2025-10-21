@@ -6,6 +6,7 @@ import { resetAuthStore, setAuthStore } from '@/redux/reducers/authReducer'
 import { createContext, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { ApiUrls } from './apiUrls'
+import axiosConfig from './axiosConfig'
 
 export const AuthContext = createContext(null)
 
@@ -19,14 +20,52 @@ const AuthProvider = ({ children }) => {
 		setStore: setAuthStore,
 	})
 
-	const login = async (token) => {
-		setToken(token)
-		await authStore.fetch()
+	const login = async (authData) => {
+		if (typeof authData === 'string') {
+			setToken(authData)
+			await authStore.fetch()
+		} else {
+			const {
+				accessToken,
+				refreshToken,
+				accessTokenExpires,
+				refreshTokenExpires,
+				role,
+				authId,
+				userId,
+				stage,
+			} = authData
+
+			setToken(accessToken)
+
+			dispatch(
+				setAuthStore({
+					accessToken,
+					refreshToken,
+					accessTokenExpires,
+					refreshTokenExpires,
+					role,
+					authId,
+					userId,
+					stage,
+				})
+			)
+
+			if (stage === null) {
+				await authStore.fetch()
+			}
+		}
 	}
 
-	const logout = () => {
-		removeToken()
-		dispatch(resetAuthStore())
+	const logout = async () => {
+		try {
+			await axiosConfig.post(ApiUrls.AUTH.LOGOUT)
+		} catch (error) {
+			console.error('Logout API call failed:', error)
+		} finally {
+			removeToken()
+			dispatch(resetAuthStore())
+		}
 	}
 
 	const hasRole = (required) => {

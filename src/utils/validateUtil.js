@@ -1,5 +1,11 @@
 import { getTranslation } from '@/hooks/useTranslation'
 
+const emailRegex = new RegExp(
+	'^(?=.{1,320}$)(?!.*\\.\\.)[a-zA-Z0-9](?:[a-zA-Z0-9._%+\\-]{0,62}[a-zA-Z0-9])?@[a-zA-Z0-9](?:[a-zA-Z0-9\\-]{0,253}[a-zA-Z0-9])?(?:\\.[a-zA-Z]{2,})+$'
+)
+
+const phoneRegex = /^0(2[0-9]{1,2}\d{7,8}|(3[2-9]|5[2-9]|7[0-9]|8[1-9]|9[0-9])\d{7})$/
+
 export const isRequired =
 	(msg = getTranslation('error.required')) =>
 	(v) => {
@@ -10,7 +16,21 @@ export const isRequired =
 export const isEmail =
 	(msg = getTranslation('error.invalid_email')) =>
 	(v) =>
-		v == null || v === '' || /\S+@\S+\.\S+/.test(String(v)) ? true : msg
+		v == null || v === '' || emailRegex.test(String(v)) ? true : msg
+
+export const isPhone =
+	(msg = getTranslation('error.invalid_phone')) =>
+	(v) => {
+		if (v == null || v === '') return true
+		return phoneRegex.test(String(v)) ? true : msg
+	}
+
+export const isPhoneOrEmail =
+	(msg = getTranslation('error.invalid_phone_or_email')) =>
+	(v) => {
+		if (v == null || v === '') return true
+		return phoneRegex.test(String(v)) || emailRegex.test(String(v)) ? true : msg
+	}
 
 export const isNumber =
 	(msg = getTranslation('error.invalid_number')) =>

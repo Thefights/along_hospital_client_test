@@ -11,6 +11,10 @@ const ProtectedRoute = ({ allowRoles = [], redirectPath = '/login', unauthorized
 		return <Navigate to={redirectPath} replace state={{ from: location }} />
 	}
 
+	if (auth.stage !== null && auth.stage !== undefined && location.pathname !== '/user/complete') {
+		return <Navigate to='/user/complete' replace />
+	}
+
 	if (!hasRole(allowRoles)) {
 		return <Navigate to={unauthorizedPath} replace />
 	}
