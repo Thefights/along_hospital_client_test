@@ -3,7 +3,16 @@ import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
 import { formatDateAndTimeBasedOnCurrentLanguage } from '@/utils/formatDateUtil'
 import { getEnumLabelByValue } from '@/utils/handleStringUtil'
-import { Box, Card, CardActionArea, CardContent, Chip, Stack, Typography } from '@mui/material'
+import {
+	Box,
+	Card,
+	CardActionArea,
+	CardContent,
+	Chip,
+	Divider,
+	Stack,
+	Typography,
+} from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { Fragment } from 'react'
 
@@ -38,19 +47,42 @@ const ManageAppointmentListItemSection = ({ appointment, onClick }) => {
 							</Typography>
 						</Box>
 						<Stack spacing={0.5} sx={{ flex: 1, minWidth: 0 }}>
-							<Typography variant='body2' sx={{ fontWeight: 600 }}>
-								{`${t('appointment.field.type')}: ${getEnumLabelByValue(
-									_enum.appointmentTypeOptions,
-									appointment?.appointmentType
-								)}`}{' '}
-								|{' '}
-								{`${t('appointment.field.meeting_type')}: ${getEnumLabelByValue(
-									_enum.appointmentMeetingTypeOptions,
-									appointment?.appointmentMeetingType
-								)}`}{' '}
-								| {appointment?.specialty?.name} | {appointment?.patient?.name} |{' '}
-								{appointment?.doctor?.name}{' '}
-							</Typography>
+							<Stack
+								direction={{ xs: 'column', md: 'row' }}
+								spacing={{ xs: 0.2, md: 1 }}
+								flexWrap={'wrap'}
+								divider={
+									<Divider orientation='vertical' variant='middle' flexItem sx={{ borderRightWidth: 2 }} />
+								}
+							>
+								{[
+									{
+										text: `${t('appointment.field.type')}: ${getEnumLabelByValue(
+											_enum.appointmentTypeOptions,
+											appointment?.appointmentType
+										)}`,
+									},
+									{
+										text: `${t('appointment.field.meeting_type')}: ${getEnumLabelByValue(
+											_enum.appointmentMeetingTypeOptions,
+											appointment?.appointmentMeetingType
+										)}`,
+									},
+									{
+										text: `${t('appointment.field.specialty')}: ${appointment?.specialty?.name}`,
+									},
+									{
+										text: `${t('appointment.field.patient')}: ${appointment?.patient?.name}`,
+									},
+									{
+										text: `${t('appointment.field.doctor')}: ${appointment?.doctor?.name}`,
+									},
+								].map((item, index) => (
+									<Typography variant='body2' key={appointment?.id + index}>
+										{item.text}
+									</Typography>
+								))}
+							</Stack>
 							<Typography variant='body2' sx={{ color: 'text.secondary', ...defaultLineClampStyle(2) }}>
 								{appointment?.purpose}
 							</Typography>

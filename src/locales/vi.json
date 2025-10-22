@@ -199,6 +199,7 @@
             "meeting_type": "Hình thức",
             "start_date": "Ngày bắt đầu",
             "end_date": "Ngày kết thúc",
+            "patient": "Bệnh nhân",
             "doctor": "Bác sĩ",
             "search_doctor": "Tìm kiếm theo tên bác sĩ...",
             "search_patient": "Tìm kiếm theo tên bệnh nhân...",

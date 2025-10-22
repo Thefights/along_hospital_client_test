@@ -186,7 +186,7 @@ const ManageAppointmentDetailDrawerSection = ({ appointment, open, onClose, butt
 								<Typography variant='subtitle1'>{t('appointment.title.doctor_info')}</Typography>
 								<Divider sx={{ my: 1.5 }} />
 								<Stack direction='row' spacing={2} alignItems='center' sx={{ mb: 1 }}>
-									<Avatar src={appointment?.doctor?.image} />
+									<Avatar src={getImageFromCloud(appointment?.doctor?.image)} />
 									<Stack>
 										<Typography variant='body1' sx={{ fontWeight: 600 }}>
 											{appointment?.doctor?.name}

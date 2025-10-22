@@ -199,6 +199,7 @@
             "meeting_type": "Meeting Type",
             "start_date": "Start Date",
             "end_date": "End Date",
+            "patient": "Patient",
             "doctor": "Doctor",
             "search_doctor": "Search by Doctor name...",
             "search_patient": "Search by Patient name...",
