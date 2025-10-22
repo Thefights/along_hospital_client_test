@@ -46,6 +46,15 @@ export const ApiUrls = {
 			REFUSE: (id) => `/appointment-management/refuse/${id}`,
 		},
 	},
+	COMPLAINT: {
+		MANAGEMENT: {
+			INDEX: `/complaint-management`,
+			DRAFT: (id) => `/complaint-management/draft/${id}`,
+			RESOLVE: (id) => `/complaint-management/resolve/${id}`,
+			CLOSE: (id) => `/complaint-management/close/${id}`,
+			CLASSIFY: (id) => `/complaint-management/classify/${id}`,
+		},
+	},
 	MEDICAL_HISTORY: {
 		INDEX: `/medical-history`,
 		CREATE_COMPLAINT: (medicalHistoryId) => `/medical-history/${medicalHistoryId}/complaint`,
@@ -59,14 +68,6 @@ export const ApiUrls = {
 				}`,
 			PRESCRIPTION: (medicalHistoryId) =>
 				`/medical-history-management/${medicalHistoryId}/prescription`,
-			COMPLAINT: {
-				DRAFT: (medicalHistoryId) => `/medical-history-management/${medicalHistoryId}/complaint/draft`,
-				RESOLVE: (medicalHistoryId) =>
-					`/medical-history-management/${medicalHistoryId}/complaint/resolve`,
-				CLOSE: (medicalHistoryId) => `/medical-history-management/${medicalHistoryId}/complaint/close`,
-				CLASSIFY: (medicalHistoryId) =>
-					`/medical-history-management/${medicalHistoryId}/complaint/classify`,
-			},
 		},
 	},
 }

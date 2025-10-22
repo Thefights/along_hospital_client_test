@@ -19,7 +19,7 @@ const ManageAppointmentBasePage = ({
 	setFilters,
 	selectedAppointment,
 	setSelectedAppointment,
-	onFilterClick = () => {},
+	onFilterClick = (values) => Promise.resolve(values),
 	loading = false,
 	drawerButtons = <React.Fragment />,
 }) => {

@@ -4,14 +4,12 @@ import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from 
 import { useState } from 'react'
 
 /**
- * actions: Array<{
- *   title?: string
- *   icon?: ReactNode
- *   disabled?: boolean
- *   onClick?: () => void | Promise<void>
- * }>
+ * @param {Object} props
+ * @param {Array<{title?: string, icon?: ReactNode, disabled?: boolean, onClick?: () => void | Promise<void>}>} props.actions
+ * @param {import('@mui/material').SxProps} props.itemSx
+ * @param {string} props.menuTooltip
  */
-const ActionMenu = ({ actions = [], itemSx = {}, ariaLabel }) => {
+const ActionMenu = ({ actions = [], itemSx = {}, menuTooltip }) => {
 	const [anchorEl, setAnchorEl] = useState(null)
 	const { t } = useTranslation()
 
@@ -25,7 +23,7 @@ const ActionMenu = ({ actions = [], itemSx = {}, ariaLabel }) => {
 
 	return (
 		<>
-			<Tooltip title={ariaLabel || t('tooltip.menu')}>
+			<Tooltip title={menuTooltip || t('tooltip.menu')}>
 				<IconButton
 					size='small'
 					onClick={(e) => setAnchorEl(e.currentTarget)}

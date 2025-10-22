@@ -2,7 +2,9 @@ import { ApiUrls } from '@/configs/apiUrls'
 import { EnumConfig } from '@/configs/enumConfig'
 import useAuth from '@/hooks/useAuth'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
+import { useConfirm } from '@/hooks/useConfirm'
 import useFetch from '@/hooks/useFetch'
+import useTranslation from '@/hooks/useTranslation'
 import { Box, Grid, Stack } from '@mui/material'
 import { useState } from 'react'
 import { Fade, Slide } from 'react-awesome-reveal'
@@ -22,6 +24,9 @@ import MedicalHistoryDetailServiceSection from './sections/MedicalHistoryDetailS
 
 const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX }) => {
 	const { id } = useParams()
+
+	const { t } = useTranslation()
+	const confirm = useConfirm()
 
 	const [selectedMedicalServiceId, setSelectedMedicalServiceId] = useState(0)
 
@@ -246,6 +251,15 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 					}
 				}}
 				onCloseComplaint={async () => {
+					const isConfirmed = await confirm({
+						title: t('complaint.dialog.confirm.close_complaint_title'),
+						description: t('complaint.dialog.confirm.close_complaint_description'),
+						confirmColor: 'error',
+						confirmText: t('button.close'),
+					})
+
+					if (!isConfirmed) return
+
 					const response = await closeComplaint.submit()
 					if (response) {
 						setOpenRespondComplaint(false)

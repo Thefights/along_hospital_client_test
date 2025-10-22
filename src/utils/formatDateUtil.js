@@ -1,3 +1,46 @@
+export const formatDateAndTimeBasedOnCurrentLanguage = (date, time = null) => {
+	if (!date) return ''
+
+	let language = localStorage.getItem('language') || 'en'
+	try {
+		language = JSON.parse(language)
+	} catch {
+		/* empty */
+	}
+
+	if (time) {
+		const datetime = `${date} ${time}`
+		return formatDatetimeStringBasedOnCurrentLanguage(datetime)
+	}
+
+	switch (language) {
+		case 'en':
+			return formatDateToMMDDYYYY(date)
+		case 'vi':
+			return formatDateToDDMMYYYY(date)
+		default:
+			return formatDateToMMDDYYYY(date)
+	}
+}
+
+export const formatDatetimeStringBasedOnCurrentLanguage = (datetime) => {
+	let language = localStorage.getItem('language') || 'en'
+	try {
+		language = JSON.parse(language)
+	} catch {
+		/* empty */
+	}
+
+	switch (language) {
+		case 'en':
+			return formatDatetimeToMMDDYYYY(datetime)
+		case 'vi':
+			return formatDatetimeToDDMMYYYY(datetime)
+		default:
+			return formatDatetimeToMMDDYYYY(datetime)
+	}
+}
+
 // Format Date -> Fri, 24 May 2024
 export const formatDateWithWeekDay = (dateString) => {
 	if (!dateString) return ''
