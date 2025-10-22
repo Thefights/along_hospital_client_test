@@ -11,6 +11,23 @@ import { useCallback, useEffect, useRef } from 'react'
 import useFileUrls from './helpers/useFileUrls'
 import useTranslation from './useTranslation'
 
+/**
+ * @typedef {Object} FieldDefinition
+ * @property {string} key
+ * @property {string} title
+ * @property {"text" | "date" | "number" | "email" | "select" | "image" | "object" | "array"} [type='text']
+ * @property {boolean} [required=true]
+ * @property {number} [multiple=undefined]
+ * @property {Array<string|Object>} [options]
+ * @property {function(string|number):JSX.Element} [renderOption]
+ * @property {Array<FieldDefinition>} [of]
+ * @property {Array<function(string):string>} [validate]
+ * @property {import('@mui/material').TextFieldProps} [props]
+ */
+
+/**
+ * @returns {{ renderField: function(FieldDefinition):JSX.Element, hasRequiredMissing: function(Array<FieldDefinition>):boolean }}
+ */
 export default function useFieldRenderer(
 	values,
 	setField,
