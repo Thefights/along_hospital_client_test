@@ -12,8 +12,8 @@ import ManageAppointmentTabsSection from './sections/ManageAppointmentTabsSectio
 
 const ManageAppointmentBasePage = ({
 	headerTitle = 'Manage Appointments',
-	totalAppointments = 0,
 	appointments = [],
+	totalPage = 1,
 	specialties = [],
 	filters,
 	setFilters,
@@ -96,7 +96,7 @@ const ManageAppointmentBasePage = ({
 					<Stack justifyContent={'center'} px={2}>
 						{filters?.pageSize ? (
 							<GenericTablePagination
-								totalItems={totalAppointments}
+								totalPage={totalPage}
 								page={filters.page}
 								setPage={(page) => setFilters({ ...filters, page })}
 								pageSize={filters.pageSize}
@@ -106,7 +106,7 @@ const ManageAppointmentBasePage = ({
 							/>
 						) : (
 							<GenericPagination
-								totalPages={Math.ceil(totalAppointments / 5)}
+								totalPage={totalPage}
 								page={filters.page}
 								setPage={(page) => setFilters({ ...filters, page })}
 								loading={loading}

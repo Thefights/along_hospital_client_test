@@ -80,7 +80,7 @@ const ManagerAppointmentManagementPage = () => {
 				selectedAppointment={selectedAppointment}
 				setSelectedAppointment={setSelectedAppointment}
 				onFilterClick={onFilterClick}
-				totalAppointments={getAppointments.data?.totalCount || 0}
+				totalPage={getAppointments.data?.totalPage || 1}
 				appointments={getAppointments.data?.collection || []}
 				specialties={specialtiesStore.data || []}
 				loading={getAppointments.loading}

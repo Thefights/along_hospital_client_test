@@ -61,7 +61,7 @@ const DoctorAppointmentManagementPage = () => {
 			setFilters={setFilters}
 			selectedAppointment={selectedAppointment}
 			setSelectedAppointment={setSelectedAppointment}
-			totalAppointments={getAppointments.data?.totalCount || 0}
+			totalPage={getAppointments.data?.totalPage || 1}
 			appointments={getAppointments.data?.collection || []}
 			specialties={specialtiesStore.data || []}
 			onFilterClick={onFilterClick}
