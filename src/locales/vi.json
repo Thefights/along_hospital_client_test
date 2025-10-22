@@ -320,8 +320,8 @@
             "confirm": {
                 "close_complaint_title": "Đóng khiếu nại?",
                 "close_complaint_description": "Bạn có chắc chắn muốn đóng khiếu nại này không? Hành động này không thể hoàn tác.",
-                "classifiy_complaint_title": "Xác nhận phân loại",
-                "classifiy_complaint_description": "Bạn có chắc chắn muốn phân loại khiếu nại này là {type} không?"
+                "classify_complaint_title": "Xác nhận phân loại",
+                "classify_complaint_description": "Bạn có chắc chắn muốn phân loại khiếu nại này là {type} không?"
             }
         }
     },

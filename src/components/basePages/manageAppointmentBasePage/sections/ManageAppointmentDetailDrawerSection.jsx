@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { defaultAppointmentStatusStyle } from '@/configs/defaultStylesConfig'
 import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'

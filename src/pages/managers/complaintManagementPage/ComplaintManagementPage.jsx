@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { GenericTablePagination } from '@/components/generals/GenericPagination'
 import { ApiUrls } from '@/configs/apiUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
@@ -25,8 +24,8 @@ const ComplaintManagementPage = () => {
 
 	const getComplaints = useFetch(
 		ApiUrls.COMPLAINT.MANAGEMENT.INDEX,
-		{ sort: `${sort.key} ${sort.direction}`, ...filters },
-		[sort, filters]
+		{ sort: `${sort.key} ${sort.direction}`, ...filters, page, pageSize },
+		[sort, filters, page, pageSize]
 	)
 
 	const classifyComplaint = useAxiosSubmit({

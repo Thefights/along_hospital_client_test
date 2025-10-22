@@ -320,8 +320,8 @@
             "confirm": {
                 "close_complaint_title": "Close complaint?",
                 "close_complaint_description": "Are you sure you want to close this complaint? This action cannot be undone",
-                "classifiy_complaint_title": "Confirm classification",
-                "classifiy_complaint_description": "Are you sure you want to classify this complaint as {type}?"
+                "classify_complaint_title": "Confirm classification",
+                "classify_complaint_description": "Are you sure you want to classify this complaint as {type}?"
             }
         }
     },

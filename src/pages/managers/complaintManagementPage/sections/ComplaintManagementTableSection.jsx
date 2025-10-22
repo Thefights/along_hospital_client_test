@@ -1,3 +1,4 @@
+import ViewDetailMedicalHistoryButton from '@/components/buttons/ViewDetailMedicalHistoryButton'
 import ActionMenu from '@/components/generals/ActionMenu'
 import GenericTable from '@/components/tables/GenericTable'
 import {

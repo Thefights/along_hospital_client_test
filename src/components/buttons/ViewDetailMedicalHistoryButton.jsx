@@ -13,7 +13,7 @@ const ViewDetailMedicalHistoryButton = ({ medicalHistoryId }) => {
 			<IconButton
 				onClick={() =>
 					navigate(
-						routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.MEDICAL_HISTORY + `/${medicalHistoryId}`)
+						routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.MEDICAL_HISTORY.DETAIL(medicalHistoryId))
 					)
 				}
 			>
