@@ -308,7 +308,7 @@
             "content": "Nội dung",
             "response": "Phản hồi",
             "type": "Loại khiếu nại",
-            "resolve_status": "Trạng thái giải quyết khiếu nại"
+            "resolve_status": "Trạng thái khiếu nại"
         },
         "button": {
             "tooltip_classify": "Phân loại khiếu nại",

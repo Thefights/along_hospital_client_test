@@ -31,16 +31,21 @@ export const routeUrls = {
 		MEDICAL_HISTORY: '/medical-history',
 		ORDER_HISTORY: '/order-history',
 		APPOINTMENT: {
-			INDEX: '/appointments',
-			CREATE: '/appointments/create',
+			INDEX: '/appointment',
+			CREATE: '/appointment/create',
 		},
 	},
 	DOCTOR: {
 		DASHBOARD: '/',
-		APPOINTMENT_MANAGEMENT: '/appointments',
+		APPOINTMENT_MANAGEMENT: '/appointment',
 	},
 	MANAGER: {
 		DASHBOARD: '/',
-		APPOINTMENT_MANAGEMENT: '/appointments',
+		APPOINTMENT_MANAGEMENT: '/appointment',
+		MEDICAL_HISTORY: {
+			INDEX: '/medical-history',
+			DETAIL: (id) => `/medical-history/${id}`,
+		},
+		COMPLAINT_MANAGEMENT: '/complaint',
 	},
 }
