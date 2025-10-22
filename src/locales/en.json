@@ -46,7 +46,8 @@
         "switch_dark": "Switch to dark mode",
         "switch_light": "Switch to light mode",
         "collapse": "Collapse",
-        "expand": "Expand"
+        "expand": "Expand",
+        "view_detail_medical_history": "View Detail Medical History"
     },
     "dialog": {
         "doctor_picker": {
@@ -108,6 +109,11 @@
             "doctor": "Doctor",
             "medicine": "Medicine",
             "others": "Others"
+        },
+        "complaint_type": {
+            "neutral": "Neutral",
+            "positive": "Positive",
+            "negative": "Negative"
         },
         "complaint_resolve_status": {
             "pending": "Pending",
@@ -257,13 +263,6 @@
                     "dosage": "Dosage (per time)",
                     "frequency_per_day": "Frequency (per day)"
                 }
-            },
-            "complaint": {
-                "topic": "Complaint Topic",
-                "content": "Content",
-                "resolve_status": "Complaint Resolve Status",
-                "response": "Response",
-                "type": "Complaint Type"
             }
         },
         "button": {
@@ -294,6 +293,35 @@
                 "delete_service_description": "Are you sure you want to delete this medical service from the medical history? This action cannot be undone",
                 "complete_medical_history_title": "Complete medical history?",
                 "complete_medical_history_description": "Are you sure you want to mark this medical history as completed?"
+            }
+        }
+    },
+    "complaint": {
+        "placeholder": {
+            "search_content": "Search by complaint content..."
+        },
+        "title": {
+            "complaint_management": "Complaint Management"
+        },
+        "field": {
+            "topic": "Complaint Topic",
+            "content": "Content",
+            "response": "Response",
+            "type": "Complaint Type",
+            "resolve_status": "Complaint Resolve Status"
+        },
+        "button": {
+            "tooltip_classify": "Classify Complaint",
+            "classify_neutral": "Classify as Neutral",
+            "classify_positive": "Classify as Positive",
+            "classify_negative": "Classify as Negative"
+        },
+        "dialog": {
+            "confirm": {
+                "close_complaint_title": "Close complaint?",
+                "close_complaint_description": "Are you sure you want to close this complaint? This action cannot be undone",
+                "classifiy_complaint_title": "Confirm classification",
+                "classifiy_complaint_description": "Are you sure you want to classify this complaint as {type}?"
             }
         }
     },

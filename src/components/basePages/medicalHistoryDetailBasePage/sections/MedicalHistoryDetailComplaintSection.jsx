@@ -22,7 +22,6 @@ const MedicalHistoryDetailComplaintSection = ({
 
 	const isResolvedStatus =
 		complaint?.complaintResolveStatus === EnumConfig.ComplaintResolveStatus.Resolved
-	const isDraftStatus = complaint?.complaintResolveStatus === EnumConfig.ComplaintResolveStatus.Draft
 	const isClosedStatus =
 		complaint?.complaintResolveStatus === EnumConfig.ComplaintResolveStatus.Closed
 
@@ -53,31 +52,25 @@ const MedicalHistoryDetailComplaintSection = ({
 				</Stack>
 			) : (
 				<Stack spacing={1}>
-					<Typography variant='body2'>
-						{t('medical_history.field.complaint.topic')}: {complaint?.complaintTopic}
-					</Typography>
-					<Typography variant='body2'>
-						{t('medical_history.field.complaint.content')}: {complaint?.content}
-					</Typography>
-					<Typography variant='body2'>
-						{t('medical_history.field.complaint.response')}:{' '}
-						{isResolvedStatus ? complaint?.response : '-'}
-					</Typography>
-					<Typography variant='body2'>
-						{t('medical_history.field.complaint.type')}: {complaint?.complaintType}
-					</Typography>
-					<Typography variant='body2'>
-						{t('medical_history.field.complaint.resolve_status')}:{' '}
-						{isDraftStatus
-							? getEnumLabelByValue(
-									_enum.complaintResolveStatusOptions,
-									EnumConfig.ComplaintResolveStatus.Pending
-							  )
-							: getEnumLabelByValue(
-									_enum.complaintResolveStatusOptions,
-									complaint?.complaintResolveStatus
-							  )}
-					</Typography>
+					{[
+						{ label: t('complaint.field.topic'), value: complaint?.complaintTopic },
+						{ label: t('complaint.field.content'), value: complaint?.content },
+						{
+							label: t('complaint.field.response'),
+							value: complaint?.response,
+						},
+						{
+							label: t('complaint.field.resolve_status'),
+							value: getEnumLabelByValue(
+								_enum.complaintResolveStatusOptions,
+								complaint?.complaintResolveStatus
+							),
+						},
+					].map((field) => (
+						<Typography key={field.label} variant='body2'>
+							{field.label}: {field.value ?? '-'}
+						</Typography>
+					))}
 					{isManagerRole && !isResolvedStatus && !isClosedStatus && (
 						<Button variant='contained' sx={{ mt: 2 }} onClick={onClickRespondComplaint}>
 							{t('medical_history.button.respond_complaint')}

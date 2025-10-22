@@ -46,7 +46,8 @@
         "switch_dark": "Chuyển sang chế độ tối",
         "switch_light": "Chuyển sang chế độ sáng",
         "collapse": "Thu gọn",
-        "expand": "Mở rộng"
+        "expand": "Mở rộng",
+        "view_detail_medical_history": "Xem chi tiết lịch sử y tế"
     },
     "dialog": {
         "doctor_picker": {
@@ -108,6 +109,11 @@
             "doctor": "Bác sĩ",
             "medicine": "Thuốc",
             "others": "Khác"
+        },
+        "complaint_type": {
+            "neutral": "Trung lập",
+            "positive": "Tích cực",
+            "negative": "Tiêu cực"
         },
         "complaint_resolve_status": {
             "pending": "Đang chờ xử lý",
@@ -257,13 +263,6 @@
                     "dosage": "Liều lượng (mỗi lần)",
                     "frequency_per_day": "Tần suất (mỗi ngày)"
                 }
-            },
-            "complaint": {
-                "topic": "Chủ đề khiếu nại",
-                "content": "Nội dung",
-                "resolve_status": "Trạng thái giải quyết khiếu nại",
-                "response": "Phản hồi",
-                "type": "Loại khiếu nại"
             }
         },
         "button": {
@@ -294,6 +293,35 @@
                 "delete_service_description": "Bạn có chắc chắn muốn xóa dịch vụ y tế này khỏi lịch sử y tế không? Hành động này không thể hoàn tác",
                 "complete_medical_history_title": "Hoàn thành lịch sử y tế?",
                 "complete_medical_history_description": "Bạn có chắc chắn muốn đánh dấu lịch sử y tế này là đã hoàn thành không?"
+            }
+        }
+    },
+    "complaint": {
+        "placeholder": {
+            "search_content": "Tìm kiếm theo nội dung khiếu nại..."
+        },
+        "title": {
+            "complaint_management": "Quản lý khiếu nại"
+        },
+        "field": {
+            "topic": "Chủ đề khiếu nại",
+            "content": "Nội dung",
+            "response": "Phản hồi",
+            "type": "Loại khiếu nại",
+            "resolve_status": "Trạng thái giải quyết khiếu nại"
+        },
+        "button": {
+            "tooltip_classify": "Phân loại khiếu nại",
+            "classify_neutral": "Phân loại là Trung lập",
+            "classify_positive": "Phân loại là Tích cực",
+            "classify_negative": "Phân loại là Tiêu cực"
+        },
+        "dialog": {
+            "confirm": {
+                "close_complaint_title": "Đóng khiếu nại?",
+                "close_complaint_description": "Bạn có chắc chắn muốn đóng khiếu nại này không? Hành động này không thể hoàn tác.",
+                "classifiy_complaint_title": "Xác nhận phân loại",
+                "classifiy_complaint_description": "Bạn có chắc chắn muốn phân loại khiếu nại này là {type} không?"
             }
         }
     },
