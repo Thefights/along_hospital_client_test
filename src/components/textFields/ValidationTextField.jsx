@@ -1,3 +1,4 @@
+import useTranslation from '@/hooks/useTranslation'
 import { getObjectMerged } from '@/utils/handleObjectUtil'
 import { isEmail, isNumber, isRequired } from '@/utils/validateUtil'
 import { TextField } from '@mui/material'
@@ -7,8 +8,10 @@ import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useState 
  * @typedef {Object} CustomProps
  * @property {string} label
  * @property {string|number} value
- * @property {function} onChange
- * @property {function} validate
+ * @property {(value: string|number) => void} onChange
+ * @property {(value: string|number) => string|null} [validate]
+ * @property {{value: string|number, label: string, disabled?: boolean}[]} [options=[]]
+ * @property {function(string|number, {value: string|number, label: string, disabled?: boolean}):JSX.Element} [renderOption]
  */
 
 /**
@@ -17,10 +20,21 @@ import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useState 
  *
  */
 const ValidationTextField = (
-	{ label, type = 'text', required = true, value, onChange, validate, ...props },
+	{
+		label,
+		type = 'text',
+		required = true,
+		value,
+		onChange,
+		validate,
+		options = [],
+		renderOption,
+		...props
+	},
 	ref
 ) => {
 	const [error, setError] = useState('')
+	const { t } = useTranslation()
 
 	const { slotProps, ...restProps } = props
 
@@ -84,7 +98,7 @@ const ValidationTextField = (
 			label={label}
 			value={value ?? undefined}
 			onChange={(e) => {
-				runWith(e.target.value, { skipEmpty: true })
+				if (error) runWith(e.target.value, { skipEmpty: true })
 				onChange?.(e)
 			}}
 			onBlur={run}
@@ -97,7 +111,22 @@ const ValidationTextField = (
 			select={type === 'select'}
 			slotProps={mergedSlotProps}
 			{...restProps}
-		/>
+		>
+			{type === 'select' && (
+				<>
+					<MenuItem value='' disabled>
+						-- {t('text.select_options')} --
+					</MenuItem>
+					{options &&
+						options.length > 0 &&
+						options.map((opt) => (
+							<MenuItem key={String(opt.value)} value={opt.value} disabled={opt.disabled}>
+								{renderOption ? renderOption(opt.value, opt) : opt.label}
+							</MenuItem>
+						))}
+				</>
+			)}
+		</TextField>
 	)
 }
 

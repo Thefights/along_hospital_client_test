@@ -1,12 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import AddTileRenderField from '@/components/fieldRenderers/AddTileRenderField'
 import ChildFieldRenderField from '@/components/fieldRenderers/ChildFieldRenderField'
 import ImageRenderField from '@/components/fieldRenderers/ImageRenderField'
 import ImageTileRenderField from '@/components/fieldRenderers/ImageTileRenderField'
+import SearchBar from '@/components/generals/SearchBar'
 import ValidationTextField from '@/components/textFields/ValidationTextField'
 import { isStringArray } from '@/utils/handleBooleanUtil'
 import { getObjectValueFromStringPath, normalizeOptions } from '@/utils/handleObjectUtil'
 import { Delete } from '@mui/icons-material'
-import { Box, Button, IconButton, MenuItem, Stack, Typography } from '@mui/material'
+import { Box, Button, IconButton, Stack, Typography } from '@mui/material'
 import { useCallback, useEffect, useRef } from 'react'
 import useFileUrls from './helpers/useFileUrls'
 import useTranslation from './useTranslation'
@@ -15,11 +17,11 @@ import useTranslation from './useTranslation'
  * @typedef {Object} FieldDefinition
  * @property {string} key
  * @property {string} title
- * @property {"text" | "date" | "number" | "email" | "select" | "image" | "object" | "array"} [type='text']
+ * @property {"text" | "search" | "date" | "number" | "email" | "select" | "image" | "object" | "array"} [type='text']
  * @property {boolean} [required=true]
  * @property {number} [multiple=undefined]
  * @property {Array<string|Object>} [options]
- * @property {function(string|number):JSX.Element} [renderOption]
+ * @property {function(string|number, {value: string|number, label: string, disabled?: boolean}):JSX.Element} [renderOption]
  * @property {Array<FieldDefinition>} [of]
  * @property {Array<function(string):string>} [validate]
  * @property {import('@mui/material').TextFieldProps} [props]
@@ -86,6 +88,8 @@ export default function useFieldRenderer(
 				label={field.title}
 				required={field.required ?? true}
 				type={field.type || 'text'}
+				options={opts}
+				renderOption={field.renderOption}
 				value={getObjectValueFromStringPath(values, field.key) || ''}
 				onChange={handleChange}
 				validate={field.validate}
@@ -93,18 +97,36 @@ export default function useFieldRenderer(
 				minRows={field.multiple}
 				size={textFieldSize}
 				{...(field.props || {})}
-			>
-				<MenuItem value='' disabled>
-					-- {t('text.select_options')} --
-				</MenuItem>
-				{opts &&
-					opts.length > 0 &&
-					opts.map((opt) => (
-						<MenuItem key={String(opt.value)} value={opt.value} disabled={opt.disabled}>
-							{field.renderOption ? field.renderOption(opt.value) : opt.label}
-						</MenuItem>
-					))}
-			</ValidationTextField>
+			/>
+		)
+	}
+
+	const renderSearch = (field) => {
+		const value = getObjectValueFromStringPath(values, field.key) ?? ''
+		const setValue = (val) => setField(field.key, val)
+		const renderOption = field.renderOption
+
+		const getOptionLabel = renderOption
+			? (opt) => {
+					try {
+						return renderOption(opt)?.props?.children || renderOption(opt) || ''
+					} catch {
+						return opt?.label || String(opt)
+					}
+			  }
+			: (opt) => opt?.label || String(opt)
+
+		return (
+			<SearchBar
+				key={field.key}
+				widthPercent={field.widthPercent ?? 0}
+				value={value}
+				setValue={setValue}
+				placeholder={field.title}
+				options={field.options || []}
+				getOptionLabel={getOptionLabel}
+				onEnterDown={field.onEnterDown}
+			/>
 		)
 	}
 
@@ -127,24 +149,35 @@ export default function useFieldRenderer(
 	}
 
 	const renderImageMultiple = (field) => {
+		const getImageKeyNames = (fieldKey) => {
+			const base = String(fieldKey).split('.').pop() || ''
+			const cap = base ? base.charAt(0).toUpperCase() + base.slice(1) : ''
+			return {
+				remainKey: `remain${cap}`,
+				newKey: `new${cap}`,
+				removeKey: `remove${cap}`,
+			}
+		}
+
 		const key = field.key
+		const { remainKey, newKey, removeKey } = getImageKeyNames(key)
 		const required = field.required ?? true
 		const max = Math.max(1, Number(field.multiple) || 1)
 		const v = values[key]
+
 		if (isStringArray(v) && !normalizedImageKeysRef.current.has(key)) {
 			normalizedImageKeysRef.current.add(key)
 			setField(key, {
-				remainImages: v.slice(),
-				newImages: [],
-				removeImages: [],
+				[remainKey]: v.slice(),
+				[newKey]: [],
+				[removeKey]: [],
 			})
 		}
 
-		const isEditObj =
-			v && typeof v === 'object' && ('remainImages' in v || 'newImages' in v || 'removeImages' in v)
+		const isEditObj = v && typeof v === 'object' && (remainKey in v || newKey in v || removeKey in v)
 
-		const remain = isEditObj ? v.remainImages || [] : []
-		const news = isEditObj ? v.newImages || [] : Array.isArray(v) ? v : []
+		const remain = isEditObj ? v[remainKey] || [] : []
+		const news = isEditObj ? v[newKey] || [] : Array.isArray(v) ? v : []
 
 		const total = remain.length + news.length
 		const capacityLeft = Math.max(0, max - total)
@@ -155,9 +188,9 @@ export default function useFieldRenderer(
 			const picked = Array.from(filesList).slice(0, capacityLeft)
 			if (isEditObj) {
 				setField(key, {
-					remainImages: remain,
-					newImages: [...news, ...picked],
-					removeImages: v.removeImages || [],
+					[remainKey]: remain,
+					[newKey]: [...news, ...picked],
+					[removeKey]: v[removeKey] || [],
 				})
 			} else {
 				setField(key, [...news, ...picked])
@@ -169,9 +202,9 @@ export default function useFieldRenderer(
 			const nextRemain = remain.slice()
 			const removed = nextRemain.splice(idx, 1)[0]
 			setField(key, {
-				remainImages: nextRemain,
-				newImages: news,
-				removeImages: [...(v.removeImages || []), removed],
+				[remainKey]: nextRemain,
+				[newKey]: news,
+				[removeKey]: [...(v[removeKey] || []), removed],
 			})
 		}
 
@@ -179,7 +212,7 @@ export default function useFieldRenderer(
 			const nextNew = news.slice()
 			const removed = nextNew.splice(idx, 1)[0]
 			if (isEditObj) {
-				setField(key, { remainImages: remain, newImages: nextNew, removeImages: v.removeImages || [] })
+				setField(key, { [remainKey]: remain, [newKey]: nextNew, [removeKey]: v[removeKey] || [] })
 			} else {
 				setField(key, nextNew)
 			}
@@ -347,6 +380,7 @@ export default function useFieldRenderer(
 
 	const map = {
 		text: renderStandard,
+		search: renderSearch,
 		number: renderStandard,
 		email: renderStandard,
 		select: renderStandard,
@@ -386,7 +420,7 @@ const fields = [
 	{ key: 'customSelect', title: 'Custom Select', type: 'select', options: [
 		{ label: 'Option 1', value: 'opt1' },
 		{ label: 'Option 2', value: 'opt2' },
-	], renderOption: (opt) => (<span style={{ fontWeight: opt.value === 'opt1' ? 'bold' : 'normal' }}>{opt}</span>) },
+	], renderOption: (value, opt) => (<span style={{ fontWeight: opt.value === 'opt1' ? 'bold' : 'normal' }}>{opt.label}</span>) },
 	// Image upload field with required false
 	{ key: 'avatar', title: 'Avatar', type: 'image', required: false },
 	// Image upload field allowing multiple images (max 3)

@@ -7,7 +7,7 @@ const SearchBar = ({
 	value,
 	setValue,
 	placeholder,
-	options = [],
+	options = [], // if provided, enables autocomplete
 	getOptionLabel = (opt) => opt?.label || opt,
 	onEnterDown = () => {},
 }) => {

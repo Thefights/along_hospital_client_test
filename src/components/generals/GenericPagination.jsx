@@ -85,13 +85,13 @@ export const GenericTablePagination = ({
 
 /*
 <GenericPagination
-	totalPages={totalPages}
+	totalPage={totalPage}
 	page={page}
 	setPage={setPage}
 />
 
 <GenericTablePagination
-	totalItems={data?.length}
+	totalPage={totalPage}
 	page={page}
 	setPage={setPage}
 	pageSize={pageSize}
