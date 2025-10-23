@@ -16,7 +16,7 @@ import RouteManager from './routes/RouteManager'
 import RoutePatient from './routes/RoutePatient'
 
 function App() {
-	const [theme, setTheme] = useLocalStorage('theme', 'light')
+	const [theme, _] = useLocalStorage('theme', 'light')
 
 	return (
 		<ThemeProvider theme={theme === 'light' ? hospitalLightTheme : hospitalDarkTheme}>

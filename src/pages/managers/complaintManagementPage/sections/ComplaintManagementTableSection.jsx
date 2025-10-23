@@ -17,8 +17,7 @@ const ComplaintManagementTableSection = ({
 	loading,
 	sort,
 	setSort,
-	setSelectedComplaint = () => {},
-	onClassifyComplaint = (type) => Promise.resolve(type),
+	onClassifyComplaint = (type, id) => Promise.resolve({ type, id }),
 }) => {
 	const { t } = useTranslation()
 	const _enum = useEnum()
@@ -82,8 +81,7 @@ const ComplaintManagementTableSection = ({
 								})
 
 								if (isConfirmed) {
-									setSelectedComplaint(row)
-									await onClassifyComplaint(EnumConfig.ComplaintType.Neutral)
+									await onClassifyComplaint(EnumConfig.ComplaintType.Neutral, row.id)
 								}
 							},
 						},
@@ -100,8 +98,7 @@ const ComplaintManagementTableSection = ({
 								})
 
 								if (isConfirmed) {
-									setSelectedComplaint(row)
-									await onClassifyComplaint(EnumConfig.ComplaintType.Positive)
+									await onClassifyComplaint(EnumConfig.ComplaintType.Positive, row.id)
 								}
 							},
 						},
@@ -118,8 +115,7 @@ const ComplaintManagementTableSection = ({
 								})
 
 								if (isConfirmed) {
-									setSelectedComplaint(row)
-									await onClassifyComplaint(EnumConfig.ComplaintType.Negative)
+									await onClassifyComplaint(EnumConfig.ComplaintType.Negative, row.id)
 								}
 							},
 						},

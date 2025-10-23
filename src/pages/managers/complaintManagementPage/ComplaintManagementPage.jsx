@@ -18,7 +18,6 @@ const ComplaintManagementPage = () => {
 	const [sort, setSort] = useState({ key: 'id', direction: 'desc' })
 	const [page, setPage] = useState(1)
 	const [pageSize, setPageSize] = useState(10)
-	const [selectedComplaint, setSelectedComplaint] = useState(null)
 
 	const { t } = useTranslation()
 
@@ -27,9 +26,7 @@ const ComplaintManagementPage = () => {
 		{ sort: `${sort.key} ${sort.direction}`, ...filters, page, pageSize },
 		[sort, filters, page, pageSize]
 	)
-
 	const classifyComplaint = useAxiosSubmit({
-		url: ApiUrls.COMPLAINT.MANAGEMENT.CLASSIFY(selectedComplaint?.id),
 		method: 'PUT',
 	})
 
@@ -47,8 +44,12 @@ const ComplaintManagementPage = () => {
 					loading={getComplaints.loading}
 					sort={sort}
 					setSort={setSort}
-					setSelectedComplaint={setSelectedComplaint}
-					onClassifyComplaint={async (type) => await classifyComplaint.submit({ type })}
+					onClassifyComplaint={async (type, id) =>
+						await classifyComplaint.submit(
+							{ type },
+							{ overrideUrl: ApiUrls.COMPLAINT.MANAGEMENT.CLASSIFY(id) }
+						)
+					}
 				/>
 				<GenericTablePagination
 					totalPage={getComplaints.data?.totalPage}

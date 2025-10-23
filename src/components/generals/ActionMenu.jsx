@@ -44,6 +44,7 @@ const ActionMenu = ({ actions = [], itemSx = {}, menuTooltip }) => {
 				transformOrigin={{ vertical: 'top', horizontal: 'right' }}
 			>
 				{actions.map((a, idx) => {
+					if (!a) return null
 					const run = makeRun(a)
 					return (
 						<MenuItem key={idx} onClick={run} disabled={a.disabled} sx={itemSx}>
