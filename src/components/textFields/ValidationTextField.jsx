@@ -1,7 +1,7 @@
 import useTranslation from '@/hooks/useTranslation'
 import { getObjectMerged } from '@/utils/handleObjectUtil'
 import { isEmail, isNumber, isRequired } from '@/utils/validateUtil'
-import { TextField } from '@mui/material'
+import { MenuItem, TextField } from '@mui/material'
 import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useState } from 'react'
 
 /**
@@ -112,20 +112,16 @@ const ValidationTextField = (
 			slotProps={mergedSlotProps}
 			{...restProps}
 		>
-			{type === 'select' && (
-				<>
-					<MenuItem value='' disabled>
-						-- {t('text.select_options')} --
+			<MenuItem value='' disabled>
+				-- {t('text.select_options')} --
+			</MenuItem>
+			{options &&
+				options.length > 0 &&
+				options.map((opt) => (
+					<MenuItem key={String(opt.value)} value={opt.value} disabled={opt.disabled}>
+						{renderOption ? renderOption(opt.value, opt) : opt.label}
 					</MenuItem>
-					{options &&
-						options.length > 0 &&
-						options.map((opt) => (
-							<MenuItem key={String(opt.value)} value={opt.value} disabled={opt.disabled}>
-								{renderOption ? renderOption(opt.value, opt) : opt.label}
-							</MenuItem>
-						))}
-				</>
-			)}
+				))}
 		</TextField>
 	)
 }
