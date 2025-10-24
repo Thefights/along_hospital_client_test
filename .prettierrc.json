@@ -19,5 +19,6 @@
 	"useTabs": true,
 	"embeddedLanguageFormatting": "auto",
 	"vueIndentScriptAndStyle": false,
-	"experimentalTernaries": false
+	"experimentalTernaries": false,
+	"parser": "babel"
 }
