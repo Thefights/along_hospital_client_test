@@ -1,13 +1,11 @@
 export const EnumConfig = {
-	// For authentication stages
+	// For users
 	AuthStage: {
 		PatientProfilePendingWithPhone: 'PatientProfilePendingWithPhone',
 		PatientProfilePendingWithoutPhone: 'PatientProfilePendingWithoutPhone',
 		DoctorProfilePending: 'DoctorProfilePending',
 		Done: 'Done',
 	},
-
-	// For users
 	Role: {
 		Guest: 'Guest',
 		Patient: 'Patient',
