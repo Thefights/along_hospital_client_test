@@ -80,7 +80,7 @@ const ManagementMedicalHistoryFilterSection = ({
 				<Grid container spacing={2}>
 					{fields2nd.map((field) => (
 						<Grid
-							size={{ xs: 12, md: fields2nd.length !== 0 ? 10 / fields2nd.length : 0 }}
+							size={{ xs: 12, md: fields2nd.length !== 0 ? Math.floor(10 / fields2nd.length) : 0 }}
 							key={field.key}
 						>
 							{renderField(field)}

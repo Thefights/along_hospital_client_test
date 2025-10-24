@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axiosConfig from '@/configs/axiosConfig'
 import { getObjectConvertingToFormData } from '@/utils/handleObjectUtil'
 import { appendPath, getTrimString } from '@/utils/handleStringUtil'
@@ -71,7 +72,7 @@ export function useAxiosSubmit({
 				setLoading(false)
 			}
 		},
-		[loading, method, data, url, params, onSuccess, onError]
+		[loading, method, data, url, params]
 	)
 
 	return { loading, error, response, submit }
