@@ -2,6 +2,7 @@ import { routeUrls } from '@/configs/routeUrls'
 import LayoutPatient from '@/layouts/LayoutPatient'
 import CreateAppointmentPage from '@/pages/patients/createAppointmentPage/CreateAppointmentPage'
 import PatientAppointmentHistoryPage from '@/pages/patients/patientAppointmentHistoryPage/PatientAppointmentHistoryPage'
+import PatientMedicalHistoryPage from '@/pages/patients/patientMedicalHistoryPage/PatientMedicalHistoryPage'
 import ProfilePage from '@/pages/patients/ProfilePage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
@@ -16,6 +17,10 @@ const RoutePatient = () => {
 					<Route
 						path={routeUrls.PATIENT.APPOINTMENT.INDEX}
 						element={<PatientAppointmentHistoryPage />}
+					/>
+					<Route
+						path={routeUrls.PATIENT.MEDICAL_HISTORY.INDEX}
+						element={<PatientMedicalHistoryPage />}
 					/>
 				</Route>
 			</Route>

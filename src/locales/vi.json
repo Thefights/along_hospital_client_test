@@ -21,9 +21,15 @@
         "search": "Tìm kiếm...",
         "loading": "Đang tải...",
         "filter": "Lọc",
+        "filters": "Bộ lọc",
         "image_preview": "Xem trước hình ảnh",
         "select_options": "Chọn tùy chọn",
+        "day": "Ngày",
+        "month": "Tháng",
+        "year": "Năm",
         "date": "Ngày",
+        "start_date": "Ngày bắt đầu",
+        "end_date": "Ngày kết thúc",
         "time": "Thời gian",
         "rows_per_page": "Số dòng mỗi trang",
         "role": {
@@ -229,6 +235,8 @@
     },
     "medical_history": {
         "title": {
+            "medical_history_management": "Quản lý lịch sử y tế",
+            "medical_history_detail": "Chi tiết lịch sử y tế",
             "medical_history_information": "Thông tin lịch sử y tế",
             "service_details": "Chi tiết dịch vụ y tế",
             "prescription": "Đơn thuốc",
@@ -237,7 +245,9 @@
         "placeholder": {
             "no_service": "Không có dịch vụ y tế nào được ghi nhận",
             "no_prescription": "Không có đơn thuốc nào được ghi nhận",
-            "no_complaint": "Không có khiếu nại nào được ghi nhận"
+            "no_complaint": "Không có khiếu nại nào được ghi nhận",
+            "search_patient_name": "Tìm kiếm theo tên bệnh nhân...",
+            "search_doctor_name": "Tìm kiếm theo tên bác sĩ..."
         },
         "field": {
             "id": "ID lịch sử y tế",
@@ -245,6 +255,9 @@
             "diagnosis": "Chẩn đoán",
             "completed_date": "Ngày hoàn thành",
             "follow_up_appointment_date": "Ngày hẹn tái khám",
+            "patient": "Bệnh nhân",
+            "doctor": "Bác sĩ",
+            "number_of_services": "Số lượng dịch vụ",
             "medical_history_detail": {
                 "medical_service": "Dịch vụ y tế",
                 "service_name": "Tên dịch vụ",
@@ -255,6 +268,7 @@
                 "grand_total": "Tổng cộng"
             },
             "prescription": {
+                "prescription": "Đơn thuốc",
                 "doctor_note": "Ghi chú của bác sĩ",
                 "medication_days": "Số ngày dùng thuốc",
                 "prescription_details": "Chi tiết đơn thuốc",
@@ -277,6 +291,7 @@
             "update_medical_history": "Cập nhật lịch sử y tế",
             "complete_medical_history": "Hoàn thành lịch sử y tế",
             "payment": "Thanh toán",
+            "view_full_detail": "Xem chi tiết đầy đủ",
             "print_invoice": "In hóa đơn"
         },
         "dialog": {

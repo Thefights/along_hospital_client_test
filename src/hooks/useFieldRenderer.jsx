@@ -392,6 +392,9 @@ export default function useFieldRenderer(
 
 	const renderField = useCallback(
 		(field) => {
+			if (!field || !field.key) {
+				return null
+			}
 			const type = field.type || 'text'
 			const fn = map[type] || map._default
 			return fn(field)
