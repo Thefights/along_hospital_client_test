@@ -5,9 +5,10 @@ import { EnumConfig } from '@/configs/enumConfig'
 import { routeUrls } from '@/configs/routeUrls'
 import useAuth from '@/hooks/useAuth'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
+import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
+import { maxLen } from '@/utils/validateUtil'
 import {
-	Alert,
 	Box,
 	Button,
 	CircularProgress,
@@ -18,7 +19,6 @@ import {
 	useMediaQuery,
 } from '@mui/material'
 import { GoogleLogin } from '@react-oauth/google'
-import { useState } from 'react'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 
 const LoginPage = () => {
@@ -26,9 +26,10 @@ const LoginPage = () => {
 	const isNarrow = useMediaQuery('(max-width:500px)')
 	const navigate = useNavigate()
 	const { login } = useAuth()
-	const [identifier, setIdentifier] = useState('')
-	const [password, setPassword] = useState('')
-	const [canResend, setCanResend] = useState(false)
+	const { values, handleChange } = useForm({
+		identifier: '',
+		password: '',
+	})
 
 	const { loading, submit } = useAxiosSubmit({
 		url: ApiUrls.AUTH.LOGIN,
@@ -48,34 +49,7 @@ const LoginPage = () => {
 		onError: async (err) => {
 			const msg = (err?.response?.data?.error || '').toString().toLowerCase()
 			if (msg.includes('please verify your account')) {
-				setCanResend(true)
-			}
-		},
-	})
-
-	const onSubmit = async (e) => {
-		e.preventDefault()
-		const fd = new FormData(e.currentTarget)
-		await submit(fd)
-	}
-
-	const { loading: resendLoading, submit: resend } = useAxiosSubmit({
-		url: ApiUrls.AUTH.REGISTER_RESEND_LINK,
-		method: 'POST',
-	})
-
-	const { submit: submitGoogle } = useAxiosSubmit({
-		url: ApiUrls.AUTH.LOGIN_GOOGLE,
-		method: 'POST',
-		onSuccess: async (resp) => {
-			const { accessToken, stage } = resp.data
-			if (!accessToken) return
-
-			await login(accessToken)
-			if (stage !== EnumConfig.AuthStage.Done) {
-				navigate(`${routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.COMPLETE_PROFILE)}`, { replace: true })
-			} else {
-				navigate('/', { replace: true })
+				navigate(routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.RESEND_LINK), { replace: true })
 			}
 		},
 	})
@@ -102,50 +76,29 @@ const LoginPage = () => {
 				</Typography>
 			</Box>
 
-			{canResend && (
-				<Alert
-					severity='warning'
-					sx={{
-						mb: 2,
-						borderRadius: 2,
-						'& .MuiAlert-message': { width: '100%' },
-					}}
-				>
-					<Typography variant='body2' sx={{ mb: 1 }}>
-						{t('auth.login.unverified')}
-					</Typography>
-					<Button
-						size='small'
-						variant='text'
-						onClick={() => {
-							const fd = new FormData()
-							fd.set('Phone', identifier)
-							resend(fd)
-						}}
-						disabled={resendLoading || !identifier}
-						sx={{ p: 0, minWidth: 'auto', textTransform: 'none' }}
-					>
-						{t('auth.login.resend_link')}
-					</Button>
-				</Alert>
-			)}
-
-			<Box component='form' onSubmit={onSubmit}>
+			<Box
+				component='form'
+				onSubmit={(e) => {
+					e.preventDefault()
+					submit(values, {})
+				}}
+			>
 				<Stack spacing={{ xs: 2, sm: 2.5 }}>
 					<ValidationTextField
-						name='Identifier'
+						name='identifier'
 						label={t('auth.field.identifier')}
 						placeholder={t('auth.placeholder.identifier')}
-						value={identifier}
-						onChange={(e) => setIdentifier(e.target.value)}
+						value={values.identifier}
+						onChange={handleChange}
 						type='phoneOrEmail'
+						validate={[maxLen(255)]}
 					/>
 					<PasswordTextField
-						name='Password'
+						name='password'
 						label={t('auth.field.password')}
 						placeholder={t('auth.placeholder.password')}
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
+						value={values.password}
+						onChange={handleChange}
 					/>
 
 					<Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -226,9 +179,7 @@ const LoginPage = () => {
 					onSuccess={(credentialResponse) => {
 						const idToken = credentialResponse?.credential
 						if (!idToken) return
-						const fd = new FormData()
-						fd.set('IdToken', idToken)
-						submitGoogle(fd)
+						submit({ idToken }, { overrideUrl: ApiUrls.AUTH.LOGIN_GOOGLE })
 					}}
 					useOneTap
 					onError={() => {}}
