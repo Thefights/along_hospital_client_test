@@ -14,7 +14,11 @@
         "save": "Save",
         "add_row": "Add Row",
         "login": "Login",
-        "filter": "Filter"
+        "filter": "Filter",
+        "next": "Next",
+        "resend_in": "Resend in",
+        "toggle_language": "Toggle language",
+        "toggle_theme": "Toggle theme"
     },
     "text": {
         "all": "All",
@@ -139,6 +143,8 @@
             "email": "Email",
             "phone": "Phone",
             "address": "Address",
+            "city": "City",
+            "country": "Country",
             "date_of_birth": "Date of Birth",
             "gender": "Gender",
             "height": "Height",
@@ -339,4 +345,112 @@
         "delete_title": "Delete selected users?",
         "delete_description": "Are you sure you want to delete {number} selected item(s)? This action cannot be undone."
     }
+        ,
+        "auth": {
+            "hero": {
+                "subtitle": "Connecting patients and doctors through secure, convenient telemedicine",
+                "tagline": "Your healthcare, anywhere"
+            },
+            "or": "Or continue with",
+            "seconds": "seconds",
+            "back_to_login": "Back to login",
+            "login": {
+                "title": "Login",
+                "welcome": "Welcome back",
+                "subtitle": "Sign in to your account",
+                "submit": "Login",
+                "unverified": "Your account isn't verified yet.",
+                "resend_link": "Resend verification link",
+                "forgot_password": "Forgot password?",
+                "no_account": "Don't have an account?",
+                "register": "Register"
+            },
+            "register": {
+                "title": "Register",
+                "subtitle": "Get started with your free account",
+                "submit": "Register",
+                "verify_sent": "Verification link sent via SMS to",
+                "check_sms": "Check your SMS",
+                "verify_subtitle": "We sent a verification link to your phone",
+                "resend_link": "Resend verification link",
+                "resend_in": "Resend in",
+                "back_to_login": "Back to login",
+                "already_have_account": "Already have an account?",
+                "login": "Login"
+            },
+            "verify_link": {
+                "title": "Verify account",
+                "description": "Processing your verification link...",
+                "processing": "Processing your verification link...",
+                "success": "Verification successful!",
+                "redirecting": "Redirecting...",
+                "failed": "Verification failed",
+                "invalid": "The verification link is invalid or has expired.",
+                "request_new": "Request new verification link"
+            },
+            "resend": {
+                "title": "Check your SMS",
+                "subtitle": "We sent a verification link to your phone",
+                "link_sent": "Verification link sent to",
+                "resend_in": "Resend in",
+                "button": "Resend verification link",
+                "edit_phone": "Edit phone number",
+                "already_have_account": "Already have an account?"
+            },
+            "forgot": {
+                "title": "Forgot password",
+                "subtitle": "Enter your email or phone to reset password",
+                "link_sent": "Reset link sent!",
+                "check_sms": "If the account exists, a reset link has been sent via SMS.",
+                "remember_password": "Remember your password?"
+            },
+            "reset": {
+                "title": "Reset password",
+                "subtitle": "Enter your new password below",
+                "success": "Password reset successfully!",
+                "redirecting": "Redirecting to login...",
+                "no_account": "Don't have an account?"
+            },
+            "complete": {
+                "title": "Complete your profile",
+                "subtitle": "Help us get to know you better"
+            },
+            "field": {
+                "identifier": "Email or Phone",
+                "email": "Email",
+                "phone": "Phone",
+                "password": "Password",
+                "confirm_password": "Confirm Password",
+                "new_password": "New password"
+            },
+            "placeholder": {
+                "identifier": "Enter your email or phone number",
+                "email": "Enter your email",
+                "phone": "Enter your phone number",
+                "password": "Enter your password",
+                "confirm_password": "Enter your password again",
+                "new_password": "Enter your new password"
+            },
+            "hint": {
+                "password_min": "At least 8 characters"
+            },
+            "error": {
+                "email_required": "Email is required",
+                "phone_required": "Phone is required",
+                "password_required": "Password is required",
+                "password_min_length": "Password must be at least 8 characters",
+                "password_match": "Passwords do not match",
+                "identifier_required": "Email or Phone is required",
+                "fullname_required": "Full name is required"
+            },
+            "link": {
+                "register": "Create account",
+                "forgot": "Forgot password?"
+            },
+            "google": {
+                "signin_with": "Sign in with Google",
+                "continue_with": "Continue with Google",
+                "locale": "en"
+            }
+        }
 }
