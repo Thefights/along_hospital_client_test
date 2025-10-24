@@ -21,6 +21,25 @@ export const defaultMedicalHistoryStatusStyle = (status) => {
 	return map[status] || 'primary'
 }
 
+export const defaultComplaintTypeStyle = (type) => {
+	const map = {
+		[EnumConfig.ComplaintType.Neutral]: 'info',
+		[EnumConfig.ComplaintType.Positive]: 'success',
+		[EnumConfig.ComplaintType.Negative]: 'error',
+	}
+	return map[type] || 'primary'
+}
+
+export const defaultComplaintResolveStatusStyle = (status) => {
+	const map = {
+		[EnumConfig.ComplaintResolveStatus.Pending]: 'warning',
+		[EnumConfig.ComplaintResolveStatus.Draft]: 'info',
+		[EnumConfig.ComplaintResolveStatus.Resolved]: 'success',
+		[EnumConfig.ComplaintResolveStatus.Closed]: 'error',
+	}
+	return map[status] || 'primary'
+}
+
 export const defaultLineClampStyle = (lines = 2) => ({
 	overflow: 'hidden',
 	textOverflow: 'ellipsis',

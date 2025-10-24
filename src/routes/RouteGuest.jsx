@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import useAuth from '@/hooks/useAuth'
 import LayoutGuest from '@/layouts/LayoutGuest'
 import LayoutPatient from '@/layouts/LayoutPatient'

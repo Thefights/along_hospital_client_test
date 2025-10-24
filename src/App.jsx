@@ -19,7 +19,7 @@ import RoutePatient from './routes/RoutePatient'
 import { getEnv } from './utils/commons'
 
 function App() {
-	const [theme] = useLocalStorage('theme', 'light')
+	const [theme, _] = useLocalStorage('theme', 'light')
 
 	return (
 		<ThemeProvider theme={theme === 'light' ? hospitalLightTheme : hospitalDarkTheme}>

@@ -63,6 +63,11 @@ export const EnumConfig = {
 		Medicine: 'Medicine',
 		Others: 'Others',
 	},
+	ComplaintType: {
+		Neutral: 'Neutral',
+		Positive: 'Positive',
+		Negative: 'Negative',
+	},
 	ComplaintResolveStatus: {
 		Pending: 'Pending',
 		Draft: 'Draft',

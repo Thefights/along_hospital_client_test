@@ -13,13 +13,13 @@ const CreateComplaintDialog = ({
 	const fields = [
 		{
 			key: 'complaintTopic',
-			title: t('medical_history.field.complaint.topic'),
+			title: t('complaint.field.topic'),
 			type: 'select',
 			options: complaintTopicOptions,
 		},
 		{
 			key: 'content',
-			title: t('medical_history.field.complaint.content'),
+			title: t('complaint.field.content'),
 			type: 'textArea',
 			multiple: 3,
 		},

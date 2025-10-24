@@ -70,6 +70,20 @@ export default function useEnum() {
 			{ value: EnumConfig.ComplaintTopic.Medicine, label: t('enum.complaint_topic.medicine') },
 			{ value: EnumConfig.ComplaintTopic.Others, label: t('enum.complaint_topic.others') },
 		],
+		complaintTypeOptions: [
+			{
+				value: EnumConfig.ComplaintType.Neutral,
+				label: t('enum.complaint_type.neutral'),
+			},
+			{
+				value: EnumConfig.ComplaintType.Positive,
+				label: t('enum.complaint_type.positive'),
+			},
+			{
+				value: EnumConfig.ComplaintType.Negative,
+				label: t('enum.complaint_type.negative'),
+			},
+		],
 		complaintResolveStatusOptions: [
 			{
 				value: EnumConfig.ComplaintResolveStatus.Pending,
