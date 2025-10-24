@@ -1,456 +1,455 @@
 {
-    "button": {
-        "close": "Close",
-        "submit": "Submit",
-        "submitting": "Submitting",
-        "cancel": "Cancel",
-        "back": "Back",
-        "add": "Add",
-        "create": "Create",
-        "update": "Update",
-        "complete": "Complete",
-        "confirm": "Confirm",
-        "delete": "Delete",
-        "save": "Save",
-        "add_row": "Add Row",
-        "login": "Login",
-        "filter": "Filter",
-        "next": "Next",
-        "resend_in": "Resend in",
-        "toggle_language": "Toggle language",
-        "toggle_theme": "Toggle theme"
-    },
-    "text": {
-        "all": "All",
-        "search": "Search...",
-        "loading": "Loading...",
-        "filter": "Filter",
-        "image_preview": "Image Preview",
-        "select_options": "Select options",
-        "date": "Date",
-        "time": "Time",
-        "rows_per_page": "Rows per page",
-        "role": {
-            "manager": "Manager",
-            "doctor": "Doctor",
-            "patient": "Patient",
-            "guest": "Guest"
-        },
-        "placeholder": {
-            "no_data": "No data available...",
-            "no_data_subtitle": "There is nothing to display here"
-        }
-    },
-    "tooltip": {
-        "menu": "Menu",
-        "edit": "Edit",
-        "delete": "Delete",
-        "cart": "Cart",
-        "create_appointment": "Create Appointment",
-        "switch_dark": "Switch to dark mode",
-        "switch_light": "Switch to light mode",
-        "collapse": "Collapse",
-        "expand": "Expand"
-    },
-    "dialog": {
-        "doctor_picker": {
-            "title": "Select Doctor",
-            "confirm_button": "Select"
-        },
-        "patient_info": {
-            "basic_info": "Basic Info",
-            "health_info": "Health Info",
-            "allergies": "Allergies",
-            "allergy_table": {
-                "name": "Name",
-                "severity": "Severity Level",
-                "reaction": "Reaction",
-                "add_allergy": "Add Allergy"
-            }
-        },
-        "doctor_info": {
-            "basic_info": "Basic Info",
-            "professional_info": "Professional Info"
-        }
-    },
-    "enum": {
-        "gender": {
-            "male": "Male",
-            "female": "Female",
-            "other": "Other"
-        },
-        "appointment_status": {
-            "scheduled": "Scheduled",
-            "confirmed": "Confirmed",
-            "completed": "Completed",
-            "cancelled": "Cancelled",
-            "refused": "Refused"
-        },
-        "appointment_type": {
-            "consultation": "Consultation",
-            "follow_up": "Follow-up",
-            "routine_checkup": "Routine Check-up",
-            "emergency": "Emergency"
-        },
-        "appointment_meeting_type": {
-            "in_person": "In-person",
-            "telehealth": "Telehealth"
-        },
-        "severity_level": {
-            "mild": "Mild",
-            "moderate": "Moderate",
-            "severe": "Severe"
-        },
-        "medical_history_status": {
-            "draft": "Draft",
-            "processed": "Processed",
-            "paid": "Paid"
-        },
-        "complaint_topic": {
-            "service": "Service",
-            "billing": "Billing",
-            "doctor": "Doctor",
-            "medicine": "Medicine",
-            "others": "Others"
-        },
-        "complaint_resolve_status": {
-            "pending": "Pending",
-            "draft": "Draft",
-            "resolved": "Resolved",
-            "closed": "Closed"
-        }
-    },
-    "error": {
-        "required": "This field is required",
-        "invalid_email": "Please enter a valid email",
-        "invalid_phone": "Please enter a valid phone number",
-        "invalid_date": "Please enter a valid date",
-        "invalid_time": "Please enter a valid time",
-        "invalid_number": "Please enter a valid number",
-        "weak_password": "Password must contain at least 8 characters, including uppercase, lowercase, number, and special character",
-        "min_length": "Must be at least {min} characters, currently {current}",
-        "max_length": "Can't exceed {max} characters, currently {current}/{max}",
-        "min_number": "Minimum number is {min}",
-        "max_number": "Maximum number is {max}",
-        "fill_all_required": "Please fill all required fields"
-    },
-    "profile": {
-        "title": {
-            "personal_information": "Personal Information"
-        },
-        "field": {
-            "full_name": "Full Name",
-            "email": "Email",
-            "phone": "Phone",
-            "address": "Address",
-            "city": "City",
-            "country": "Country",
-            "date_of_birth": "Date of Birth",
-            "gender": "Gender",
-            "height": "Height",
-            "weight": "Weight",
-            "height_weight": "Height/Weight",
-            "blood_type": "Blood Type",
-            "allergy": {
-                "allergy": "Allergy",
-                "name": "Name",
-                "severity": "Severity",
-                "reaction": "Reaction"
-            },
-            "hire_date": "Hire Date",
-            "department": "Department",
-            "qualification": "Qualification",
-            "specialty": "Specialty"
-        }
-    },
-    "medicine": {
-        "field": {
-            "name": "Medicine Name",
-            "brand": "Brand",
-            "images": "Images",
-            "unit": "Unit",
-            "medicine_category": {
-                "name": "Medicine Category",
-                "description": "Description"
-            }
-        }
-    },
-    "appointment": {
-        "title": {
-            "patient_info": "Patient Info",
-            "appointment_info": "Appointment Info",
-            "doctor_info": "Doctor Info",
-            "create_appointment": "Create Appointment",
-            "appointment_history": "Appointment History",
-            "appointment_management": "Appointment Management",
-            "appointment_detail": "Appointment Detail",
-            "filters": "Filters",
-            "timelines": "Timelines",
-            "upcoming": "Upcoming",
-            "completed": "Completed"
-        },
-        "button": {
-            "cancel_appointment": "Cancel Appointment",
-            "deny_assignment": "Deny Assignment",
-            "accept_assignment": "Accept Assignment",
-            "complete_appointment": "Complete Appointment",
-            "assign_doctor": "Assign Doctor",
-            "refuse_appointment": "Refuse Appointment"
-        },
-        "field": {
-            "purpose": "Purpose",
-            "specialty": "Specialty",
-            "status": "Status",
-            "type": "Type",
-            "meeting_type": "Meeting Type",
-            "start_date": "Start Date",
-            "end_date": "End Date",
-            "doctor": "Doctor",
-            "search_doctor": "Search by Doctor name...",
-            "search_patient": "Search by Patient name...",
-            "cancel_reason": "Cancel Reason",
-            "refuse_reason": "Refuse Reason"
-        },
-        "dialog": {
-            "confirm_create_title": "Create appointment?",
-            "confirm_create_description": "Are you sure to create this appointment?",
-            "confirm_cancel_title": "Cancel appointment?",
-            "confirm_cancel_description": "Please provide a reason for cancellation:",
-            "confirm_deny_title": "Deny assignment?",
-            "confirm_deny_description": "Are your sure to deny this assignment? This action cannot be undone",
-            "confirm_accept_title": "Accept assignment?",
-            "confirm_accept_description": "Are your sure to accept this assignment?",
-            "confirm_complete_title": "Complete appointment?",
-            "confirm_complete_description": "Are you sure to mark this appointment as completed?",
-            "confirm_refuse_title": "Refuse assignment?",
-            "confirm_refuse_description": "Please provide a reason for refusal:"
-        }
-    },
-    "medical_history": {
-        "title": {
-            "medical_history_information": "Medical History Information",
-            "service_details": "Service Details",
-            "prescription": "Prescription",
-            "complaint": "Complaint"
-        },
-        "placeholder": {
-            "no_service": "No medical services recorded",
-            "no_prescription": "No prescriptions recorded",
-            "no_complaint": "No complaints recorded"
-        },
-        "field": {
-            "id": "Medical History ID",
-            "status": "Medical History Status",
-            "diagnosis": "Diagnosis",
-            "completed_date": "Completed Date",
-            "follow_up_appointment_date": "Follow-up Appointment Date",
-            "medical_history_detail": {
-                "medical_service": "Medical Service",
-                "service_name": "Service Name",
-                "description": "Description",
-                "quantity": "Quantity",
-                "unit_price": "Unit Price",
-                "total_price": "Total Price",
-                "grand_total": "Grand Total"
-            },
-            "prescription": {
-                "doctor_note": "Doctor's Note",
-                "medication_days": "Medication Days",
-                "prescription_details": "Prescription Details",
-                "prescription_detail": {
-                    "medicine": "Medicine",
-                    "dosage": "Dosage (per time)",
-                    "frequency_per_day": "Frequency (per day)"
-                }
-            },
-            "complaint": {
-                "topic": "Complaint Topic",
-                "content": "Content",
-                "resolve_status": "Complaint Resolve Status",
-                "response": "Response",
-                "type": "Complaint Type"
-            }
-        },
-        "button": {
-            "add_service": "Add Service",
-            "create_prescription": "Create Prescription",
-            "update_prescription": "Update Prescription",
-            "print_prescription": "Print Prescription",
-            "create_complaint": "Create Complaint",
-            "respond_complaint": "Respond to Complaint",
-            "save_as_draft": "Save as Draft",
-            "close_complaint": "Close Complaint",
-            "update_medical_history": "Update Medical History",
-            "complete_medical_history": "Complete Medical History",
-            "payment": "Payment",
-            "print_invoice": "Print Invoice"
-        },
-        "dialog": {
-            "title": {
-                "update_medical_history": "Update Medical History",
-                "add_medical_service": "Add Medical Service",
-                "create_prescription": "Create Prescription",
-                "upsert_prescription": "Upsert Prescription",
-                "create_complaint": "Create Complaint",
-                "respond_complaint": "Respond to Complaint"
-            },
-            "confirm": {
-                "delete_service_title": "Delete medical service?",
-                "delete_service_description": "Are you sure you want to delete this medical service from the medical history? This action cannot be undone",
-                "complete_medical_history_title": "Complete medical history?",
-                "complete_medical_history_description": "Are you sure you want to mark this medical history as completed?"
-            }
-        }
-    },
-    "header": {
-        "home": "Home",
-        "medicine": "Medicine",
-        "service": "Service",
-        "medical_service": "Medical Service",
-        "doctor": "Doctor",
-        "specialty": "Specialty",
-        "blog": "Blog",
-        "about_us": "About Us",
-        "user_menu": {
-            "profile": "Profile",
-            "appointments": "Appointments",
-            "medical_history": "Medical History",
-            "order_history": "Order History",
-            "change_password": "Change Password",
-            "setting": "Setting",
-            "logout": "Logout"
-        }
-    },
-    "footer": {
-        "__________comment1": "For footer section links",
-        "medical": "Medical",
-        "resources": "Resources",
-        "support": "Support",
-        "about": "About",
-        "__________comment2": "For footer section titles",
-        "medical_service": "Medical Service",
-        "doctor": "Doctor",
-        "specialty": "Specialty",
-        "blog": "Blog",
-        "medicine": "Medicine",
-        "contact_us": "Contact Us",
-        "faq": "FAQ",
-        "privacy_policy": "Privacy Policy",
-        "terms_of_service": "Terms of Service",
-        "our_hospital": "Our Hospital",
-        "career": "Career"
-    },
-    "done_care_about_this": {
-        "delete_selected": "Delete {number} selected",
-        "delete_title": "Delete selected users?",
-        "delete_description": "Are you sure you want to delete {number} selected item(s)? This action cannot be undone."
-    }
-        ,
-        "auth": {
-            "hero": {
-                "subtitle": "Connecting patients and doctors through secure, convenient telemedicine",
-                "tagline": "Your healthcare, anywhere"
-            },
-            "or": "Or continue with",
-            "seconds": "seconds",
-            "back_to_login": "Back to login",
-            "login": {
-                "title": "Login",
-                "welcome": "Welcome back",
-                "subtitle": "Sign in to your account",
-                "submit": "Login",
-                "unverified": "Your account isn't verified yet.",
-                "resend_link": "Resend verification link",
-                "forgot_password": "Forgot password?",
-                "no_account": "Don't have an account?",
-                "register": "Register"
-            },
-            "register": {
-                "title": "Register",
-                "subtitle": "Get started with your free account",
-                "submit": "Register",
-                "verify_sent": "Verification link sent via SMS to",
-                "check_sms": "Check your SMS",
-                "verify_subtitle": "We sent a verification link to your phone",
-                "resend_link": "Resend verification link",
-                "resend_in": "Resend in",
-                "back_to_login": "Back to login",
-                "already_have_account": "Already have an account?",
-                "login": "Login"
-            },
-            "verify_link": {
-                "title": "Verify account",
-                "description": "Processing your verification link...",
-                "processing": "Processing your verification link...",
-                "success": "Verification successful!",
-                "redirecting": "Redirecting...",
-                "failed": "Verification failed",
-                "invalid": "The verification link is invalid or has expired.",
-                "request_new": "Request new verification link"
-            },
-            "resend": {
-                "title": "Check your SMS",
-                "subtitle": "We sent a verification link to your phone",
-                "link_sent": "Verification link sent to",
-                "resend_in": "Resend in",
-                "button": "Resend verification link",
-                "edit_phone": "Edit phone number",
-                "already_have_account": "Already have an account?"
-            },
-            "forgot": {
-                "title": "Forgot password",
-                "subtitle": "Enter your email or phone to reset password",
-                "link_sent": "Reset link sent!",
-                "check_sms": "If the account exists, a reset link has been sent via SMS.",
-                "remember_password": "Remember your password?"
-            },
-            "reset": {
-                "title": "Reset password",
-                "subtitle": "Enter your new password below",
-                "success": "Password reset successfully!",
-                "redirecting": "Redirecting to login...",
-                "no_account": "Don't have an account?"
-            },
-            "complete": {
-                "title": "Complete your profile",
-                "subtitle": "Help us get to know you better"
-            },
-            "field": {
-                "identifier": "Email or Phone",
-                "email": "Email",
-                "phone": "Phone",
-                "password": "Password",
-                "confirm_password": "Confirm Password",
-                "new_password": "New password"
-            },
-            "placeholder": {
-                "identifier": "Enter your email or phone number",
-                "email": "Enter your email",
-                "phone": "Enter your phone number",
-                "password": "Enter your password",
-                "confirm_password": "Enter your password again",
-                "new_password": "Enter your new password"
-            },
-            "hint": {
-                "password_min": "At least 8 characters"
-            },
-            "error": {
-                "email_required": "Email is required",
-                "phone_required": "Phone is required",
-                "password_required": "Password is required",
-                "password_min_length": "Password must be at least 8 characters",
-                "password_match": "Passwords do not match",
-                "identifier_required": "Email or Phone is required",
-                "fullname_required": "Full name is required"
-            },
-            "link": {
-                "register": "Create account",
-                "forgot": "Forgot password?"
-            },
-            "google": {
-                "signin_with": "Sign in with Google",
-                "continue_with": "Continue with Google",
-                "locale": "en"
-            }
-        }
+	"button": {
+		"close": "Close",
+		"submit": "Submit",
+		"submitting": "Submitting",
+		"cancel": "Cancel",
+		"back": "Back",
+		"add": "Add",
+		"create": "Create",
+		"update": "Update",
+		"complete": "Complete",
+		"confirm": "Confirm",
+		"delete": "Delete",
+		"save": "Save",
+		"add_row": "Add Row",
+		"login": "Login",
+		"filter": "Filter",
+		"next": "Next",
+		"resend_in": "Resend in",
+		"toggle_language": "Toggle language",
+		"toggle_theme": "Toggle theme"
+	},
+	"text": {
+		"all": "All",
+		"search": "Search...",
+		"loading": "Loading...",
+		"filter": "Filter",
+		"image_preview": "Image Preview",
+		"select_options": "Select options",
+		"date": "Date",
+		"time": "Time",
+		"rows_per_page": "Rows per page",
+		"role": {
+			"manager": "Manager",
+			"doctor": "Doctor",
+			"patient": "Patient",
+			"guest": "Guest"
+		},
+		"placeholder": {
+			"no_data": "No data available...",
+			"no_data_subtitle": "There is nothing to display here"
+		}
+	},
+	"tooltip": {
+		"menu": "Menu",
+		"edit": "Edit",
+		"delete": "Delete",
+		"cart": "Cart",
+		"create_appointment": "Create Appointment",
+		"switch_dark": "Switch to dark mode",
+		"switch_light": "Switch to light mode",
+		"collapse": "Collapse",
+		"expand": "Expand"
+	},
+	"dialog": {
+		"doctor_picker": {
+			"title": "Select Doctor",
+			"confirm_button": "Select"
+		},
+		"patient_info": {
+			"basic_info": "Basic Info",
+			"health_info": "Health Info",
+			"allergies": "Allergies",
+			"allergy_table": {
+				"name": "Name",
+				"severity": "Severity Level",
+				"reaction": "Reaction",
+				"add_allergy": "Add Allergy"
+			}
+		},
+		"doctor_info": {
+			"basic_info": "Basic Info",
+			"professional_info": "Professional Info"
+		}
+	},
+	"enum": {
+		"gender": {
+			"male": "Male",
+			"female": "Female",
+			"other": "Other"
+		},
+		"appointment_status": {
+			"scheduled": "Scheduled",
+			"confirmed": "Confirmed",
+			"completed": "Completed",
+			"cancelled": "Cancelled",
+			"refused": "Refused"
+		},
+		"appointment_type": {
+			"consultation": "Consultation",
+			"follow_up": "Follow-up",
+			"routine_checkup": "Routine Check-up",
+			"emergency": "Emergency"
+		},
+		"appointment_meeting_type": {
+			"in_person": "In-person",
+			"telehealth": "Telehealth"
+		},
+		"severity_level": {
+			"mild": "Mild",
+			"moderate": "Moderate",
+			"severe": "Severe"
+		},
+		"medical_history_status": {
+			"draft": "Draft",
+			"processed": "Processed",
+			"paid": "Paid"
+		},
+		"complaint_topic": {
+			"service": "Service",
+			"billing": "Billing",
+			"doctor": "Doctor",
+			"medicine": "Medicine",
+			"others": "Others"
+		},
+		"complaint_resolve_status": {
+			"pending": "Pending",
+			"draft": "Draft",
+			"resolved": "Resolved",
+			"closed": "Closed"
+		}
+	},
+	"error": {
+		"required": "This field is required",
+		"invalid_email": "Please enter a valid email",
+		"invalid_phone": "Please enter a valid phone number",
+		"invalid_date": "Please enter a valid date",
+		"invalid_time": "Please enter a valid time",
+		"invalid_number": "Please enter a valid number",
+		"weak_password": "Password must contain at least 8 characters, including uppercase, lowercase, number, and special character",
+		"min_length": "Must be at least {min} characters, currently {current}",
+		"max_length": "Can't exceed {max} characters, currently {current}/{max}",
+		"min_number": "Minimum number is {min}",
+		"max_number": "Maximum number is {max}",
+		"fill_all_required": "Please fill all required fields"
+	},
+	"profile": {
+		"title": {
+			"personal_information": "Personal Information"
+		},
+		"field": {
+			"full_name": "Full Name",
+			"email": "Email",
+			"phone": "Phone",
+			"address": "Address",
+			"city": "City",
+			"country": "Country",
+			"date_of_birth": "Date of Birth",
+			"gender": "Gender",
+			"height": "Height",
+			"weight": "Weight",
+			"height_weight": "Height/Weight",
+			"blood_type": "Blood Type",
+			"allergy": {
+				"allergy": "Allergy",
+				"name": "Name",
+				"severity": "Severity",
+				"reaction": "Reaction"
+			},
+			"hire_date": "Hire Date",
+			"department": "Department",
+			"qualification": "Qualification",
+			"specialty": "Specialty"
+		}
+	},
+	"medicine": {
+		"field": {
+			"name": "Medicine Name",
+			"brand": "Brand",
+			"images": "Images",
+			"unit": "Unit",
+			"medicine_category": {
+				"name": "Medicine Category",
+				"description": "Description"
+			}
+		}
+	},
+	"appointment": {
+		"title": {
+			"patient_info": "Patient Info",
+			"appointment_info": "Appointment Info",
+			"doctor_info": "Doctor Info",
+			"create_appointment": "Create Appointment",
+			"appointment_history": "Appointment History",
+			"appointment_management": "Appointment Management",
+			"appointment_detail": "Appointment Detail",
+			"filters": "Filters",
+			"timelines": "Timelines",
+			"upcoming": "Upcoming",
+			"completed": "Completed"
+		},
+		"button": {
+			"cancel_appointment": "Cancel Appointment",
+			"deny_assignment": "Deny Assignment",
+			"accept_assignment": "Accept Assignment",
+			"complete_appointment": "Complete Appointment",
+			"assign_doctor": "Assign Doctor",
+			"refuse_appointment": "Refuse Appointment"
+		},
+		"field": {
+			"purpose": "Purpose",
+			"specialty": "Specialty",
+			"status": "Status",
+			"type": "Type",
+			"meeting_type": "Meeting Type",
+			"start_date": "Start Date",
+			"end_date": "End Date",
+			"doctor": "Doctor",
+			"search_doctor": "Search by Doctor name...",
+			"search_patient": "Search by Patient name...",
+			"cancel_reason": "Cancel Reason",
+			"refuse_reason": "Refuse Reason"
+		},
+		"dialog": {
+			"confirm_create_title": "Create appointment?",
+			"confirm_create_description": "Are you sure to create this appointment?",
+			"confirm_cancel_title": "Cancel appointment?",
+			"confirm_cancel_description": "Please provide a reason for cancellation:",
+			"confirm_deny_title": "Deny assignment?",
+			"confirm_deny_description": "Are your sure to deny this assignment? This action cannot be undone",
+			"confirm_accept_title": "Accept assignment?",
+			"confirm_accept_description": "Are your sure to accept this assignment?",
+			"confirm_complete_title": "Complete appointment?",
+			"confirm_complete_description": "Are you sure to mark this appointment as completed?",
+			"confirm_refuse_title": "Refuse assignment?",
+			"confirm_refuse_description": "Please provide a reason for refusal:"
+		}
+	},
+	"medical_history": {
+		"title": {
+			"medical_history_information": "Medical History Information",
+			"service_details": "Service Details",
+			"prescription": "Prescription",
+			"complaint": "Complaint"
+		},
+		"placeholder": {
+			"no_service": "No medical services recorded",
+			"no_prescription": "No prescriptions recorded",
+			"no_complaint": "No complaints recorded"
+		},
+		"field": {
+			"id": "Medical History ID",
+			"status": "Medical History Status",
+			"diagnosis": "Diagnosis",
+			"completed_date": "Completed Date",
+			"follow_up_appointment_date": "Follow-up Appointment Date",
+			"medical_history_detail": {
+				"medical_service": "Medical Service",
+				"service_name": "Service Name",
+				"description": "Description",
+				"quantity": "Quantity",
+				"unit_price": "Unit Price",
+				"total_price": "Total Price",
+				"grand_total": "Grand Total"
+			},
+			"prescription": {
+				"doctor_note": "Doctor's Note",
+				"medication_days": "Medication Days",
+				"prescription_details": "Prescription Details",
+				"prescription_detail": {
+					"medicine": "Medicine",
+					"dosage": "Dosage (per time)",
+					"frequency_per_day": "Frequency (per day)"
+				}
+			},
+			"complaint": {
+				"topic": "Complaint Topic",
+				"content": "Content",
+				"resolve_status": "Complaint Resolve Status",
+				"response": "Response",
+				"type": "Complaint Type"
+			}
+		},
+		"button": {
+			"add_service": "Add Service",
+			"create_prescription": "Create Prescription",
+			"update_prescription": "Update Prescription",
+			"print_prescription": "Print Prescription",
+			"create_complaint": "Create Complaint",
+			"respond_complaint": "Respond to Complaint",
+			"save_as_draft": "Save as Draft",
+			"close_complaint": "Close Complaint",
+			"update_medical_history": "Update Medical History",
+			"complete_medical_history": "Complete Medical History",
+			"payment": "Payment",
+			"print_invoice": "Print Invoice"
+		},
+		"dialog": {
+			"title": {
+				"update_medical_history": "Update Medical History",
+				"add_medical_service": "Add Medical Service",
+				"create_prescription": "Create Prescription",
+				"upsert_prescription": "Upsert Prescription",
+				"create_complaint": "Create Complaint",
+				"respond_complaint": "Respond to Complaint"
+			},
+			"confirm": {
+				"delete_service_title": "Delete medical service?",
+				"delete_service_description": "Are you sure you want to delete this medical service from the medical history? This action cannot be undone",
+				"complete_medical_history_title": "Complete medical history?",
+				"complete_medical_history_description": "Are you sure you want to mark this medical history as completed?"
+			}
+		}
+	},
+	"header": {
+		"home": "Home",
+		"medicine": "Medicine",
+		"service": "Service",
+		"medical_service": "Medical Service",
+		"doctor": "Doctor",
+		"specialty": "Specialty",
+		"blog": "Blog",
+		"about_us": "About Us",
+		"user_menu": {
+			"profile": "Profile",
+			"appointments": "Appointments",
+			"medical_history": "Medical History",
+			"order_history": "Order History",
+			"change_password": "Change Password",
+			"setting": "Setting",
+			"logout": "Logout"
+		}
+	},
+	"footer": {
+		"__________comment1": "For footer section links",
+		"medical": "Medical",
+		"resources": "Resources",
+		"support": "Support",
+		"about": "About",
+		"__________comment2": "For footer section titles",
+		"medical_service": "Medical Service",
+		"doctor": "Doctor",
+		"specialty": "Specialty",
+		"blog": "Blog",
+		"medicine": "Medicine",
+		"contact_us": "Contact Us",
+		"faq": "FAQ",
+		"privacy_policy": "Privacy Policy",
+		"terms_of_service": "Terms of Service",
+		"our_hospital": "Our Hospital",
+		"career": "Career"
+	},
+	"done_care_about_this": {
+		"delete_selected": "Delete {number} selected",
+		"delete_title": "Delete selected users?",
+		"delete_description": "Are you sure you want to delete {number} selected item(s)? This action cannot be undone."
+	},
+	"auth": {
+		"hero": {
+			"subtitle": "Connecting patients and doctors through secure, convenient telemedicine",
+			"tagline": "Your healthcare, anywhere"
+		},
+		"or": "Or continue with",
+		"seconds": "seconds",
+		"back_to_login": "Back to login",
+		"login": {
+			"title": "Login",
+			"welcome": "Welcome back",
+			"subtitle": "Sign in to your account",
+			"submit": "Login",
+			"unverified": "Your account isn't verified yet.",
+			"resend_link": "Resend verification link",
+			"forgot_password": "Forgot password?",
+			"no_account": "Don't have an account?",
+			"register": "Register"
+		},
+		"register": {
+			"title": "Register",
+			"subtitle": "Get started with your free account",
+			"submit": "Register",
+			"verify_sent": "Verification link sent via SMS to",
+			"check_sms": "Check your SMS",
+			"verify_subtitle": "We sent a verification link to your phone",
+			"resend_link": "Resend verification link",
+			"resend_in": "Resend in",
+			"back_to_login": "Back to login",
+			"already_have_account": "Already have an account?",
+			"login": "Login"
+		},
+		"verify_link": {
+			"title": "Verify account",
+			"description": "Processing your verification link...",
+			"processing": "Processing your verification link...",
+			"success": "Verification successful!",
+			"redirecting": "Redirecting...",
+			"failed": "Verification failed",
+			"invalid": "The verification link is invalid or has expired.",
+			"request_new": "Request new verification link"
+		},
+		"resend": {
+			"title": "Check your SMS",
+			"subtitle": "We sent a verification link to your phone",
+			"link_sent": "Verification link sent to",
+			"resend_in": "Resend in",
+			"button": "Resend verification link",
+			"edit_phone": "Edit phone number",
+			"already_have_account": "Already have an account?"
+		},
+		"forgot": {
+			"title": "Forgot password",
+			"subtitle": "Enter your email or phone to reset password",
+			"link_sent": "Reset link sent!",
+			"check_sms": "If the account exists, a reset link has been sent via SMS.",
+			"remember_password": "Remember your password?"
+		},
+		"reset": {
+			"title": "Reset password",
+			"subtitle": "Enter your new password below",
+			"success": "Password reset successfully!",
+			"redirecting": "Redirecting to login...",
+			"no_account": "Don't have an account?"
+		},
+		"complete": {
+			"title": "Complete your profile",
+			"subtitle": "Help us get to know you better"
+		},
+		"field": {
+			"identifier": "Email or Phone",
+			"email": "Email",
+			"phone": "Phone",
+			"password": "Password",
+			"confirm_password": "Confirm Password",
+			"new_password": "New password"
+		},
+		"placeholder": {
+			"identifier": "Enter your email or phone number",
+			"email": "Enter your email",
+			"phone": "Enter your phone number",
+			"password": "Enter your password",
+			"confirm_password": "Enter your password again",
+			"new_password": "Enter your new password"
+		},
+		"hint": {
+			"password_min": "At least 8 characters"
+		},
+		"error": {
+			"email_required": "Email is required",
+			"phone_required": "Phone is required",
+			"password_required": "Password is required",
+			"password_min_length": "Password must be at least 8 characters",
+			"password_match": "Passwords do not match",
+			"identifier_required": "Email or Phone is required",
+			"fullname_required": "Full name is required"
+		},
+		"link": {
+			"register": "Create account",
+			"forgot": "Forgot password?"
+		},
+		"google": {
+			"signin_with": "Sign in with Google",
+			"continue_with": "Continue with Google",
+			"locale": "en"
+		}
+	}
 }

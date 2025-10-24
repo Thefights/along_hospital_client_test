@@ -69,7 +69,6 @@ const LoginPage = () => {
 		method: 'POST',
 		onSuccess: async (resp) => {
 			const { accessToken, stage } = resp.data
-			console.log(accessToken, stage)
 			if (!accessToken) return
 
 			await login(accessToken)

@@ -11,8 +11,6 @@ const ProtectedRoute = ({
 	const { auth, hasRole } = useAuth()
 	const location = useLocation()
 
-	console.log('ProtectedRoute auth:', auth)
-
 	const completeProfilePath = routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.COMPLETE_PROFILE)
 
 	if (allowRoles.length === 0) return <Outlet />
