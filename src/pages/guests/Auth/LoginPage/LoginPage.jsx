@@ -36,10 +36,9 @@ const LoginPage = () => {
 		method: 'POST',
 		onSuccess: async (resp) => {
 			const { accessToken, stage } = resp.data
-
 			if (!accessToken) return
-
 			await login(accessToken)
+
 			if (stage !== EnumConfig.AuthStage.Done) {
 				navigate(`${routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.COMPLETE_PROFILE)}`, { replace: true })
 			} else {
@@ -181,8 +180,6 @@ const LoginPage = () => {
 						if (!idToken) return
 						submit({ idToken }, { overrideUrl: ApiUrls.AUTH.LOGIN_GOOGLE })
 					}}
-					useOneTap
-					onError={() => {}}
 					text='signin_with'
 					shape='rectangular'
 					size='large'

@@ -2,6 +2,7 @@ import ValidationTextField from '@/components/textFields/ValidationTextField'
 import { ApiUrls } from '@/configs/apiUrls'
 import { routeUrls } from '@/configs/routeUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
+import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
 import { Alert, Box, Button, CircularProgress, Link, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
@@ -10,20 +11,15 @@ import { Link as RouterLink } from 'react-router-dom'
 const ForgotPasswordPage = () => {
 	const { t } = useTranslation()
 	const [submitted, setSubmitted] = useState(false)
-	const [identifier, setIdentifier] = useState('')
+	const { values, handleChange } = useForm({
+		Identifier: '',
+	})
 
 	const { loading, submit } = useAxiosSubmit({
 		url: ApiUrls.AUTH.FORGOT_PASSWORD,
 		method: 'POST',
 		onSuccess: async () => setSubmitted(true),
 	})
-
-	const onSubmit = async (e) => {
-		e.preventDefault()
-
-		const fd = new FormData(e.currentTarget)
-		await submit(fd)
-	}
 
 	return (
 		<>
@@ -100,14 +96,20 @@ const ForgotPasswordPage = () => {
 					</Link>
 				</Stack>
 			) : (
-				<Box component='form' onSubmit={onSubmit}>
+				<Box
+					component='form'
+					onSubmit={(e) => {
+						e.preventDefault()
+						submit(values, {})
+					}}
+				>
 					<Stack spacing={{ xs: 2, sm: 2.5 }}>
 						<ValidationTextField
 							name='Identifier'
 							label={t('auth.field.identifier')}
 							placeholder={t('auth.placeholder.identifier')}
-							value={identifier}
-							onChange={(e) => setIdentifier(e.target.value)}
+							value={values.Identifier}
+							onChange={handleChange}
 						/>
 
 						<Button

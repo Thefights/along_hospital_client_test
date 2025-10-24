@@ -2,6 +2,7 @@ import PasswordTextField from '@/components/textFields/PasswordTextField'
 import { ApiUrls } from '@/configs/apiUrls'
 import { routeUrls } from '@/configs/routeUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
+import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
 import { Box, Button, CircularProgress, Link, Stack, Typography } from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
@@ -12,9 +13,9 @@ const ResetPasswordPage = () => {
 	const navigate = useNavigate()
 	const [params] = useSearchParams()
 	const token = useMemo(() => params.get('token') || '', [params])
-	const [formData, setFormData] = useState({
-		newPassword: '',
-		confirmPassword: '',
+	const { values, handleChange } = useForm({
+		NewPassword: '',
+		ConfirmPassword: '',
 	})
 	const [success, setSuccess] = useState(false)
 
@@ -35,13 +36,6 @@ const ResetPasswordPage = () => {
 			}, 2000)
 		},
 	})
-
-	const onSubmit = async (e) => {
-		e.preventDefault()
-
-		const fd = new FormData(e.currentTarget)
-		await submit(fd)
-	}
 
 	if (success) {
 		return (
@@ -100,21 +94,27 @@ const ResetPasswordPage = () => {
 				</Typography>
 			</Box>
 
-			<Box component='form' onSubmit={onSubmit}>
+			<Box
+				component='form'
+				onSubmit={(e) => {
+					e.preventDefault()
+					submit(values, {})
+				}}
+			>
 				<Stack spacing={{ xs: 2, sm: 2.5 }}>
 					<PasswordTextField
 						name='NewPassword'
 						label={t('auth.field.new_password')}
 						placeholder={t('auth.placeholder.new_password')}
-						value={formData.newPassword}
-						onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}
+						value={values.NewPassword}
+						onChange={handleChange}
 					/>
 					<PasswordTextField
 						name='ConfirmPassword'
 						label={t('auth.field.confirm_password')}
 						placeholder={t('auth.placeholder.confirm_password')}
-						value={formData.confirmPassword}
-						onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+						value={values.ConfirmPassword}
+						onChange={handleChange}
 					/>
 
 					<Button

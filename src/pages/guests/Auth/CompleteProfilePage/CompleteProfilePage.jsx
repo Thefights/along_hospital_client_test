@@ -1,12 +1,14 @@
-import ValidationTextField from '@/components/textFields/ValidationTextField'
 import { ApiUrls } from '@/configs/apiUrls'
 import { EnumConfig } from '@/configs/enumConfig'
 import { routeUrls } from '@/configs/routeUrls'
 import useAuth from '@/hooks/useAuth'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useEnum from '@/hooks/useEnum'
+import useFieldRenderer from '@/hooks/useFieldRenderer'
+import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
-import { Box, Button, CircularProgress, MenuItem, Stack, Typography } from '@mui/material'
+import { maxLen, minLen } from '@/utils/validateUtil'
+import { Box, Button, CircularProgress, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -15,15 +17,57 @@ const CompleteProfilePage = () => {
 	const navigate = useNavigate()
 	const { auth, login } = useAuth()
 	const _enum = useEnum()
-	const [formData, setFormData] = useState({
+	const { values, handleChange, setField, registerRef, validateAll } = useForm({
 		name: '',
 		phone: '',
 		dateOfBirth: '',
 		gender: '',
 		address: '',
 	})
+	const [submitted, setSubmitted] = useState(false)
+	const { renderField } = useFieldRenderer(values, setField, handleChange, registerRef, submitted)
 
 	const needsPhone = auth?.stage === EnumConfig.AuthStage.PatientProfilePendingWithoutPhone
+
+	const fields = [
+		{
+			key: 'name',
+			title: t('profile.field.full_name') || t('profile.field.name'),
+			type: 'text',
+			validate: [minLen(2), maxLen(255)],
+			props: { placeholder: t('profile.placeholder.name') },
+		},
+		...(needsPhone
+			? [
+					{
+						key: 'phone',
+						title: t('profile.field.phone'),
+						type: 'phone',
+						required: true,
+						validate: [minLen(9), maxLen(20)],
+						props: { placeholder: t('auth.register.phone_placeholder') },
+					},
+			  ]
+			: []),
+		{
+			key: 'dateOfBirth',
+			title: t('profile.field.date_of_birth'),
+			type: 'date',
+		},
+		{
+			key: 'gender',
+			title: t('profile.field.gender'),
+			type: 'select',
+			options: _enum.genderOptions,
+		},
+		{
+			key: 'address',
+			title: t('profile.field.address'),
+			type: 'text',
+			validate: [maxLen(255)],
+			props: { placeholder: t('profile.placeholder.address') },
+		},
+	]
 
 	useEffect(() => {
 		if (!auth) {
@@ -32,24 +76,28 @@ const CompleteProfilePage = () => {
 		}
 	})
 
-	const { loading, submit } = useAxiosSubmit({
+	const { phone: _omitPhone, ...rest } = values
+	const payload = needsPhone ? values : rest
+
+	const postCompleteProfile = useAxiosSubmit({
 		url: ApiUrls.AUTH.COMPLETE_PROFILE,
 		method: 'POST',
-		onSuccess: async () => {},
+		data: payload,
+		onSuccess: async (resp) => {
+			const { accessToken } = resp.data
+			if (!accessToken) return
+			await login(accessToken)
+
+			navigate('/', { replace: true })
+		},
 	})
 
 	const onSubmit = async (e) => {
 		e.preventDefault()
-
-		const fd = new FormData()
-		fd.set('Name', formData.name)
-		fd.set('DateOfBirth', formData.dateOfBirth)
-		fd.set('Gender', formData.gender)
-		fd.set('Address', formData.address)
-		if (needsPhone && formData.phone) {
-			fd.set('Phone', formData.phone)
-		}
-		await submit(fd)
+		setSubmitted(true)
+		const ok = validateAll()
+		if (!ok) return
+		await postCompleteProfile.submit(undefined, {})
 	}
 
 	return (
@@ -76,65 +124,14 @@ const CompleteProfilePage = () => {
 
 			<Box component='form' onSubmit={onSubmit}>
 				<Stack spacing={{ xs: 2, sm: 2.5 }}>
-					<ValidationTextField
-						name='Name'
-						label={t('profile.field.name')}
-						placeholder={t('profile.placeholder.name')}
-						value={formData.name}
-						onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-					/>
-
-					{needsPhone && (
-						<ValidationTextField
-							name='Phone'
-							type='phone'
-							label={t('profile.field.phone')}
-							placeholder={t('auth.register.phone_placeholder')}
-							value={formData.phone}
-							onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-							required
-						/>
-					)}
-
-					<ValidationTextField
-						name='DateOfBirth'
-						type='date'
-						label={t('profile.field.date_of_birth')}
-						value={formData.dateOfBirth}
-						onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
-					/>
-
-					<ValidationTextField
-						name='Gender'
-						type='select'
-						label={t('profile.field.gender')}
-						value={formData.gender}
-						onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-					>
-						<MenuItem value='' disabled>
-							{t('profile.placeholder.gender')}
-						</MenuItem>
-						{_enum.genderOptions.map((option) => (
-							<MenuItem key={option.value} value={option.value}>
-								{option.label}
-							</MenuItem>
-						))}
-					</ValidationTextField>
-
-					<ValidationTextField
-						name='Address'
-						label={t('profile.field.address')}
-						placeholder={t('profile.placeholder.address')}
-						value={formData.address}
-						onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-					/>
+					{fields.map(renderField)}
 
 					<Button
 						type='submit'
 						variant='contained'
 						size='large'
-						disabled={loading}
-						startIcon={loading && <CircularProgress size={20} color='inherit' />}
+						disabled={postCompleteProfile.loading}
+						startIcon={postCompleteProfile.loading && <CircularProgress size={20} color='inherit' />}
 						sx={{
 							py: { xs: 1.2, sm: 1.5 },
 							borderRadius: 2,
