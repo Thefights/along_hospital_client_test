@@ -11,7 +11,7 @@ export const ApiUrls = {
 		FORGOT_PASSWORD_RESET: '/auth/forgot-password/reset', // POST with ?token=...
 		LOGOUT: '/auth/logout',
 		CURRENT_ACCOUNT: '/auth/me',
-		COMPLETE_PROFILE: '/auth/complete-profile',
+		COMPLETE_PROFILE: '/user/complete-profile',
 	},
 	USER: {
 		INDEX: `/user`,

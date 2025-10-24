@@ -4,6 +4,7 @@ const initialState = {
 	authId: 0,
 	userId: 0,
 	role: null,
+	stage: null,
 }
 
 const authSlice = createSlice({
