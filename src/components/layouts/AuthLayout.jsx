@@ -1,10 +1,11 @@
 import SwitchLanguageButton from '@/components/buttons/SwitchLanguageButton'
 import SwitchThemeButton from '@/components/buttons/SwitchThemeButton'
 import useTranslation from '@/hooks/useTranslation'
-import { Box, Container, Stack, Typography, useTheme } from '@mui/material'
+import { Box, Container, Stack, Typography, useMediaQuery, useTheme } from '@mui/material'
 
 const AuthLayout = ({ children, showHero = true }) => {
 	const theme = useTheme()
+	const isNarrow = useMediaQuery('(max-width:500px)')
 	const { t } = useTranslation()
 
 	return (
@@ -26,7 +27,7 @@ const AuthLayout = ({ children, showHero = true }) => {
 						flexDirection: 'column',
 						alignItems: 'center',
 						justifyContent: 'center',
-						p: { xs: 3, sm: 4, md: 6 },
+						p: { xs: 2, sm: 4, md: 6 },
 						position: 'relative',
 						overflow: 'hidden',
 					}}
@@ -109,7 +110,7 @@ const AuthLayout = ({ children, showHero = true }) => {
 					flexDirection: 'column',
 					alignItems: 'center',
 					justifyContent: 'center',
-					p: { xs: 2, sm: 3, md: 4 },
+					p: { xs: 1, sm: 3, md: 4 },
 					position: 'relative',
 					minHeight: { xs: 'calc(100vh - 200px)', md: 'calc(100vh - 300px)', lg: '100vh' },
 				}}
@@ -119,8 +120,9 @@ const AuthLayout = ({ children, showHero = true }) => {
 					spacing={1.5}
 					sx={{
 						position: 'absolute',
-						top: { xs: 12, sm: 16, md: 24 },
-						right: { xs: 12, sm: 16, md: 24 },
+						top: { xs: 8, sm: 16, md: 24 },
+						right: { xs: 8, sm: 16, md: 24 },
+						zIndex: 10,
 					}}
 				>
 					<SwitchLanguageButton />
@@ -128,18 +130,20 @@ const AuthLayout = ({ children, showHero = true }) => {
 				</Stack>
 
 				<Container
-					maxWidth='sm'
+					maxWidth={isNarrow ? false : 'sm'}
+					disableGutters={isNarrow}
 					sx={{
 						width: '100%',
-						maxWidth: { xs: '100%', sm: '500px', md: '600px' },
+						px: { xs: 0.5, sm: 2 },
+						boxSizing: 'border-box',
 					}}
 				>
-					<Box sx={{ mb: { xs: 2, sm: 3, md: 4 } }}>
-						<Stack direction='row' spacing={{ xs: 1.5, sm: 2 }} alignItems='center' sx={{ mb: 2 }}>
+					<Box sx={{ mb: { xs: 1.5, sm: 3, md: 4 } }}>
+						<Stack direction='row' spacing={{ xs: 1, sm: 2 }} alignItems='center' sx={{ mb: 2 }}>
 							<Box
 								sx={{
-									width: { xs: 36, sm: 40 },
-									height: { xs: 36, sm: 40 },
+									width: { xs: 32, sm: 40 },
+									height: { xs: 32, sm: 40 },
 									borderRadius: 2,
 									bgcolor: 'primary.main',
 									display: 'flex',
@@ -162,7 +166,7 @@ const AuthLayout = ({ children, showHero = true }) => {
 									variant='h5'
 									sx={{
 										fontWeight: 700,
-										fontSize: { xs: '1.2rem', sm: '1.5rem' },
+										fontSize: { xs: '1rem', sm: '1.5rem' },
 									}}
 								>
 									Telemedicine
@@ -170,7 +174,7 @@ const AuthLayout = ({ children, showHero = true }) => {
 								<Typography
 									variant='body2'
 									color='text.secondary'
-									sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
+									sx={{ fontSize: { xs: '0.7rem', sm: '0.875rem' } }}
 								>
 									{t('auth.hero.tagline', 'Your healthcare, anywhere')}
 								</Typography>
@@ -183,9 +187,20 @@ const AuthLayout = ({ children, showHero = true }) => {
 							bgcolor: 'background.paper',
 							border: 1,
 							borderColor: 'divider',
-							borderRadius: { xs: 3, sm: 4 },
+							borderRadius: { xs: 2, sm: 4 },
 							boxShadow: theme.shadows[3],
-							p: { xs: 2.5, sm: 3, md: 4 },
+							width: '100%',
+							maxWidth: isNarrow ? 'min(360px, calc(100vw - 16px))' : '100%',
+							mx: 'auto',
+							p: { xs: 1.25, sm: 3, md: 4 },
+							minWidth: 0,
+							wordBreak: 'break-word',
+							...(isNarrow
+								? {
+										'& .MuiButton-root': { width: '100%' },
+										'& .MuiTextField-root': { width: '100%' },
+								  }
+								: {}),
 						}}
 					>
 						{children}
