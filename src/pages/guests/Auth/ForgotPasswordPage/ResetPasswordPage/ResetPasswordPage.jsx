@@ -64,14 +64,14 @@ const ResetPasswordPage = () => {
 							fontSize: { xs: '1rem', sm: '1.25rem' },
 						}}
 					>
-						{t('auth.reset.success', 'Password reset successfully!')}
+						{t('auth.reset.success')}
 					</Typography>
 					<Typography
 						variant='body2'
 						color='text.secondary'
 						sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
 					>
-						{t('auth.reset.redirecting', 'Redirecting to login...')}
+						{t('auth.reset.redirecting')}
 					</Typography>
 				</Box>
 			</>
@@ -89,14 +89,14 @@ const ResetPasswordPage = () => {
 						fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
 					}}
 				>
-					{t('auth.reset.title', 'Reset password')}
+					{t('auth.reset.title')}
 				</Typography>
 				<Typography
 					variant='body2'
 					color='text.secondary'
 					sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
 				>
-					{t('auth.reset.subtitle', 'Enter your new password below')}
+					{t('auth.reset.subtitle')}
 				</Typography>
 			</Box>
 
@@ -104,15 +104,15 @@ const ResetPasswordPage = () => {
 				<Stack spacing={{ xs: 2, sm: 2.5 }}>
 					<PasswordTextField
 						name='NewPassword'
-						label={t('auth.field.new_password', 'New password')}
-						placeholder={t('auth.placeholder.new_password', 'Enter your new password')}
+						label={t('auth.field.new_password')}
+						placeholder={t('auth.placeholder.new_password')}
 						value={formData.newPassword}
 						onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}
 					/>
 					<PasswordTextField
 						name='ConfirmPassword'
-						label={t('auth.field.confirm_password', 'Confirm password')}
-						placeholder={t('auth.placeholder.confirm_password', 'Enter your password again')}
+						label={t('auth.field.confirm_password')}
+						placeholder={t('auth.placeholder.confirm_password')}
 						value={formData.confirmPassword}
 						onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
 					/>
@@ -140,7 +140,7 @@ const ResetPasswordPage = () => {
 							},
 						}}
 					>
-						{t('button.submit', 'Submit')}
+						{t('button.submit')}
 					</Button>
 				</Stack>
 			</Box>
@@ -152,7 +152,7 @@ const ResetPasswordPage = () => {
 					component='span'
 					sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
 				>
-					{t('auth.reset.no_account', "Don't have an account?")}{' '}
+					{t('auth.reset.no_account')}{' '}
 				</Typography>
 				<Link
 					component={RouterLink}
@@ -165,7 +165,7 @@ const ResetPasswordPage = () => {
 						'&:hover': { textDecoration: 'underline' },
 					}}
 				>
-					{t('auth.register.title', 'Register')}
+					{t('auth.register.title')}
 				</Link>
 			</Box>
 		</>

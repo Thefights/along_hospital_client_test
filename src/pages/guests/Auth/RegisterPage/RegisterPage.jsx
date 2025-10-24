@@ -69,14 +69,14 @@ const RegisterPage = () => {
 							fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
 						}}
 					>
-						{t('auth.register.check_sms', 'Check your SMS')}
+						{t('auth.register.check_sms')}
 					</Typography>
 					<Typography
 						variant='body2'
 						color='text.secondary'
 						sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
 					>
-						{t('auth.register.verify_subtitle', 'We sent a verification link to your phone')}
+						{t('auth.register.verify_subtitle')}
 					</Typography>
 				</Box>
 
@@ -91,7 +91,7 @@ const RegisterPage = () => {
 					}}
 				>
 					<Typography variant='body2' sx={{ mb: 0.5, fontSize: { xs: '0.8rem', sm: '0.875rem' } }}>
-						{t('auth.register.verify_sent', 'Verification link sent via SMS to')}
+						{t('auth.register.verify_sent')}
 					</Typography>
 					<Typography
 						variant='body2'
@@ -109,7 +109,7 @@ const RegisterPage = () => {
 								fontSize: { xs: '0.7rem', sm: '0.75rem' },
 							}}
 						>
-							{t('auth.register.resend_in', 'Resend in')} {countdown} {t('auth.seconds', 'seconds')}
+							{t('auth.register.resend_in')} {countdown} {t('auth.seconds')}
 						</Typography>
 					)}
 				</Alert>
@@ -117,8 +117,8 @@ const RegisterPage = () => {
 				<Stack spacing={{ xs: 1.5, sm: 2 }}>
 					<ValidationTextField
 						name='Phone'
-						label={t('auth.field.phone', 'Phone')}
-						placeholder={t('auth.register.phone_placeholder', 'Enter your phone number')}
+						label={t('auth.field.phone')}
+						placeholder={t('auth.register.phone_placeholder')}
 						type='phone'
 						value={formData.phone}
 						onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -138,9 +138,7 @@ const RegisterPage = () => {
 							fontWeight: 600,
 						}}
 					>
-						{countdown > 0
-							? `${t('button.resend_in', 'Resend in')} ${countdown}s`
-							: t('auth.register.resend_link', 'Resend verification link')}
+						{countdown > 0 ? `${t('button.resend_in')} ${countdown}s` : t('auth.register.resend_link')}
 					</Button>
 
 					<Box sx={{ textAlign: 'center' }}>
@@ -150,7 +148,7 @@ const RegisterPage = () => {
 							component='span'
 							sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
 						>
-							{t('auth.register.already_have_account', 'Already have an account?')}{' '}
+							{t('auth.register.already_have_account')}{' '}
 						</Typography>
 						<Link
 							component={RouterLink}
@@ -163,7 +161,7 @@ const RegisterPage = () => {
 								'&:hover': { textDecoration: 'underline' },
 							}}
 						>
-							{t('auth.register.login', 'Login')}
+							{t('auth.register.login')}
 						</Link>
 					</Box>
 				</Stack>
@@ -182,14 +180,14 @@ const RegisterPage = () => {
 						fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
 					}}
 				>
-					{t('auth.register.title', 'Create account')}
+					{t('auth.register.title')}
 				</Typography>
 				<Typography
 					variant='body2'
 					color='text.secondary'
 					sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
 				>
-					{t('auth.register.subtitle', 'Get started with your free account')}
+					{t('auth.register.subtitle')}
 				</Typography>
 			</Box>
 
@@ -197,32 +195,32 @@ const RegisterPage = () => {
 				<Stack spacing={{ xs: 2, sm: 2.5 }}>
 					<ValidationTextField
 						name='Email'
-						label={t('auth.field.email', 'Email')}
+						label={t('auth.field.email')}
 						type='email'
-						placeholder={t('auth.register.email_placeholder', 'Enter your email address')}
+						placeholder={t('auth.register.email_placeholder')}
 						value={formData.email}
 						onChange={(e) => setFormData({ ...formData, email: e.target.value })}
 						required={false}
 					/>
 					<ValidationTextField
 						name='Phone'
-						label={t('auth.field.phone', 'Phone')}
+						label={t('auth.field.phone')}
 						type='phone'
-						placeholder={t('auth.register.phone_placeholder', 'Enter your phone number')}
+						placeholder={t('auth.register.phone_placeholder')}
 						value={formData.phone}
 						onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
 					/>
 					<PasswordTextField
 						name='Password'
-						label={t('auth.field.password', 'Password')}
-						placeholder={t('auth.placeholder.password', 'Please enter your password')}
+						label={t('auth.field.password')}
+						placeholder={t('auth.placeholder.password')}
 						value={formData.password}
 						onChange={(e) => setFormData({ ...formData, password: e.target.value })}
 					/>
 					<PasswordTextField
 						name='ConfirmPassword'
-						label={t('auth.field.confirm_password', 'Confirm Password')}
-						placeholder={t('auth.placeholder.confirm_password', 'Please confirm your password')}
+						label={t('auth.field.confirm_password')}
+						placeholder={t('auth.placeholder.confirm_password')}
 						value={formData.confirmPassword}
 						onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
 					/>
@@ -250,7 +248,7 @@ const RegisterPage = () => {
 							},
 						}}
 					>
-						{t('auth.register.submit', 'Register')}
+						{t('auth.register.submit')}
 					</Button>
 				</Stack>
 			</Box>
@@ -262,7 +260,7 @@ const RegisterPage = () => {
 					component='span'
 					sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
 				>
-					{t('auth.register.already_have_account', 'Already have an account?')}{' '}
+					{t('auth.register.already_have_account')}{' '}
 				</Typography>
 				<Link
 					component={RouterLink}
@@ -275,7 +273,7 @@ const RegisterPage = () => {
 						'&:hover': { textDecoration: 'underline' },
 					}}
 				>
-					{t('auth.register.login', 'Login')}
+					{t('auth.register.login')}
 				</Link>
 			</Box>
 		</>

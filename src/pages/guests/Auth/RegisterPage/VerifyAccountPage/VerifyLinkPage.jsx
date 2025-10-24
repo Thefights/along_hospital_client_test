@@ -64,7 +64,7 @@ const VerifyLinkPage = () => {
 				<Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: 4 }}>
 					<CircularProgress size={48} sx={{ mb: 3 }} />
 					<Typography variant='body1' color='text.secondary'>
-						{t('auth.verify_link.processing', 'Processing your verification link...')}
+						{t('auth.verify_link.processing')}
 					</Typography>
 				</Box>
 			</>
@@ -85,10 +85,10 @@ const VerifyLinkPage = () => {
 						✓
 					</Box>
 					<Typography variant='h6' sx={{ fontWeight: 600, mb: 1 }}>
-						{t('auth.verify_link.success', 'Verification successful!')}
+						{t('auth.verify_link.success')}
 					</Typography>
 					<Typography variant='body2' color='text.secondary'>
-						{t('auth.verify_link.redirecting', 'Redirecting...')}
+						{t('auth.verify_link.redirecting')}
 					</Typography>
 				</Box>
 			</>
@@ -99,7 +99,7 @@ const VerifyLinkPage = () => {
 		<>
 			<Box sx={{ mb: 3 }}>
 				<Typography variant='h4' sx={{ mb: 1, fontWeight: 700 }}>
-					{t('auth.verify_link.title', 'Verify account')}
+					{t('auth.verify_link.title')}
 				</Typography>
 			</Box>
 
@@ -115,10 +115,10 @@ const VerifyLinkPage = () => {
 						}}
 					>
 						<Typography variant='body2' sx={{ fontWeight: 600 }}>
-							{t('auth.verify_link.failed', 'Verification failed')}
+							{t('auth.verify_link.failed')}
 						</Typography>
 						<Typography variant='body2' sx={{ mt: 0.5 }}>
-							{t('auth.verify_link.invalid', 'The verification link is invalid or has expired.')}
+							{t('auth.verify_link.invalid')}
 						</Typography>
 					</Alert>
 				)}
@@ -140,7 +140,7 @@ const VerifyLinkPage = () => {
 							fontWeight: 600,
 						}}
 					>
-						{t('auth.back_to_login', 'Back to login')}
+						{t('auth.back_to_login')}
 					</Button>
 				</Link>
 			</Stack>

@@ -36,14 +36,14 @@ const ForgotPasswordPage = () => {
 						fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
 					}}
 				>
-					{t('auth.forgot.title', 'Forgot password')}
+					{t('auth.forgot.title')}
 				</Typography>
 				<Typography
 					variant='body2'
 					color='text.secondary'
 					sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
 				>
-					{t('auth.forgot.subtitle', 'Enter your email or phone to reset password')}
+					{t('auth.forgot.subtitle')}
 				</Typography>
 			</Box>
 
@@ -66,10 +66,10 @@ const ForgotPasswordPage = () => {
 								fontSize: { xs: '0.8rem', sm: '0.875rem' },
 							}}
 						>
-							{t('auth.forgot.link_sent', 'Reset link sent!')}
+							{t('auth.forgot.link_sent')}
 						</Typography>
 						<Typography variant='body2' sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}>
-							{t('auth.forgot.check_sms', 'If the account exists, a reset link has been sent via SMS.')}
+							{t('auth.forgot.check_sms')}
 						</Typography>
 					</Alert>
 
@@ -95,7 +95,7 @@ const ForgotPasswordPage = () => {
 								},
 							}}
 						>
-							{t('auth.back_to_login', 'Back to login')}
+							{t('auth.back_to_login')}
 						</Button>
 					</Link>
 				</Stack>
@@ -104,8 +104,8 @@ const ForgotPasswordPage = () => {
 					<Stack spacing={{ xs: 2, sm: 2.5 }}>
 						<ValidationTextField
 							name='Identifier'
-							label={t('auth.field.identifier', 'Email or Phone')}
-							placeholder={t('auth.placeholder.identifier', 'Enter your email or phone')}
+							label={t('auth.field.identifier')}
+							placeholder={t('auth.placeholder.identifier')}
 							value={identifier}
 							onChange={(e) => setIdentifier(e.target.value)}
 						/>
@@ -133,7 +133,7 @@ const ForgotPasswordPage = () => {
 								},
 							}}
 						>
-							{t('button.next', 'Next')}
+							{t('button.next')}
 						</Button>
 					</Stack>
 				</Box>
@@ -146,7 +146,7 @@ const ForgotPasswordPage = () => {
 					component='span'
 					sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
 				>
-					{t('auth.forgot.remember_password', 'Remember your password?')}{' '}
+					{t('auth.forgot.remember_password')}{' '}
 				</Typography>
 				<Link
 					component={RouterLink}
@@ -159,7 +159,7 @@ const ForgotPasswordPage = () => {
 						'&:hover': { textDecoration: 'underline' },
 					}}
 				>
-					{t('auth.login.submit', 'Login')}
+					{t('auth.login.submit')}
 				</Link>
 			</Box>
 		</>

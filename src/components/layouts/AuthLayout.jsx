@@ -71,10 +71,7 @@ const AuthLayout = ({ children, showHero = true }) => {
 								px: { xs: 2, sm: 0 },
 							}}
 						>
-							{t(
-								'auth.hero.subtitle',
-								'Connecting patients and doctors through secure, convenient telemedicine'
-							)}
+							{t('auth.hero.subtitle')}
 						</Typography>
 					</Box>
 
@@ -176,7 +173,7 @@ const AuthLayout = ({ children, showHero = true }) => {
 									color='text.secondary'
 									sx={{ fontSize: { xs: '0.7rem', sm: '0.875rem' } }}
 								>
-									{t('auth.hero.tagline', 'Your healthcare, anywhere')}
+									{t('auth.hero.tagline')}
 								</Typography>
 							</Box>
 						</Stack>

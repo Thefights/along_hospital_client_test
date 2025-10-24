@@ -63,14 +63,14 @@ const CompleteProfilePage = () => {
 						fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
 					}}
 				>
-					{t('auth.complete.title', 'Complete your profile')}
+					{t('auth.complete.title')}
 				</Typography>
 				<Typography
 					variant='body2'
 					color='text.secondary'
 					sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
 				>
-					{t('auth.complete.subtitle', 'Help us get to know you better')}
+					{t('auth.complete.subtitle')}
 				</Typography>
 			</Box>
 
@@ -78,8 +78,8 @@ const CompleteProfilePage = () => {
 				<Stack spacing={{ xs: 2, sm: 2.5 }}>
 					<ValidationTextField
 						name='Name'
-						label={t('profile.field.name', 'Full Name')}
-						placeholder={t('profile.placeholder.name', 'Enter your full name')}
+						label={t('profile.field.name')}
+						placeholder={t('profile.placeholder.name')}
 						value={formData.name}
 						onChange={(e) => setFormData({ ...formData, name: e.target.value })}
 					/>
@@ -88,8 +88,8 @@ const CompleteProfilePage = () => {
 						<ValidationTextField
 							name='Phone'
 							type='phone'
-							label={t('profile.field.phone', 'Phone Number')}
-							placeholder={t('auth.register.phone_placeholder', 'Enter your phone number')}
+							label={t('profile.field.phone')}
+							placeholder={t('auth.register.phone_placeholder')}
 							value={formData.phone}
 							onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
 							required
@@ -99,7 +99,7 @@ const CompleteProfilePage = () => {
 					<ValidationTextField
 						name='DateOfBirth'
 						type='date'
-						label={t('profile.field.date_of_birth', 'Date of Birth')}
+						label={t('profile.field.date_of_birth')}
 						value={formData.dateOfBirth}
 						onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
 					/>
@@ -107,12 +107,12 @@ const CompleteProfilePage = () => {
 					<ValidationTextField
 						name='Gender'
 						type='select'
-						label={t('profile.field.gender', 'Gender')}
+						label={t('profile.field.gender')}
 						value={formData.gender}
 						onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
 					>
 						<MenuItem value='' disabled>
-							{t('profile.placeholder.gender', 'Select your gender')}
+							{t('profile.placeholder.gender')}
 						</MenuItem>
 						{_enum.genderOptions.map((option) => (
 							<MenuItem key={option.value} value={option.value}>
@@ -123,8 +123,8 @@ const CompleteProfilePage = () => {
 
 					<ValidationTextField
 						name='Address'
-						label={t('profile.field.address', 'Address')}
-						placeholder={t('profile.placeholder.address', 'Enter your address')}
+						label={t('profile.field.address')}
+						placeholder={t('profile.placeholder.address')}
 						value={formData.address}
 						onChange={(e) => setFormData({ ...formData, address: e.target.value })}
 					/>
@@ -152,7 +152,7 @@ const CompleteProfilePage = () => {
 							},
 						}}
 					>
-						{t('button.submit', 'Submit')}
+						{t('button.submit')}
 					</Button>
 				</Stack>
 			</Box>

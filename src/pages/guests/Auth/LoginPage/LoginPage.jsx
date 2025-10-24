@@ -91,14 +91,14 @@ const LoginPage = () => {
 						fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
 					}}
 				>
-					{t('auth.login.welcome', 'Welcome back')}
+					{t('auth.login.welcome')}
 				</Typography>
 				<Typography
 					variant='body2'
 					color='text.secondary'
 					sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
 				>
-					{t('auth.login.subtitle', 'Sign in to your account')}
+					{t('auth.login.subtitle')}
 				</Typography>
 			</Box>
 
@@ -112,7 +112,7 @@ const LoginPage = () => {
 					}}
 				>
 					<Typography variant='body2' sx={{ mb: 1 }}>
-						{t('auth.login.unverified', "Your account isn't verified yet.")}
+						{t('auth.login.unverified')}
 					</Typography>
 					<Button
 						size='small'
@@ -125,7 +125,7 @@ const LoginPage = () => {
 						disabled={resendLoading || !identifier}
 						sx={{ p: 0, minWidth: 'auto', textTransform: 'none' }}
 					>
-						{t('auth.login.resend_link', 'Resend verification link')}
+						{t('auth.login.resend_link')}
 					</Button>
 				</Alert>
 			)}
@@ -134,16 +134,16 @@ const LoginPage = () => {
 				<Stack spacing={{ xs: 2, sm: 2.5 }}>
 					<ValidationTextField
 						name='Identifier'
-						label={t('auth.field.identifier', 'Email or Phone')}
-						placeholder={t('auth.placeholder.identifier', 'Enter your email or phone number')}
+						label={t('auth.field.identifier')}
+						placeholder={t('auth.placeholder.identifier')}
 						value={identifier}
 						onChange={(e) => setIdentifier(e.target.value)}
 						type='phoneOrEmail'
 					/>
 					<PasswordTextField
 						name='Password'
-						label={t('auth.field.password', 'Password')}
-						placeholder={t('auth.placeholder.password', 'Enter your password')}
+						label={t('auth.field.password')}
+						placeholder={t('auth.placeholder.password')}
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 					/>
@@ -163,7 +163,7 @@ const LoginPage = () => {
 								'&:hover': { textDecoration: 'underline' },
 							}}
 						>
-							{t('auth.login.forgot_password', 'Forgot password?')}
+							{t('auth.login.forgot_password')}
 						</Link>
 					</Box>
 
@@ -191,7 +191,7 @@ const LoginPage = () => {
 							},
 						}}
 					>
-						{t('auth.login.submit', 'Login')}
+						{t('auth.login.submit')}
 					</Button>
 				</Stack>
 			</Box>
@@ -203,7 +203,7 @@ const LoginPage = () => {
 						color='text.secondary'
 						sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
 					>
-						{t('auth.or', 'Or continue with')}
+						{t('auth.or')}
 					</Typography>
 				</Divider>
 			</Box>
@@ -236,7 +236,7 @@ const LoginPage = () => {
 					shape='rectangular'
 					size='large'
 					width={isNarrow ? 280 : 400}
-					locale={t('auth.google.locale', 'en')}
+					locale={t('auth.google.locale')}
 				/>
 			</Box>
 
@@ -247,7 +247,7 @@ const LoginPage = () => {
 					component='span'
 					sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
 				>
-					{t('auth.login.no_account', "Don't have an account?")}{' '}
+					{t('auth.login.no_account')}{' '}
 				</Typography>
 				<Link
 					component={RouterLink}
@@ -260,7 +260,7 @@ const LoginPage = () => {
 						'&:hover': { textDecoration: 'underline' },
 					}}
 				>
-					{t('auth.login.register', 'Register')}
+					{t('auth.login.register')}
 				</Link>
 			</Box>
 		</>

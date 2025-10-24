@@ -41,10 +41,10 @@ const ResendLinkPage = () => {
 		<>
 			<Box sx={{ mb: 3 }}>
 				<Typography variant='h4' sx={{ mb: 1, fontWeight: 700 }}>
-					{t('auth.resend.title', 'Check your SMS')}
+					{t('auth.resend.title')}
 				</Typography>
 				<Typography variant='body2' color='text.secondary'>
-					{t('auth.resend.subtitle', 'We sent a verification link to your phone')}
+					{t('auth.resend.subtitle')}
 				</Typography>
 			</Box>
 
@@ -73,14 +73,14 @@ const ResendLinkPage = () => {
 					}}
 				>
 					<Typography variant='body2' sx={{ mb: 0.5 }}>
-						{t('auth.resend.link_sent', 'Verification link sent to')}
+						{t('auth.resend.link_sent')}
 					</Typography>
 					<Typography variant='body2' sx={{ fontWeight: 600 }}>
 						{phone}
 					</Typography>
 					{resendTimer > 0 && (
 						<Typography variant='caption' color='text.secondary' sx={{ mt: 1, display: 'block' }}>
-							{t('auth.resend.resend_in', 'Resend in')} {resendTimer} {t('auth.seconds', 'seconds')}
+							{t('auth.resend.resend_in')} {resendTimer} {t('auth.seconds')}
 						</Typography>
 					)}
 				</Alert>
@@ -88,7 +88,7 @@ const ResendLinkPage = () => {
 				{editingPhone ? (
 					<Stack spacing={2}>
 						<ValidationTextField
-							label={t('auth.field.phone', 'Phone')}
+							label={t('auth.field.phone')}
 							type='tel'
 							placeholder='+1234567890'
 							value={phone}
@@ -114,7 +114,7 @@ const ResendLinkPage = () => {
 									},
 								}}
 							>
-								{t('button.next', 'Next')}
+								{t('button.next')}
 							</Button>
 							<Button
 								variant='outlined'
@@ -132,7 +132,7 @@ const ResendLinkPage = () => {
 									fontWeight: 600,
 								}}
 							>
-								{t('button.cancel', 'Cancel')}
+								{t('button.cancel')}
 							</Button>
 						</Stack>
 					</Stack>
@@ -149,14 +149,14 @@ const ResendLinkPage = () => {
 							fontWeight: 600,
 						}}
 					>
-						{t('auth.resend.edit_phone', 'Edit phone number')}
+						{t('auth.resend.edit_phone')}
 					</Button>
 				)}
 
 				<Box>
 					{resendTimer > 0 ? (
 						<Typography variant='body2' color='text.secondary' sx={{ textAlign: 'center' }}>
-							{t('auth.resend.resend_in', 'Resend in')} {resendTimer} {t('auth.seconds', 'seconds')}
+							{t('auth.resend.resend_in')} {resendTimer} {t('auth.seconds')}
 						</Typography>
 					) : (
 						<Button
@@ -174,14 +174,14 @@ const ResendLinkPage = () => {
 								fontWeight: 600,
 							}}
 						>
-							{t('auth.resend.button', 'Resend verification link')}
+							{t('auth.resend.button')}
 						</Button>
 					)}
 				</Box>
 
 				<Box sx={{ textAlign: 'center' }}>
 					<Typography variant='body2' color='text.secondary' component='span'>
-						{t('auth.resend.already_have_account', 'Already have an account?')}{' '}
+						{t('auth.resend.already_have_account')}{' '}
 					</Typography>
 					<Link
 						component={RouterLink}
@@ -193,7 +193,7 @@ const ResendLinkPage = () => {
 							'&:hover': { textDecoration: 'underline' },
 						}}
 					>
-						{t('auth.login.submit', 'Login')}
+						{t('auth.login.submit')}
 					</Link>
 				</Box>
 			</Stack>
