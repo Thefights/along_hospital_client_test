@@ -1,7 +1,5 @@
 /* eslint-disable no-unused-vars */
-import useTranslation from '@/hooks/useTranslation'
 import { normalizeOptions } from '@/utils/handleObjectUtil'
-import { MenuItem } from '@mui/material'
 import ValidationTextField from '../textFields/ValidationTextField'
 
 const ChildFieldRenderField = ({
@@ -13,7 +11,6 @@ const ChildFieldRenderField = ({
 	textFieldVariant,
 	textFieldSize,
 }) => {
-	const { t } = useTranslation()
 	const opts = normalizeOptions(child.options || [])
 	return (
 		<ValidationTextField
@@ -29,24 +26,13 @@ const ChildFieldRenderField = ({
 			multiline={!!child.multiple}
 			minRows={child.multiple}
 			size={textFieldSize}
+			options={opts}
+			renderOption={child.renderOption}
 			type={child.type || 'text'}
 			select={child.type === 'select'}
 			sx={{ minWidth: 220, flex: 1 }}
 			{...(child.props || {})}
-		>
-			<MenuItem value='' disabled>
-				-- {t('text.select_options')} --
-			</MenuItem>
-			{opts &&
-				opts.length > 0 &&
-				opts.map((opt) => {
-					return (
-						<MenuItem key={String(opt.value)} value={opt.value} disabled={opt.disabled}>
-							{child.renderOption ? child.renderOption(opt.value) : opt.label}
-						</MenuItem>
-					)
-				})}
-		</ValidationTextField>
+		/>
 	)
 }
 

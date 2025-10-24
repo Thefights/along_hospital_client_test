@@ -1,3 +1,4 @@
+import EmptyPage from '@/components/placeholders/EmptyPage'
 import { ApiUrls } from '@/configs/apiUrls'
 import { EnumConfig } from '@/configs/enumConfig'
 import useAuth from '@/hooks/useAuth'
@@ -74,15 +75,15 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 		method: 'POST',
 	})
 	const responseAsDraftComplaint = useAxiosSubmit({
-		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.COMPLAINT.DRAFT(id),
+		url: ApiUrls.COMPLAINT.MANAGEMENT.DRAFT(id),
 		method: 'PUT',
 	})
 	const responseAsResolveComplaint = useAxiosSubmit({
-		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.COMPLAINT.RESOLVE(id),
+		url: ApiUrls.COMPLAINT.MANAGEMENT.RESOLVE(id),
 		method: 'PUT',
 	})
 	const closeComplaint = useAxiosSubmit({
-		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.COMPLAINT.CLOSE(id),
+		url: ApiUrls.COMPLAINT.MANAGEMENT.CLOSE(id),
 		method: 'PUT',
 	})
 

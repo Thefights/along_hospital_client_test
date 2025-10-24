@@ -21,9 +21,15 @@
         "search": "Search...",
         "loading": "Loading...",
         "filter": "Filter",
+        "filters": "Filters",
         "image_preview": "Image Preview",
         "select_options": "Select options",
+        "day": "Day",
+        "month": "Month",
+        "year": "Year",
         "date": "Date",
+        "start_date": "Start Date",
+        "end_date": "End Date",
         "time": "Time",
         "rows_per_page": "Rows per page",
         "role": {
@@ -229,6 +235,8 @@
     },
     "medical_history": {
         "title": {
+            "medical_history_management": "Medical History Management",
+            "medical_history_detail": "Medical History Detail",
             "medical_history_information": "Medical History Information",
             "service_details": "Service Details",
             "prescription": "Prescription",
@@ -237,7 +245,9 @@
         "placeholder": {
             "no_service": "No medical services recorded",
             "no_prescription": "No prescriptions recorded",
-            "no_complaint": "No complaints recorded"
+            "no_complaint": "No complaints recorded",
+            "search_patient_name": "Search by patient name...",
+            "search_doctor_name": "Search by doctor name..."
         },
         "field": {
             "id": "Medical History ID",
@@ -245,6 +255,9 @@
             "diagnosis": "Diagnosis",
             "completed_date": "Completed Date",
             "follow_up_appointment_date": "Follow-up Appointment Date",
+            "patient": "Patient",
+            "doctor": "Doctor",
+            "number_of_services": "Number of Services",
             "medical_history_detail": {
                 "medical_service": "Medical Service",
                 "service_name": "Service Name",
@@ -255,6 +268,7 @@
                 "grand_total": "Grand Total"
             },
             "prescription": {
+                "prescription": "Prescription",
                 "doctor_note": "Doctor's Note",
                 "medication_days": "Medication Days",
                 "prescription_details": "Prescription Details",
@@ -277,6 +291,7 @@
             "update_medical_history": "Update Medical History",
             "complete_medical_history": "Complete Medical History",
             "payment": "Payment",
+            "view_full_detail": "View Full Detail",
             "print_invoice": "Print Invoice"
         },
         "dialog": {
