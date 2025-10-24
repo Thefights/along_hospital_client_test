@@ -1,0 +1,169 @@
+import ValidationTextField from '@/components/textFields/ValidationTextField'
+import { ApiUrls } from '@/configs/apiUrls'
+import { routeUrls } from '@/configs/routeUrls'
+import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
+import useTranslation from '@/hooks/useTranslation'
+import { Alert, Box, Button, CircularProgress, Link, Stack, Typography } from '@mui/material'
+import { useState } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
+
+const ForgotPasswordPage = () => {
+	const { t } = useTranslation()
+	const [submitted, setSubmitted] = useState(false)
+	const [identifier, setIdentifier] = useState('')
+
+	const { loading, submit } = useAxiosSubmit({
+		url: ApiUrls.AUTH.FORGOT_PASSWORD,
+		method: 'POST',
+		onSuccess: async () => setSubmitted(true),
+	})
+
+	const onSubmit = async (e) => {
+		e.preventDefault()
+
+		const fd = new FormData(e.currentTarget)
+		await submit(fd)
+	}
+
+	return (
+		<>
+			<Box sx={{ mb: { xs: 2, sm: 3 } }}>
+				<Typography
+					variant='h4'
+					sx={{
+						mb: 1,
+						fontWeight: 700,
+						fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
+					}}
+				>
+					{t('auth.forgot.title', 'Forgot password')}
+				</Typography>
+				<Typography
+					variant='body2'
+					color='text.secondary'
+					sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
+				>
+					{t('auth.forgot.subtitle', 'Enter your email or phone to reset password')}
+				</Typography>
+			</Box>
+
+			{submitted ? (
+				<Stack spacing={{ xs: 2, sm: 3 }}>
+					<Alert
+						severity='success'
+						sx={{
+							borderRadius: 2,
+							bgcolor: 'success.softBg',
+							border: 1,
+							borderColor: 'success.softBorder',
+						}}
+					>
+						<Typography
+							variant='body2'
+							sx={{
+								fontWeight: 600,
+								mb: 0.5,
+								fontSize: { xs: '0.8rem', sm: '0.875rem' },
+							}}
+						>
+							{t('auth.forgot.link_sent', 'Reset link sent!')}
+						</Typography>
+						<Typography variant='body2' sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}>
+							{t('auth.forgot.check_sms', 'If the account exists, a reset link has been sent via SMS.')}
+						</Typography>
+					</Alert>
+
+					<Link
+						component={RouterLink}
+						to={routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.LOGIN)}
+						sx={{ textDecoration: 'none' }}
+					>
+						<Button
+							variant='contained'
+							fullWidth
+							size='large'
+							sx={{
+								py: { xs: 1.2, sm: 1.5 },
+								borderRadius: 2,
+								textTransform: 'none',
+								fontSize: { xs: '0.9rem', sm: '1rem' },
+								fontWeight: 600,
+								bgcolor: 'primary.main',
+								color: 'primary.contrastText',
+								'&:hover': {
+									bgcolor: 'primary.dark',
+								},
+							}}
+						>
+							{t('auth.back_to_login', 'Back to login')}
+						</Button>
+					</Link>
+				</Stack>
+			) : (
+				<Box component='form' onSubmit={onSubmit}>
+					<Stack spacing={{ xs: 2, sm: 2.5 }}>
+						<ValidationTextField
+							name='Identifier'
+							label={t('auth.field.identifier', 'Email or Phone')}
+							placeholder={t('auth.placeholder.identifier', 'Enter your email or phone')}
+							value={identifier}
+							onChange={(e) => setIdentifier(e.target.value)}
+						/>
+
+						<Button
+							type='submit'
+							variant='contained'
+							size='large'
+							disabled={loading}
+							startIcon={loading && <CircularProgress size={20} color='inherit' />}
+							sx={{
+								py: { xs: 1.2, sm: 1.5 },
+								borderRadius: 2,
+								textTransform: 'none',
+								fontSize: { xs: '0.9rem', sm: '1rem' },
+								fontWeight: 600,
+								bgcolor: 'primary.main',
+								color: 'primary.contrastText',
+								'&:hover': {
+									bgcolor: 'primary.dark',
+								},
+								'&.Mui-disabled': {
+									bgcolor: 'action.disabledBackground',
+									color: 'text.disabled',
+								},
+							}}
+						>
+							{t('button.next', 'Next')}
+						</Button>
+					</Stack>
+				</Box>
+			)}
+
+			<Box sx={{ mt: { xs: 2, sm: 3 }, textAlign: 'center' }}>
+				<Typography
+					variant='body2'
+					color='text.secondary'
+					component='span'
+					sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
+				>
+					{t('auth.forgot.remember_password', 'Remember your password?')}{' '}
+				</Typography>
+				<Link
+					component={RouterLink}
+					to={routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.LOGIN)}
+					variant='body2'
+					sx={{
+						fontWeight: 600,
+						textDecoration: 'none',
+						fontSize: { xs: '0.8rem', sm: '0.875rem' },
+						'&:hover': { textDecoration: 'underline' },
+					}}
+				>
+					{t('auth.login.submit', 'Login')}
+				</Link>
+			</Box>
+		</>
+	)
+}
+
+export default ForgotPasswordPage

@@ -19,7 +19,7 @@ const RouteAuth = () => {
 				<Route path={routeUrls.AUTH.RESEND_LINK} element={<ResendLinkPage />} />
 				<Route path={routeUrls.AUTH.FORGOT_PASSWORD} element={<ForgotPasswordPage />} />
 				<Route path={routeUrls.AUTH.RESET_PASSWORD} element={<ResetPasswordPage />} />
-				<Route path='/user/complete' element={<CompleteProfilePage />} />
+				<Route path={routeUrls.AUTH.COMPLETE_PROFILE} element={<CompleteProfilePage />} />
 			</Route>
 		</Routes>
 	)

@@ -1,0 +1,271 @@
+import PasswordTextField from '@/components/textFields/PasswordTextField'
+import ValidationTextField from '@/components/textFields/ValidationTextField'
+import { ApiUrls } from '@/configs/apiUrls'
+import { EnumConfig } from '@/configs/enumConfig'
+import { routeUrls } from '@/configs/routeUrls'
+import useAuth from '@/hooks/useAuth'
+import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
+import useTranslation from '@/hooks/useTranslation'
+import {
+	Alert,
+	Box,
+	Button,
+	CircularProgress,
+	Divider,
+	Link,
+	Stack,
+	Typography,
+	useMediaQuery,
+} from '@mui/material'
+import { GoogleLogin } from '@react-oauth/google'
+import { useState } from 'react'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
+
+const LoginPage = () => {
+	const { t } = useTranslation()
+	const isNarrow = useMediaQuery('(max-width:500px)')
+	const navigate = useNavigate()
+	const { login } = useAuth()
+	const [identifier, setIdentifier] = useState('')
+	const [password, setPassword] = useState('')
+	const [canResend, setCanResend] = useState(false)
+
+	const { loading, submit } = useAxiosSubmit({
+		url: ApiUrls.AUTH.LOGIN,
+		method: 'POST',
+		onSuccess: async (resp) => {
+			const { accessToken, stage } = resp.data
+
+			if (!accessToken) return
+
+			await login(accessToken)
+			if (stage !== EnumConfig.AuthStage.Done) {
+				navigate(`${routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.COMPLETE_PROFILE)}`, { replace: true })
+			} else {
+				navigate('/', { replace: true })
+			}
+		},
+		onError: async (err) => {
+			const msg = (err?.response?.data?.error || '').toString().toLowerCase()
+			if (msg.includes('please verify your account')) {
+				setCanResend(true)
+			}
+		},
+	})
+
+	const onSubmit = async (e) => {
+		e.preventDefault()
+		const fd = new FormData(e.currentTarget)
+		await submit(fd)
+	}
+
+	const { loading: resendLoading, submit: resend } = useAxiosSubmit({
+		url: ApiUrls.AUTH.REGISTER_RESEND_LINK,
+		method: 'POST',
+	})
+
+	const { submit: submitGoogle } = useAxiosSubmit({
+		url: ApiUrls.AUTH.LOGIN_GOOGLE,
+		method: 'POST',
+		onSuccess: async (resp) => {
+			const { accessToken, stage } = resp.data
+			console.log(accessToken, stage)
+			if (!accessToken) return
+
+			await login(accessToken)
+			if (stage !== EnumConfig.AuthStage.Done) {
+				navigate(`${routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.COMPLETE_PROFILE)}`, { replace: true })
+			} else {
+				navigate('/', { replace: true })
+			}
+		},
+	})
+
+	return (
+		<>
+			<Box sx={{ mb: { xs: 2, sm: 3 } }}>
+				<Typography
+					variant='h4'
+					sx={{
+						mb: 1,
+						fontWeight: 700,
+						fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
+					}}
+				>
+					{t('auth.login.welcome', 'Welcome back')}
+				</Typography>
+				<Typography
+					variant='body2'
+					color='text.secondary'
+					sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
+				>
+					{t('auth.login.subtitle', 'Sign in to your account')}
+				</Typography>
+			</Box>
+
+			{canResend && (
+				<Alert
+					severity='warning'
+					sx={{
+						mb: 2,
+						borderRadius: 2,
+						'& .MuiAlert-message': { width: '100%' },
+					}}
+				>
+					<Typography variant='body2' sx={{ mb: 1 }}>
+						{t('auth.login.unverified', "Your account isn't verified yet.")}
+					</Typography>
+					<Button
+						size='small'
+						variant='text'
+						onClick={() => {
+							const fd = new FormData()
+							fd.set('Phone', identifier)
+							resend(fd)
+						}}
+						disabled={resendLoading || !identifier}
+						sx={{ p: 0, minWidth: 'auto', textTransform: 'none' }}
+					>
+						{t('auth.login.resend_link', 'Resend verification link')}
+					</Button>
+				</Alert>
+			)}
+
+			<Box component='form' onSubmit={onSubmit}>
+				<Stack spacing={{ xs: 2, sm: 2.5 }}>
+					<ValidationTextField
+						name='Identifier'
+						label={t('auth.field.identifier', 'Email or Phone')}
+						placeholder={t('auth.placeholder.identifier', 'Enter your email or phone number')}
+						value={identifier}
+						onChange={(e) => setIdentifier(e.target.value)}
+						type='phoneOrEmail'
+					/>
+					<PasswordTextField
+						name='Password'
+						label={t('auth.field.password', 'Password')}
+						placeholder={t('auth.placeholder.password', 'Enter your password')}
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
+					/>
+
+					<Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+						<Link
+							component={RouterLink}
+							to={routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.FORGOT_PASSWORD)}
+							variant='body2'
+							sx={{
+								textDecoration: 'none',
+								fontSize: { xs: '0.8rem', sm: '0.875rem' },
+								maxWidth: '100%',
+								whiteSpace: 'nowrap',
+								overflow: 'hidden',
+								textOverflow: 'ellipsis',
+								'&:hover': { textDecoration: 'underline' },
+							}}
+						>
+							{t('auth.login.forgot_password', 'Forgot password?')}
+						</Link>
+					</Box>
+
+					<Button
+						type='submit'
+						variant='contained'
+						size='large'
+						fullWidth
+						disabled={loading}
+						startIcon={loading && <CircularProgress size={20} color='inherit' />}
+						sx={{
+							py: { xs: 1.2, sm: 1.5 },
+							borderRadius: 2,
+							textTransform: 'none',
+							fontSize: { xs: '0.9rem', sm: '1rem' },
+							fontWeight: 600,
+							bgcolor: 'primary.main',
+							color: 'primary.contrastText',
+							'&:hover': {
+								bgcolor: 'primary.dark',
+							},
+							'&.Mui-disabled': {
+								bgcolor: 'action.disabledBackground',
+								color: 'text.disabled',
+							},
+						}}
+					>
+						{t('auth.login.submit', 'Login')}
+					</Button>
+				</Stack>
+			</Box>
+
+			<Box sx={{ my: { xs: 2, sm: 3 } }}>
+				<Divider>
+					<Typography
+						variant='body2'
+						color='text.secondary'
+						sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
+					>
+						{t('auth.or', 'Or continue with')}
+					</Typography>
+				</Divider>
+			</Box>
+
+			<Box
+				sx={{
+					display: 'flex',
+					justifyContent: 'center',
+					'& > div': {
+						width: '100% !important',
+						maxWidth: isNarrow ? '100%' : 400,
+					},
+					'& > div > div': {
+						width: '100% !important',
+						maxWidth: '100% !important',
+					},
+				}}
+			>
+				<GoogleLogin
+					onSuccess={(credentialResponse) => {
+						const idToken = credentialResponse?.credential
+						if (!idToken) return
+						const fd = new FormData()
+						fd.set('IdToken', idToken)
+						submitGoogle(fd)
+					}}
+					useOneTap
+					onError={() => {}}
+					text='signin_with'
+					shape='rectangular'
+					size='large'
+					width={isNarrow ? 280 : 400}
+					locale={t('auth.google.locale', 'en')}
+				/>
+			</Box>
+
+			<Box sx={{ mt: { xs: 2, sm: 3 }, textAlign: 'center' }}>
+				<Typography
+					variant='body2'
+					color='text.secondary'
+					component='span'
+					sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
+				>
+					{t('auth.login.no_account', "Don't have an account?")}{' '}
+				</Typography>
+				<Link
+					component={RouterLink}
+					to={routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.REGISTER)}
+					variant='body2'
+					sx={{
+						fontWeight: 600,
+						textDecoration: 'none',
+						fontSize: { xs: '0.8rem', sm: '0.875rem' },
+						'&:hover': { textDecoration: 'underline' },
+					}}
+				>
+					{t('auth.login.register', 'Register')}
+				</Link>
+			</Box>
+		</>
+	)
+}
+
+export default LoginPage
