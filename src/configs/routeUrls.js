@@ -43,6 +43,7 @@ export const routeUrls = {
 		APPOINTMENT_MANAGEMENT: '/appointment',
 		MEDICAL_HISTORY: {
 			INDEX: '/medical-history',
+			CREATE: '/medical-history/create',
 			DETAIL: (id) => `/medical-history/${id}`,
 		},
 	},

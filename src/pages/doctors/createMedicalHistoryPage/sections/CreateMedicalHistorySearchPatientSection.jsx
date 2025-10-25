@@ -3,7 +3,11 @@ import useTranslation from '@/hooks/useTranslation'
 import { PersonAdd } from '@mui/icons-material'
 import { Box, Button, Paper, Stack, Typography } from '@mui/material'
 
-const CreateMedicalHistorySearchPatientSection = () => {
+const CreateMedicalHistorySearchPatientSection = ({
+	searchTerm,
+	setSearchTerm,
+	onCreateNewPatientClick,
+}) => {
 	const { t } = useTranslation()
 
 	return (
@@ -13,9 +17,13 @@ const CreateMedicalHistorySearchPatientSection = () => {
 			</Typography>
 			<Stack direction='row' spacing={2} alignItems='center'>
 				<Box sx={{ flex: 1 }}>
-					<SearchBar placeholder={t('medical_history.placeholder.search_patient_phone_name_email')} />
+					<SearchBar
+						placeholder={t('medical_history.placeholder.search_patient_phone_name_email')}
+						value={searchTerm}
+						onChange={(e) => setSearchTerm(e.target.value)}
+					/>
 				</Box>
-				<Button variant='outlined' startIcon={<PersonAdd />}>
+				<Button variant='outlined' startIcon={<PersonAdd />} onClick={onCreateNewPatientClick}>
 					{t('medical_history.button.create_patient')}
 				</Button>
 			</Stack>

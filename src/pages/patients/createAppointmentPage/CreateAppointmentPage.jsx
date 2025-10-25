@@ -51,7 +51,7 @@ const CreateAppointmentPage = () => {
 	const patientFields = [
 		{
 			key: 'fullName',
-			title: t('profile.field.full_name'),
+			title: t('profile.field.name'),
 			required: false,
 		},
 		{

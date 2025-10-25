@@ -29,7 +29,13 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 
-const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable }) => {
+const PatientInfoDialog = ({
+	open,
+	onClose,
+	onSave = (values) => Promise.resolve(values),
+	patientInfo = {},
+	isEditable,
+}) => {
 	const defaultValues = {
 		id: patientInfo.id || '',
 		name: patientInfo.name || '',
@@ -49,7 +55,7 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 	const { t } = useTranslation()
 	const _enum = useEnum()
 
-	const { values, setField, handleChange, registerRef, validateAll } = useForm(defaultValues)
+	const { values, setField, handleChange, registerRef, reset, validateAll } = useForm(defaultValues)
 	const { renderField, hasRequiredMissing } = useFieldRenderer(
 		values,
 		setField,
@@ -61,6 +67,7 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 	)
 
 	const basicInfoFields = [
+		{ key: 'name', title: t('profile.field.name'), type: 'text' },
 		{ key: 'dateOfBirth', title: t('profile.field.date_of_birth'), type: 'date' },
 		{
 			key: 'gender',
@@ -140,7 +147,12 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 		)
 	}
 
-	const handleSave = () => {
+	const handleClose = () => {
+		reset()
+		onClose?.()
+	}
+
+	const handleSave = async () => {
 		setSubmitted(true)
 		const ok = validateAll()
 		const isMissing = hasRequiredMissing(fields)
@@ -149,11 +161,12 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 			return
 		}
 
-		onSave(values)
+		reset()
+		await onSave(values)
 	}
 
 	return (
-		<Dialog open={open} onClose={onClose} maxWidth='md' fullWidth scroll='paper'>
+		<Dialog open={open} onClose={handleClose} maxWidth='md' fullWidth scroll='paper'>
 			<DialogTitle
 				sx={{ p: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
 			>
@@ -170,7 +183,7 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 					)}
 				</Stack>
 				<IconButton>
-					<Close onClick={onClose} />
+					<Close onClick={handleClose} />
 				</IconButton>
 			</DialogTitle>
 			<DialogContent sx={{ p: 3 }}>
@@ -258,7 +271,7 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 			>
 				{isEditable ? (
 					<>
-						<Button onClick={onClose} variant='outlined'>
+						<Button onClick={handleClose} variant='outlined'>
 							{t('button.cancel')}
 						</Button>
 						<Button onClick={handleSave} variant='contained'>
@@ -266,7 +279,7 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 						</Button>
 					</>
 				) : (
-					<Button onClick={onClose} variant='contained'>
+					<Button onClick={handleClose} variant='contained'>
 						{t('button.close')}
 					</Button>
 				)}

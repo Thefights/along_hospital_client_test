@@ -1,7 +1,11 @@
 import useTranslation from '@/hooks/useTranslation'
 import { Button, Stack, Toolbar, Typography } from '@mui/material'
 
-const CreateMedicalHistoryFooterSection = ({ selectedPatient }) => {
+const CreateMedicalHistoryFooterSection = ({
+	selectedPatient,
+	onCreateMedicalHistoryClick,
+	onCancelClick,
+}) => {
 	const { t } = useTranslation()
 
 	return (
@@ -25,10 +29,12 @@ const CreateMedicalHistoryFooterSection = ({ selectedPatient }) => {
 						: t('medical_history.title.no_choosen_patient')}
 				</Typography>
 				<Stack direction='row' spacing={1}>
-					<Button variant='contained' disabled={!selectedPatient}>
+					<Button variant='contained' disabled={!selectedPatient} onClick={onCreateMedicalHistoryClick}>
 						{t('medical_history.button.create_medical_history')}
 					</Button>
-					<Button variant='text'>{t('button.cancel')}</Button>
+					<Button onClick={onCancelClick} variant='text'>
+						{t('button.cancel')}
+					</Button>
 				</Stack>
 			</Stack>
 		</Toolbar>

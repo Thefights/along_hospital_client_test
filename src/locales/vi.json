@@ -160,7 +160,7 @@
             "no_allergies": "Chưa có dữ liệu dị ứng"
         },
         "field": {
-            "full_name": "Họ và tên",
+            "name": "Họ và tên",
             "email": "Email",
             "phone": "Số điện thoại",
             "address": "Địa chỉ",

@@ -31,7 +31,11 @@ const CreateMedicalHistoryCardSection = ({ item, selected, onSelect }) => {
 	return (
 		<Card
 			variant='outlined'
-			sx={{ borderRadius: 2, bgcolor: selected ? 'secondary.softBg' : 'background.paper' }}
+			sx={{
+				borderRadius: 2,
+				bgcolor: selected ? 'secondary.softBg' : 'background.paper',
+				minHeight: 'max-content',
+			}}
 		>
 			<CardActionArea onClick={onSelect}>
 				<CardContent sx={{ p: 1.5 }}>
