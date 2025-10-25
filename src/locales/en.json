@@ -29,6 +29,9 @@
         "select_options": "Select options",
         "date": "Date",
         "time": "Time",
+        "step": "Step",
+        "more": "More",
+        "result": "Result",
         "rows_per_page": "Rows per page",
         "role": {
             "manager": "Manager",
@@ -138,8 +141,18 @@
         "title": {
             "personal_information": "Personal Information"
         },
+        "placeholder": {
+            "no_phone": "No phone number provided",
+            "no_email": "No email provided",
+            "no_gender": "No gender provided",
+            "no_date_of_birth": "No date of birth provided",
+            "no_address": "No address provided",
+            "no_height": "No height provided",
+            "no_weight": "No weight provided",
+            "no_allergies": "No allergies recorded"
+        },
         "field": {
-            "full_name": "Full Name",
+            "name": "Name",
             "email": "Email",
             "phone": "Phone",
             "address": "Address",
@@ -152,7 +165,7 @@
             "height_weight": "Height/Weight",
             "blood_type": "Blood Type",
             "allergy": {
-                "allergy": "Allergy",
+                "allergies": "Allergies",
                 "name": "Name",
                 "severity": "Severity",
                 "reaction": "Reaction"
@@ -231,12 +244,22 @@
             "medical_history_information": "Medical History Information",
             "service_details": "Service Details",
             "prescription": "Prescription",
-            "complaint": "Complaint"
+            "complaint": "Complaint",
+            "create_medical_history": "Create Medical History",
+            "select_patient": "Select Patient",
+            "patient_summary": "Patient Summary",
+            "chosen_patient": "Chosen Patient: {name}",
+            "no_chosen_patient": "No patient selected",
+            "medical_record_info": "Medical Record Info (will be filled after creation)"
         },
         "placeholder": {
             "no_service": "No medical services recorded",
             "no_prescription": "No prescriptions recorded",
-            "no_complaint": "No complaints recorded"
+            "no_complaint": "No complaints recorded",
+            "search_patient_name": "Search by patient name...",
+            "search_doctor_name": "Search by doctor name...",
+            "search_patient_phone_name_email": "Search by patient phone/name/email...",
+            "note_edit_after_creation": "After creation, open detail page to update these fields"
         },
         "field": {
             "id": "Medical History ID",
@@ -280,10 +303,13 @@
             "respond_complaint": "Respond to Complaint",
             "save_as_draft": "Save as Draft",
             "close_complaint": "Close Complaint",
+            "create_medical_history": "Create Medical History",
             "update_medical_history": "Update Medical History",
             "complete_medical_history": "Complete Medical History",
             "payment": "Payment",
-            "print_invoice": "Print Invoice"
+            "view_full_detail": "View Full Detail",
+            "print_invoice": "Print Invoice",
+            "create_patient": "Create Patient"
         },
         "dialog": {
             "title": {

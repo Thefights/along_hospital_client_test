@@ -5,6 +5,7 @@ import ImageRenderField from '@/components/fieldRenderers/ImageRenderField'
 import ImageTileRenderField from '@/components/fieldRenderers/ImageTileRenderField'
 import SearchBar from '@/components/generals/SearchBar'
 import ValidationTextField from '@/components/textFields/ValidationTextField'
+import { getImageFromCloud } from '@/utils/commons'
 import { isStringArray } from '@/utils/handleBooleanUtil'
 import { getObjectValueFromStringPath, normalizeOptions } from '@/utils/handleObjectUtil'
 import { Delete } from '@mui/icons-material'
@@ -132,9 +133,15 @@ export default function useFieldRenderer(
 
 	const renderImageSingle = (field) => {
 		const file = values[field.key]
-		const preview = file instanceof File ? URL.createObjectURL(file) : ''
 		const required = field.required ?? true
 		const showError = submitted && required && !file
+
+		let preview = ''
+		if (file instanceof File) {
+			preview = URL.createObjectURL(file)
+		} else if (typeof file === 'string') {
+			preview = getImageFromCloud(file)
+		}
 
 		return (
 			<ImageRenderField
@@ -165,10 +172,16 @@ export default function useFieldRenderer(
 		const max = Math.max(1, Number(field.multiple) || 1)
 		const v = values[key]
 
+		const toPreviewSrc = (val) => {
+			if (val instanceof File) return getUrlForFile(val)
+			if (typeof val === 'string') return getImageFromCloud(val)
+			return ''
+		}
+
 		if (isStringArray(v) && !normalizedImageKeysRef.current.has(key)) {
 			normalizedImageKeysRef.current.add(key)
 			setField(key, {
-				[remainKey]: v.slice(),
+				[remainKey]: v.filter(Boolean).slice(),
 				[newKey]: [],
 				[removeKey]: [],
 			})
@@ -241,18 +254,18 @@ export default function useFieldRenderer(
 					{remain.map((url, i) => (
 						<ImageTileRenderField
 							key={`remain-${i}`}
-							src={String(url)}
+							src={toPreviewSrc(url)}
 							alt={`${field.title}-remain-${i}`}
 							onRemove={() => removeRemain(i)}
 						/>
 					))}
+
 					{news.map((file, i) => {
-						const src = file instanceof File ? getUrlForFile(file) : ''
 						const fileKey = (f) => `${f.name}_${f.size}_${f.lastModified}_${i}`
 						return (
 							<ImageTileRenderField
 								key={`new-${fileKey(file)}`}
-								src={src}
+								src={toPreviewSrc(file)}
 								alt={`${field.title}-new-${fileKey(file)}`}
 								onRemove={() => removeNew(i)}
 							/>

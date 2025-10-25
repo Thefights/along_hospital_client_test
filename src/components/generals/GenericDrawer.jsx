@@ -1,6 +1,7 @@
 import { Close } from '@mui/icons-material'
 import { Box, Divider, Drawer, IconButton, Stack, Typography } from '@mui/material'
 import React from 'react'
+import DrawerInfoRow from '../infoRows/DrawerInfoRow'
 import EmptyBox from '../placeholders/EmptyBox'
 
 /**
@@ -60,7 +61,9 @@ const GenericDrawer = ({ open, onClose, title, fields, buttons = <React.Fragment
 										) : (
 											<Typography variant='subtitle1'>{field.title}</Typography>
 										)}
+
 										<Divider sx={{ my: 1.5 }} />
+
 										{rows.length === 0 ? (
 											<Typography variant='body2' sx={{ color: 'text.secondary' }}>
 												-
@@ -68,7 +71,7 @@ const GenericDrawer = ({ open, onClose, title, fields, buttons = <React.Fragment
 										) : (
 											<Stack spacing={1}>
 												{rows.map((row, rIdx) => (
-													<InfoRow key={rIdx} label={row.label} value={row.value} />
+													<DrawerInfoRow key={rIdx} label={row.label} value={row.value} />
 												))}
 											</Stack>
 										)}
@@ -93,44 +96,6 @@ const GenericDrawer = ({ open, onClose, title, fields, buttons = <React.Fragment
 				</Box>
 			</Box>
 		</Drawer>
-	)
-}
-
-const InfoRow = ({ label, value }) => {
-	const renderValue =
-		typeof value === 'function'
-			? value()
-			: React.isValidElement(value)
-			? value
-			: (value ?? value === 0) && value !== ''
-			? String(value)
-			: '-'
-
-	return (
-		<Stack direction='row' alignItems='flex-start' justifyContent='space-between'>
-			<Typography
-				variant='body2'
-				sx={{ color: 'text.secondary', whiteSpace: 'nowrap', flexShrink: 0 }}
-			>
-				{label}
-			</Typography>
-			<Box sx={{ flex: 1, minWidth: 0 }}>
-				{typeof renderValue === 'string' ? (
-					<Typography
-						variant='body2'
-						sx={{
-							textAlign: 'right',
-							wordBreak: 'break-word',
-							overflowWrap: 'anywhere',
-						}}
-					>
-						{renderValue}
-					</Typography>
-				) : (
-					<Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>{renderValue}</Box>
-				)}
-			</Box>
-		</Stack>
 	)
 }
 

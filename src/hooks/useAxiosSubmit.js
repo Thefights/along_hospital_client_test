@@ -26,8 +26,8 @@ export function useAxiosSubmit({
 	const [response, setResponse] = useState(null)
 
 	const submit = useCallback(
-		async (overrideData, { overrideUrl, overrideParam }) => {
-			if (loading) return Promise.resolve(null)
+		async (overrideData, { overrideUrl, overrideParam } = {}) => {
+			if (loading) return undefined
 
 			setLoading(true)
 			setError(null)
