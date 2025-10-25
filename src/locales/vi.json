@@ -423,7 +423,12 @@
 			"new_password": "Mật khẩu mới"
 		},
 		"placeholder": {
-			"identifier": "Nhập email của bạn"
+			"identifier": "Nhập email của bạn",
+            "email": "Nhập email của bạn",
+            "phone": "Nhập số điện thoại của bạn",
+            "password": "Nhập mật khẩu của bạn",
+            "confirm_password": "Nhập lại mật khẩu của bạn",
+            "new_password": "Nhập mật khẩu mới của bạn"
 		},
 		"hint": {
 			"password_min": "Tối thiểu 8 ký tự"
