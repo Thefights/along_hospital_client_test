@@ -1,6 +1,6 @@
 import useTranslation from '@/hooks/useTranslation'
 import { getObjectMerged } from '@/utils/handleObjectUtil'
-import { isEmail, isNumber, isRequired } from '@/utils/validateUtil'
+import { isEmail, isNumber, isPhone, isRequired } from '@/utils/validateUtil'
 import { MenuItem, TextField } from '@mui/material'
 import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useState } from 'react'
 
@@ -48,6 +48,7 @@ const ValidationTextField = (
 		if (required) rs.push(isRequired())
 		if (type === 'email') rs.push(isEmail())
 		if (type === 'number') rs.push(isNumber())
+		if (type === 'tel') rs.push(isPhone())
 
 		return rs
 	}, [required, type])
