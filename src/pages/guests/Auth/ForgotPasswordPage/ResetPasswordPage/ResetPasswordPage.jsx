@@ -16,8 +16,8 @@ const ResetPasswordPage = () => {
 	const token = useMemo(() => params.get('token') || '', [params])
 	const [submitted, setSubmitted] = useState(false)
 	const { values, handleChange, registerRef, validateAll } = useForm({
-		NewPassword: '',
-		ConfirmPassword: '',
+		newPassword: '',
+		confirmPassword: '',
 	})
 	const [success, setSuccess] = useState(false)
 
@@ -28,7 +28,7 @@ const ResetPasswordPage = () => {
 	}, [token, navigate])
 
 	const { loading, submit } = useAxiosSubmit({
-		url: `${ApiUrls.AUTH.FORGOT_PASSWORD_RESET}`,
+		url: ApiUrls.AUTH.FORGOT_PASSWORD_RESET,
 		params: { token },
 		method: 'POST',
 		onSuccess: async () => {
@@ -107,23 +107,23 @@ const ResetPasswordPage = () => {
 			<Box component='form' onSubmit={onSubmit}>
 				<Stack spacing={{ xs: 2, sm: 2.5 }}>
 					<PasswordTextField
-						name='NewPassword'
+						name='newPassword'
 						label={t('auth.field.new_password')}
 						placeholder={t('auth.placeholder.new_password')}
-						value={values.NewPassword}
+						value={values.newPassword}
 						onChange={handleChange}
-						ref={registerRef('NewPassword')}
+						ref={registerRef('newPassword')}
 						submitted={submitted}
 					/>
 					<PasswordTextField
-						name='ConfirmPassword'
+						name='confirmPassword'
 						label={t('auth.field.confirm_password')}
 						placeholder={t('auth.placeholder.confirm_password')}
-						value={values.ConfirmPassword}
+						value={values.confirmPassword}
 						onChange={handleChange}
-						ref={registerRef('ConfirmPassword')}
+						ref={registerRef('confirmPassword')}
 						submitted={submitted}
-						validate={[compare(values.NewPassword, t('error.password_not_match'))]}
+						validate={[compare(values.newPassword, t('error.password_not_match'))]}
 					/>
 
 					<Button
