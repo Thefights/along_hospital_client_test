@@ -11,6 +11,11 @@ export const EnumConfig = {
 		Female: 'Female',
 		Other: 'Other',
 	},
+	AllergySeverity: {
+		Mild: 'Mild',
+		Moderate: 'Moderate',
+		Severe: 'Severe',
+	},
 
 	// For appointments
 	AppointmentStatus: {

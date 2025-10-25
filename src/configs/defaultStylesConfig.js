@@ -12,6 +12,15 @@ export const defaultAppointmentStatusStyle = (theme, status) => {
 	return { bg: p.softBg || p.main + '1A', border: p.softBorder || p.main + '33', color: p.main }
 }
 
+export const defaultAllergySeverityStyle = (severity) => {
+	const map = {
+		[EnumConfig.AllergySeverity.Mild]: 'info.dark',
+		[EnumConfig.AllergySeverity.Moderate]: 'warning.dark',
+		[EnumConfig.AllergySeverity.Severe]: 'error.dark',
+	}
+	return map[severity] || 'primary'
+}
+
 export const defaultMedicalHistoryStatusStyle = (status) => {
 	const map = {
 		[EnumConfig.MedicalHistoryStatus.Draft]: 'warning',
