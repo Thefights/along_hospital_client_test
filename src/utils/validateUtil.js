@@ -77,3 +77,8 @@ export const numberLessThan = (max) => (v) => {
 	const n = Number(v)
 	return n < max ? true : getTranslation('error.max_number', { max })
 }
+
+export const compare = (otherValue, msg) => (v) => {
+	if (v == null || v === '') return true
+	return v === otherValue ? true : msg ?? getTranslation('error.not_match')
+}

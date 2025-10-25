@@ -4,6 +4,7 @@ import { routeUrls } from '@/configs/routeUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
+import { compare } from '@/utils/validateUtil'
 import { Box, Button, CircularProgress, Link, Stack, Typography } from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
 import { Link as RouterLink, useNavigate, useSearchParams } from 'react-router-dom'
@@ -13,7 +14,8 @@ const ResetPasswordPage = () => {
 	const navigate = useNavigate()
 	const [params] = useSearchParams()
 	const token = useMemo(() => params.get('token') || '', [params])
-	const { values, handleChange } = useForm({
+	const [submitted, setSubmitted] = useState(false)
+	const { values, handleChange, registerRef, validateAll } = useForm({
 		NewPassword: '',
 		ConfirmPassword: '',
 	})
@@ -36,6 +38,14 @@ const ResetPasswordPage = () => {
 			}, 2000)
 		},
 	})
+
+	const onSubmit = async (e) => {
+		e.preventDefault()
+		setSubmitted(true)
+		const ok = validateAll()
+		if (!ok) return
+		await submit(values)
+	}
 
 	if (success) {
 		return (
@@ -94,13 +104,7 @@ const ResetPasswordPage = () => {
 				</Typography>
 			</Box>
 
-			<Box
-				component='form'
-				onSubmit={(e) => {
-					e.preventDefault()
-					submit(values, {})
-				}}
-			>
+			<Box component='form' onSubmit={onSubmit}>
 				<Stack spacing={{ xs: 2, sm: 2.5 }}>
 					<PasswordTextField
 						name='NewPassword'
@@ -108,6 +112,8 @@ const ResetPasswordPage = () => {
 						placeholder={t('auth.placeholder.new_password')}
 						value={values.NewPassword}
 						onChange={handleChange}
+						ref={registerRef('NewPassword')}
+						submitted={submitted}
 					/>
 					<PasswordTextField
 						name='ConfirmPassword'
@@ -115,6 +121,9 @@ const ResetPasswordPage = () => {
 						placeholder={t('auth.placeholder.confirm_password')}
 						value={values.ConfirmPassword}
 						onChange={handleChange}
+						ref={registerRef('ConfirmPassword')}
+						submitted={submitted}
+						validate={[compare(values.NewPassword, t('error.password_not_match'))]}
 					/>
 
 					<Button

@@ -46,7 +46,7 @@ const ResendLinkPage = () => {
 	const handleResendLink = async () => {
 		const ok = validateAll()
 		if (!ok) return
-		await submit({ phone: values.phone }, {})
+		await submit({ phone: values.phone })
 	}
 
 	return (

@@ -5,13 +5,16 @@ import { routeUrls } from '@/configs/routeUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
+import { compare } from '@/utils/validateUtil'
 import { Box, Button, CircularProgress, Link, Stack, Typography } from '@mui/material'
+import { useState } from 'react'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 
 const RegisterPage = () => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
-	const { values, handleChange } = useForm({
+	const [submitted, setSubmitted] = useState(false)
+	const { values, handleChange, registerRef, validateAll } = useForm({
 		email: '',
 		phone: '',
 		password: '',
@@ -25,6 +28,14 @@ const RegisterPage = () => {
 			navigate(routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.RESEND_LINK), { replace: true })
 		},
 	})
+
+	const onSubmit = async (e) => {
+		e.preventDefault()
+		setSubmitted(true)
+		const ok = validateAll()
+		if (!ok) return
+		await submit(values)
+	}
 
 	return (
 		<>
@@ -48,13 +59,7 @@ const RegisterPage = () => {
 				</Typography>
 			</Box>
 
-			<Box
-				component='form'
-				onSubmit={(e) => {
-					e.preventDefault()
-					submit(values, {})
-				}}
-			>
+			<Box component='form' onSubmit={onSubmit}>
 				<Stack spacing={{ xs: 2, sm: 2.5 }}>
 					<ValidationTextField
 						name='email'
@@ -64,14 +69,18 @@ const RegisterPage = () => {
 						value={values.email}
 						onChange={handleChange}
 						required={false}
+						ref={registerRef('email')}
+						submitted={submitted}
 					/>
 					<ValidationTextField
 						name='phone'
 						label={t('auth.field.phone')}
-						type='phone'
+						type='tel'
 						placeholder={t('auth.register.phone_placeholder')}
 						value={values.phone}
 						onChange={handleChange}
+						ref={registerRef('phone')}
+						submitted={submitted}
 					/>
 					<PasswordTextField
 						name='password'
@@ -79,6 +88,8 @@ const RegisterPage = () => {
 						placeholder={t('auth.placeholder.password')}
 						value={values.password}
 						onChange={handleChange}
+						ref={registerRef('password')}
+						submitted={submitted}
 					/>
 					<PasswordTextField
 						name='confirmPassword'
@@ -86,6 +97,9 @@ const RegisterPage = () => {
 						placeholder={t('auth.placeholder.confirm_password')}
 						value={values.confirmPassword}
 						onChange={handleChange}
+						ref={registerRef('confirmPassword')}
+						submitted={submitted}
+						validate={[compare(values.password, t('error.password_not_match'))]}
 					/>
 
 					<Button

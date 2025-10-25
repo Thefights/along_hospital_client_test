@@ -4,6 +4,7 @@ import { routeUrls } from '@/configs/routeUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
+import { isPhoneOrEmail, maxLen } from '@/utils/validateUtil'
 import { Alert, Box, Button, CircularProgress, Link, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
@@ -11,15 +12,24 @@ import { Link as RouterLink } from 'react-router-dom'
 const ForgotPasswordPage = () => {
 	const { t } = useTranslation()
 	const [submitted, setSubmitted] = useState(false)
-	const { values, handleChange } = useForm({
-		Identifier: '',
+	const [success, setSuccess] = useState(false)
+	const { values, handleChange, registerRef, validateAll } = useForm({
+		identifier: '',
 	})
 
 	const { loading, submit } = useAxiosSubmit({
 		url: ApiUrls.AUTH.FORGOT_PASSWORD,
 		method: 'POST',
-		onSuccess: async () => setSubmitted(true),
+		onSuccess: async () => setSuccess(true),
 	})
+
+	const onSubmit = async (e) => {
+		e.preventDefault()
+		setSubmitted(true)
+		const ok = validateAll()
+		if (!ok) return
+		await submit(values)
+	}
 
 	return (
 		<>
@@ -43,7 +53,7 @@ const ForgotPasswordPage = () => {
 				</Typography>
 			</Box>
 
-			{submitted ? (
+			{success ? (
 				<Stack spacing={{ xs: 2, sm: 3 }}>
 					<Alert
 						severity='success'
@@ -96,20 +106,17 @@ const ForgotPasswordPage = () => {
 					</Link>
 				</Stack>
 			) : (
-				<Box
-					component='form'
-					onSubmit={(e) => {
-						e.preventDefault()
-						submit(values, {})
-					}}
-				>
+				<Box component='form' onSubmit={onSubmit}>
 					<Stack spacing={{ xs: 2, sm: 2.5 }}>
 						<ValidationTextField
-							name='Identifier'
+							name='identifier'
 							label={t('auth.field.identifier')}
 							placeholder={t('auth.placeholder.identifier')}
-							value={values.Identifier}
+							value={values.identifier}
 							onChange={handleChange}
+							ref={registerRef('identifier')}
+							submitted={submitted}
+							validate={[isPhoneOrEmail(), maxLen(255)]}
 						/>
 
 						<Button

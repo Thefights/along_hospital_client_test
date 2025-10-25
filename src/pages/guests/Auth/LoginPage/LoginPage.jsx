@@ -7,7 +7,7 @@ import useAuth from '@/hooks/useAuth'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
-import { maxLen } from '@/utils/validateUtil'
+import { isPhoneOrEmail, maxLen } from '@/utils/validateUtil'
 import {
 	Box,
 	Button,
@@ -19,6 +19,7 @@ import {
 	useMediaQuery,
 } from '@mui/material'
 import { GoogleLogin } from '@react-oauth/google'
+import { useState } from 'react'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 
 const LoginPage = () => {
@@ -26,7 +27,8 @@ const LoginPage = () => {
 	const isNarrow = useMediaQuery('(max-width:500px)')
 	const navigate = useNavigate()
 	const { login } = useAuth()
-	const { values, handleChange } = useForm({
+	const [submitted, setSubmitted] = useState(false)
+	const { values, handleChange, registerRef, validateAll } = useForm({
 		identifier: '',
 		password: '',
 	})
@@ -40,7 +42,7 @@ const LoginPage = () => {
 			await login(accessToken)
 
 			if (stage !== EnumConfig.AuthStage.Done) {
-				navigate(`${routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.COMPLETE_PROFILE)}`, { replace: true })
+				navigate(routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.COMPLETE_PROFILE), { replace: true })
 			} else {
 				navigate('/', { replace: true })
 			}
@@ -52,6 +54,14 @@ const LoginPage = () => {
 			}
 		},
 	})
+
+	const onSubmit = async (e) => {
+		e.preventDefault()
+		setSubmitted(true)
+		const ok = validateAll()
+		if (!ok) return
+		await submit(values)
+	}
 
 	return (
 		<>
@@ -75,13 +85,7 @@ const LoginPage = () => {
 				</Typography>
 			</Box>
 
-			<Box
-				component='form'
-				onSubmit={(e) => {
-					e.preventDefault()
-					submit(values, {})
-				}}
-			>
+			<Box component='form' onSubmit={onSubmit}>
 				<Stack spacing={{ xs: 2, sm: 2.5 }}>
 					<ValidationTextField
 						name='identifier'
@@ -89,8 +93,10 @@ const LoginPage = () => {
 						placeholder={t('auth.placeholder.identifier')}
 						value={values.identifier}
 						onChange={handleChange}
-						type='phoneOrEmail'
-						validate={[maxLen(255)]}
+						type='text'
+						validate={[isPhoneOrEmail(), maxLen(255)]}
+						ref={registerRef('identifier')}
+						submitted={submitted}
 					/>
 					<PasswordTextField
 						name='password'
@@ -98,6 +104,8 @@ const LoginPage = () => {
 						placeholder={t('auth.placeholder.password')}
 						value={values.password}
 						onChange={handleChange}
+						ref={registerRef('password')}
+						submitted={submitted}
 					/>
 
 					<Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -175,10 +183,10 @@ const LoginPage = () => {
 				}}
 			>
 				<GoogleLogin
-					onSuccess={(credentialResponse) => {
+					onSuccess={async (credentialResponse) => {
 						const idToken = credentialResponse?.credential
 						if (!idToken) return
-						submit({ idToken }, { overrideUrl: ApiUrls.AUTH.LOGIN_GOOGLE })
+						await submit({ idToken }, { overrideUrl: ApiUrls.AUTH.LOGIN_GOOGLE })
 					}}
 					text='signin_with'
 					shape='rectangular'

@@ -97,7 +97,7 @@ const CompleteProfilePage = () => {
 		setSubmitted(true)
 		const ok = validateAll()
 		if (!ok) return
-		await postCompleteProfile.submit(undefined, {})
+		await postCompleteProfile.submit()
 	}
 
 	return (
