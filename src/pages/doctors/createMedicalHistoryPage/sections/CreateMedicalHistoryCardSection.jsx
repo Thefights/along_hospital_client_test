@@ -1,5 +1,8 @@
 import PatientInfoRow from '@/components/infoRows/PatientInfoRow'
 import { EnumConfig } from '@/configs/enumConfig'
+import useEnum from '@/hooks/useEnum'
+import useTranslation from '@/hooks/useTranslation'
+import { getEnumLabelByValue } from '@/utils/handleStringUtil'
 import { Email, Female, Male, Phone, Transgender } from '@mui/icons-material'
 import {
 	Avatar,
@@ -13,6 +16,9 @@ import {
 } from '@mui/material'
 
 const CreateMedicalHistoryCardSection = ({ item, selected, onSelect }) => {
+	const { t } = useTranslation()
+	const _enum = useEnum()
+
 	const genderIcon =
 		item.gender === EnumConfig.Gender.Male ? (
 			<Male fontSize='small' color='primary' />
@@ -42,17 +48,22 @@ const CreateMedicalHistoryCardSection = ({ item, selected, onSelect }) => {
 							</Stack>
 							<PatientInfoRow
 								icon={<Phone fontSize='inherit' />}
-								value={item.phone || 'Chưa có số'}
+								value={item.phone || t('profile.placeholder.no_phone')}
 								spacing={1}
 							/>
 							<PatientInfoRow
 								icon={<Email fontSize='inherit' />}
-								value={item.email || 'Chưa có email'}
+								value={item.email || t('profile.placeholder.no_email')}
 								spacing={1}
 							/>
 						</Box>
 
-						<Chip size='small' variant='outlined' icon={genderIcon} label={item.gender || '—'} />
+						<Chip
+							size='small'
+							variant='outlined'
+							icon={genderIcon}
+							label={getEnumLabelByValue(_enum.genderOptions, item.gender) || '—'}
+						/>
 					</Stack>
 				</CardContent>
 			</CardActionArea>

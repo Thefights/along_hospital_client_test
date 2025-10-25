@@ -1,6 +1,9 @@
+import useTranslation from '@/hooks/useTranslation'
 import { Button, Stack, Toolbar, Typography } from '@mui/material'
 
 const CreateMedicalHistoryFooterSection = ({ selectedPatient }) => {
+	const { t } = useTranslation()
+
 	return (
 		<Toolbar
 			sx={{
@@ -17,13 +20,15 @@ const CreateMedicalHistoryFooterSection = ({ selectedPatient }) => {
 		>
 			<Stack direction='row' alignItems='center' justifyContent='space-between' sx={{ width: '100%' }}>
 				<Typography variant='body2' color='text.secondary'>
-					{selectedPatient ? `Đã chọn: ${selectedPatient.name}` : 'Chưa chọn bệnh nhân'}
+					{selectedPatient
+						? t('medical_history.title.choosen_patient', { name: selectedPatient.name })
+						: t('medical_history.title.no_choosen_patient')}
 				</Typography>
 				<Stack direction='row' spacing={1}>
 					<Button variant='contained' disabled={!selectedPatient}>
-						Tạo Medical History
+						{t('medical_history.button.create_medical_history')}
 					</Button>
-					<Button variant='text'>Hủy</Button>
+					<Button variant='text'>{t('button.cancel')}</Button>
 				</Stack>
 			</Stack>
 		</Toolbar>

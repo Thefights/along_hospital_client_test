@@ -1,19 +1,22 @@
 import SearchBar from '@/components/generals/SearchBar'
+import useTranslation from '@/hooks/useTranslation'
 import { PersonAdd } from '@mui/icons-material'
 import { Box, Button, Paper, Stack, Typography } from '@mui/material'
 
 const CreateMedicalHistorySearchPatientSection = () => {
+	const { t } = useTranslation()
+
 	return (
 		<Paper variant='outlined' sx={{ p: 2, borderRadius: 2, mb: 2 }}>
 			<Typography variant='subtitle1' sx={{ mb: 1.5 }}>
-				Chọn bệnh nhân
+				{t('medical_history.title.select_patient')}
 			</Typography>
 			<Stack direction='row' spacing={2} alignItems='center'>
 				<Box sx={{ flex: 1 }}>
-					<SearchBar />
+					<SearchBar placeholder={t('medical_history.placeholder.search_patient_phone_name_email')} />
 				</Box>
 				<Button variant='outlined' startIcon={<PersonAdd />}>
-					Tạo bệnh nhân mới
+					{t('medical_history.button.create_patient')}
 				</Button>
 			</Stack>
 		</Paper>

@@ -1,4 +1,5 @@
 import { EnumConfig } from '@/configs/enumConfig'
+import useTranslation from '@/hooks/useTranslation'
 import { Box, Divider, Grid, Paper, Stack, Typography } from '@mui/material'
 import { useMemo, useState } from 'react'
 import CreateMedicalHistoryCardSection from './sections/CreateMedicalHistoryCardSection'
@@ -9,6 +10,8 @@ import CreateMedicalHistoryPreviewSection from './sections/CreateMedicalHistoryP
 import CreateMedicalHistorySearchPatientSection from './sections/CreateMedicalHistorySearchPatientSection'
 
 export default function CreateMedicalHistoryPage() {
+	const { t } = useTranslation()
+
 	const [selectedId, setSelectedId] = useState(null)
 	const patients = useMemo(
 		() => [
@@ -94,7 +97,7 @@ export default function CreateMedicalHistoryPage() {
 
 					<Paper variant='outlined' sx={{ p: 2, borderRadius: 2 }}>
 						<Stack spacing={1.2}>
-							<Typography variant='subtitle2'>Kết quả</Typography>
+							<Typography variant='subtitle2'>{t('text.result')}:</Typography>
 							<Divider />
 							<Stack spacing={1.2}>
 								{patients.map((p) => (

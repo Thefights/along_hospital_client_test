@@ -31,6 +31,9 @@
         "start_date": "Ngày bắt đầu",
         "end_date": "Ngày kết thúc",
         "time": "Thời gian",
+        "step": "Bước",
+        "more": "Nữa",
+        "result": "Kết quả",
         "rows_per_page": "Số dòng mỗi trang",
         "role": {
             "manager": "Quản lý",
@@ -146,6 +149,16 @@
         "title": {
             "personal_information": "Thông tin cá nhân"
         },
+        "placeholder": {
+            "no_phone": "Chưa có số điện thoại",
+            "no_email": "Chưa có email",
+            "no_gender": "Chưa có giới tính",
+            "no_date_of_birth": "Chưa có ngày sinh",
+            "no_address": "Chưa có địa chỉ",
+            "no_height": "Chưa có chiều cao",
+            "no_weight": "Chưa có cân nặng",
+            "no_allergies": "Chưa có dữ liệu dị ứng"
+        },
         "field": {
             "full_name": "Họ và tên",
             "email": "Email",
@@ -158,7 +171,7 @@
             "height_weight": "Chiều cao/Cân nặng",
             "blood_type": "Nhóm máu",
             "allergy": {
-                "allergy": "Dị ứng",
+                "allergies": "Dị ứng",
                 "name": "Tên",
                 "severity": "Mức độ",
                 "reaction": "Phản ứng"
@@ -240,14 +253,22 @@
             "medical_history_information": "Thông tin lịch sử y tế",
             "service_details": "Chi tiết dịch vụ y tế",
             "prescription": "Đơn thuốc",
-            "complaint": "Khiếu nại"
+            "complaint": "Khiếu nại",
+            "create_medical_history": "Tạo lịch sử y tế",
+            "select_patient": "Chọn bệnh nhân",
+            "patient_summary": "Tóm tắt bệnh nhân",
+            "choosen_patient": "Bệnh nhân đã chọn: {name}",
+            "no_choosen_patient": "Chưa chọn bệnh nhân",
+            "medical_record_info": "Thông tin hồ sơ (sẽ điền sau khi tạo)"
         },
         "placeholder": {
             "no_service": "Không có dịch vụ y tế nào được ghi nhận",
             "no_prescription": "Không có đơn thuốc nào được ghi nhận",
             "no_complaint": "Không có khiếu nại nào được ghi nhận",
             "search_patient_name": "Tìm kiếm theo tên bệnh nhân...",
-            "search_doctor_name": "Tìm kiếm theo tên bác sĩ..."
+            "search_doctor_name": "Tìm kiếm theo tên bác sĩ...",
+            "search_patient_phone_name_email": "Tìm kiếm theo số điện thoại/tên/email bệnh nhân...",
+            "note_edit_after_creation": "Sau khi tạo, mở trang chi tiết để cập nhật các trường này"
         },
         "field": {
             "id": "ID lịch sử y tế",
@@ -288,11 +309,13 @@
             "respond_complaint": "Phản hồi khiếu nại",
             "save_as_draft": "Lưu dưới dạng bản nháp",
             "close_complaint": "Đóng khiếu nại",
+            "create_medical_history": "Tạo lịch sử y tế",
             "update_medical_history": "Cập nhật lịch sử y tế",
             "complete_medical_history": "Hoàn thành lịch sử y tế",
             "payment": "Thanh toán",
             "view_full_detail": "Xem chi tiết đầy đủ",
-            "print_invoice": "In hóa đơn"
+            "print_invoice": "In hóa đơn",
+            "create_patient": "Tạo bệnh nhân"
         },
         "dialog": {
             "title": {
