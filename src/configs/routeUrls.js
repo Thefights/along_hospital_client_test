@@ -24,6 +24,10 @@ export const routeUrls = {
 		REGISTER: '/register',
 		CHANGE_PASSWORD: '/change-password',
 		FORGOT_PASSWORD: '/forgot-password',
+		VERIFY: '/verify',
+		RESEND_LINK: '/resend-link',
+		RESET_PASSWORD: '/reset-password',
+		COMPLETE_PROFILE: '/complete-profile',
 	},
 	PATIENT: {
 		CART: '/cart',

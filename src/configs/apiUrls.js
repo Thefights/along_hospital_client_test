@@ -1,6 +1,16 @@
 export const ApiUrls = {
 	AUTH: {
-		CURRENT_ACCOUNT: '/auth/current-account',
+		LOGIN: '/auth/login',
+		LOGIN_GOOGLE: '/auth/login/google',
+		REGISTER: '/auth/register',
+		REGISTER_RESEND_LINK: '/auth/register/resend-link',
+		REGISTER_VERIFY: '/auth/register/verify',
+		REFRESH: '/auth/refresh',
+		FORGOT_PASSWORD: '/auth/forgot-password',
+		FORGOT_PASSWORD_RESET: '/auth/forgot-password/reset',
+		LOGOUT: '/auth/logout',
+		CURRENT_ACCOUNT: '/auth/me',
+		COMPLETE_PROFILE: '/user/complete-profile',
 	},
 	USER: {
 		INDEX: `/user`,

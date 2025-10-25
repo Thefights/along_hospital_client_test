@@ -4,7 +4,6 @@ import LayoutGuest from '@/layouts/LayoutGuest'
 import LayoutPatient from '@/layouts/LayoutPatient'
 import CreateMedicalHistoryPage from '@/pages/doctors/createMedicalHistoryPage/CreateMedicalHistoryPage'
 import HomePage from '@/pages/guests/HomePage'
-import LoginPage from '@/pages/guests/LoginPage'
 import TestTable from '@/pages/TestTable'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
@@ -25,9 +24,6 @@ const RouteGuest = () => {
 						</>
 					)}
 				</Route>
-
-				{/* This is route without layout */}
-				<Route path='/login' element={<LoginPage />} />
 			</Route>
 		</Routes>
 	)
