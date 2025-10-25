@@ -25,8 +25,8 @@ const CreateMedicalHistoryFooterSection = ({
 			<Stack direction='row' alignItems='center' justifyContent='space-between' sx={{ width: '100%' }}>
 				<Typography variant='body2' color='text.secondary'>
 					{selectedPatient
-						? t('medical_history.title.choosen_patient', { name: selectedPatient.name })
-						: t('medical_history.title.no_choosen_patient')}
+						? t('medical_history.title.chosen_patient', { name: selectedPatient.name })
+						: t('medical_history.title.no_chosen_patient')}
 				</Typography>
 				<Stack direction='row' spacing={1}>
 					<Button variant='contained' disabled={!selectedPatient} onClick={onCreateMedicalHistoryClick}>

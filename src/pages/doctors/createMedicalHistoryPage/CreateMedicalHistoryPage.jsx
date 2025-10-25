@@ -51,7 +51,7 @@ export default function CreateMedicalHistoryPage() {
 		method: 'POST',
 		onSuccess: async (response) => {
 			const newPatient = response.data
-			setPatientsStore((prev) => [...prev, newPatient])
+			patientsStore.resetStore((prev) => [...prev, newPatient])
 		},
 	})
 

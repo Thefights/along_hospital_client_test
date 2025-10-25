@@ -257,8 +257,8 @@
             "create_medical_history": "Tạo lịch sử y tế",
             "select_patient": "Chọn bệnh nhân",
             "patient_summary": "Tóm tắt bệnh nhân",
-            "choosen_patient": "Bệnh nhân đã chọn: {name}",
-            "no_choosen_patient": "Chưa chọn bệnh nhân",
+            "chosen_patient": "Bệnh nhân đã chọn: {name}",
+            "no_chosen_patient": "Chưa chọn bệnh nhân",
             "medical_record_info": "Thông tin hồ sơ (sẽ điền sau khi tạo)"
         },
         "placeholder": {

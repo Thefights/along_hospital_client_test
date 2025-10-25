@@ -257,8 +257,8 @@
             "create_medical_history": "Create Medical History",
             "select_patient": "Select Patient",
             "patient_summary": "Patient Summary",
-            "choosen_patient": "Choosen Patient: {name}",
-            "no_choosen_patient": "No patient selected",
+            "chosen_patient": "Chosen Patient: {name}",
+            "no_chosen_patient": "No patient selected",
             "medical_record_info": "Medical Record Info (will be filled after creation)"
         },
         "placeholder": {
