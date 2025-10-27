@@ -1,8 +1,46 @@
 import { EnumConfig } from '@/configs/enumConfig'
+import { useCallback, useMemo } from 'react'
 import useTranslation from './useTranslation'
+
+const normalizeEnumKey = (value) => String(value ?? '').toLowerCase()
 
 export default function useEnum() {
 	const { t } = useTranslation()
+
+	const blogTypeOptions = useMemo(
+		() => [
+			{ value: EnumConfig.BlogType.Health, label: t('blogPage.blogType.Health') },
+			{ value: EnumConfig.BlogType.News, label: t('blogPage.blogType.News') },
+			{ value: EnumConfig.BlogType.Promotion, label: t('blogPage.blogType.Promotion') },
+			{ value: EnumConfig.BlogType.Guide, label: t('blogPage.blogType.Guide') },
+			{ value: EnumConfig.BlogType.Other, label: t('blogPage.blogType.Other') },
+		],
+		[t]
+	)
+
+	const blogTypeOptionMap = useMemo(() => {
+		return blogTypeOptions.reduce((acc, option, index) => {
+			const normalizedKey = normalizeEnumKey(option.value)
+			acc[normalizedKey] = option
+			acc[String(option.value ?? '').trim()] = option
+			if (typeof option.value === 'number') {
+				acc[option.value] = option
+			}
+			acc[index] = option
+			acc[String(index)] = option
+			return acc
+		}, {})
+	}, [blogTypeOptions])
+
+	const getBlogTypeOption = useCallback(
+		(value) => blogTypeOptionMap[normalizeEnumKey(value)],
+		[blogTypeOptionMap]
+	)
+
+	const getBlogTypeLabel = useCallback(
+		(value) => getBlogTypeOption(value)?.label,
+		[getBlogTypeOption]
+	)
 	return {
 		genderOptions: [
 			{ value: EnumConfig.Gender.Male, label: t('enum.gender.male') },
@@ -89,13 +127,10 @@ export default function useEnum() {
 			},
 		],
 
-		blogTypeOptions: [
-			{ value: 'Health', label: t('blogPage.blogType.Health') },
-			{ value: 'News', label: t('blogPage.blogType.News') },
-			{ value: 'Promotion', label: t('blogPage.blogType.Promotion') },
-			{ value: 'Guide', label: t('blogPage.blogType.Guide') },
-			{ value: 'Other', label: t('blogPage.blogType.Other') },
-		],
+		blogTypeOptions,
+		blogTypeOptionMap,
+		getBlogTypeOption,
+		getBlogTypeLabel,
 	}
 }
 
