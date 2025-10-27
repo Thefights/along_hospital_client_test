@@ -41,3 +41,18 @@ export const getEnumLabelByValue = (enumArray, value) => {
 	})
 	return found ? found.label ?? (typeof found === 'string' ? found : String(value)) : null
 }
+
+export const stripHtml = (html) => {
+	if (!html || typeof html !== 'string') return ''
+
+	const tempDiv = document.createElement('div')
+	tempDiv.innerHTML = html
+
+	let text = tempDiv.textContent || tempDiv.innerText || ''
+
+	const textArea = document.createElement('textarea')
+	textArea.innerHTML = text
+	text = textArea.value
+
+	return text
+}
