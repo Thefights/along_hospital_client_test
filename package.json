@@ -18,6 +18,7 @@
     "@mui/material": "^7.3.2",
     "@reduxjs/toolkit": "^2.9.0",
     "axios": "^1.11.0",
+    "ckeditor4-react": "^5.2.1",
     "react": "^19.1.1",
     "react-awesome-reveal": "^4.3.1",
     "react-dom": "^19.1.1",
