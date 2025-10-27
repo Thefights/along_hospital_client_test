@@ -21,14 +21,16 @@ const VerifyLinkPage = () => {
 		url: `${ApiUrls.AUTH.REGISTER_VERIFY}?token=${encodeURIComponent(token)}`,
 		method: 'POST',
 		onSuccess: async (resp) => {
-			const token = resp.data.accessToken
+			const { accessToken, refreshToken } = resp.data
+
 			if (!token) {
 				setFailed(true)
 				setVerifying(false)
 				return
 			}
 
-			await login(token)
+			await login(accessToken, refreshToken)
+
 			setSuccess(true)
 
 			setTimeout(() => {

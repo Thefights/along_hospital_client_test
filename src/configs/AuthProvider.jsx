@@ -3,15 +3,24 @@
 import useReduxStore from '@/hooks/useReduxStore'
 import { useLocalStorage } from '@/hooks/useStorage'
 import { resetAuthStore, setAuthStore } from '@/redux/reducers/authReducer'
-import { createContext, useMemo } from 'react'
+import { createContext, useEffect, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { ApiUrls } from './apiUrls'
+import axiosConfig from './axiosConfig'
 
 export const AuthContext = createContext(null)
 
 const AuthProvider = ({ children }) => {
 	const dispatch = useDispatch()
-	const [_, setToken, removeToken] = useLocalStorage('token')
+	const [accessToken, setAccessToken, removeAccessToken] = useLocalStorage('accessToken')
+	const [refreshToken, setRefreshToken, removeRefreshToken] = useLocalStorage('refreshToken')
+
+	useEffect(() => {
+		const fetchToken = async () => {
+			if (accessToken && refreshToken) await authStore.fetch()
+		}
+		fetchToken()
+	}, [accessToken, refreshToken])
 
 	const authStore = useReduxStore({
 		url: ApiUrls.AUTH.CURRENT_ACCOUNT,
@@ -19,14 +28,21 @@ const AuthProvider = ({ children }) => {
 		setStore: setAuthStore,
 	})
 
-	const login = async (token) => {
-		setToken(token)
-		await authStore.fetch()
+	const login = async (accessToken, refreshToken) => {
+		setAccessToken(accessToken)
+		setRefreshToken(refreshToken)
 	}
 
-	const logout = () => {
-		removeToken()
-		dispatch(resetAuthStore())
+	const logout = async () => {
+		try {
+			if (refreshToken) {
+				await axiosConfig.post(ApiUrls.AUTH.LOGOUT, { refreshToken })
+			}
+		} finally {
+			removeAccessToken()
+			removeRefreshToken()
+			dispatch(resetAuthStore())
+		}
 	}
 
 	const hasRole = (required) => {

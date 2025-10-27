@@ -10,6 +10,7 @@ export const ApiUrls = {
 		FORGOT_PASSWORD_RESET: '/auth/forgot-password/reset',
 		LOGOUT: '/auth/logout',
 		CURRENT_ACCOUNT: '/auth/me',
+		REFRESH_TOKEN: '/auth/refresh',
 		COMPLETE_PROFILE: '/user/complete-profile',
 	},
 	USER: {

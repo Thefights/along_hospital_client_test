@@ -37,19 +37,21 @@ const LoginPage = () => {
 		url: ApiUrls.AUTH.LOGIN,
 		method: 'POST',
 		onSuccess: async (resp) => {
-			const { accessToken, stage } = resp.data
+			console.log(resp)
+			const { accessToken, refreshToken, stage } = resp.data
 			if (!accessToken) return
-			await login(accessToken)
+			await login(accessToken, refreshToken)
 
-			if (stage !== EnumConfig.AuthStage.Done) {
+			if (stage && stage !== EnumConfig.AuthStage.Done) {
 				navigate(routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.COMPLETE_PROFILE), { replace: true })
 			} else {
 				navigate('/', { replace: true })
 			}
 		},
 		onError: async (err) => {
+			console.log(err)
 			const msg = (err?.response?.data?.error || '').toString().toLowerCase()
-			if (msg.includes('please verify your account')) {
+			if (msg.includes('not verified')) {
 				navigate(routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.RESEND_LINK), { replace: true })
 			}
 		},
