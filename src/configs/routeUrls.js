@@ -42,8 +42,10 @@ export const routeUrls = {
 	MANAGER: {
 		DASHBOARD: '/',
 		APPOINTMENT_MANAGEMENT: '/appointments',
-		BLOG_MANAGEMENT: '/blogs',
-		BLOG_CREATE: '/blogs/create',
-		BLOG_UPDATE: (blogId = ':id') => `/blogs/edit/${blogId}`,
+		BLOG: {
+			INDEX: '/blogs',
+			CREATE: '/blogs/create',
+			UPDATE: (blogId = ':id') => `/blogs/edit/${blogId}`,
+		},
 	},
 }

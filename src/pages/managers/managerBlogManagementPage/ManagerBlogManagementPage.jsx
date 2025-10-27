@@ -179,7 +179,7 @@ const ManagerBlogManagementPage = () => {
 								title: t('button.update'),
 								icon: <Edit fontSize='small' />,
 								onClick: () =>
-									navigate(routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.BLOG_UPDATE(row?.id))),
+									navigate(routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.BLOG.UPDATE(row?.id))),
 							},
 							{
 								title: t('button.delete'),
@@ -256,7 +256,7 @@ const ManagerBlogManagementPage = () => {
 					<Button
 						variant='contained'
 						color='primary'
-						onClick={() => navigate(routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.BLOG_CREATE))}
+						onClick={() => navigate(routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.BLOG.CREATE))}
 					>
 						{t('button.create')} Blog
 					</Button>
