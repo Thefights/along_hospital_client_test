@@ -14,7 +14,9 @@
         "save": "Save",
         "add_row": "Add Row",
         "login": "Login",
-        "filter": "Filter"
+        "filter": "Filter",
+        "reset_filter": "Reset Filter",
+        "creating": "Creating..."
     },
     "text": {
         "all": "All",
@@ -340,8 +342,15 @@
         "delete_description": "Are you sure you want to delete {number} selected item(s)? This action cannot be undone."
     },
     "blogPage": {
+        "title": "News & Blog",
         "titleLabel": "Title",
-        "typeLabel": "Type",
+        "typeLabel": "Blog Type",
+        "contentLabel": "Content",
+        "coverImage": "Cover Image",
+        "selectTypePlaceholder": "-- Select Type --",
+        "chooseImage": "Choose Image",
+        "previewColumn": "Preview",
+        "imageColumn": "Image",
         "apply": "Apply",
         "applyConfirmTitle": "Apply filters?",
         "applyConfirmDescription": "Apply selected filters?",
@@ -352,12 +361,32 @@
         "untitled": "Untitled",
         "imageAlt": "Blog image",
         "pageInfo": "Page {current} / {total}",
+        "tabs": {
+            "health": "Health",
+            "news": "News",
+            "promotion": "Promotion",
+            "guide": "Guide",
+            "other": "Other"
+        },
         "blogType": {
             "Health": "Health",
             "News": "News",
             "Promotion": "Promotion",
             "Guide": "Guide",
             "Other": "Other"
+        },
+        "blogDetail": {
+            "headerTitle": "Blog",
+            "back": "Back",
+            "untitled": "Untitled"
         }
+    },
+    "blogDetail": {
+        "headerTitle": "Blog",
+        "back": "Back",
+        "untitled": "Untitled",
+        "recentPosts": "Recent Blogs",
+        "noRecent": "No recent blogs available.",
+        "publishedOn": "Published on {date}"
     }
 }
