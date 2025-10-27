@@ -69,4 +69,11 @@ export const ApiUrls = {
 			},
 		},
 	},
+	BLOG: {
+		INDEX: `/blog`,
+		MANAGEMENT: {
+			INDEX: `/Blog-Management`,
+			DETAIL: (id) => `/Blog-Management/${id}`,
+		},
+	},
 }

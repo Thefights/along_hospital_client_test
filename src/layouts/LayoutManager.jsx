@@ -1,11 +1,13 @@
 import DashboardDrawer from '@/components/layouts/DashboardDrawer'
 import { default as DashboardHeader } from '@/components/layouts/DashboardHeader'
 import { ApiUrls } from '@/configs/apiUrls'
+import { routeUrls } from '@/configs/routeUrls'
 import useAuth from '@/hooks/useAuth'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
 import { setProfileStore } from '@/redux/reducers/patientReducer'
 import {
+	ArticleRounded,
 	DashboardRounded,
 	Inventory2Rounded,
 	LocalHospitalRounded,
@@ -34,6 +36,12 @@ const LayoutManager = () => {
 			title: 'Resource',
 			items: [
 				{ key: 'dashboard', label: 'Dashboard', icon: <DashboardRounded />, url: '/admin' },
+				{
+					key: 'blogs',
+					label: 'Blogs',
+					icon: <ArticleRounded />,
+					url: routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.BLOG_MANAGEMENT),
+				},
 				{
 					key: 'staff',
 					label: 'Staff',
