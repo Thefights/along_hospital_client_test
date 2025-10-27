@@ -6,7 +6,7 @@ import { MenuItem, Pagination, PaginationItem, Select, Stack, Typography } from 
 import { useEffect, useMemo } from 'react'
 
 export const GenericPagination = ({
-	totalPages = 1,
+	totalPage = 1,
 	page = 1,
 	setPage = (page) => {},
 	siblingCount = 2,
@@ -15,7 +15,7 @@ export const GenericPagination = ({
 }) => {
 	return (
 		<Pagination
-			count={Math.max(totalPages, 1)}
+			count={Math.max(totalPage, 1)}
 			page={Math.max(page, 1)}
 			onChange={(event, value) => setPage(value)}
 			showFirstButton
@@ -33,7 +33,7 @@ export const GenericPagination = ({
 }
 
 export const GenericTablePagination = ({
-	totalItems = 0,
+	totalPage = 0,
 	page = 1,
 	setPage = (page) => {},
 	pageSize,
@@ -48,17 +48,9 @@ export const GenericTablePagination = ({
 		[pageSize, pageSizeOptions]
 	)
 
-	const totalPages = useMemo(() => {
-		return Math.max(Math.ceil((totalItems || 0) / rowsPerPageNum), 1)
-	}, [totalItems, rowsPerPageNum])
-
 	useEffect(() => {
 		if (page !== 1) setPage(1)
 	}, [rowsPerPageNum, setPage])
-
-	useEffect(() => {
-		if (page > totalPages) setPage(totalPages)
-	}, [page, totalPages, setPage])
 
 	return (
 		<Stack direction='row' justifyContent='space-between' alignItems='center' flexWrap={'wrap'} m={2}>
@@ -78,7 +70,7 @@ export const GenericTablePagination = ({
 				</Select>
 			</Stack>
 			<GenericPagination
-				totalPages={totalPages}
+				totalPage={totalPage}
 				page={page}
 				setPage={setPage}
 				siblingCount={1}
@@ -93,13 +85,13 @@ export const GenericTablePagination = ({
 
 /*
 <GenericPagination
-	totalPages={totalPages}
+	totalPage={totalPage}
 	page={page}
 	setPage={setPage}
 />
 
 <GenericTablePagination
-	totalItems={data?.length}
+	totalPage={totalPage}
 	page={page}
 	setPage={setPage}
 	pageSize={pageSize}

@@ -1,6 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axiosConfig from '@/configs/axiosConfig'
 import { getObjectConvertingToFormData } from '@/utils/handleObjectUtil'
-import { getTrimString } from '@/utils/handleStringUtil'
+import { appendPath, getTrimString } from '@/utils/handleStringUtil'
+import { isPlainObject } from '@reduxjs/toolkit'
 import { useCallback, useState } from 'react'
 
 /**
@@ -9,7 +11,7 @@ import { useCallback, useState } from 'react'
  * @param {'POST'|'GET'|'PUT'|'DELETE'} [config.method='POST']
  * @param {Object} [config.data={}]
  * @param {Object|string} [config.params={}]
- * @returns {{loading: boolean, error: Error|null, response: any|null, submit: function(overrideValues): Promise<any>}}
+ * @returns {{loading: boolean, error: Error|null, response: any|null, submit: function(overrideValues, { overrideUrl, overrideParam }): Promise<any>}}
  */
 export function useAxiosSubmit({
 	url = '',
@@ -24,8 +26,8 @@ export function useAxiosSubmit({
 	const [response, setResponse] = useState(null)
 
 	const submit = useCallback(
-		async (overrideValues) => {
-			if (loading) return Promise.resolve(null)
+		async (overrideData, { overrideUrl, overrideParam } = {}) => {
+			if (loading) return undefined
 
 			setLoading(true)
 			setError(null)
@@ -33,7 +35,14 @@ export function useAxiosSubmit({
 
 			const upper = String(method).toUpperCase()
 			const queryOnly = upper === 'GET' || upper === 'DELETE'
-			const bodySource = overrideValues !== undefined ? overrideValues : data
+			const bodySource = overrideData !== undefined ? overrideData : data
+
+			const finalParams = overrideParam !== undefined ? overrideParam : params
+			const finalUrl = overrideUrl || url
+
+			const isObjParams = isPlainObject(finalParams)
+			const axiosUrl = isObjParams ? finalUrl : appendPath(finalUrl, finalParams)
+			const axiosParams = isObjParams ? finalParams : undefined
 
 			try {
 				let payload = undefined
@@ -46,9 +55,9 @@ export function useAxiosSubmit({
 					}
 				}
 				const response = await axiosConfig.request({
-					url,
+					url: axiosUrl,
 					method: upper,
-					params,
+					params: axiosParams,
 					data: payload,
 				})
 
@@ -63,7 +72,7 @@ export function useAxiosSubmit({
 				setLoading(false)
 			}
 		},
-		[loading, url, method, data, params]
+		[loading, method, data, url, params]
 	)
 
 	return { loading, error, response, submit }

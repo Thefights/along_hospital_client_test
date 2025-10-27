@@ -14,7 +14,11 @@
         "save": "Lưu",
         "add_row": "Thêm dòng",
         "login": "Đăng nhập",
-        "filter": "Lọc"
+        "filter": "Lọc",
+        "next": "Tiếp theo",
+        "resend_in": "Gửi lại sau",
+        "toggle_language": "Chuyển đổi ngôn ngữ",
+        "toggle_theme": "Chuyển đổi giao diện"
     },
     "text": {
         "all": "Tất cả",
@@ -25,6 +29,9 @@
         "select_options": "Chọn tùy chọn",
         "date": "Ngày",
         "time": "Thời gian",
+        "step": "Bước",
+        "more": "Nữa",
+        "result": "Kết quả",
         "rows_per_page": "Số dòng mỗi trang",
         "role": {
             "manager": "Quản lý",
@@ -136,11 +143,23 @@
         "title": {
             "personal_information": "Thông tin cá nhân"
         },
+        "placeholder": {
+            "no_phone": "Chưa có số điện thoại",
+            "no_email": "Chưa có email",
+            "no_gender": "Chưa có giới tính",
+            "no_date_of_birth": "Chưa có ngày sinh",
+            "no_address": "Chưa có địa chỉ",
+            "no_height": "Chưa có chiều cao",
+            "no_weight": "Chưa có cân nặng",
+            "no_allergies": "Chưa có dữ liệu dị ứng"
+        },
         "field": {
-            "full_name": "Họ và tên",
+            "name": "Họ và tên",
             "email": "Email",
             "phone": "Số điện thoại",
             "address": "Địa chỉ",
+            "city": "Thành phố",
+            "country": "Quốc gia",
             "date_of_birth": "Ngày sinh",
             "gender": "Giới tính",
             "height": "Chiều cao",
@@ -148,7 +167,7 @@
             "height_weight": "Chiều cao/Cân nặng",
             "blood_type": "Nhóm máu",
             "allergy": {
-                "allergy": "Dị ứng",
+                "allergies": "Dị ứng",
                 "name": "Tên",
                 "severity": "Mức độ",
                 "reaction": "Phản ứng"
@@ -282,12 +301,22 @@
             "medical_history_information": "Thông tin lịch sử y tế",
             "service_details": "Chi tiết dịch vụ y tế",
             "prescription": "Đơn thuốc",
-            "complaint": "Khiếu nại"
+            "complaint": "Khiếu nại",
+            "create_medical_history": "Tạo lịch sử y tế",
+            "select_patient": "Chọn bệnh nhân",
+            "patient_summary": "Tóm tắt bệnh nhân",
+            "chosen_patient": "Bệnh nhân đã chọn: {name}",
+            "no_chosen_patient": "Chưa chọn bệnh nhân",
+            "medical_record_info": "Thông tin hồ sơ (sẽ điền sau khi tạo)"
         },
         "placeholder": {
             "no_service": "Không có dịch vụ y tế nào được ghi nhận",
             "no_prescription": "Không có đơn thuốc nào được ghi nhận",
-            "no_complaint": "Không có khiếu nại nào được ghi nhận"
+            "no_complaint": "Không có khiếu nại nào được ghi nhận",
+            "search_patient_name": "Tìm kiếm theo tên bệnh nhân...",
+            "search_doctor_name": "Tìm kiếm theo tên bác sĩ...",
+            "search_patient_phone_name_email": "Tìm kiếm theo số điện thoại/tên/email bệnh nhân...",
+            "note_edit_after_creation": "Sau khi tạo, mở trang chi tiết để cập nhật các trường này"
         },
         "field": {
             "id": "ID lịch sử y tế",
@@ -331,10 +360,13 @@
             "respond_complaint": "Phản hồi khiếu nại",
             "save_as_draft": "Lưu dưới dạng bản nháp",
             "close_complaint": "Đóng khiếu nại",
+            "create_medical_history": "Tạo lịch sử y tế",
             "update_medical_history": "Cập nhật lịch sử y tế",
             "complete_medical_history": "Hoàn thành lịch sử y tế",
             "payment": "Thanh toán",
-            "print_invoice": "In hóa đơn"
+            "view_full_detail": "Xem chi tiết đầy đủ",
+            "print_invoice": "In hóa đơn",
+            "create_patient": "Tạo bệnh nhân"
         },
         "dialog": {
             "title": {
@@ -411,5 +443,112 @@
         "delete_selected": "Xóa {number} mục đã chọn",
         "delete_title": "Xóa người dùng đã chọn?",
         "delete_description": "Bạn có chắc chắn muốn xóa {number} mục đã chọn không? Hành động này không thể hoàn tác."
+    },
+    "auth": {
+        "hero": {
+            "subtitle": "Kết nối bệnh nhân và bác sĩ thông qua dịch vụ y tế từ xa an toàn, tiện lợi",
+            "tagline": "Chăm sóc sức khỏe mọi lúc, mọi nơi"
+        },
+        "or": "Hoặc tiếp tục với",
+        "seconds": "giây",
+        "back_to_login": "Quay lại đăng nhập",
+        "login": {
+            "title": "Đăng nhập",
+            "welcome": "Chào mừng trở lại",
+            "subtitle": "Đăng nhập vào tài khoản của bạn",
+            "submit": "Đăng nhập",
+            "unverified": "Tài khoản của bạn chưa được xác minh.",
+            "resend_link": "Gửi lại liên kết xác minh",
+            "forgot_password": "Quên mật khẩu?",
+            "no_account": "Chưa có tài khoản?",
+            "register": "Đăng ký"
+        },
+        "register": {
+            "title": "Đăng ký",
+            "subtitle": "Bắt đầu với tài khoản miễn phí của bạn",
+            "submit": "Đăng ký",
+            "verify_sent": "Liên kết xác minh đã được gửi qua SMS tới",
+            "check_sms": "Kiểm tra tin nhắn SMS",
+            "verify_subtitle": "Chúng tôi đã gửi liên kết xác minh đến điện thoại của bạn",
+            "resend_link": "Gửi lại liên kết xác minh",
+            "resend_in": "Gửi lại sau",
+            "back_to_login": "Quay lại đăng nhập",
+            "already_have_account": "Đã có tài khoản?",
+            "login": "Đăng nhập"
+        },
+        "verify_link": {
+            "title": "Xác minh tài khoản",
+            "description": "Đang xử lý liên kết xác minh của bạn...",
+            "processing": "Đang xử lý liên kết xác minh của bạn...",
+            "success": "Xác minh thành công!",
+            "redirecting": "Đang chuyển hướng...",
+            "failed": "Xác minh thất bại",
+            "invalid": "Liên kết xác minh không hợp lệ hoặc đã hết hạn.",
+            "request_new": "Yêu cầu liên kết xác minh mới"
+        },
+        "resend": {
+            "title": "Kiểm tra tin nhắn SMS",
+            "subtitle": "Chúng tôi đã gửi liên kết xác minh đến điện thoại của bạn",
+            "link_sent": "Liên kết xác minh đã được gửi tới",
+            "resend_in": "Gửi lại sau",
+            "button": "Gửi lại liên kết xác minh",
+            "edit_phone": "Chỉnh sửa số điện thoại",
+            "already_have_account": "Đã có tài khoản?"
+        },
+        "forgot": {
+            "title": "Quên mật khẩu",
+            "subtitle": "Nhập email hoặc số điện thoại để đặt lại mật khẩu",
+            "link_sent": "Liên kết đặt lại đã được gửi!",
+            "check_sms": "Nếu tài khoản tồn tại, liên kết đặt lại đã được gửi qua SMS.",
+            "remember_password": "Nhớ mật khẩu?"
+        },
+        "reset": {
+            "title": "Đặt lại mật khẩu",
+            "subtitle": "Nhập mật khẩu mới của bạn bên dưới",
+            "success": "Đặt lại mật khẩu thành công!",
+            "redirecting": "Đang chuyển đến trang đăng nhập...",
+            "no_account": "Chưa có tài khoản?"
+        },
+        "complete": {
+            "title": "Hoàn tất hồ sơ",
+            "subtitle": "Giúp chúng tôi hiểu bạn hơn"
+        },
+        "field": {
+            "identifier": "Email hoặc Số điện thoại",
+            "email": "Email",
+            "phone": "Số điện thoại",
+            "password": "Mật khẩu",
+            "confirm_password": "Xác nhận mật khẩu",
+            "new_password": "Mật khẩu mới"
+        },
+        "placeholder": {
+            "identifier": "Nhập email của bạn",
+            "email": "Nhập email của bạn",
+            "phone": "Nhập số điện thoại của bạn",
+            "password": "Nhập mật khẩu của bạn",
+            "confirm_password": "Nhập lại mật khẩu của bạn",
+            "new_password": "Nhập mật khẩu mới của bạn"
+        },
+        "hint": {
+            "password_min": "Tối thiểu 8 ký tự"
+        },
+        "error": {
+            "email_required": "Email là bắt buộc",
+            "phone_required": "Số điện thoại là bắt buộc",
+            "password_required": "Mật khẩu là bắt buộc",
+            "password_min_length": "Mật khẩu phải có ít nhất 8 ký tự",
+            "password_match": "Mật khẩu không khớp",
+            "identifier_required": "Email hoặc Số điện thoại là bắt buộc",
+            "fullname_required": "Họ và tên là bắt buộc"
+        },
+        "link": {
+            "register": "Tạo tài khoản",
+            "forgot": "Quên mật khẩu?"
+        },
+        "google": {
+            "signin_with": "Đăng nhập bằng Google",
+            "continue_with": "Tiếp tục với Google",
+            "locale": "vi"
+        }
     }
 }

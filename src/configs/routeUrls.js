@@ -24,26 +24,43 @@ export const routeUrls = {
 		REGISTER: '/register',
 		CHANGE_PASSWORD: '/change-password',
 		FORGOT_PASSWORD: '/forgot-password',
+		VERIFY: '/verify',
+		RESEND_LINK: '/resend-link',
+		RESET_PASSWORD: '/reset-password',
+		COMPLETE_PROFILE: '/complete-profile',
 	},
 	PATIENT: {
 		CART: '/cart',
 		PROFILE: '/profile',
-		MEDICAL_HISTORY: '/medical-history',
+		MEDICAL_HISTORY: {
+			INDEX: '/medical-history',
+			DETAIL: (id) => `/medical-history/${id}`,
+		},
 		ORDER_HISTORY: '/order-history',
 		APPOINTMENT: {
-			INDEX: '/appointments',
-			CREATE: '/appointments/create',
 			JOIN_MEETING_ROOM: `/appointments/join-meeting-room`,
 			MEETING_ROOM_TOKEN: (id) => `/appointments/meeting-room-token/${id}`,
+			INDEX: '/appointment',
+			CREATE: '/appointment/create',
 		},
 		VIDEO_CONSULTATION: '/video-consultation',
 	},
 	DOCTOR: {
 		DASHBOARD: '/',
-		APPOINTMENT_MANAGEMENT: '/appointments',
+		APPOINTMENT_MANAGEMENT: '/appointment',
+		MEDICAL_HISTORY: {
+			INDEX: '/medical-history',
+			CREATE: '/medical-history/create',
+			DETAIL: (id) => `/medical-history/${id}`,
+		},
 	},
 	MANAGER: {
 		DASHBOARD: '/',
-		APPOINTMENT_MANAGEMENT: '/appointments',
+		APPOINTMENT_MANAGEMENT: '/appointment',
+		MEDICAL_HISTORY: {
+			INDEX: '/medical-history',
+			DETAIL: (id) => `/medical-history/${id}`,
+		},
+		COMPLAINT_MANAGEMENT: '/complaint',
 	},
 }

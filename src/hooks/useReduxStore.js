@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { isEmptyValue } from '@/utils/handleBooleanUtil'
-import { useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import useFetch from './useFetch'
 
@@ -37,9 +38,17 @@ export default function useReduxStore({
 			const payload = dataToStore(fetchedData)
 			dispatch(setStore(payload))
 		}
-	}, [fetchedData, dataToStore, dispatch, setStore])
+	}, [fetchedData])
 
-	const data = useMemo(() => dataToGet(storeData), [storeData, dataToGet])
+	const data = useMemo(() => dataToGet(storeData), [storeData])
 
-	return { loading, error, data, fetch }
+	const resetStore = useCallback(
+		(next) => {
+			const payload = typeof next === 'function' ? next(storeData) : next
+			dispatch(setStore(payload))
+		},
+		[dispatch, setStore, storeData]
+	)
+
+	return { loading, error, data, fetch, resetStore }
 }

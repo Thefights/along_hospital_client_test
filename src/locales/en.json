@@ -14,7 +14,11 @@
         "save": "Save",
         "add_row": "Add Row",
         "login": "Login",
-        "filter": "Filter"
+        "filter": "Filter",
+        "next": "Next",
+        "resend_in": "Resend in",
+        "toggle_language": "Toggle language",
+        "toggle_theme": "Toggle theme"
     },
     "text": {
         "all": "All",
@@ -25,6 +29,9 @@
         "select_options": "Select options",
         "date": "Date",
         "time": "Time",
+        "step": "Step",
+        "more": "More",
+        "result": "Result",
         "rows_per_page": "Rows per page",
         "role": {
             "manager": "Manager",
@@ -46,9 +53,7 @@
         "switch_dark": "Switch to dark mode",
         "switch_light": "Switch to light mode",
         "collapse": "Collapse",
-        "expand": "Expand",
-        "video_consultation": "Video Consultation",
-        "meeting_room": "Meeting Room"
+        "expand": "Expand"
     },
     "dialog": {
         "doctor_picker": {
@@ -136,11 +141,23 @@
         "title": {
             "personal_information": "Personal Information"
         },
+        "placeholder": {
+            "no_phone": "No phone number provided",
+            "no_email": "No email provided",
+            "no_gender": "No gender provided",
+            "no_date_of_birth": "No date of birth provided",
+            "no_address": "No address provided",
+            "no_height": "No height provided",
+            "no_weight": "No weight provided",
+            "no_allergies": "No allergies recorded"
+        },
         "field": {
-            "full_name": "Full Name",
+            "name": "Name",
             "email": "Email",
             "phone": "Phone",
             "address": "Address",
+            "city": "City",
+            "country": "Country",
             "date_of_birth": "Date of Birth",
             "gender": "Gender",
             "height": "Height",
@@ -148,7 +165,7 @@
             "height_weight": "Height/Weight",
             "blood_type": "Blood Type",
             "allergy": {
-                "allergy": "Allergy",
+                "allergies": "Allergies",
                 "name": "Name",
                 "severity": "Severity",
                 "reaction": "Reaction"
@@ -222,72 +239,27 @@
             "confirm_refuse_description": "Please provide a reason for refusal:"
         }
     },
-    "video_consultation": {
-        "title": {
-            "patient_info": "Patient Info",
-            "appointment_info": "Video Consultation Info",
-            "doctor_info": "Doctor Info",
-            "create_appointment": "Register Video Consultation",
-            "appointment_history": "Appointment History",
-            "appointment_management": "Appointment Management",
-            "appointment_detail": "Appointment Detail",
-            "filters": "Filters",
-            "timelines": "Timelines"
-        },
-        "button": {
-            "cancel_appointment": "Cancel video consultation",
-            "deny_assignment": "Deny Assignment",
-            "accept_assignment": "Accept Assignment",
-            "complete_appointment": "Complete video consultation",
-            "assign_doctor": "Assign Doctor",
-            "refuse_appointment": "Refuse video consultation"
-        },
-        "field": {
-            "purpose": "Purpose",
-            "specialty": "Specialty",
-            "select_specialty": "Select Specialty",
-            "start_date": "Start Date",
-            "end_date": "End Date",
-            "doctor": "Doctor",
-            "select_doctor": "Select Doctor",
-            "search_doctor": "Search by Doctor name...",
-            "cancel_reason": "Cancel Reason",
-            "refuse_reason": "Refuse Reason"
-        },
-        "dialog": {
-            "confirm_create_title": "Create video consultation?",
-            "confirm_create_description": "Are you sure to create this video consultation?",
-            "confirm_cancel_title": "Cancel video consultation?",
-            "confirm_cancel_description": "Please provide a reason for cancellation:",
-            "confirm_deny_title": "Deny assignment?",
-            "confirm_deny_description": "Are your sure to deny this assignment? This action cannot be undone",
-            "confirm_accept_title": "Accept assignment?",
-            "confirm_accept_description": "Are your sure to accept this assignment?",
-            "confirm_complete_title": "Complete video consultation?",
-            "confirm_complete_description": "Are you sure to mark this video consultation as completed?",
-            "confirm_refuse_title": "Refuse assignment?",
-            "confirm_refuse_description": "Please provide a reason for refusal:"
-        },
-        "status": {
-            "upcoming": "Upcoming",
-            "scheduled": "Scheduled",
-            "confirmed": "Confirmed",
-            "completed": "Completed",
-            "cancelled": "Cancelled",
-            "refused": "Refused"
-        }
-    },
     "medical_history": {
         "title": {
             "medical_history_information": "Medical History Information",
             "service_details": "Service Details",
             "prescription": "Prescription",
-            "complaint": "Complaint"
+            "complaint": "Complaint",
+            "create_medical_history": "Create Medical History",
+            "select_patient": "Select Patient",
+            "patient_summary": "Patient Summary",
+            "chosen_patient": "Chosen Patient: {name}",
+            "no_chosen_patient": "No patient selected",
+            "medical_record_info": "Medical Record Info (will be filled after creation)"
         },
         "placeholder": {
             "no_service": "No medical services recorded",
             "no_prescription": "No prescriptions recorded",
-            "no_complaint": "No complaints recorded"
+            "no_complaint": "No complaints recorded",
+            "search_patient_name": "Search by patient name...",
+            "search_doctor_name": "Search by doctor name...",
+            "search_patient_phone_name_email": "Search by patient phone/name/email...",
+            "note_edit_after_creation": "After creation, open detail page to update these fields"
         },
         "field": {
             "id": "Medical History ID",
@@ -331,10 +303,13 @@
             "respond_complaint": "Respond to Complaint",
             "save_as_draft": "Save as Draft",
             "close_complaint": "Close Complaint",
+            "create_medical_history": "Create Medical History",
             "update_medical_history": "Update Medical History",
             "complete_medical_history": "Complete Medical History",
             "payment": "Payment",
-            "print_invoice": "Print Invoice"
+            "view_full_detail": "View Full Detail",
+            "print_invoice": "Print Invoice",
+            "create_patient": "Create Patient"
         },
         "dialog": {
             "title": {
@@ -362,11 +337,6 @@
         "specialty": "Specialty",
         "blog": "Blog",
         "about_us": "About Us",
-        "video_consultation": "Video Consultation",
-        "meeting_room": "Meeting Room",
-        "booking": "Booking",
-        "more": "More",
-        "appointment": "Appointment",
         "user_menu": {
             "profile": "Profile",
             "appointments": "Appointments",
@@ -401,66 +371,111 @@
         "delete_title": "Delete selected users?",
         "delete_description": "Are you sure you want to delete {number} selected item(s)? This action cannot be undone."
     },
-    "meeting_room": {
-        "title": {
-            "waiting_room": "Waiting Room",
-            "consultation_room": "Consultation Room",
-            "join_meeting": "Join Meeting",
-            "placeholder_meeting_id": "Enter Meeting ID",
-            "appointment_time" : "Appointment Time:",
-            "duration": "Duration:",
-            "note": "Please ensure you have a stable internet connection and a quiet environment for the best consultation experience.",
-            "duration_left": "Duration Left"
+    "auth": {
+        "hero": {
+            "subtitle": "Connecting patients and doctors through secure, convenient telemedicine",
+            "tagline": "Your healthcare, anywhere"
         },
-        "subtitle": {
-            "waiting_room": "Please wait for the doctor to start the consultation.",
-            "consultation_room": "You are now in the consultation room.",
-            "enter_meeting": "Enter the meeting room to join the consultation."
+        "or": "Or continue with",
+        "seconds": "seconds",
+        "back_to_login": "Back to login",
+        "login": {
+            "title": "Login",
+            "welcome": "Welcome back",
+            "subtitle": "Sign in to your account",
+            "submit": "Login",
+            "unverified": "Your account isn't verified yet.",
+            "resend_link": "Resend verification link",
+            "forgot_password": "Forgot password?",
+            "no_account": "Don't have an account?",
+            "register": "Register"
         },
-        "button": {
-            "join_consultation": "Join Consultation",
-            "leave_consultation": "Leave Consultation",
-            "end_consultation": "End Consultation",
-            "mute_audio": "Mute Audio",
-            "unmute_audio": "Unmute Audio",
-            "disable_video": "Disable Video",
-            "enable_video": "Enable Video",
-            "share_screen": "Share Screen",
-            "stop_sharing": "Stop Sharing"
+        "register": {
+            "title": "Register",
+            "subtitle": "Get started with your free account",
+            "submit": "Register",
+            "verify_sent": "Verification link sent via SMS to",
+            "check_sms": "Check your SMS",
+            "verify_subtitle": "We sent a verification link to your phone",
+            "resend_link": "Resend verification link",
+            "resend_in": "Resend in",
+            "back_to_login": "Back to login",
+            "already_have_account": "Already have an account?",
+            "login": "Login"
         },
-        "notification": {
-            "consultation_ended": "The consultation has ended.",
-            "user_joined": "{user} has joined the consultation.",
-            "user_left": "{user} has left the consultation."
+        "verify_link": {
+            "title": "Verify account",
+            "description": "Processing your verification link...",
+            "processing": "Processing your verification link...",
+            "success": "Verification successful!",
+            "redirecting": "Redirecting...",
+            "failed": "Verification failed",
+            "invalid": "The verification link is invalid or has expired.",
+            "request_new": "Request new verification link"
         },
-        "message": {
-            "waiting_for_doctor": "Waiting for the doctor to start the consultation...",
-            "consultation_in_progress": "Consultation in progress.",
-            "please_enter_meeting_id": "Please enter a valid Meeting ID to join."
+        "resend": {
+            "title": "Check your SMS",
+            "subtitle": "We sent a verification link to your phone",
+            "link_sent": "Verification link sent to",
+            "resend_in": "Resend in",
+            "button": "Resend verification link",
+            "edit_phone": "Edit phone number",
+            "already_have_account": "Already have an account?"
         },
-        "remote_placeholder": "Remote video",
-        "mic": "Microphone",
-        "camera": "Camera",
-        "chat": "Chat",
-        "chat_title": "Chat",
-        "no_messages": "No messages yet",
-        "chat_input_placeholder": "Type a message...",
-        "end_call": "End Call",
-        "create_medical_history": "Create Medical History",
-        "consultation_complete_title": "Consultation Complete",
-        "consultation_complete_subtitle": "Thank you for using our telemedicine service",
-        "consultation_summary_title": "Consultation Summary",
-        "chief_complaint": "Chief Complaint",
-        "sample_chief_complaint": "Recurring headaches for the past 2 weeks",
-        "diagnosis": "Diagnosis",
-        "sample_diagnosis": "Tension-type headache",
-        "recommendations": "Recommendations",
-        "sample_rec_1": "Take prescribed medication as directed",
-        "sample_rec_2": "Maintain regular sleep schedule",
-        "sample_rec_3": "Stay hydrated and reduce screen time",
-        "sample_rec_4": "Follow up in 2 weeks if symptoms persist",
-        "schedule_follow_up": "Schedule Follow-up",
-        "back_to_home": "Back To Home",
-        "summary_notice": "A copy of the summary will be sent to your registered email address"
-    }   
+        "forgot": {
+            "title": "Forgot password",
+            "subtitle": "Enter your email or phone to reset password",
+            "link_sent": "Reset link sent!",
+            "check_sms": "If the account exists, a reset link has been sent via SMS.",
+            "remember_password": "Remember your password?"
+        },
+        "reset": {
+            "title": "Reset password",
+            "subtitle": "Enter your new password below",
+            "success": "Password reset successfully!",
+            "redirecting": "Redirecting to login...",
+            "no_account": "Don't have an account?"
+        },
+        "complete": {
+            "title": "Complete your profile",
+            "subtitle": "Help us get to know you better"
+        },
+        "field": {
+            "identifier": "Email or Phone",
+            "email": "Email",
+            "phone": "Phone",
+            "password": "Password",
+            "confirm_password": "Confirm Password",
+            "new_password": "New password"
+        },
+        "placeholder": {
+            "identifier": "Enter your email or phone number",
+            "email": "Enter your email",
+            "phone": "Enter your phone number",
+            "password": "Enter your password",
+            "confirm_password": "Enter your password again",
+            "new_password": "Enter your new password"
+        },
+        "hint": {
+            "password_min": "At least 8 characters"
+        },
+        "error": {
+            "email_required": "Email is required",
+            "phone_required": "Phone is required",
+            "password_required": "Password is required",
+            "password_min_length": "Password must be at least 8 characters",
+            "password_match": "Passwords do not match",
+            "identifier_required": "Email or Phone is required",
+            "fullname_required": "Full name is required"
+        },
+        "link": {
+            "register": "Create account",
+            "forgot": "Forgot password?"
+        },
+        "google": {
+            "signin_with": "Sign in with Google",
+            "continue_with": "Continue with Google",
+            "locale": "en"
+        }
+    }
 }

@@ -1,5 +1,11 @@
 export const EnumConfig = {
 	// For users
+	AuthStage: {
+		PatientProfilePendingWithPhone: 'PatientProfilePendingWithPhone',
+		PatientProfilePendingWithoutPhone: 'PatientProfilePendingWithoutPhone',
+		DoctorProfilePending: 'DoctorProfilePending',
+		Done: 'Done',
+	},
 	Role: {
 		Guest: 'Guest',
 		Patient: 'Patient',
@@ -10,6 +16,11 @@ export const EnumConfig = {
 		Male: 'Male',
 		Female: 'Female',
 		Other: 'Other',
+	},
+	AllergySeverity: {
+		Mild: 'Mild',
+		Moderate: 'Moderate',
+		Severe: 'Severe',
 	},
 
 	// For appointments
@@ -56,6 +67,11 @@ export const EnumConfig = {
 		Doctor: 'Doctor',
 		Medicine: 'Medicine',
 		Others: 'Others',
+	},
+	ComplaintType: {
+		Neutral: 'Neutral',
+		Positive: 'Positive',
+		Negative: 'Negative',
 	},
 	ComplaintResolveStatus: {
 		Pending: 'Pending',

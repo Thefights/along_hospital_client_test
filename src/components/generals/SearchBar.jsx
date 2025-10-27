@@ -7,7 +7,7 @@ const SearchBar = ({
 	value,
 	setValue,
 	placeholder,
-	options = [],
+	options = [], // if provided, enables autocomplete
 	getOptionLabel = (opt) => opt?.label || opt,
 	onEnterDown = () => {},
 }) => {
@@ -15,7 +15,7 @@ const SearchBar = ({
 	const isAutocomplete = Array.isArray(options) && options.length > 0
 
 	const commonProps = {
-		sx: { width: widthPercent + '%' },
+		sx: widthPercent !== 0 ? { width: widthPercent + '%' } : {},
 		size: 'small',
 		placeholder: placeholder || t('text.search'),
 	}
@@ -23,6 +23,7 @@ const SearchBar = ({
 	return isAutocomplete ? (
 		<Autocomplete
 			freeSolo
+			fullWidth
 			options={options}
 			value={value}
 			onChange={(_, newValue) => setValue(newValue)}
@@ -33,7 +34,6 @@ const SearchBar = ({
 					onEnterDown?.()
 				}
 			}}
-			sx={{ width: widthPercent + '%' }}
 			renderInput={(params) => (
 				<TextField
 					{...params}
@@ -53,6 +53,7 @@ const SearchBar = ({
 		/>
 	) : (
 		<TextField
+			fullWidth
 			{...commonProps}
 			value={value}
 			onChange={(e) => setValue(e.target.value)}

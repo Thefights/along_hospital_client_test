@@ -6,6 +6,7 @@ import EndMeetingRoomPage from '@/pages/patients/meetingRoomPage/endMeetingRoomP
 import JoinMeetingRoomPage from '@/pages/patients/meetingRoomPage/JoinMeetingRoomPage'
 import MeetingRoomPage from '@/pages/patients/meetingRoomPage/meetingRoomPage/MeetingRoomPage'
 import PatientAppointmentHistoryPage from '@/pages/patients/patientAppointmentHistoryPage/PatientAppointmentHistoryPage'
+import PatientMedicalHistoryPage from '@/pages/patients/patientMedicalHistoryPage/PatientMedicalHistoryPage'
 import ProfilePage from '@/pages/patients/ProfilePage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
@@ -30,6 +31,8 @@ const RoutePatient = () => {
 						element={<EndMeetingRoomPage />}
 					/>
 					<Route path={routeUrls.PATIENT.VIDEO_CONSULTATION} element={<CreateVideoConsultationPage />} />
+					path={routeUrls.PATIENT.MEDICAL_HISTORY.INDEX}
+					element={<PatientMedicalHistoryPage />}
 				</Route>
 				<Route
 					path={routeUrls.PATIENT.APPOINTMENT.MEETING_ROOM_TOKEN(':id')}

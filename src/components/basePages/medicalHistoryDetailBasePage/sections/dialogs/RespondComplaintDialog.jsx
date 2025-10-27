@@ -10,9 +10,7 @@ const RespondComplaintDialog = ({
 	onSubmit = (values) => Promise.resolve(values),
 }) => {
 	const { t } = useTranslation()
-	const fields = [
-		{ key: 'response', title: t('medical_history.field.complaint.response'), multiple: 2 },
-	]
+	const fields = [{ key: 'response', title: t('complaint.field.response'), multiple: 2 }]
 
 	return (
 		<GenericFormDialog
