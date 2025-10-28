@@ -1,127 +1,69 @@
 import ActionMenu from '@/components/generals/ActionMenu'
-import ConfirmationButton from '@/components/generals/ConfirmationButton'
-import { GenericTablePagination } from '@/components/generals/GenericPagination'
+import { GenericPagination } from '@/components/generals/GenericPagination'
 import GenericTabs from '@/components/generals/GenericTabs'
 import SearchBar from '@/components/generals/SearchBar'
 import GenericTable from '@/components/tables/GenericTable'
 import { ApiUrls } from '@/configs/apiUrls'
-import axiosConfig from '@/configs/axiosConfig'
 import { defaultBlogTypeStyle } from '@/configs/defaultStylesConfig'
 import { routeUrls } from '@/configs/routeUrls'
-import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
-import { useConfirm } from '@/hooks/useConfirm'
 import useEnum from '@/hooks/useEnum'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
 import { formatDateToDDMMYYYY } from '@/utils/formatDateUtil'
-import { getEnumLabelByValue } from '@/utils/handleStringUtil'
-import { DeleteOutline, Edit } from '@mui/icons-material'
+import { getEnumLabelByValue, stripHtml } from '@/utils/handleStringUtil'
+import { Edit } from '@mui/icons-material'
 import { Box, Button, Paper, Stack, Typography } from '@mui/material'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const getPlainText = (content) => {
-	const cleaned = stripHtml(String(content ?? ''))
-		.replace(/\s+/g, ' ')
-		.trim()
-}
-
-const SORT_FIELD_MAP = {
-	id: 'Id',
-	title: 'Title',
-	blogType: 'BlogType',
-	publicationDate: 'PublicationDate',
+	return (
+		stripHtml(String(content ?? ''))
+			.replace(/\s+/g, ' ')
+			.trim()
+			.substring(0, 120) + '...'
+	)
 }
 
 const ManagerBlogManagementPage = () => {
 	const { t } = useTranslation()
-	const confirm = useConfirm()
 	const navigate = useNavigate()
 	const { blogTypeOptions } = useEnum()
 
 	const [sort, setSort] = useState({ key: 'id', direction: 'asc' })
 	const [page, setPage] = useState(1)
 	const [pageSize, setPageSize] = useState(10)
-	const [currentTypeTab, setCurrentTypeTab] = useState('all')
-	const [selectedIds, setSelectedIds] = useState([])
-	const [deleteId, setDeleteId] = useState(null)
-	const [pendingDelete, setPendingDelete] = useState(false)
-	const [searchValue, setSearchValue] = useState('')
-	const [keyword, setKeyword] = useState('')
-	const trimmedKeyword = useMemo(() => keyword.trim(), [keyword])
-	const filterExpression = useMemo(() => {
-		if (!trimmedKeyword) return null
-		return /^\d+$/.test(trimmedKeyword) ? `Id==${trimmedKeyword}` : `Title@=${trimmedKeyword}`
-	}, [trimmedKeyword])
-	const sortField = useMemo(() => SORT_FIELD_MAP[sort.key] ?? null, [sort.key])
+	const [currentTypeTab, setCurrentTypeTab] = useState('')
 
-	useEffect(() => {
-		if (searchValue === '') {
-			setKeyword('')
-			setPage(1)
-		}
-	}, [searchValue])
-
-	const queryParams = useMemo(() => {
-		const params = {
+	const { loading, data, fetch } = useFetch(
+		ApiUrls.BLOG.MANAGEMENT.INDEX,
+		{
 			Page: page,
 			PageSize: pageSize,
-		}
-		if (sortField) {
-			params.Sort = `${sortField} ${sort.direction === 'desc' ? 'desc' : 'asc'}`
-		}
-		if (filterExpression) {
-			params.Filter = filterExpression
-		}
-		if (currentTypeTab && currentTypeTab !== 'all') params.BlogType = currentTypeTab
-		return params
-	}, [page, pageSize, sortField, sort.direction, filterExpression, currentTypeTab])
-
-	const { loading, data, fetch } = useFetch(ApiUrls.BLOG.MANAGEMENT.INDEX, queryParams, [
-		page,
-		pageSize,
-		sortField,
-		sort.direction,
-		filterExpression,
-		currentTypeTab,
-	])
+			Sort: `${sort.key} ${sort.direction}`,
+			...(currentTypeTab && { BlogType: currentTypeTab }),
+		},
+		[page, pageSize, sort, currentTypeTab]
+	)
 
 	const blogs = useMemo(() => (Array.isArray(data?.collection) ? data.collection : []), [data])
-	const totalItems = data?.totalCount ?? data?.totalItems ?? 0
-
-	useEffect(() => {
-		setSelectedIds([])
-	}, [blogs])
+	const totalItems = data?.totalCount ?? 0
 
 	const statusTabs = useMemo(() => {
 		return [
-			{ key: 'all', title: t('text.all') },
+			{ key: '', title: t('text.all') },
 			...blogTypeOptions.map((option) => ({ key: option.value, title: option.label })),
 		]
 	}, [blogTypeOptions, t])
 
-	const { submit: submitDelete } = useAxiosSubmit({
-		url: deleteId ? ApiUrls.BLOG.MANAGEMENT.DETAIL(deleteId) : '',
-		method: 'DELETE',
-		onSuccess: async () => {
-			await fetch()
-			setDeleteId(null)
-		},
-	})
-
-	useEffect(() => {
-		if (!pendingDelete || !deleteId) return
-		submitDelete().finally(() => setPendingDelete(false))
-	}, [pendingDelete, deleteId, submitDelete])
-
 	const tableFields = useMemo(
 		() => [
 			{ key: 'id', title: 'ID', width: 8, sortable: true, fixedColumn: true },
-			{ key: 'title', title: t('blogPage.titleLabel'), width: 28, sortable: true },
+			{ key: 'title', title: t('blog.field.title'), width: 28, sortable: true },
 			{
 				key: 'blogType',
-				title: t('blogPage.typeLabel'),
+				title: t('blog.field.type'),
 				width: 16,
 				sortable: true,
 				render: (value) => {
@@ -141,7 +83,7 @@ const ManagerBlogManagementPage = () => {
 			},
 			{
 				key: 'content',
-				title: t('blogPage.previewColumn'),
+				title: t('blog.field.preview'),
 				width: 32,
 				render: (value) => (
 					<Typography variant='body2' sx={{ color: 'text.secondary' }}>
@@ -151,7 +93,7 @@ const ManagerBlogManagementPage = () => {
 			},
 			{
 				key: 'image',
-				title: t('blogPage.imageColumn'),
+				title: t('blog.field.image'),
 				width: 12,
 				render: (value, row) => {
 					const imageUrl = getImageFromCloud(row?.image)
@@ -193,51 +135,13 @@ const ManagerBlogManagementPage = () => {
 								onClick: () =>
 									navigate(routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.BLOG.UPDATE(row?.id))),
 							},
-							{
-								title: t('button.delete'),
-								icon: <DeleteOutline fontSize='small' />,
-								onClick: async () => {
-									const confirmed = await confirm({
-										confirmText: t('button.delete'),
-										confirmColor: 'error',
-										title: t('button.delete') + ' blog?',
-										description: row?.title ? `"${row.title}"` : undefined,
-									})
-
-									if (!confirmed || !row?.id) {
-										setDeleteId(null)
-										return
-									}
-
-									setDeleteId(row.id)
-									setPendingDelete(true)
-								},
-							},
 						]}
 					/>
 				),
 			},
 		],
-		[blogTypeOptions, confirm, navigate, t]
+		[blogTypeOptions, navigate, t]
 	)
-
-	const handleBulkDelete = async () => {
-		if (selectedIds.length === 0) return
-		const confirmed = await confirm({
-			confirmText: t('button.delete'),
-			confirmColor: 'error',
-			title: t('button.delete') + ` (${selectedIds.length})`,
-		})
-		if (!confirmed) return
-
-		try {
-			await Promise.all(
-				selectedIds.map((id) => axiosConfig.delete(ApiUrls.BLOG.MANAGEMENT.DETAIL(id)))
-			)
-			setSelectedIds([])
-			await fetch()
-		} catch (error) {}
-	}
 
 	return (
 		<Paper sx={{ py: 1, px: 2, mt: 2 }}>
@@ -249,44 +153,20 @@ const ManagerBlogManagementPage = () => {
 					tabs={statusTabs}
 					currentTab={currentTypeTab}
 					setCurrentTab={(tab) => {
-						setCurrentTypeTab(tab?.key ?? 'all')
+						setCurrentTypeTab(tab?.key ?? '')
 						setPage(1)
 					}}
 				/>
 			</Stack>
 			<Stack direction='row' justifyContent='space-between' alignItems='center' my={2}>
-				<SearchBar
-					widthPercent={30}
-					value={searchValue}
-					setValue={setSearchValue}
-					onEnterDown={() => {
-						setKeyword(searchValue.trim())
-						setPage(1)
-					}}
-				/>
-				<Stack spacing={2} direction='row' alignItems='center'>
-					<Button
-						variant='contained'
-						color='primary'
-						onClick={() => navigate(routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.BLOG.CREATE))}
-					>
-						{t('button.create')} Blog
-					</Button>
-					<ConfirmationButton
-						confirmButtonColor='error'
-						confirmButtonText={t('button.delete')}
-						confirmationTitle={t('button.delete') + ' blog(s)?'}
-						confirmationDescription={t('done_care_about_this.delete_description', {
-							number: selectedIds.length,
-						})}
-						onConfirm={handleBulkDelete}
-						color='error'
-						variant='outlined'
-						disabled={selectedIds.length === 0}
-					>
-						{t('done_care_about_this.delete_selected', { number: selectedIds.length })}
-					</ConfirmationButton>
-				</Stack>
+				<SearchBar widthPercent={30} />
+				<Button
+					variant='contained'
+					color='primary'
+					onClick={() => navigate(routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.BLOG.CREATE))}
+				>
+					{t('button.create')} Blog
+				</Button>
 			</Stack>
 			<GenericTable
 				data={blogs}
@@ -294,18 +174,18 @@ const ManagerBlogManagementPage = () => {
 				sort={sort}
 				setSort={setSort}
 				rowKey='id'
-				canSelectRows
-				selectedRows={selectedIds}
-				setSelectedRows={setSelectedIds}
 				loading={loading}
 			/>
-			<GenericTablePagination
-				totalItems={totalItems}
-				page={page}
-				setPage={setPage}
-				pageSize={pageSize}
-				setPageSize={setPageSize}
-			/>
+			<Stack alignItems='center' sx={{ mt: 3 }}>
+				<GenericPagination
+					totalPages={Math.ceil(totalItems / pageSize)}
+					page={page}
+					setPage={setPage}
+					pageSize={pageSize}
+					setPageSize={setPageSize}
+					loading={loading}
+				/>
+			</Stack>
 		</Paper>
 	)
 }
