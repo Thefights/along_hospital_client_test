@@ -23,7 +23,7 @@ const VerifyLinkPage = () => {
 		onSuccess: async (resp) => {
 			const { accessToken, refreshToken } = resp.data
 
-			if (!token) {
+			if (!accessToken) {
 				setFailed(true)
 				setVerifying(false)
 				return

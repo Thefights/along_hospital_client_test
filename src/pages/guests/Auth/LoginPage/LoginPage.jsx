@@ -37,7 +37,6 @@ const LoginPage = () => {
 		url: ApiUrls.AUTH.LOGIN,
 		method: 'POST',
 		onSuccess: async (resp) => {
-			console.log(resp)
 			const { accessToken, refreshToken, stage } = resp.data
 			if (!accessToken) return
 			await login(accessToken, refreshToken)
@@ -49,7 +48,6 @@ const LoginPage = () => {
 			}
 		},
 		onError: async (err) => {
-			console.log(err)
 			const msg = (err?.response?.data?.error || '').toString().toLowerCase()
 			if (msg.includes('not verified')) {
 				navigate(routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.RESEND_LINK), { replace: true })
