@@ -1,8 +1,8 @@
 import FilterButton from '@/components/buttons/FilterButton'
 import ResetFilterButton from '@/components/buttons/ResetFilterButton'
 import SearchBar from '@/components/generals/SearchBar'
-import useEnum from '@/hooks/useEnum'
 import useFieldRenderer from '@/hooks/useFieldRenderer'
+import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
 import { Grid, Paper } from '@mui/material'
 import { useMemo } from 'react'
@@ -10,12 +10,12 @@ import { useMemo } from 'react'
 const BlogFilterBarSection = ({
 	filters = {},
 	setFilters = () => {},
-	onFilterClick = () => {},
 	onResetFilterClick = () => {},
 	loading = false,
 }) => {
 	const { t } = useTranslation()
-	const { blogTypeOptions } = useEnum()
+
+	const { values, setField, handleChange } = useForm(filters)
 
 	const fields = useMemo(() => {
 		return [
@@ -28,18 +28,8 @@ const BlogFilterBarSection = ({
 		]
 	}, [t])
 
-	const setField = (key, value) => {
-		setFilters({ ...filters, [key]: value })
-	}
-
-	const handleChange = (e) => {
-		const { name, value } = e.target || {}
-		if (!name) return
-		setFilters({ ...filters, [name]: value })
-	}
-
 	const { renderField } = useFieldRenderer(
-		filters,
+		values,
 		setField,
 		handleChange,
 		() => {},
@@ -54,10 +44,10 @@ const BlogFilterBarSection = ({
 				<Grid size={{ xs: 12, md: 4 }}>
 					<SearchBar
 						widthPercent={100}
-						value={filters.title || ''}
-						setValue={(value) => setFilters({ ...filters, title: value })}
-						placeholder={t('blogPage.titleLabel')}
-						onEnterDown={() => onFilterClick()}
+						value={values.title || ''}
+						setValue={(value) => setField('title', value)}
+						placeholder={t('text.search')}
+						onEnterDown={() => setFilters(values)}
 					/>
 				</Grid>
 				{fields.map((f) => (
@@ -66,7 +56,13 @@ const BlogFilterBarSection = ({
 					</Grid>
 				))}
 				<Grid size={{ xs: 12, md: 2 }}>
-					<FilterButton onFilterClick={onFilterClick} loading={loading} fullWidth />
+					<FilterButton
+						onFilterClick={() => {
+							setFilters(values)
+						}}
+						loading={loading}
+						fullWidth
+					/>
 				</Grid>
 				<Grid size={{ xs: 12, md: 2 }}>
 					<ResetFilterButton onResetFilterClick={onResetFilterClick} loading={loading} />

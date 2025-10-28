@@ -1,11 +1,10 @@
-import { GenericPagination } from '@/components/generals/GenericPagination'
 import EmptyPage from '@/components/placeholders/EmptyPage'
-import { defaultBlogTypeStyle } from '@/configs/defaultStylesConfig'
+import { defaultBlogTypeStyle, defaultLineClampStyle } from '@/configs/defaultStylesConfig'
 import { routeUrls } from '@/configs/routeUrls'
 import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
-import { getEnumLabelByValue, stripHtml } from '@/utils/handleStringUtil'
+import { getEnumLabelByValue } from '@/utils/handleStringUtil'
 import {
 	Box,
 	Button,
@@ -25,15 +24,12 @@ const BlogCard = ({ blog = {} }) => {
 	const { blogTypeOptions } = useEnum()
 	const navigate = useNavigate()
 
-	const cleanContent = blog.content ? stripHtml(String(blog.content)) : ''
-	const contentPreview = cleanContent ? cleanContent.substring(0, 120) + '...' : ''
-
 	const formattedDate = blog.publicationDate
 		? new Date(blog.publicationDate).toLocaleDateString()
 		: ''
 
 	const blogTypeString =
-		getEnumLabelByValue(blogTypeOptions, blog.blogType) || t('blogPage.blogType.Other')
+		getEnumLabelByValue(blogTypeOptions, blog.blogType) || t('enum.blog_type.other')
 	const blogTypeStyle = (theme) => defaultBlogTypeStyle(theme, blog.blogType)
 
 	const handleCardClick = () => {
@@ -58,7 +54,7 @@ const BlogCard = ({ blog = {} }) => {
 					component='img'
 					height='180'
 					image={getImageFromCloud(blog.image) || '/placeholder-image.png'}
-					alt={blog.title || t('blogPage.imageAlt')}
+					alt={blog.title || t('blog.text.image_alt')}
 					onError={(event) => {
 						event.currentTarget.src = '/placeholder-image.png'
 					}}
@@ -82,41 +78,22 @@ const BlogCard = ({ blog = {} }) => {
 						gutterBottom
 						variant='h6'
 						component='div'
-						sx={{
-							mt: 1,
-							fontWeight: 600,
-							overflow: 'hidden',
-							textOverflow: 'ellipsis',
-							display: '-webkit-box',
-							WebkitLineClamp: 2,
-							WebkitBoxOrient: 'vertical',
-							lineHeight: 1.3,
-						}}
+						sx={{ ...defaultLineClampStyle(3), mt: 1, fontWeight: 600 }}
 					>
-						{blog.title || t('blogPage.untitled')}
-					</Typography>
-					<Typography variant='body2' color='text.secondary' sx={{ mb: 2 }}>
-						{contentPreview}
+						{blog.title || t('blog.title.untitled')}
 					</Typography>
 				</CardContent>
 			</CardActionArea>
 			<Box sx={{ p: 2, pt: 0 }}>
 				<Button size='small' onClick={handleCardClick}>
-					{t('blogPage.readMore')}
+					{t('blog.text.read_more')}
 				</Button>
 			</Box>
 		</Card>
 	)
 }
 
-const BlogListSection = ({
-	blogs = [],
-	loading = false,
-	language = 'en',
-	totalPages = 1,
-	page = 1,
-	setPage = () => {},
-}) => {
+const BlogListSection = ({ blogs = [], loading = false }) => {
 	const { t } = useTranslation()
 	const safeBlogs = Array.isArray(blogs) ? blogs : []
 
@@ -140,9 +117,6 @@ const BlogListSection = ({
 								</Stack>
 								<Skeleton variant='text' width='100%' height={32} sx={{ mb: 0.5 }} />
 								<Skeleton variant='text' width='90%' height={32} sx={{ mb: 1 }} />
-								<Skeleton variant='text' width='100%' height={16} />
-								<Skeleton variant='text' width='85%' height={16} />
-								<Skeleton variant='text' width='70%' height={16} />
 							</CardContent>
 							<Box sx={{ p: 2, pt: 0 }}>
 								<Skeleton variant='rectangular' width={100} height={36} />
@@ -157,8 +131,8 @@ const BlogListSection = ({
 	if (safeBlogs.length === 0) {
 		return (
 			<EmptyPage
-				title={t('blogPage.noPosts')}
-				subtitle={t('blogPage.noPostsSubtitle')}
+				title={t('blog.text.no_posts')}
+				subtitle={t('blog.text.no_posts_subtitle')}
 				showButton={false}
 			/>
 		)
@@ -170,14 +144,11 @@ const BlogListSection = ({
 				<Grid container spacing={3} sx={{ height: '100%' }}>
 					{safeBlogs.map((b, index) => (
 						<Grid size={{ xs: 12, sm: 6, md: 4 }} key={b.id ?? b.blogId ?? index}>
-							<BlogCard blog={b} language={language} />
+							<BlogCard blog={b} />
 						</Grid>
 					))}
 				</Grid>
 			</Box>
-			<Stack alignItems='center' sx={{ mt: 4 }}>
-				<GenericPagination totalPages={totalPages} page={page} setPage={setPage} loading={loading} />
-			</Stack>
 		</Stack>
 	)
 }

@@ -3,7 +3,12 @@ import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
 import { Stack, Typography } from '@mui/material'
 
-const BlogTabsSection = ({ filters = {}, setFilters = () => {}, loading = false }) => {
+const BlogTabsSection = ({
+	filters = {},
+	setFilters = () => {},
+	loading = false,
+	setPage = () => {},
+}) => {
 	const { t } = useTranslation()
 	const { blogTypeOptions } = useEnum()
 
@@ -13,13 +18,14 @@ const BlogTabsSection = ({ filters = {}, setFilters = () => {}, loading = false 
 
 	const setCurrentTab = (tab) => {
 		const nextType = filters.blogType === tab?.key ? '' : tab?.key || ''
-		setFilters({ ...filters, blogType: nextType, page: 1 })
+		setFilters({ ...filters, blogType: nextType })
+		setPage(1)
 	}
 
 	return (
 		<Stack spacing={2}>
 			<Typography variant='subtitle1' sx={{ fontWeight: 600 }}>
-				{t('blogPage.typeLabel')}
+				{t('blog.field.type')}
 			</Typography>
 			<GenericTabs
 				tabs={tabs}
