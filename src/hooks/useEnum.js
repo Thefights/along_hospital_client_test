@@ -1,8 +1,6 @@
 import { EnumConfig } from '@/configs/enumConfig'
-import { useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
 import useTranslation from './useTranslation'
-
-const normalizeEnumKey = (value) => String(value ?? '').toLowerCase()
 
 export default function useEnum() {
 	const { t } = useTranslation()
@@ -18,29 +16,6 @@ export default function useEnum() {
 		[t]
 	)
 
-	const blogTypeOptionMap = useMemo(() => {
-		return blogTypeOptions.reduce((acc, option, index) => {
-			const normalizedKey = normalizeEnumKey(option.value)
-			acc[normalizedKey] = option
-			acc[String(option.value ?? '').trim()] = option
-			if (typeof option.value === 'number') {
-				acc[option.value] = option
-			}
-			acc[index] = option
-			acc[String(index)] = option
-			return acc
-		}, {})
-	}, [blogTypeOptions])
-
-	const getBlogTypeOption = useCallback(
-		(value) => blogTypeOptionMap[normalizeEnumKey(value)],
-		[blogTypeOptionMap]
-	)
-
-	const getBlogTypeLabel = useCallback(
-		(value) => getBlogTypeOption(value)?.label,
-		[getBlogTypeOption]
-	)
 	return {
 		genderOptions: [
 			{ value: EnumConfig.Gender.Male, label: t('enum.gender.male') },
@@ -128,9 +103,6 @@ export default function useEnum() {
 		],
 
 		blogTypeOptions,
-		blogTypeOptionMap,
-		getBlogTypeOption,
-		getBlogTypeLabel,
 	}
 }
 
