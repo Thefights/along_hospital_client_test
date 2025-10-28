@@ -1,3 +1,4 @@
+import useTranslation from '@/hooks/useTranslation'
 import { Delete, Save } from '@mui/icons-material'
 import {
 	Box,
@@ -32,10 +33,11 @@ const BlogUpsertFormSection = ({
 	isFormDisabled,
 	editorRef,
 	onBack,
-	backLabel,
 	isSubmitting,
 	canRemoveImage,
 }) => {
+	const { t: tSection } = useTranslation()
+
 	return (
 		<Card>
 			<CardContent>
@@ -53,8 +55,8 @@ const BlogUpsertFormSection = ({
 					sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}
 				>
 					<TextField
-						label={t('blogPage.titleLabel')}
-						value={formData.title}
+						label={t('blog.field.title')}
+						value={formData.title || ''}
 						onChange={(e) => onInputChange('title', e.target.value)}
 						error={!!errors.title}
 						helperText={errors.title}
@@ -63,9 +65,29 @@ const BlogUpsertFormSection = ({
 						disabled={isFormDisabled}
 					/>
 
+					<FormControl fullWidth error={!!errors.blogType} required disabled={isFormDisabled}>
+						<InputLabel>{t('blog.field.type')}</InputLabel>
+						<Select
+							value={formData.blogType || ''}
+							onChange={(e) => onInputChange('blogType', e.target.value)}
+							label={t('blog.field.type')}
+							disabled={isFormDisabled}
+						>
+							<MenuItem value='' disabled>
+								{t('blog.placeholder.select_type')}
+							</MenuItem>
+							{blogTypeOptions.map((option) => (
+								<MenuItem key={option.value} value={option.value}>
+									{option.label}
+								</MenuItem>
+							))}
+						</Select>
+						{errors.blogType && <FormHelperText>{errors.blogType}</FormHelperText>}
+					</FormControl>
+
 					<Box>
 						<Typography variant='body2' color='text.secondary' sx={{ mb: 1 }}>
-							{t('blogPage.contentLabel')} *
+							{t('blog.field.content')} *
 						</Typography>
 						<textarea
 							ref={editorRef}
@@ -81,29 +103,9 @@ const BlogUpsertFormSection = ({
 						)}
 					</Box>
 
-					<FormControl fullWidth error={!!errors.blogType} required disabled={isFormDisabled}>
-						<InputLabel>{t('blogPage.typeLabel')}</InputLabel>
-						<Select
-							value={formData.blogType}
-							onChange={(e) => onInputChange('blogType', e.target.value)}
-							label={t('blogPage.typeLabel')}
-							disabled={isFormDisabled}
-						>
-							<MenuItem value='' disabled>
-								{t('blogPage.selectTypePlaceholder')}
-							</MenuItem>
-							{blogTypeOptions.map((option) => (
-								<MenuItem key={option.value} value={option.value}>
-									{option.label}
-								</MenuItem>
-							))}
-						</Select>
-						{errors.blogType && <FormHelperText>{errors.blogType}</FormHelperText>}
-					</FormControl>
-
 					<Box>
 						<Typography variant='body2' color='text.secondary' sx={{ mb: 1 }}>
-							{t('blogPage.coverImage')}
+							{t('blog.field.cover_image')}
 						</Typography>
 						<input
 							accept='image/*'
@@ -115,7 +117,7 @@ const BlogUpsertFormSection = ({
 						/>
 						<label htmlFor='image-upload'>
 							<Button variant='outlined' component='span' fullWidth disabled={isFormDisabled}>
-								{t('blogPage.chooseImage')}
+								{t('blog.button.choose_image')}
 							</Button>
 						</label>
 						{imagePreview && (
@@ -123,7 +125,7 @@ const BlogUpsertFormSection = ({
 								<Box
 									component='img'
 									src={imagePreview}
-									alt={t('blogPage.coverImage')}
+									alt={t('blog.field.cover_image')}
 									sx={{
 										width: '100%',
 										maxWidth: 400,
@@ -139,7 +141,7 @@ const BlogUpsertFormSection = ({
 									color='error'
 									onClick={onRemoveImage}
 									disabled={!canRemoveImage || isFormDisabled}
-									aria-label={t('blogPage.removeImage')}
+									aria-label={t('blog.button.remove_image')}
 									sx={{
 										position: 'absolute',
 										top: 8,
@@ -160,7 +162,7 @@ const BlogUpsertFormSection = ({
 
 					<Stack direction='row' justifyContent='space-between' sx={{ mt: 2 }}>
 						<Button variant='outlined' onClick={onBack} disabled={isSubmitting}>
-							{backLabel}
+							{t('button.back')}
 						</Button>
 						<Button
 							type='submit'

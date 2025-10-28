@@ -1,15 +1,16 @@
 import { ApiUrls } from '@/configs/apiUrls'
-import axiosConfig from '@/configs/axiosConfig'
 import { routeUrls } from '@/configs/routeUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useEnum from '@/hooks/useEnum'
+import useFetch from '@/hooks/useFetch'
+import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
-import { Paper } from '@mui/material'
+import { ArrowBack } from '@mui/icons-material'
+import { Button, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import BlogUpsertFormSection from './sections/BlogUpsertFormSection'
-import BlogUpsertHeaderSection from './sections/BlogUpsertHeaderSection'
 
 const BlogUpsertPage = () => {
 	const { t } = useTranslation()
@@ -19,10 +20,8 @@ const BlogUpsertPage = () => {
 	const isEditMode = Boolean(blogId)
 	const { blogTypeOptions } = useEnum()
 	const editorRef = useRef(null)
-	const [editorLoaded, setEditorLoaded] = useState(false)
-	const [detailLoading, setDetailLoading] = useState(isEditMode)
 
-	const [formData, setFormData] = useState({
+	const { values, handleChange, setField, reset } = useForm({
 		title: '',
 		blogType: '',
 		content: '',
@@ -32,6 +31,14 @@ const BlogUpsertPage = () => {
 	const [errors, setErrors] = useState({})
 	const [imagePreview, setImagePreview] = useState(null)
 	const [shouldRemoveImage, setShouldRemoveImage] = useState(false)
+	const [editorLoaded, setEditorLoaded] = useState(false)
+	const dataLoadedRef = useRef(false)
+
+	const getBlogDetail = useFetch(
+		ApiUrls.BLOG.MANAGEMENT.DETAIL(blogId),
+		{},
+		blogId && isEditMode ? [blogId] : []
+	)
 
 	const blogSubmit = useAxiosSubmit({
 		url: isEditMode ? ApiUrls.BLOG.MANAGEMENT.DETAIL(blogId) : ApiUrls.BLOG.MANAGEMENT.INDEX,
@@ -143,66 +150,35 @@ const BlogUpsertPage = () => {
 		if (!editorLoaded) return
 		const instance = window.CKEDITOR?.instances?.[editorRef.current?.id]
 		if (!instance) return
-		const desiredData = formData.content || ''
+		const desiredData = values.content || ''
 		if (instance.getData() !== desiredData) {
 			instance.setData(desiredData)
 		}
-	}, [editorLoaded, formData.content])
+	}, [editorLoaded, values.content])
 
 	useEffect(() => {
-		if (!isEditMode || !blogId) return
-		let isMounted = true
+		dataLoadedRef.current = false
+	}, [blogId])
 
-		const fetchBlogDetail = async () => {
-			setDetailLoading(true)
-			try {
-				const response = await axiosConfig.get(ApiUrls.BLOG.MANAGEMENT.DETAIL(blogId))
-				const blog = response?.data
-				if (!isMounted || !blog) return
-				setFormData({
-					title: blog.title ?? '',
-					blogType: blog.blogType ?? '',
-					content: blog.content ?? '',
-					image: null,
-				})
-				setImagePreview(blog.image ? getImageFromCloud(blog.image) : null)
-				setShouldRemoveImage(false)
-			} catch (error) {
-			} finally {
-				if (isMounted) {
-					setDetailLoading(false)
-				}
-			}
-		}
-
-		fetchBlogDetail()
-
-		return () => {
-			isMounted = false
-		}
-	}, [isEditMode, blogId])
-
-	const handleInputChange = (field, value) => {
-		setFormData((prev) => ({
-			...prev,
-			[field]: value,
-		}))
-
-		if (errors[field]) {
-			setErrors((prev) => ({
-				...prev,
-				[field]: null,
-			}))
-		}
-	}
+	useEffect(() => {
+		if (!isEditMode || !blogId || !getBlogDetail.data || dataLoadedRef.current) return
+		const blog = getBlogDetail.data
+		dataLoadedRef.current = true
+		reset({
+			title: blog.title ?? '',
+			blogType: blog.blogType ?? '',
+			content: blog.content ?? '',
+			image: null,
+		})
+		setImagePreview(blog.image ? getImageFromCloud(blog.image) : null)
+		setShouldRemoveImage(false)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [getBlogDetail.data, isEditMode, blogId])
 
 	const handleImageChange = (event) => {
 		const file = event.target.files?.[0]
 		if (file) {
-			setFormData((prev) => ({
-				...prev,
-				image: file,
-			}))
+			setField('image', file)
 
 			const reader = new FileReader()
 			reader.onload = (e) => {
@@ -218,31 +194,35 @@ const BlogUpsertPage = () => {
 	}
 
 	const handleRemoveImage = () => {
-		if (isFormDisabled) return
-		setFormData((prev) => ({
-			...prev,
-			image: null,
-		}))
+		setField('image', null)
 		setImagePreview(null)
 		setShouldRemoveImage(true)
 	}
 
+	const headerTitle = `${t(`button.${isEditMode ? 'update' : 'create'}`)} Blog`
+	const submitButtonLabel = blogSubmit.loading
+		? isEditMode
+			? t('button.submitting')
+			: t('button.creating')
+		: t(`button.${isEditMode ? 'update' : 'create'}`)
+	const isFormDisabled = getBlogDetail.loading || blogSubmit.loading
+
 	const handleSubmit = async (event) => {
 		event.preventDefault()
-		if (detailLoading || blogSubmit.loading) return
+		if (isFormDisabled) return
 
 		const editorContent =
-			window.CKEDITOR?.instances?.[editorRef.current?.id]?.getData() || formData.content
-		const updatedFormData = { ...formData, content: editorContent }
+			window.CKEDITOR?.instances?.[editorRef.current?.id]?.getData() || values.content
+		const updatedContent = { ...values, content: editorContent }
 
 		const newErrors = {}
-		if (!updatedFormData.title?.trim()) {
+		if (!updatedContent.title?.trim()) {
 			newErrors.title = t('error.required')
-		} else if (updatedFormData.title.length > 255) {
+		} else if (updatedContent.title.length > 255) {
 			newErrors.title = t('error.max_length', { max: 255 })
 		}
 
-		if (!updatedFormData.blogType) {
+		if (!updatedContent.blogType) {
 			newErrors.blogType = t('error.required')
 		}
 
@@ -252,18 +232,18 @@ const BlogUpsertPage = () => {
 			newErrors.content = t('error.max_length', { max: 10000 })
 		}
 
-		setErrors(newErrors)
 		if (Object.keys(newErrors).length > 0) {
+			setErrors(newErrors)
 			return
 		}
 
 		try {
 			const formDataToSend = new FormData()
-			formDataToSend.append('Title', updatedFormData.title)
+			formDataToSend.append('Title', updatedContent.title)
 			formDataToSend.append('Content', editorContent)
-			formDataToSend.append('BlogType', updatedFormData.blogType)
-			if (updatedFormData.image) {
-				formDataToSend.append('Image', updatedFormData.image)
+			formDataToSend.append('BlogType', updatedContent.blogType)
+			if (updatedContent.image) {
+				formDataToSend.append('Image', updatedContent.image)
 			}
 			if (shouldRemoveImage && isEditMode) {
 				formDataToSend.append('RemoveImage', 'true')
@@ -271,38 +251,38 @@ const BlogUpsertPage = () => {
 
 			const response = await blogSubmit.submit(formDataToSend)
 			if (response) {
-				navigate(routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.BLOG_MANAGEMENT))
+				navigate(routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.BLOG.INDEX))
 			}
 		} catch (error) {}
 	}
 
-	const headerTitle = `${t(`button.${isEditMode ? 'update' : 'create'}`)} Blog`
-	const submitButtonLabel = blogSubmit.loading
-		? isEditMode
-			? t('button.submitting')
-			: t('button.creating')
-		: t(`button.${isEditMode ? 'update' : 'create'}`)
-	const isFormDisabled = detailLoading || blogSubmit.loading
 	const handleBack = () => {
-		navigate(routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.BLOG_MANAGEMENT))
+		navigate(routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.BLOG.INDEX))
 	}
 
 	return (
 		<Paper sx={{ py: 2, px: 3, mt: 2 }}>
-			<BlogUpsertHeaderSection
-				title={headerTitle}
-				backLabel={t('button.back')}
-				onBack={handleBack}
-				disabled={blogSubmit.loading}
-			/>
+			<Stack direction='row' alignItems='center' spacing={2} mb={3}>
+				<Button
+					startIcon={<ArrowBack />}
+					onClick={handleBack}
+					variant='outlined'
+					disabled={blogSubmit.loading}
+				>
+					{t('button.back')}
+				</Button>
+				<Typography variant='h5' fontWeight='bold'>
+					{headerTitle}
+				</Typography>
+			</Stack>
 			<BlogUpsertFormSection
 				isEditMode={isEditMode}
-				detailLoading={detailLoading}
+				detailLoading={getBlogDetail.loading}
 				t={t}
 				onSubmit={handleSubmit}
-				formData={formData}
+				formData={values}
 				errors={errors}
-				onInputChange={handleInputChange}
+				onInputChange={setField}
 				onImageChange={handleImageChange}
 				onRemoveImage={handleRemoveImage}
 				blogTypeOptions={blogTypeOptions}
@@ -311,7 +291,6 @@ const BlogUpsertPage = () => {
 				isFormDisabled={isFormDisabled}
 				editorRef={editorRef}
 				onBack={handleBack}
-				backLabel={t('button.back')}
 				isSubmitting={blogSubmit.loading}
 				canRemoveImage={Boolean(imagePreview)}
 			/>
