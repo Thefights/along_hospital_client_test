@@ -1,4 +1,8 @@
-import { defaultAppointmentStatusStyle, defaultLineClampStyle } from '@/configs/defaultStylesConfig'
+import {
+	defaultAppointmentPaymentStatusStyle,
+	defaultAppointmentStatusStyle,
+	defaultLineClampStyle,
+} from '@/configs/defaultStylesConfig'
 import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
 import { formatDateAndTimeBasedOnCurrentLanguage } from '@/utils/formatDateUtil'
@@ -87,11 +91,31 @@ const ManageAppointmentListItemSection = ({ appointment, onClick }) => {
 								{appointment?.purpose}
 							</Typography>
 						</Stack>
-						<Chip
-							label={getEnumLabelByValue(_enum.appointmentStatusOptions, appointment?.appointmentStatus)}
-							size='small'
-							sx={{ bgcolor: s.bg, color: s.color, border: `1px solid ${s.border}` }}
-						/>
+						<Stack spacing={1} alignItems='end'>
+							<Stack direction={'row'}>
+								<Typography variant='subtitle2' sx={{ mr: 1 }}>
+									{t('appointment.field.payment_status')}:
+								</Typography>
+								<Chip
+									label={getEnumLabelByValue(
+										_enum.appointmentPaymentStatusOptions,
+										appointment?.appointmentPaymentStatus
+									)}
+									size='small'
+									color={defaultAppointmentPaymentStatusStyle(appointment?.appointmentPaymentStatus)}
+								/>
+							</Stack>
+							<Stack direction={'row'}>
+								<Typography variant='subtitle2' sx={{ mr: 1 }}>
+									{t('appointment.field.status')}:
+								</Typography>
+								<Chip
+									label={getEnumLabelByValue(_enum.appointmentStatusOptions, appointment?.appointmentStatus)}
+									size='small'
+									sx={{ bgcolor: s.bg, color: s.color, border: `1px solid ${s.border}` }}
+								/>
+							</Stack>
+						</Stack>
 					</Stack>
 				</CardContent>
 			</CardActionArea>

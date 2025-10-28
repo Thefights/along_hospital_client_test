@@ -12,6 +12,16 @@ export const defaultAppointmentStatusStyle = (theme, status) => {
 	return { bg: p.softBg || p.main + '1A', border: p.softBorder || p.main + '33', color: p.main }
 }
 
+export const defaultAppointmentPaymentStatusStyle = (status) => {
+	const map = {
+		[EnumConfig.AppointmentPaymentStatus.None]: 'default',
+		[EnumConfig.AppointmentPaymentStatus.Pending]: 'warning',
+		[EnumConfig.AppointmentPaymentStatus.Completed]: 'success',
+		[EnumConfig.AppointmentPaymentStatus.Failed]: 'error',
+	}
+	return map[status] || 'default'
+}
+
 export const defaultAllergySeverityStyle = (severity) => {
 	const map = {
 		[EnumConfig.AllergySeverity.Mild]: 'info.dark',

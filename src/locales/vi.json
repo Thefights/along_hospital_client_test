@@ -89,6 +89,12 @@
             "cancelled": "Đã hủy",
             "refused": "Đã từ chối"
         },
+        "appointment_payment_status": {
+            "none": "Không",
+            "pending": "Đang chờ",
+            "completed": "Đã hoàn thành",
+            "failed": "Thất bại"
+        },
         "appointment_type": {
             "consultation": "Tư vấn",
             "follow_up": "Tái khám",
@@ -213,11 +219,13 @@
         "field": {
             "purpose": "Mục đích",
             "specialty": "Chuyên khoa",
+            "payment_status": "Trạng thái thanh toán",
             "status": "Trạng thái",
             "type": "Loại",
             "meeting_type": "Hình thức",
             "start_date": "Ngày bắt đầu",
             "end_date": "Ngày kết thúc",
+            "patient": "Bệnh nhân",
             "doctor": "Bác sĩ",
             "search_doctor": "Tìm kiếm theo tên bác sĩ...",
             "search_patient": "Tìm kiếm theo tên bệnh nhân...",

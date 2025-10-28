@@ -89,6 +89,12 @@
             "cancelled": "Cancelled",
             "refused": "Refused"
         },
+        "appointment_payment_status": {
+            "none": "None",
+            "pending": "Pending",
+            "completed": "Completed",
+            "failed": "Failed"
+        },
         "appointment_type": {
             "consultation": "Consultation",
             "follow_up": "Follow-up",
@@ -213,11 +219,13 @@
         "field": {
             "purpose": "Purpose",
             "specialty": "Specialty",
+            "payment_status": "Payment Status",
             "status": "Status",
             "type": "Type",
             "meeting_type": "Meeting Type",
             "start_date": "Start Date",
             "end_date": "End Date",
+            "patient": "Patient",
             "doctor": "Doctor",
             "search_doctor": "Search by Doctor name...",
             "search_patient": "Search by Patient name...",

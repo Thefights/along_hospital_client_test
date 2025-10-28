@@ -16,13 +16,6 @@ const PatientAppointmentHistoryPage = () => {
 	const [openCancelDialog, setOpenCancelDialog] = useState(false)
 	const [cancelReason, setCancelReason] = useState('')
 	const [filters, setFilters] = useState({
-		startDate: '',
-		endDate: '',
-		status: '',
-		type: '',
-		meetingType: '',
-		specialtyId: '',
-		search: '',
 		page: 1,
 		pageSize: 5,
 	})
@@ -55,10 +48,6 @@ const PatientAppointmentHistoryPage = () => {
 		}
 	}
 
-	const onFilterClick = async (values) => {
-		setFilters((prev) => ({ ...prev, page: 1, ...values }))
-	}
-
 	return (
 		<Box my={3}>
 			<ManageAppointmentBasePage
@@ -67,7 +56,6 @@ const PatientAppointmentHistoryPage = () => {
 				setFilters={setFilters}
 				selectedAppointment={selectedAppointment}
 				setSelectedAppointment={setSelectedAppointment}
-				onFilterClick={onFilterClick}
 				totalPage={getAppointments.data?.totalPage || 1}
 				appointments={getAppointments.data?.collection || []}
 				specialties={specialtiesStore.data || []}

@@ -13,13 +13,6 @@ import { useState } from 'react'
 const DoctorAppointmentManagementPage = () => {
 	const [selectedAppointment, setSelectedAppointment] = useState(null)
 	const [filters, setFilters] = useState({
-		startDate: '',
-		endDate: '',
-		status: '',
-		type: '',
-		meetingType: '',
-		specialtyId: '',
-		search: '',
 		page: 1,
 		pageSize: 5,
 	})
@@ -50,10 +43,6 @@ const DoctorAppointmentManagementPage = () => {
 		method: 'PUT',
 	})
 
-	const onFilterClick = async (values) => {
-		setFilters((prev) => ({ ...prev, page: 1, ...values }))
-	}
-
 	return (
 		<ManageAppointmentBasePage
 			headerTitle={t('appointment.title.appointment_management')}
@@ -64,7 +53,6 @@ const DoctorAppointmentManagementPage = () => {
 			totalPage={getAppointments.data?.totalPage || 1}
 			appointments={getAppointments.data?.collection || []}
 			specialties={specialtiesStore.data || []}
-			onFilterClick={onFilterClick}
 			loading={getAppointments.loading}
 			drawerButtons={
 				selectedAppointment?.appointmentStatus === EnumConfig.AppointmentStatus.Scheduled ? (
