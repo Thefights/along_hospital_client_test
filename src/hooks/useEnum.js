@@ -7,11 +7,11 @@ export default function useEnum() {
 
 	const blogTypeOptions = useMemo(
 		() => [
-			{ value: EnumConfig.BlogType.Health, label: t('blogPage.blogType.Health') },
-			{ value: EnumConfig.BlogType.News, label: t('blogPage.blogType.News') },
-			{ value: EnumConfig.BlogType.Promotion, label: t('blogPage.blogType.Promotion') },
-			{ value: EnumConfig.BlogType.Guide, label: t('blogPage.blogType.Guide') },
-			{ value: EnumConfig.BlogType.Other, label: t('blogPage.blogType.Other') },
+			{ value: EnumConfig.BlogType.Health, label: t('enum.blog_type.health') },
+			{ value: EnumConfig.BlogType.News, label: t('enum.blog_type.news') },
+			{ value: EnumConfig.BlogType.Promotion, label: t('enum.blog_type.promotion') },
+			{ value: EnumConfig.BlogType.Guide, label: t('enum.blog_type.guide') },
+			{ value: EnumConfig.BlogType.Other, label: t('enum.blog_type.other') },
 		],
 		[t]
 	)
