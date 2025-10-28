@@ -5,6 +5,7 @@ import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
 import { formatDateToDDMMYYYY } from '@/utils/formatDateUtil'
+import { getEnumLabelByValue } from '@/utils/handleStringUtil'
 import { Box, Container, Grid, Paper, Skeleton, Stack } from '@mui/material'
 import { useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -18,7 +19,7 @@ const BlogDetailPage = () => {
 	const { id } = useParams()
 	const navigate = useNavigate()
 	const { t } = useTranslation()
-	const { getBlogTypeLabel } = useEnum()
+	const { blogTypeOptions } = useEnum()
 
 	const { data: blogRaw, loading } = useFetch(`/Blog/${id}`, {}, [id])
 	const { data: recentRaw, loading: recentLoading } = useFetch('/Blog', RECENT_PARAMS, [id])
@@ -26,7 +27,8 @@ const BlogDetailPage = () => {
 	const blog = blogRaw || {}
 	const coverImage = getImageFromCloud(blog.image)
 	const formattedDate = formatDateToDDMMYYYY(blog.publicationDate)
-	const blogTypeLabel = getBlogTypeLabel(blog.blogType) || t('blogPage.blogType.Other')
+	const blogTypeLabel =
+		getEnumLabelByValue(blogTypeOptions, blog.blogType) || t('blogPage.blogType.Other')
 
 	const recentBlogs = useMemo(() => {
 		const collection = recentRaw?.collection || []

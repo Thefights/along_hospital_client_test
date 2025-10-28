@@ -1,10 +1,11 @@
 import { GenericPagination } from '@/components/generals/GenericPagination'
 import EmptyPage from '@/components/placeholders/EmptyPage'
+import { defaultBlogTypeStyle } from '@/configs/defaultStylesConfig'
 import { routeUrls } from '@/configs/routeUrls'
 import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
-import { stripHtml } from '@/utils/handleStringUtil'
+import { getEnumLabelByValue, stripHtml } from '@/utils/handleStringUtil'
 import {
 	Box,
 	Button,
@@ -21,7 +22,7 @@ import { useNavigate } from 'react-router-dom'
 
 const BlogCard = ({ blog = {} }) => {
 	const { t } = useTranslation()
-	const { getBlogTypeLabel } = useEnum()
+	const { blogTypeOptions } = useEnum()
 	const navigate = useNavigate()
 
 	const cleanContent = blog.content ? stripHtml(String(blog.content)) : ''
@@ -31,7 +32,9 @@ const BlogCard = ({ blog = {} }) => {
 		? new Date(blog.publicationDate).toLocaleDateString()
 		: ''
 
-	const blogTypeString = getBlogTypeLabel(blog.blogType) || t('blogPage.blogType.Other')
+	const blogTypeString =
+		getEnumLabelByValue(blogTypeOptions, blog.blogType) || t('blogPage.blogType.Other')
+	const blogTypeStyle = (theme) => defaultBlogTypeStyle(theme, blog.blogType)
 
 	const handleCardClick = () => {
 		navigate(`${routeUrls.HOME.BLOG}/${blog.id}`)
@@ -62,7 +65,13 @@ const BlogCard = ({ blog = {} }) => {
 				/>
 				<CardContent sx={{ flexGrow: 1 }}>
 					<Stack direction='row' justifyContent='space-between' alignItems='center' spacing={1}>
-						<Typography variant='caption' color='primary.main' sx={{ fontWeight: 700 }}>
+						<Typography
+							variant='caption'
+							sx={(theme) => ({
+								fontWeight: 700,
+								color: blogTypeStyle(theme).color,
+							})}
+						>
 							{blogTypeString}
 						</Typography>
 						<Typography variant='caption' color='text.secondary'>

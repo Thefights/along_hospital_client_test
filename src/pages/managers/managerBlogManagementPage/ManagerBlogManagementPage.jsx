@@ -6,6 +6,7 @@ import SearchBar from '@/components/generals/SearchBar'
 import GenericTable from '@/components/tables/GenericTable'
 import { ApiUrls } from '@/configs/apiUrls'
 import axiosConfig from '@/configs/axiosConfig'
+import { defaultBlogTypeStyle } from '@/configs/defaultStylesConfig'
 import { routeUrls } from '@/configs/routeUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useConfirm } from '@/hooks/useConfirm'
@@ -14,18 +15,16 @@ import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
 import { formatDateToDDMMYYYY } from '@/utils/formatDateUtil'
+import { getEnumLabelByValue } from '@/utils/handleStringUtil'
 import { DeleteOutline, Edit } from '@mui/icons-material'
 import { Box, Button, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const getPlainText = (content) => {
-	const cleaned = String(content ?? '')
-		.replace(/<[^>]*>/g, ' ')
+	const cleaned = stripHtml(String(content ?? ''))
 		.replace(/\s+/g, ' ')
 		.trim()
-	if (cleaned.length <= 120) return cleaned
-	return `${cleaned.slice(0, 120)}...`
 }
 
 const SORT_FIELD_MAP = {
@@ -39,7 +38,7 @@ const ManagerBlogManagementPage = () => {
 	const { t } = useTranslation()
 	const confirm = useConfirm()
 	const navigate = useNavigate()
-	const { blogTypeOptions, getBlogTypeLabel } = useEnum()
+	const { blogTypeOptions } = useEnum()
 
 	const [sort, setSort] = useState({ key: 'id', direction: 'asc' })
 	const [page, setPage] = useState(1)
@@ -125,7 +124,20 @@ const ManagerBlogManagementPage = () => {
 				title: t('blogPage.typeLabel'),
 				width: 16,
 				sortable: true,
-				render: (value) => getBlogTypeLabel(value) || value || 'N/A',
+				render: (value) => {
+					const label = getEnumLabelByValue(blogTypeOptions, value) || value || 'N/A'
+					return (
+						<Typography
+							variant='body2'
+							sx={(theme) => ({
+								fontWeight: 600,
+								color: defaultBlogTypeStyle(theme, value).color,
+							})}
+						>
+							{label}
+						</Typography>
+					)
+				},
 			},
 			{
 				key: 'content',
@@ -206,7 +218,7 @@ const ManagerBlogManagementPage = () => {
 				),
 			},
 		],
-		[getBlogTypeLabel, confirm, navigate, t]
+		[blogTypeOptions, confirm, navigate, t]
 	)
 
 	const handleBulkDelete = async () => {
