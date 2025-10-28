@@ -1,5 +1,5 @@
 import ActionMenu from '@/components/generals/ActionMenu'
-import { GenericPagination } from '@/components/generals/GenericPagination'
+import { GenericTablePagination } from '@/components/generals/GenericPagination'
 import GenericTabs from '@/components/generals/GenericTabs'
 import SearchBar from '@/components/generals/SearchBar'
 import GenericTable from '@/components/tables/GenericTable'
@@ -176,16 +176,13 @@ const ManagerBlogManagementPage = () => {
 				rowKey='id'
 				loading={loading}
 			/>
-			<Stack alignItems='center' sx={{ mt: 3 }}>
-				<GenericPagination
-					totalPages={Math.ceil(totalItems / pageSize)}
-					page={page}
-					setPage={setPage}
-					pageSize={pageSize}
-					setPageSize={setPageSize}
-					loading={loading}
-				/>
-			</Stack>
+			<GenericTablePagination
+				totalItems={totalItems}
+				page={page}
+				setPage={setPage}
+				pageSize={pageSize}
+				setPageSize={setPageSize}
+			/>
 		</Paper>
 	)
 }
