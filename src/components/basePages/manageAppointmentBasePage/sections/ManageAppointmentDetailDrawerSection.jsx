@@ -1,5 +1,8 @@
 import GenericDrawer from '@/components/generals/GenericDrawer'
-import { defaultAppointmentStatusStyle } from '@/configs/defaultStylesConfig'
+import {
+	defaultAppointmentPaymentStatusStyle,
+	defaultAppointmentStatusStyle,
+} from '@/configs/defaultStylesConfig'
 import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
@@ -39,6 +42,19 @@ const ManageAppointmentDetailDrawerSection = ({ appointment, open, onClose, butt
 						</Stack>
 					),
 					of: [
+						{
+							label: t('appointment.field.payment_status'),
+							value: (
+								<Chip
+									label={getEnumLabelByValue(
+										_enum.appointmentPaymentStatusOptions,
+										appointment?.appointmentPaymentStatus
+									)}
+									size='small'
+									color={defaultAppointmentPaymentStatusStyle(appointment?.appointmentPaymentStatus)}
+								/>
+							),
+						},
 						{
 							label: t('appointment.field.type'),
 							value: getEnumLabelByValue(_enum.appointmentTypeOptions, appointment?.appointmentType),

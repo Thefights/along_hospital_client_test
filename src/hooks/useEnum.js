@@ -18,6 +18,24 @@ export default function useEnum() {
 			{ value: EnumConfig.AppointmentStatus.Cancelled, label: t('enum.appointment_status.cancelled') },
 			{ value: EnumConfig.AppointmentStatus.Refused, label: t('enum.appointment_status.refused') },
 		],
+		appointmentPaymentStatusOptions: [
+			{
+				value: EnumConfig.AppointmentPaymentStatus.None,
+				label: t('enum.appointment_payment_status.none'),
+			},
+			{
+				value: EnumConfig.AppointmentPaymentStatus.Pending,
+				label: t('enum.appointment_payment_status.pending'),
+			},
+			{
+				value: EnumConfig.AppointmentPaymentStatus.Completed,
+				label: t('enum.appointment_payment_status.completed'),
+			},
+			{
+				value: EnumConfig.AppointmentPaymentStatus.Failed,
+				label: t('enum.appointment_payment_status.failed'),
+			},
+		],
 		appointmentTypeOptions: [
 			{
 				value: EnumConfig.AppointmentType.Consultation,

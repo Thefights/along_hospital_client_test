@@ -25,9 +25,12 @@
         "search": "Search...",
         "loading": "Loading...",
         "filter": "Filter",
+        "filters": "Filters",
         "image_preview": "Image Preview",
         "select_options": "Select options",
         "date": "Date",
+        "start_date": "Start Date",
+        "end_date": "End Date",
         "time": "Time",
         "step": "Step",
         "more": "More",
@@ -88,6 +91,12 @@
             "completed": "Completed",
             "cancelled": "Cancelled",
             "refused": "Refused"
+        },
+        "appointment_payment_status": {
+            "none": "None",
+            "pending": "Pending",
+            "completed": "Completed",
+            "failed": "Failed"
         },
         "appointment_type": {
             "consultation": "Consultation",
@@ -160,6 +169,7 @@
             "country": "Country",
             "date_of_birth": "Date of Birth",
             "gender": "Gender",
+            "medical_number": "Medical Number",
             "height": "Height",
             "weight": "Weight",
             "height_weight": "Height/Weight",
@@ -213,11 +223,13 @@
         "field": {
             "purpose": "Purpose",
             "specialty": "Specialty",
+            "payment_status": "Payment Status",
             "status": "Status",
             "type": "Type",
             "meeting_type": "Meeting Type",
             "start_date": "Start Date",
             "end_date": "End Date",
+            "patient": "Patient",
             "doctor": "Doctor",
             "search_doctor": "Search by Doctor name...",
             "search_patient": "Search by Patient name...",
@@ -250,7 +262,8 @@
             "patient_summary": "Patient Summary",
             "chosen_patient": "Chosen Patient: {name}",
             "no_chosen_patient": "No patient selected",
-            "medical_record_info": "Medical Record Info (will be filled after creation)"
+            "medical_record_info": "Medical Record Info (will be filled after creation)",
+            "medical_history_management": "Medical History Management"
         },
         "placeholder": {
             "no_service": "No medical services recorded",
@@ -258,7 +271,7 @@
             "no_complaint": "No complaints recorded",
             "search_patient_name": "Search by patient name...",
             "search_doctor_name": "Search by doctor name...",
-            "search_patient_phone_name_email": "Search by patient phone/name/email...",
+            "search_patient_in_create": "Search by patient phone/name/email/medical number...",
             "note_edit_after_creation": "After creation, open detail page to update these fields"
         },
         "field": {

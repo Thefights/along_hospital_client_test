@@ -45,6 +45,7 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 
 	const { auth } = useAuth()
 	const role = auth?.role
+	const isDoctor = role === EnumConfig.Role.Doctor
 
 	const {
 		loading,
@@ -93,6 +94,11 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 	})
 	const updatePrescription = useAxiosSubmit({
 		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.PRESCRIPTION(id),
+		method: 'PUT',
+	})
+
+	const updatePatientInfo = useAxiosSubmit({
+		url: ApiUrls.PATIENT.MANAGEMENT.DETAIL(medicalHistory?.patient.id),
 		method: 'PUT',
 	})
 
@@ -183,6 +189,9 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 				open={openPatientInfo}
 				onClose={() => setOpenPatientInfo(false)}
 				patientInfo={medicalHistory?.patient}
+				loading={updatePatientInfo.loading}
+				isEditable={isDoctor}
+				onSave={async (values) => await updatePatientInfo.submit(values)}
 			/>
 			<DoctorInfoDialog
 				open={openDoctorInfo}

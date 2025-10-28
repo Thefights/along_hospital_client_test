@@ -31,6 +31,12 @@ export const EnumConfig = {
 		Cancelled: 'Cancelled',
 		Refused: 'Refused',
 	},
+	AppointmentPaymentStatus: {
+		None: 'None',
+		Pending: 'Pending',
+		Completed: 'Completed',
+		Failed: 'Failed',
+	},
 	AppointmentType: {
 		Consultation: 'Consultation',
 		FollowUp: 'Follow-up',

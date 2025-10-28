@@ -1,18 +1,16 @@
 import FilterButton from '@/components/buttons/FilterButton'
-import SearchBar from '@/components/generals/SearchBar'
 import { EnumConfig } from '@/configs/enumConfig'
 import useAuth from '@/hooks/useAuth'
 import useEnum from '@/hooks/useEnum'
 import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
-import { Stack, Typography } from '@mui/material'
+import { Grid, Stack, Typography } from '@mui/material'
 
 const ManageAppointmentFilterBarSection = ({
 	filters,
 	setFilters,
 	specialties,
-	onFilterClick = (values) => Promise.resolve(values),
 	loading = false,
 }) => {
 	const { t } = useTranslation()
@@ -20,6 +18,7 @@ const ManageAppointmentFilterBarSection = ({
 
 	const { auth } = useAuth()
 	const role = auth?.role
+	const isPatient = role === EnumConfig.Role.Patient
 	const isDoctor = role === EnumConfig.Role.Doctor
 
 	const { values, handleChange, setField, registerRef } = useForm(filters)
@@ -47,6 +46,13 @@ const ManageAppointmentFilterBarSection = ({
 
 	const fields2nd = [
 		{
+			key: 'paymentStatus',
+			title: t('appointment.field.payment_status'),
+			type: 'select',
+			options: [{ value: '', label: t('text.all') }, ..._enum.appointmentPaymentStatusOptions],
+			required: false,
+		},
+		{
 			key: 'type',
 			title: t('appointment.field.type'),
 			type: 'select',
@@ -61,6 +67,25 @@ const ManageAppointmentFilterBarSection = ({
 			required: false,
 		},
 	]
+
+	const fields3rd = [
+		isPatient
+			? undefined
+			: {
+					key: 'patientName',
+					title: t('appointment.field.search_patient'),
+					type: 'search',
+					required: false,
+			  },
+		isDoctor
+			? undefined
+			: {
+					key: 'doctorName',
+					title: t('appointment.field.search_doctor'),
+					type: 'search',
+					required: false,
+			  },
+	].filter(Boolean)
 
 	return (
 		<Stack
@@ -77,26 +102,26 @@ const ManageAppointmentFilterBarSection = ({
 			<Typography variant='caption'>{t('appointment.title.filters')}</Typography>
 
 			<Stack direction='row' spacing={2} alignItems='center'>
-				{fields1st.map((field) => renderField(field))}
+				{fields1st.map(renderField)}
 			</Stack>
 			<Stack direction='row' spacing={2} alignItems='center'>
-				{fields2nd.map((field) => renderField(field))}
+				{fields2nd.map(renderField)}
 			</Stack>
-			<Stack direction={'row'} spacing={2}>
-				<SearchBar
-					placeholder={
-						isDoctor ? t('appointment.field.search_patient') : t('appointment.field.search_doctor')
-					}
-					value={filters?.search}
-					setValue={(searchTerm) => setFilters({ ...filters, search: searchTerm })}
-					widthPercent={80}
-				/>
-				<FilterButton
-					onFilterClick={() => onFilterClick(values)}
-					loading={loading}
-					sx={{ flexGrow: 1 }}
-				/>
-			</Stack>
+			<Grid container spacing={2}>
+				{fields3rd.map((field) => (
+					<Grid size={fields3rd.length === 1 ? 10 : 5} key={field.key}>
+						{renderField(field)}
+					</Grid>
+				))}
+				<Grid size={2}>
+					<FilterButton
+						onFilterClick={() => setFilters({ ...values, page: 1 })}
+						fullWidth
+						loading={loading}
+						sx={{ flexGrow: 1 }}
+					/>
+				</Grid>
+			</Grid>
 		</Stack>
 	)
 }

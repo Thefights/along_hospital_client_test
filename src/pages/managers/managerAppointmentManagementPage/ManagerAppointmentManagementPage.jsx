@@ -19,13 +19,6 @@ const ManagerAppointmentManagementPage = () => {
 	const [openRefuseDialog, setOpenRefuseDialog] = useState(false)
 	const [refuseReason, setRefuseReason] = useState('')
 	const [filters, setFilters] = useState({
-		startDate: '',
-		endDate: '',
-		status: '',
-		type: '',
-		meetingType: '',
-		specialtyId: '',
-		search: '',
 		page: 1,
 		pageSize: 5,
 	})
@@ -67,10 +60,6 @@ const ManagerAppointmentManagementPage = () => {
 		}
 	}
 
-	const onFilterClick = async (values) => {
-		setFilters((prev) => ({ ...prev, page: 1, ...values }))
-	}
-
 	return (
 		<>
 			<ManageAppointmentBasePage
@@ -79,7 +68,6 @@ const ManagerAppointmentManagementPage = () => {
 				setFilters={setFilters}
 				selectedAppointment={selectedAppointment}
 				setSelectedAppointment={setSelectedAppointment}
-				onFilterClick={onFilterClick}
 				totalPage={getAppointments.data?.totalPage || 1}
 				appointments={getAppointments.data?.collection || []}
 				specialties={specialtiesStore.data || []}
