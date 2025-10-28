@@ -40,7 +40,7 @@ const LayoutManager = () => {
 					key: 'blogs',
 					label: 'Blogs',
 					icon: <ArticleRounded />,
-					url: routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.BLOG_MANAGEMENT),
+					url: routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.BLOG.INDEX),
 				},
 				{
 					key: 'staff',

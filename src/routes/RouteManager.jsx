@@ -16,9 +16,9 @@ const RouteManager = () => {
 						path={routeUrls.MANAGER.APPOINTMENT_MANAGEMENT}
 						element={<ManagerAppointmentManagementPage />}
 					/>
-					<Route path={routeUrls.MANAGER.BLOG_MANAGEMENT} element={<ManagerBlogManagementPage />} />
-					<Route path={routeUrls.MANAGER.BLOG_CREATE} element={<BlogUpsertPage />} />
-					<Route path={routeUrls.MANAGER.BLOG_UPDATE()} element={<BlogUpsertPage />} />
+					<Route path={routeUrls.MANAGER.BLOG.INDEX} element={<ManagerBlogManagementPage />} />
+					<Route path={routeUrls.MANAGER.BLOG.CREATE} element={<BlogUpsertPage />} />
+					<Route path={routeUrls.MANAGER.BLOG.UPDATE(':id')} element={<BlogUpsertPage />} />
 				</Route>
 			</Route>
 		</Routes>
