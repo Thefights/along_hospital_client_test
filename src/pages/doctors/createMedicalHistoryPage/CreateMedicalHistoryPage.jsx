@@ -37,7 +37,8 @@ export default function CreateMedicalHistoryPage() {
 			(p) =>
 				(p.name && p.name.toLowerCase().includes(lowerSearchTerm)) ||
 				(p.phone && p.phone.toLowerCase().includes(lowerSearchTerm)) ||
-				(p.email && p.email.toLowerCase().includes(lowerSearchTerm))
+				(p.email && p.email.toLowerCase().includes(lowerSearchTerm)) ||
+				(p.medicalNumber && p.medicalNumber.toLowerCase().includes(lowerSearchTerm))
 		)
 	}, [patientsStore.data, searchTerm])
 
@@ -127,6 +128,7 @@ export default function CreateMedicalHistoryPage() {
 				onClose={() => setOpenCreatePatientDialog(false)}
 				isEditable={true}
 				onSave={async (data) => await createPatient.submit(data)}
+				loading={createPatient.loading}
 			/>
 		</Box>
 	)

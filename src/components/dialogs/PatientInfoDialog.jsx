@@ -34,6 +34,7 @@ const PatientInfoDialog = ({
 	onClose,
 	onSave = (values) => Promise.resolve(values),
 	patientInfo = {},
+	loading = false,
 	isEditable,
 }) => {
 	const defaultValues = {
@@ -45,6 +46,7 @@ const PatientInfoDialog = ({
 		address: patientInfo.address || '',
 		phone: patientInfo.phone || '',
 		email: patientInfo.email || '',
+		medicalNumber: patientInfo.medicalNumber || '',
 		height: patientInfo.height || '',
 		weight: patientInfo.weight || '',
 		bloodType: patientInfo.bloodType || '',
@@ -82,6 +84,7 @@ const PatientInfoDialog = ({
 			type: 'email',
 			validate: [isEmail(), maxLen(255)],
 			required: false,
+			disabled: true,
 		},
 		{
 			key: 'address',
@@ -91,7 +94,15 @@ const PatientInfoDialog = ({
 			required: false,
 		},
 	]
+
 	const healthInfoFields = [
+		{
+			key: 'medicalNumber',
+			title: t('profile.field.medical_number'),
+			type: 'text',
+			required: false,
+			disabled: true,
+		},
 		{
 			key: 'height',
 			title: t('profile.field.height'),
@@ -148,8 +159,8 @@ const PatientInfoDialog = ({
 	}
 
 	const handleClose = () => {
-		reset()
 		onClose?.()
+		reset()
 	}
 
 	const handleSave = async () => {
@@ -161,8 +172,10 @@ const PatientInfoDialog = ({
 			return
 		}
 
-		reset()
-		await onSave(values)
+		const response = await onSave(values)
+		if (response) {
+			handleClose()
+		}
 	}
 
 	return (
@@ -194,7 +207,7 @@ const PatientInfoDialog = ({
 						</Typography>
 						<Stack spacing={2}>
 							{basicInfoFields.map((f) =>
-								renderField({ ...f, props: { ...f.props, disabled: !isEditable } })
+								renderField({ ...f, props: { ...f.props, disabled: f.disabled ?? !isEditable } })
 							)}
 						</Stack>
 					</Grid>
@@ -204,7 +217,7 @@ const PatientInfoDialog = ({
 						</Typography>
 						<Stack spacing={2}>
 							{healthInfoFields.map((f) =>
-								renderField({ ...f, props: { ...f.props, disabled: !isEditable } })
+								renderField({ ...f, props: { ...f.props, disabled: f.disabled ?? !isEditable } })
 							)}
 							{bmi && (
 								<Box sx={{ mt: 1 }}>
@@ -274,7 +287,7 @@ const PatientInfoDialog = ({
 						<Button onClick={handleClose} variant='outlined'>
 							{t('button.cancel')}
 						</Button>
-						<Button onClick={handleSave} variant='contained'>
+						<Button onClick={handleSave} loading={loading} loadingPosition='start' variant='contained'>
 							{t('button.save')}
 						</Button>
 					</>

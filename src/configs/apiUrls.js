@@ -21,6 +21,7 @@ export const ApiUrls = {
 	PATIENT: {
 		MANAGEMENT: {
 			INDEX: `/patient-management`,
+			DETAIL: (id) => `/patient-management/${id}`,
 			GET_ALL: `/patient-management/all`,
 		},
 	},

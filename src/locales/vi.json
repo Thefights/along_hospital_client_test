@@ -25,10 +25,13 @@
         "search": "Tìm kiếm...",
         "loading": "Đang tải...",
         "filter": "Lọc",
+        "filters": "Bộ lọc",
         "image_preview": "Xem trước hình ảnh",
         "select_options": "Chọn tùy chọn",
         "date": "Ngày",
         "time": "Thời gian",
+        "start_date": "Ngày bắt đầu",
+        "end_date": "Ngày kết thúc",
         "step": "Bước",
         "more": "Nữa",
         "result": "Kết quả",
@@ -166,6 +169,7 @@
             "country": "Quốc gia",
             "date_of_birth": "Ngày sinh",
             "gender": "Giới tính",
+            "medical_number": "Mã số y tế",
             "height": "Chiều cao",
             "weight": "Cân nặng",
             "height_weight": "Chiều cao/Cân nặng",
@@ -258,7 +262,8 @@
             "patient_summary": "Tóm tắt bệnh nhân",
             "chosen_patient": "Bệnh nhân đã chọn: {name}",
             "no_chosen_patient": "Chưa chọn bệnh nhân",
-            "medical_record_info": "Thông tin hồ sơ (sẽ điền sau khi tạo)"
+            "medical_record_info": "Thông tin hồ sơ (sẽ điền sau khi tạo)",
+            "medical_history_management": "Quản lý lịch sử y tế"
         },
         "placeholder": {
             "no_service": "Không có dịch vụ y tế nào được ghi nhận",
@@ -266,7 +271,7 @@
             "no_complaint": "Không có khiếu nại nào được ghi nhận",
             "search_patient_name": "Tìm kiếm theo tên bệnh nhân...",
             "search_doctor_name": "Tìm kiếm theo tên bác sĩ...",
-            "search_patient_phone_name_email": "Tìm kiếm theo số điện thoại/tên/email bệnh nhân...",
+            "search_patient_in_create": "Tìm kiếm theo số điện thoại/tên/email/mã số bệnh nhân...",
             "note_edit_after_creation": "Sau khi tạo, mở trang chi tiết để cập nhật các trường này"
         },
         "field": {
