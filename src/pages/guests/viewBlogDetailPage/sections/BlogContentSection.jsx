@@ -1,3 +1,4 @@
+import useTranslation from '@/hooks/useTranslation'
 import { ArrowBack, LocalHospital } from '@mui/icons-material'
 import { Box, Button, CardMedia, Chip, Paper, Stack } from '@mui/material'
 
@@ -118,55 +119,57 @@ const BLOG_CONTENT_SX = {
 
 const BlogContentSection = ({
 	title = '',
-	untitledLabel,
 	blogTypeLabel,
 	formattedDate = '',
 	content = '',
 	onBack,
-	backLabel,
 	showImage,
 	coverImage = '',
-}) => (
-	<Paper sx={PAPER_STYLES}>
-		<Box sx={{ p: { xs: 3, md: 4 }, borderBottom: 1, borderColor: 'divider' }}>
-			<Stack direction='row' spacing={1} alignItems='center' flexWrap='wrap'>
-				<Chip label={blogTypeLabel} color='primary' size='small' />
-				{formattedDate && <Chip label={formattedDate} variant='outlined' size='small' />}
-			</Stack>
-		</Box>
-
-		{showImage ? (
-			<CardMedia
-				component='img'
-				image={coverImage}
-				alt={title || untitledLabel}
-				sx={IMAGE_STYLES.cover}
-				onError={IMAGE_ERROR_HANDLER}
-			/>
-		) : (
-			<Box sx={IMAGE_STYLES.placeholder}>
-				<LocalHospital sx={{ fontSize: 88, color: 'primary.main', opacity: 0.3 }} />
+}) => {
+	const { t } = useTranslation()
+	const fallbackTitle = t('blog.title.untitled')
+	return (
+		<Paper sx={PAPER_STYLES}>
+			<Box sx={{ p: { xs: 3, md: 4 }, borderBottom: 1, borderColor: 'divider' }}>
+				<Stack direction='row' spacing={1} alignItems='center' flexWrap='wrap'>
+					<Chip label={blogTypeLabel} color='primary' size='small' />
+					{formattedDate && <Chip label={formattedDate} variant='outlined' size='small' />}
+				</Stack>
 			</Box>
-		)}
 
-		<Box sx={{ p: { xs: 3, md: 4 }, overflow: 'hidden', width: '100%', maxWidth: '100%' }}>
-			<Stack spacing={3} sx={{ width: '100%', maxWidth: '100%' }}>
-				<Box
-					className='blog-content-wrapper'
-					sx={BLOG_CONTENT_SX}
-					dangerouslySetInnerHTML={{ __html: content || '' }}
+			{showImage ? (
+				<CardMedia
+					component='img'
+					image={coverImage}
+					alt={title || fallbackTitle}
+					sx={IMAGE_STYLES.cover}
+					onError={IMAGE_ERROR_HANDLER}
 				/>
-				<Button
-					variant='outlined'
-					startIcon={<ArrowBack />}
-					onClick={onBack}
-					sx={{ alignSelf: 'flex-start' }}
-				>
-					{backLabel}
-				</Button>
-			</Stack>
-		</Box>
-	</Paper>
-)
+			) : (
+				<Box sx={IMAGE_STYLES.placeholder}>
+					<LocalHospital sx={{ fontSize: 88, color: 'primary.main', opacity: 0.3 }} />
+				</Box>
+			)}
+
+			<Box sx={{ p: { xs: 3, md: 4 }, overflow: 'hidden', width: '100%', maxWidth: '100%' }}>
+				<Stack spacing={3} sx={{ width: '100%', maxWidth: '100%' }}>
+					<Box
+						className='blog-content-wrapper'
+						sx={BLOG_CONTENT_SX}
+						dangerouslySetInnerHTML={{ __html: content || '' }}
+					/>
+					<Button
+						variant='outlined'
+						startIcon={<ArrowBack />}
+						onClick={onBack}
+						sx={{ alignSelf: 'flex-start' }}
+					>
+						{t('button.back')}
+					</Button>
+				</Stack>
+			</Box>
+		</Paper>
+	)
+}
 
 export default BlogContentSection

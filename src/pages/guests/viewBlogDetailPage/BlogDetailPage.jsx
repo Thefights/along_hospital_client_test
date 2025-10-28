@@ -1,4 +1,5 @@
 import EmptyPage from '@/components/placeholders/EmptyPage'
+import { ApiUrls } from '@/configs/apiUrls'
 import { routeUrls } from '@/configs/routeUrls'
 import useEnum from '@/hooks/useEnum'
 import useFetch from '@/hooks/useFetch'
@@ -21,14 +22,16 @@ const BlogDetailPage = () => {
 	const { t } = useTranslation()
 	const { blogTypeOptions } = useEnum()
 
-	const { data: blogRaw, loading } = useFetch(`/Blog/${id}`, {}, [id])
-	const { data: recentRaw, loading: recentLoading } = useFetch('/Blog', RECENT_PARAMS, [id])
+	const { data: blogRaw, loading } = useFetch(`${ApiUrls.BLOG.INDEX}/${id}`, {}, [id])
+	const { data: recentRaw, loading: recentLoading } = useFetch(ApiUrls.BLOG.INDEX, RECENT_PARAMS, [
+		id,
+	])
 
 	const blog = blogRaw || {}
 	const coverImage = getImageFromCloud(blog.image)
 	const formattedDate = formatDateToDDMMYYYY(blog.publicationDate)
 	const blogTypeLabel =
-		getEnumLabelByValue(blogTypeOptions, blog.blogType) || t('blogPage.blogType.Other')
+		getEnumLabelByValue(blogTypeOptions, blog.blogType) || t('enum.blog_type.other')
 
 	const recentBlogs = useMemo(() => {
 		const collection = recentRaw?.collection || []
@@ -44,7 +47,6 @@ const BlogDetailPage = () => {
 	if (loading) {
 		return (
 			<Box sx={{ bgcolor: 'background.default' }}>
-				{/* Hero Section Skeleton */}
 				<Box
 					sx={{
 						position: 'relative',
@@ -71,10 +73,8 @@ const BlogDetailPage = () => {
 						alignItems='flex-start'
 						sx={{ flexWrap: { xs: 'wrap', lg: 'nowrap' } }}
 					>
-						{/* Main Content Skeleton */}
 						<Grid size={{ xs: 12, md: 8, lg: 9 }} sx={{ minWidth: 0 }}>
 							<Paper sx={{ borderRadius: 3, boxShadow: 6, overflow: 'hidden' }}>
-								{/* Header with chips */}
 								<Box sx={{ p: { xs: 3, md: 4 }, borderBottom: 1, borderColor: 'divider' }}>
 									<Stack direction='row' spacing={1} alignItems='center' flexWrap='wrap'>
 										<Skeleton variant='rectangular' width={80} height={24} sx={{ borderRadius: 3 }} />
@@ -82,10 +82,7 @@ const BlogDetailPage = () => {
 									</Stack>
 								</Box>
 
-								{/* Image skeleton */}
 								<Skeleton variant='rectangular' height={{ xs: 240, sm: 320, md: 420 }} />
-
-								{/* Content skeleton */}
 								<Box sx={{ p: { xs: 3, md: 4 } }}>
 									<Stack spacing={3}>
 										<Stack spacing={2}>
@@ -147,9 +144,9 @@ const BlogDetailPage = () => {
 	return (
 		<Box sx={{ bgcolor: 'background.default' }}>
 			<BlogHeroSection
-				headerTitle={t('blogDetail.headerTitle')}
-				title={blog.title || t('blogDetail.untitled')}
-				subtitle={formattedDate ? t('blogDetail.publishedOn', { date: formattedDate }) : ''}
+				headerTitle={t('blog.title.detail')}
+				title={blog.title || t('blog.title.untitled')}
+				subtitle={formattedDate ? t('blog.text.published_on', { date: formattedDate }) : ''}
 			/>
 
 			<Container maxWidth='lg' sx={{ pb: { xs: 5, md: 7 } }}>
@@ -162,12 +159,10 @@ const BlogDetailPage = () => {
 					<Grid size={{ xs: 12, md: 8, lg: 9 }} sx={{ minWidth: 0, overflow: 'hidden' }}>
 						<BlogContentSection
 							title={blog.title}
-							untitledLabel={t('blogDetail.untitled')}
 							blogTypeLabel={blogTypeLabel}
 							formattedDate={formattedDate}
 							content={blog.content}
 							onBack={handleBack}
-							backLabel={t('blogDetail.back')}
 							showImage={Boolean(blog.image)}
 							coverImage={coverImage}
 						/>
@@ -181,15 +176,7 @@ const BlogDetailPage = () => {
 							flexShrink: 0,
 						}}
 					>
-						<RecentBlogsSection
-							title={t('blogDetail.recentPosts')}
-							loading={recentLoading}
-							blogs={recentBlogs}
-							onNavigate={navigateToBlog}
-							readMoreLabel={t('blogPage.readMore')}
-							untitledLabel={t('blogDetail.untitled')}
-							emptyLabel={t('blogDetail.noRecent')}
-						/>
+						<RecentBlogsSection loading={recentLoading} blogs={recentBlogs} onNavigate={navigateToBlog} />
 					</Grid>
 				</Grid>
 			</Container>
