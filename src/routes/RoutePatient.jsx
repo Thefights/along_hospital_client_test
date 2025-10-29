@@ -31,8 +31,10 @@ const RoutePatient = () => {
 						element={<EndMeetingRoomPage />}
 					/>
 					<Route path={routeUrls.PATIENT.VIDEO_CONSULTATION} element={<CreateVideoConsultationPage />} />
-					path={routeUrls.PATIENT.MEDICAL_HISTORY.INDEX}
-					element={<PatientMedicalHistoryPage />}
+					<Route
+						path={routeUrls.PATIENT.MEDICAL_HISTORY.INDEX}
+						element={<PatientMedicalHistoryPage />}
+					/>
 				</Route>
 				<Route
 					path={routeUrls.PATIENT.APPOINTMENT.MEETING_ROOM_TOKEN(':id')}

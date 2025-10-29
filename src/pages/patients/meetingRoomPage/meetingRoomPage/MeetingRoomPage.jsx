@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import ChatSidebar from './section/ChatSidebar'
 import ControlBar from './section/ControlBar'
 import DoctorActions from './section/DoctorActions'
+import LocalMediaTest from './section/LocalMediaTest'
 import MeetingStatusBadge from './section/MeetingStatusBadge'
 import VideoStage from './section/VideoStage'
 
@@ -59,6 +60,8 @@ const MeetingRoomPage = () => {
 						navigate(routeUrls.BASE_ROUTE.DOCTOR(routeUrls.DOCTOR.APPOINTMENT_MANAGEMENT))
 					}
 				/>
+				{/* TEST ONLY: local media quick preview for camera/mic — remove later */}
+				<LocalMediaTest />
 			</Container>
 		</Box>
 	)
