@@ -2,6 +2,7 @@ import ManageAppointmentBasePage from '@/components/basePages/manageAppointmentB
 import ConfirmationButton from '@/components/generals/ConfirmationButton'
 import { ApiUrls } from '@/configs/apiUrls'
 import { EnumConfig } from '@/configs/enumConfig'
+import { routeUrls } from '@/configs/routeUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
 import useReduxStore from '@/hooks/useReduxStore'
@@ -9,27 +10,22 @@ import useTranslation from '@/hooks/useTranslation'
 import { setSpecialtiesStore } from '@/redux/reducers/managementReducer'
 import { Stack } from '@mui/material'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const DoctorAppointmentManagementPage = () => {
 	const [selectedAppointment, setSelectedAppointment] = useState(null)
 	const [filters, setFilters] = useState({
-		startDate: '',
-		endDate: '',
-		status: '',
-		type: '',
-		meetingType: '',
-		specialtyId: '',
-		search: '',
 		page: 1,
 		pageSize: 5,
 	})
 
 	const { t } = useTranslation()
+	const navigate = useNavigate()
 
 	const getAppointments = useFetch(
 		ApiUrls.APPOINTMENT.MANAGEMENT.GET_ALL_BY_CURRENT_DOCTOR,
 		filters,
-		[filters.status, filters.page, filters.pageSize]
+		[filters]
 	)
 	const specialtiesStore = useReduxStore({
 		url: ApiUrls.SPECIALTY.GET_ALL,
@@ -40,20 +36,29 @@ const DoctorAppointmentManagementPage = () => {
 	const confirmAppointment = useAxiosSubmit({
 		url: ApiUrls.APPOINTMENT.MANAGEMENT.CONFIRM(selectedAppointment?.id),
 		method: 'PUT',
+		onSuccess: async () => {
+			await getAppointments.fetch()
+			setSelectedAppointment(null)
+		},
 	})
 	const completeAppointment = useAxiosSubmit({
 		url: ApiUrls.APPOINTMENT.MANAGEMENT.COMPLETE(selectedAppointment?.id),
 		method: 'PUT',
+		onSuccess: async (response) => {
+			const medicalHistoryId = response?.data?.medicalHistoryId
+			if (medicalHistoryId) {
+				navigate(routeUrls.BASE_ROUTE.DOCTOR(routeUrls.DOCTOR.MEDICAL_HISTORY.DETAIL(medicalHistoryId)))
+			}
+		},
 	})
 	const denyAssignment = useAxiosSubmit({
 		url: ApiUrls.APPOINTMENT.MANAGEMENT.DENY_ASSIGNMENT(selectedAppointment?.id),
 		method: 'PUT',
+		onSuccess: async () => {
+			await getAppointments.fetch()
+			setSelectedAppointment(null)
+		},
 	})
-
-	const onFilterClick = async () => {
-		setFilters((prev) => ({ ...prev, page: 1 }))
-		await getAppointments.fetch()
-	}
 
 	return (
 		<ManageAppointmentBasePage
@@ -62,10 +67,9 @@ const DoctorAppointmentManagementPage = () => {
 			setFilters={setFilters}
 			selectedAppointment={selectedAppointment}
 			setSelectedAppointment={setSelectedAppointment}
-			totalAppointments={getAppointments.data?.totalCount || 0}
+			totalPage={getAppointments.data?.totalPage || 1}
 			appointments={getAppointments.data?.collection || []}
 			specialties={specialtiesStore.data || []}
-			onFilterClick={onFilterClick}
 			loading={getAppointments.loading}
 			drawerButtons={
 				selectedAppointment?.appointmentStatus === EnumConfig.AppointmentStatus.Scheduled ? (
@@ -76,6 +80,7 @@ const DoctorAppointmentManagementPage = () => {
 							confirmButtonColor='primary'
 							confirmButtonText={t('appointment.button.accept_assignment')}
 							loading={confirmAppointment.loading}
+							onConfirm={async () => await confirmAppointment.submit()}
 						>
 							{t('appointment.button.accept_assignment')}
 						</ConfirmationButton>
@@ -84,7 +89,9 @@ const DoctorAppointmentManagementPage = () => {
 							confirmationDescription={t('appointment.dialog.confirm_deny_description')}
 							confirmButtonColor='error'
 							confirmButtonText={t('appointment.button.deny_assignment')}
+							color='error'
 							loading={denyAssignment.loading}
+							onConfirm={async () => await denyAssignment.submit()}
 						>
 							{t('appointment.button.deny_assignment')}
 						</ConfirmationButton>
@@ -95,7 +102,9 @@ const DoctorAppointmentManagementPage = () => {
 						confirmationDescription={t('appointment.dialog.confirm_complete_description')}
 						confirmButtonColor='primary'
 						confirmButtonText={t('appointment.button.complete_appointment')}
+						color='success'
 						loading={completeAppointment.loading}
+						onConfirm={async () => await completeAppointment.submit()}
 					>
 						{t('appointment.button.complete_appointment')}
 					</ConfirmationButton>

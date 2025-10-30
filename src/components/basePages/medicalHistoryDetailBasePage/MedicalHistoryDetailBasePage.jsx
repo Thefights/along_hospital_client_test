@@ -1,8 +1,11 @@
+import EmptyPage from '@/components/placeholders/EmptyPage'
 import { ApiUrls } from '@/configs/apiUrls'
 import { EnumConfig } from '@/configs/enumConfig'
 import useAuth from '@/hooks/useAuth'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
+import { useConfirm } from '@/hooks/useConfirm'
 import useFetch from '@/hooks/useFetch'
+import useTranslation from '@/hooks/useTranslation'
 import { Box, Grid, Stack } from '@mui/material'
 import { useState } from 'react'
 import { Fade, Slide } from 'react-awesome-reveal'
@@ -23,6 +26,9 @@ import MedicalHistoryDetailServiceSection from './sections/MedicalHistoryDetailS
 const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX }) => {
 	const { id } = useParams()
 
+	const { t } = useTranslation()
+	const confirm = useConfirm()
+
 	const [selectedMedicalServiceId, setSelectedMedicalServiceId] = useState(0)
 
 	const [openPatientInfo, setOpenPatientInfo] = useState(false)
@@ -39,6 +45,7 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 
 	const { auth } = useAuth()
 	const role = auth?.role
+	const isDoctor = role === EnumConfig.Role.Doctor
 
 	const {
 		loading,
@@ -69,15 +76,15 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 		method: 'POST',
 	})
 	const responseAsDraftComplaint = useAxiosSubmit({
-		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.COMPLAINT.DRAFT(id),
+		url: ApiUrls.COMPLAINT.MANAGEMENT.DRAFT(id),
 		method: 'PUT',
 	})
 	const responseAsResolveComplaint = useAxiosSubmit({
-		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.COMPLAINT.RESOLVE(id),
+		url: ApiUrls.COMPLAINT.MANAGEMENT.RESOLVE(id),
 		method: 'PUT',
 	})
 	const closeComplaint = useAxiosSubmit({
-		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.COMPLAINT.CLOSE(id),
+		url: ApiUrls.COMPLAINT.MANAGEMENT.CLOSE(id),
 		method: 'PUT',
 	})
 
@@ -87,6 +94,11 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 	})
 	const updatePrescription = useAxiosSubmit({
 		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.PRESCRIPTION(id),
+		method: 'PUT',
+	})
+
+	const updatePatientInfo = useAxiosSubmit({
+		url: ApiUrls.PATIENT.MANAGEMENT.DETAIL(medicalHistory?.patient.id),
 		method: 'PUT',
 	})
 
@@ -177,6 +189,9 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 				open={openPatientInfo}
 				onClose={() => setOpenPatientInfo(false)}
 				patientInfo={medicalHistory?.patient}
+				loading={updatePatientInfo.loading}
+				isEditable={isDoctor}
+				onSave={async (values) => await updatePatientInfo.submit(values)}
 			/>
 			<DoctorInfoDialog
 				open={openDoctorInfo}
@@ -246,6 +261,15 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 					}
 				}}
 				onCloseComplaint={async () => {
+					const isConfirmed = await confirm({
+						title: t('complaint.dialog.confirm.close_complaint_title'),
+						description: t('complaint.dialog.confirm.close_complaint_description'),
+						confirmColor: 'error',
+						confirmText: t('button.close'),
+					})
+
+					if (!isConfirmed) return
+
 					const response = await closeComplaint.submit()
 					if (response) {
 						setOpenRespondComplaint(false)

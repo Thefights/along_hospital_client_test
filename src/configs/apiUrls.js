@@ -1,11 +1,29 @@
 export const ApiUrls = {
 	AUTH: {
-		CURRENT_ACCOUNT: '/auth/current-account',
+		LOGIN: '/auth/login',
+		LOGIN_GOOGLE: '/auth/login/google',
+		REGISTER: '/auth/register',
+		REGISTER_RESEND_LINK: '/auth/register/resend-link',
+		REGISTER_VERIFY: '/auth/register/verify',
+		REFRESH: '/auth/refresh',
+		FORGOT_PASSWORD: '/auth/forgot-password',
+		FORGOT_PASSWORD_RESET: '/auth/forgot-password/reset',
+		LOGOUT: '/auth/logout',
+		CURRENT_ACCOUNT: '/auth/me',
+		REFRESH_TOKEN: '/auth/refresh',
+		COMPLETE_PROFILE: '/user/complete-profile',
 	},
 	USER: {
 		INDEX: `/user`,
 		PROFILE: `/user/profile`,
 		CART: `/user/cart`,
+	},
+	PATIENT: {
+		MANAGEMENT: {
+			INDEX: `/patient-management`,
+			DETAIL: (id) => `/patient-management/${id}`,
+			GET_ALL: `/patient-management/all`,
+		},
 	},
 	DOCTOR: {
 		INDEX: `/doctor`,
@@ -46,6 +64,15 @@ export const ApiUrls = {
 			REFUSE: (id) => `/appointment-management/refuse/${id}`,
 		},
 	},
+	COMPLAINT: {
+		MANAGEMENT: {
+			INDEX: `/complaint-management`,
+			DRAFT: (id) => `/complaint-management/draft/${id}`,
+			RESOLVE: (id) => `/complaint-management/resolve/${id}`,
+			CLOSE: (id) => `/complaint-management/close/${id}`,
+			CLASSIFY: (id) => `/complaint-management/classify/${id}`,
+		},
+	},
 	MEDICAL_HISTORY: {
 		INDEX: `/medical-history`,
 		CREATE_COMPLAINT: (medicalHistoryId) => `/medical-history/${medicalHistoryId}/complaint`,
@@ -59,14 +86,6 @@ export const ApiUrls = {
 				}`,
 			PRESCRIPTION: (medicalHistoryId) =>
 				`/medical-history-management/${medicalHistoryId}/prescription`,
-			COMPLAINT: {
-				DRAFT: (medicalHistoryId) => `/medical-history-management/${medicalHistoryId}/complaint/draft`,
-				RESOLVE: (medicalHistoryId) =>
-					`/medical-history-management/${medicalHistoryId}/complaint/resolve`,
-				CLOSE: (medicalHistoryId) => `/medical-history-management/${medicalHistoryId}/complaint/close`,
-				CLASSIFY: (medicalHistoryId) =>
-					`/medical-history-management/${medicalHistoryId}/complaint/classify`,
-			},
 		},
 	},
 	BLOG: {

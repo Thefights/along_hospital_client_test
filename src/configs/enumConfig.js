@@ -1,5 +1,11 @@
 export const EnumConfig = {
 	// For users
+	AuthStage: {
+		PatientProfilePendingWithPhone: 'PatientProfilePendingWithPhone',
+		PatientProfilePendingWithoutPhone: 'PatientProfilePendingWithoutPhone',
+		DoctorProfilePending: 'DoctorProfilePending',
+		Done: 'Done',
+	},
 	Role: {
 		Guest: 'Guest',
 		Patient: 'Patient',
@@ -11,6 +17,11 @@ export const EnumConfig = {
 		Female: 'Female',
 		Other: 'Other',
 	},
+	AllergySeverity: {
+		Mild: 'Mild',
+		Moderate: 'Moderate',
+		Severe: 'Severe',
+	},
 
 	// For appointments
 	AppointmentStatus: {
@@ -19,6 +30,12 @@ export const EnumConfig = {
 		Completed: 'Completed',
 		Cancelled: 'Cancelled',
 		Refused: 'Refused',
+	},
+	AppointmentPaymentStatus: {
+		None: 'None',
+		Pending: 'Pending',
+		Completed: 'Completed',
+		Failed: 'Failed',
 	},
 	AppointmentType: {
 		Consultation: 'Consultation',
@@ -56,6 +73,11 @@ export const EnumConfig = {
 		Doctor: 'Doctor',
 		Medicine: 'Medicine',
 		Others: 'Others',
+	},
+	ComplaintType: {
+		Neutral: 'Neutral',
+		Positive: 'Positive',
+		Negative: 'Negative',
 	},
 	ComplaintResolveStatus: {
 		Pending: 'Pending',

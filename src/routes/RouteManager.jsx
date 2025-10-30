@@ -1,8 +1,10 @@
 import { routeUrls } from '@/configs/routeUrls'
 import LayoutManager from '@/layouts/LayoutManager'
+import ComplaintManagementPage from '@/pages/managers/complaintManagementPage/ComplaintManagementPage'
 import ManagerAppointmentManagementPage from '@/pages/managers/managerAppointmentManagementPage/ManagerAppointmentManagementPage'
 import ManagerBlogManagementPage from '@/pages/managers/managerBlogManagementPage/ManagerBlogManagementPage'
 import BlogUpsertPage from '@/pages/managers/managerBlogUpsertPage/BlogUpsertPage'
+import ManagerMedicalHistoryManagementPage from '@/pages/managers/managerMedicalHistoryManagementPage/ManagerMedicalHistoryManagementPage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 
@@ -19,6 +21,11 @@ const RouteManager = () => {
 					<Route path={routeUrls.MANAGER.BLOG.INDEX} element={<ManagerBlogManagementPage />} />
 					<Route path={routeUrls.MANAGER.BLOG.CREATE} element={<BlogUpsertPage />} />
 					<Route path={routeUrls.MANAGER.BLOG.UPDATE(':id')} element={<BlogUpsertPage />} />
+					<Route path={routeUrls.MANAGER.COMPLAINT_MANAGEMENT} element={<ComplaintManagementPage />} />
+					<Route
+						path={routeUrls.MANAGER.MEDICAL_HISTORY.INDEX}
+						element={<ManagerMedicalHistoryManagementPage />}
+					/>
 				</Route>
 			</Route>
 		</Routes>

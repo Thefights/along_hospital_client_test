@@ -31,6 +31,24 @@ export default function useEnum() {
 			{ value: EnumConfig.AppointmentStatus.Cancelled, label: t('enum.appointment_status.cancelled') },
 			{ value: EnumConfig.AppointmentStatus.Refused, label: t('enum.appointment_status.refused') },
 		],
+		appointmentPaymentStatusOptions: [
+			{
+				value: EnumConfig.AppointmentPaymentStatus.None,
+				label: t('enum.appointment_payment_status.none'),
+			},
+			{
+				value: EnumConfig.AppointmentPaymentStatus.Pending,
+				label: t('enum.appointment_payment_status.pending'),
+			},
+			{
+				value: EnumConfig.AppointmentPaymentStatus.Completed,
+				label: t('enum.appointment_payment_status.completed'),
+			},
+			{
+				value: EnumConfig.AppointmentPaymentStatus.Failed,
+				label: t('enum.appointment_payment_status.failed'),
+			},
+		],
 		appointmentTypeOptions: [
 			{
 				value: EnumConfig.AppointmentType.Consultation,
@@ -82,6 +100,20 @@ export default function useEnum() {
 			{ value: EnumConfig.ComplaintTopic.Doctor, label: t('enum.complaint_topic.doctor') },
 			{ value: EnumConfig.ComplaintTopic.Medicine, label: t('enum.complaint_topic.medicine') },
 			{ value: EnumConfig.ComplaintTopic.Others, label: t('enum.complaint_topic.others') },
+		],
+		complaintTypeOptions: [
+			{
+				value: EnumConfig.ComplaintType.Neutral,
+				label: t('enum.complaint_type.neutral'),
+			},
+			{
+				value: EnumConfig.ComplaintType.Positive,
+				label: t('enum.complaint_type.positive'),
+			},
+			{
+				value: EnumConfig.ComplaintType.Negative,
+				label: t('enum.complaint_type.negative'),
+			},
 		],
 		complaintResolveStatusOptions: [
 			{

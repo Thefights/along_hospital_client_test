@@ -1,7 +1,7 @@
 import ManageAppointmentDetailDrawerSection from '@/components/basePages/manageAppointmentBasePage/sections/ManageAppointmentDetailDrawerSection'
 import ManageAppointmentFilterBarSection from '@/components/basePages/manageAppointmentBasePage/sections/ManageAppointmentFilterBarSection'
 import ManageAppointmentListItemSection from '@/components/basePages/manageAppointmentBasePage/sections/ManageAppointmentListItemSection'
-import { GenericPagination, GenericTablePagination } from '@/components/generals/GenericPagination'
+import { GenericTablePagination } from '@/components/generals/GenericPagination'
 import { EnumConfig } from '@/configs/enumConfig'
 import useTranslation from '@/hooks/useTranslation'
 import { Paper, Stack, Typography } from '@mui/material'
@@ -12,14 +12,13 @@ import ManageAppointmentTabsSection from './sections/ManageAppointmentTabsSectio
 
 const ManageAppointmentBasePage = ({
 	headerTitle = 'Manage Appointments',
-	totalAppointments = 0,
 	appointments = [],
+	totalPage = 1,
 	specialties = [],
 	filters,
 	setFilters,
 	selectedAppointment,
 	setSelectedAppointment,
-	onFilterClick = () => {},
 	loading = false,
 	drawerButtons = <React.Fragment />,
 }) => {
@@ -48,8 +47,9 @@ const ManageAppointmentBasePage = ({
 							[{t('appointment.title.upcoming')}:{' '}
 							{appointments?.reduce(
 								(acc, appt) =>
-									appt.appointmentStatus === EnumConfig.AppointmentStatus.Scheduled ||
-									appt.appointmentStatus === EnumConfig.AppointmentStatus.Confirmed
+									appt &&
+									(appt.appointmentStatus === EnumConfig.AppointmentStatus.Scheduled ||
+										appt.appointmentStatus === EnumConfig.AppointmentStatus.Confirmed)
 										? acc + 1
 										: acc,
 								0
@@ -60,7 +60,7 @@ const ManageAppointmentBasePage = ({
 							[{t('appointment.title.completed')}:{' '}
 							{appointments?.reduce(
 								(acc, appt) =>
-									appt.appointmentStatus === EnumConfig.AppointmentStatus.Completed ? acc + 1 : acc,
+									appt && appt.appointmentStatus === EnumConfig.AppointmentStatus.Completed ? acc + 1 : acc,
 								0
 							)}
 							]
@@ -72,7 +72,6 @@ const ManageAppointmentBasePage = ({
 					filters={filters}
 					setFilters={setFilters}
 					specialties={specialties}
-					onFilterClick={onFilterClick}
 					loading={loading}
 				/>
 
@@ -94,24 +93,15 @@ const ManageAppointmentBasePage = ({
 						)}
 					</Stack>
 					<Stack justifyContent={'center'} px={2}>
-						{filters?.pageSize ? (
-							<GenericTablePagination
-								totalItems={totalAppointments}
-								page={filters.page}
-								setPage={(page) => setFilters({ ...filters, page })}
-								pageSize={filters.pageSize}
-								setPageSize={(pageSize) => setFilters({ ...filters, pageSize })}
-								pageSizeOptions={[5, 10, 20]}
-								loading={loading}
-							/>
-						) : (
-							<GenericPagination
-								totalPages={Math.ceil(totalAppointments / 5)}
-								page={filters.page}
-								setPage={(page) => setFilters({ ...filters, page })}
-								loading={loading}
-							/>
-						)}
+						<GenericTablePagination
+							totalPage={totalPage}
+							page={filters.page}
+							setPage={(page) => setFilters({ ...filters, page })}
+							pageSize={filters.pageSize}
+							setPageSize={(pageSize) => setFilters({ ...filters, pageSize })}
+							pageSizeOptions={[5, 10, 20]}
+							loading={loading}
+						/>
 					</Stack>
 				</Stack>
 

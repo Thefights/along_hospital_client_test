@@ -43,7 +43,6 @@ const tableHeadCellStyle = (theme, canSort = false, sticky = false) => {
 	}
 }
 
-// jsdoc type
 /**
  * @param {Object} props
  * @param {Array<Object>} props.data
@@ -296,8 +295,11 @@ export default GenericTable
 
 // Usage Example:
 /*
-const { loading, error, data } = useFetch('/users', { sort }, [sort])
-const [sort, setSort] = React.useState({ key: 'name', direction: 'asc' })
+const [sort, setSort] = useState({ key: 'name', direction: 'asc' })
+
+const confirm = useConfirm()
+
+const { loading, error, data } = useFetch('/users', { sort: `${sort.key} ${sort.direction}` }, [sort])
 
 const fields = [
     { key: 'id', title: 'ID', width: 10, sortable: true, fixedColumn: true },
@@ -306,6 +308,39 @@ const fields = [
     { key: 'address.city', title: 'City', width: 20, sortable: false },
     { key: 'address.country', title: 'Country', width: 20, sortable: false },
     { key: '', title: 'Actions', width: 10, render: (value, row) => <Button onClick={() => handleEdit(row.id)}>Edit</Button> },
+	{
+		key: '',
+		title: 'Custom Actions',
+		width: 5,
+		render: (value, row) => (
+			<ActionMenu
+				actions={[
+					{
+						title: 'Edit',
+						onClick: () => {
+							setSelectedRow(row)
+							setOpenUpdate(true)
+						},
+					},
+					{
+						title: 'Delete',
+						onClick: async () => {
+							const isConfirmed = await confirm({
+								confirmText: 'Delete',
+								confirmColor: 'error',
+								title: 'Delete user?',
+								description: `Are you sure you want to delete ${row.name}?`,
+							})
+
+							if (isConfirmed) {
+								await deleteTest.submit()
+							}
+						},
+					},
+				]}
+			/>
+		),
+	},	 
 ]
 
 const testData = [
@@ -316,14 +351,15 @@ const testData = [
 <GenericTable
     data={data}
     fields={fields}
+    rowKey="id"
     sort={sort}
     onSortChange={setSort}
-	canSelectRows={true}
-	selectedRows={selectedIds}
-	setSelectedRows={setSelectedIds}
-    rowKey="id"
+	canSelectRows={true} // can be removed if not needed
+	selectedRows={selectedIds} // can be removed if not needed
+	setSelectedRows={setSelectedIds} // can be removed if not needed
     loading={loading}
-    stickyHeader={true}
+    stickyHeader={true} // can be removed if not needed
+
 />
 
 */

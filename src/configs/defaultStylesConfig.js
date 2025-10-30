@@ -12,11 +12,49 @@ export const defaultAppointmentStatusStyle = (theme, status) => {
 	return { bg: p.softBg || p.main + '1A', border: p.softBorder || p.main + '33', color: p.main }
 }
 
+export const defaultAppointmentPaymentStatusStyle = (status) => {
+	const map = {
+		[EnumConfig.AppointmentPaymentStatus.None]: 'default',
+		[EnumConfig.AppointmentPaymentStatus.Pending]: 'warning',
+		[EnumConfig.AppointmentPaymentStatus.Completed]: 'success',
+		[EnumConfig.AppointmentPaymentStatus.Failed]: 'error',
+	}
+	return map[status] || 'default'
+}
+
+export const defaultAllergySeverityStyle = (severity) => {
+	const map = {
+		[EnumConfig.AllergySeverity.Mild]: 'info.dark',
+		[EnumConfig.AllergySeverity.Moderate]: 'warning.dark',
+		[EnumConfig.AllergySeverity.Severe]: 'error.dark',
+	}
+	return map[severity] || 'primary'
+}
+
 export const defaultMedicalHistoryStatusStyle = (status) => {
 	const map = {
 		[EnumConfig.MedicalHistoryStatus.Draft]: 'warning',
 		[EnumConfig.MedicalHistoryStatus.Processed]: 'info',
 		[EnumConfig.MedicalHistoryStatus.Paid]: 'success',
+	}
+	return map[status] || 'primary'
+}
+
+export const defaultComplaintTypeStyle = (type) => {
+	const map = {
+		[EnumConfig.ComplaintType.Neutral]: 'info',
+		[EnumConfig.ComplaintType.Positive]: 'success',
+		[EnumConfig.ComplaintType.Negative]: 'error',
+	}
+	return map[type] || 'primary'
+}
+
+export const defaultComplaintResolveStatusStyle = (status) => {
+	const map = {
+		[EnumConfig.ComplaintResolveStatus.Pending]: 'warning',
+		[EnumConfig.ComplaintResolveStatus.Draft]: 'info',
+		[EnumConfig.ComplaintResolveStatus.Resolved]: 'success',
+		[EnumConfig.ComplaintResolveStatus.Closed]: 'error',
 	}
 	return map[status] || 'primary'
 }

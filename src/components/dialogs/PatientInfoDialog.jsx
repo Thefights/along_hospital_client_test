@@ -29,7 +29,14 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 
-const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable }) => {
+const PatientInfoDialog = ({
+	open,
+	onClose,
+	onSave = (values) => Promise.resolve(values),
+	patientInfo = {},
+	loading = false,
+	isEditable,
+}) => {
 	const defaultValues = {
 		id: patientInfo.id || '',
 		name: patientInfo.name || '',
@@ -39,6 +46,7 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 		address: patientInfo.address || '',
 		phone: patientInfo.phone || '',
 		email: patientInfo.email || '',
+		medicalNumber: patientInfo.medicalNumber || '',
 		height: patientInfo.height || '',
 		weight: patientInfo.weight || '',
 		bloodType: patientInfo.bloodType || '',
@@ -49,7 +57,7 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 	const { t } = useTranslation()
 	const _enum = useEnum()
 
-	const { values, setField, handleChange, registerRef, validateAll } = useForm(defaultValues)
+	const { values, setField, handleChange, registerRef, reset, validateAll } = useForm(defaultValues)
 	const { renderField, hasRequiredMissing } = useFieldRenderer(
 		values,
 		setField,
@@ -61,6 +69,7 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 	)
 
 	const basicInfoFields = [
+		{ key: 'name', title: t('profile.field.name'), type: 'text' },
 		{ key: 'dateOfBirth', title: t('profile.field.date_of_birth'), type: 'date' },
 		{
 			key: 'gender',
@@ -75,6 +84,7 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 			type: 'email',
 			validate: [isEmail(), maxLen(255)],
 			required: false,
+			disabled: true,
 		},
 		{
 			key: 'address',
@@ -84,7 +94,15 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 			required: false,
 		},
 	]
+
 	const healthInfoFields = [
+		{
+			key: 'medicalNumber',
+			title: t('profile.field.medical_number'),
+			type: 'text',
+			required: false,
+			disabled: true,
+		},
 		{
 			key: 'height',
 			title: t('profile.field.height'),
@@ -140,7 +158,12 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 		)
 	}
 
-	const handleSave = () => {
+	const handleClose = () => {
+		onClose?.()
+		reset()
+	}
+
+	const handleSave = async () => {
 		setSubmitted(true)
 		const ok = validateAll()
 		const isMissing = hasRequiredMissing(fields)
@@ -149,11 +172,14 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 			return
 		}
 
-		onSave(values)
+		const response = await onSave(values)
+		if (response) {
+			handleClose()
+		}
 	}
 
 	return (
-		<Dialog open={open} onClose={onClose} maxWidth='md' fullWidth scroll='paper'>
+		<Dialog open={open} onClose={handleClose} maxWidth='md' fullWidth scroll='paper'>
 			<DialogTitle
 				sx={{ p: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
 			>
@@ -170,7 +196,7 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 					)}
 				</Stack>
 				<IconButton>
-					<Close onClick={onClose} />
+					<Close onClick={handleClose} />
 				</IconButton>
 			</DialogTitle>
 			<DialogContent sx={{ p: 3 }}>
@@ -181,7 +207,7 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 						</Typography>
 						<Stack spacing={2}>
 							{basicInfoFields.map((f) =>
-								renderField({ ...f, props: { ...f.props, disabled: !isEditable } })
+								renderField({ ...f, props: { ...f.props, disabled: f.disabled ?? !isEditable } })
 							)}
 						</Stack>
 					</Grid>
@@ -191,7 +217,7 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 						</Typography>
 						<Stack spacing={2}>
 							{healthInfoFields.map((f) =>
-								renderField({ ...f, props: { ...f.props, disabled: !isEditable } })
+								renderField({ ...f, props: { ...f.props, disabled: f.disabled ?? !isEditable } })
 							)}
 							{bmi && (
 								<Box sx={{ mt: 1 }}>
@@ -258,15 +284,15 @@ const PatientInfoDialog = ({ open, onClose, onSave, patientInfo = {}, isEditable
 			>
 				{isEditable ? (
 					<>
-						<Button onClick={onClose} variant='outlined'>
+						<Button onClick={handleClose} variant='outlined'>
 							{t('button.cancel')}
 						</Button>
-						<Button onClick={handleSave} variant='contained'>
+						<Button onClick={handleSave} loading={loading} loadingPosition='start' variant='contained'>
 							{t('button.save')}
 						</Button>
 					</>
 				) : (
-					<Button onClick={onClose} variant='contained'>
+					<Button onClick={handleClose} variant='contained'>
 						{t('button.close')}
 					</Button>
 				)}

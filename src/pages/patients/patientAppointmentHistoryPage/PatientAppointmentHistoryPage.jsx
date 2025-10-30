@@ -16,24 +16,13 @@ const PatientAppointmentHistoryPage = () => {
 	const [openCancelDialog, setOpenCancelDialog] = useState(false)
 	const [cancelReason, setCancelReason] = useState('')
 	const [filters, setFilters] = useState({
-		startDate: '',
-		endDate: '',
-		status: '',
-		type: '',
-		meetingType: '',
-		specialtyId: '',
-		search: '',
 		page: 1,
 		pageSize: 5,
 	})
 
 	const { t } = useTranslation()
 
-	const getAppointments = useFetch(ApiUrls.APPOINTMENT.INDEX, filters, [
-		filters.status,
-		filters.page,
-		filters.pageSize,
-	])
+	const getAppointments = useFetch(ApiUrls.APPOINTMENT.INDEX, filters, [filters])
 	const specialtiesStore = useReduxStore({
 		url: ApiUrls.SPECIALTY.GET_ALL,
 		selector: (state) => state.management.specialties,
@@ -59,11 +48,6 @@ const PatientAppointmentHistoryPage = () => {
 		}
 	}
 
-	const onFilterClick = async () => {
-		setFilters((prev) => ({ ...prev, page: 1 }))
-		await getAppointments.fetch()
-	}
-
 	return (
 		<Box my={3}>
 			<ManageAppointmentBasePage
@@ -72,8 +56,7 @@ const PatientAppointmentHistoryPage = () => {
 				setFilters={setFilters}
 				selectedAppointment={selectedAppointment}
 				setSelectedAppointment={setSelectedAppointment}
-				onFilterClick={onFilterClick}
-				totalAppointments={getAppointments.data?.totalCount || 0}
+				totalPage={getAppointments.data?.totalPage || 1}
 				appointments={getAppointments.data?.collection || []}
 				specialties={specialtiesStore.data || []}
 				loading={getAppointments.loading}
