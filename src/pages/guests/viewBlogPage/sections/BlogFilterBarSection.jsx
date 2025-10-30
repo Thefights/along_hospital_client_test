@@ -46,7 +46,6 @@ const BlogFilterBarSection = ({
 						widthPercent={100}
 						value={values.title || ''}
 						setValue={(value) => setField('title', value)}
-						placeholder={t('text.search')}
 						onEnterDown={() => setFilters(values)}
 					/>
 				</Grid>

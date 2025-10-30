@@ -21,7 +21,7 @@ const BlogUpsertPage = () => {
 	const { blogTypeOptions } = useEnum()
 	const editorRef = useRef(null)
 
-	const { values, handleChange, setField, reset } = useForm({
+	const { values, setField, reset } = useForm({
 		title: '',
 		blogType: '',
 		content: '',
@@ -37,7 +37,7 @@ const BlogUpsertPage = () => {
 	const getBlogDetail = useFetch(
 		ApiUrls.BLOG.MANAGEMENT.DETAIL(blogId),
 		{},
-		blogId && isEditMode ? [blogId] : []
+		isEditMode ? [blogId] : []
 	)
 
 	const blogSubmit = useAxiosSubmit({

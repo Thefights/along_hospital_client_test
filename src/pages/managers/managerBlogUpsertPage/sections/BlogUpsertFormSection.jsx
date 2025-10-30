@@ -20,7 +20,6 @@ import {
 const BlogUpsertFormSection = ({
 	isEditMode,
 	detailLoading,
-	t,
 	onSubmit,
 	formData,
 	errors,
@@ -36,7 +35,7 @@ const BlogUpsertFormSection = ({
 	isSubmitting,
 	canRemoveImage,
 }) => {
-	const { t: tSection } = useTranslation()
+	const { t } = useTranslation()
 
 	return (
 		<Card>
