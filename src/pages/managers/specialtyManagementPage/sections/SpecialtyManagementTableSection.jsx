@@ -44,34 +44,32 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 
 	const fields = useMemo(
 		() => [
-			{ key: 'id', title: 'ID', width: 20, sortable: true, fixedColumn: true },
-			{ key: 'name', title: 'Name', width: 40, sortable: true },
+			{ key: 'id', title: t('specialty.field.id'), width: 20, sortable: true, fixedColumn: true },
+			{ key: 'name', title: t('specialty.field.name'), width: 40, sortable: true },
 
-			{ key: 'description', title: 'Description', width: 40, sortable: false },
+			{ key: 'description', title: t('specialty.field.description'), width: 40, sortable: false },
 			{
 				key: '',
 				title: '',
 				width: 5,
-				render: (value, row) => (
+				render: (row) => (
 					<ActionMenu
 						actions={[
 							{
-								title: t('button.edit') || 'Edit',
+								title: t('button.edit'),
 								onClick: () => {
 									setSelectedRow(row)
 									setOpenUpdate(true)
 								},
 							},
 							{
-								title: t('button.delete') || 'Delete',
+								title: t('button.delete'),
 								onClick: async () => {
 									const isConfirmed = await confirm({
-										confirmText: t('button.delete') || 'Delete',
+										confirmText: t('button.delete'),
 										confirmColor: 'error',
-										title: t('done_care_about_this.delete_title') || 'Delete',
-										description: `${t('specialty.delete_confirm') || 'Are you sure you want to delete'} ${
-											row.name
-										}?`,
+										title: t('done_care_about_this.delete_title'),
+										description: `${t('specialty.delete_confirm')} ${row.name}?`,
 									})
 
 									if (isConfirmed) {
@@ -87,27 +85,27 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 				),
 			},
 		],
-		[]
+		[t, confirm, specialtyDelete, refetch]
 	)
 
 	const upsertField = useMemo(
 		() => [
 			{
 				key: 'name',
-				title: 'Name',
+				title: t('specialty.field.name'),
 				type: 'text',
 				validate: [maxLen(255)],
 				required: true,
 			},
 			{
 				key: 'description',
-				title: 'Description',
+				title: t('specialty.field.description'),
 				type: 'text',
 				required: false,
 				validate: [maxLen(1000)],
 			},
 		],
-		[]
+		[t]
 	)
 
 	return (
@@ -156,7 +154,7 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 				fields={upsertField}
 				submitLabel={t('button.create')}
 				submitButtonColor='success'
-				title={t('button.create') + ' Specialty'}
+				title={t('button.create') + ' ' + t('specialty.title')}
 				onSubmit={async ({ values, closeDialog }) => {
 					if (await specialtyPost.submit(values)) {
 						closeDialog()
@@ -171,7 +169,7 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 				initialValues={selectedRow}
 				submitLabel={t('button.update')}
 				submitButtonColor='success'
-				title={t('button.update') + ' Specialty'}
+				title={t('button.update') + ' ' + t('specialty.title')}
 				onSubmit={async ({ values, closeDialog }) => {
 					if (
 						await specialtyPut.submit(values, {
