@@ -20,7 +20,8 @@
         "next": "Next",
         "resend_in": "Resend in",
         "toggle_language": "Toggle language",
-        "toggle_theme": "Toggle theme"
+        "toggle_theme": "Toggle theme",
+        "delete_selected": "Delete selected"
     },
     "text": {
         "all": "All",
@@ -424,6 +425,12 @@
             "recent_posts": "Recent Blogs",
             "no_recent": "No recent blogs available.",
             "published_on": "Published on {date}"
+        },
+        "dialog": {
+            "delete_title": "Delete blog",
+            "delete_description": "Are you sure you want to delete blog '{title}'?",
+            "delete_many_title": "Delete multiple blogs",
+            "delete_many_description": "Are you sure you want to delete {number} selected blogs?"
         }
     },
     "auth": {
