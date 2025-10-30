@@ -3,6 +3,7 @@ import LayoutManager from '@/layouts/LayoutManager'
 import ComplaintManagementPage from '@/pages/managers/complaintManagementPage/ComplaintManagementPage'
 import ManagerAppointmentManagementPage from '@/pages/managers/managerAppointmentManagementPage/ManagerAppointmentManagementPage'
 import ManagerMedicalHistoryManagementPage from '@/pages/managers/managerMedicalHistoryManagementPage/ManagerMedicalHistoryManagementPage'
+import SpecialtyManagementPage from '@/pages/managers/specialtyManagementPage/SpecialtyManagementPage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 
@@ -21,6 +22,7 @@ const RouteManager = () => {
 						path={routeUrls.MANAGER.MEDICAL_HISTORY.INDEX}
 						element={<ManagerMedicalHistoryManagementPage />}
 					/>
+					<Route path={routeUrls.MANAGER.SPECIALTY_MANAGEMENT} element={<SpecialtyManagementPage />} />
 				</Route>
 			</Route>
 		</Routes>
