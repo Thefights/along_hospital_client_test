@@ -44,15 +44,7 @@ export const getEnumLabelByValue = (enumArray, value) => {
 
 export const stripHtml = (html) => {
 	if (!html || typeof html !== 'string') return ''
-
-	const tempDiv = document.createElement('div')
-	tempDiv.innerHTML = html
-
-	let text = tempDiv.textContent || tempDiv.innerText || ''
-
-	const textArea = document.createElement('textarea')
-	textArea.innerHTML = text
-	text = textArea.value
-
+	const doc = new DOMParser().parseFromString(html, 'text/html')
+	const text = doc.body.textContent || ''
 	return text
 }
