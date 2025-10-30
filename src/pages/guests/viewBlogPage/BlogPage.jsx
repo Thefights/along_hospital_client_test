@@ -53,11 +53,9 @@ export default function BlogPage() {
 				</Stack>
 				<Stack alignItems='center' sx={{ mt: 3 }}>
 					<GenericPagination
-						totalPages={getBlogs.data?.totalPage || 1}
+						totalPage={getBlogs.data?.totalPage || 1}
 						page={page}
 						setPage={setPage}
-						pageSize={pageSize}
-						setPageSize={setPageSize}
 						loading={getBlogs.loading}
 					/>
 				</Stack>
