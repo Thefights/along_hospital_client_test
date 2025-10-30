@@ -4,7 +4,7 @@ import { Button } from '@mui/material'
 
 /**
  * @typedef {Object} CustomProps
- * @property {function} props.onFilterClick
+ * @property {function} props.onResetFilterClick
  */
 
 /**

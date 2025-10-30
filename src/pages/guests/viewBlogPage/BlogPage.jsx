@@ -16,7 +16,7 @@ export default function BlogPage() {
 		publicationDate: '',
 	})
 	const [page, setPage] = useState(1)
-	const [pageSize, setPageSize] = useState(6)
+	const [pageSize] = useState(6)
 
 	const getBlogs = useFetch(ApiUrls.BLOG.INDEX, { ...filters, page, pageSize }, [
 		filters,
