@@ -88,4 +88,11 @@ export const ApiUrls = {
 				`/medical-history-management/${medicalHistoryId}/prescription`,
 		},
 	},
+	BLOG: {
+		INDEX: `/blog`,
+		MANAGEMENT: {
+			INDEX: `/Blog-Management`,
+			DETAIL: (id) => `/Blog-Management/${id}`,
+		},
+	},
 }

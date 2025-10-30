@@ -3,11 +3,19 @@ import useTranslation from './useTranslation'
 
 export default function useEnum() {
 	const { t } = useTranslation()
+
 	return {
 		genderOptions: [
 			{ value: EnumConfig.Gender.Male, label: t('enum.gender.male') },
 			{ value: EnumConfig.Gender.Female, label: t('enum.gender.female') },
 			{ value: EnumConfig.Gender.Other, label: t('enum.gender.other') },
+		],
+		blogTypeOptions: [
+			{ value: EnumConfig.BlogType.Health, label: t('enum.blog_type.health') },
+			{ value: EnumConfig.BlogType.News, label: t('enum.blog_type.news') },
+			{ value: EnumConfig.BlogType.Promotion, label: t('enum.blog_type.promotion') },
+			{ value: EnumConfig.BlogType.Guide, label: t('enum.blog_type.guide') },
+			{ value: EnumConfig.BlogType.Other, label: t('enum.blog_type.other') },
 		],
 
 		// For appointments
