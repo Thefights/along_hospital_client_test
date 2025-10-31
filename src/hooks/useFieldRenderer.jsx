@@ -60,21 +60,9 @@ export default function useFieldRenderer(
 
 	const getImageCount = (f) => {
 		const { remainKey, newKey } = getImageKeyNames(f.key)
-		const v = values[f.key]
 
-		const remain = Array.isArray(values[remainKey])
-			? values[remainKey]
-			: v && typeof v === 'object' && Array.isArray(v[remainKey])
-			? v[remainKey]
-			: []
-
-		const news = Array.isArray(values[newKey])
-			? values[newKey]
-			: v && typeof v === 'object' && Array.isArray(v[newKey])
-			? v[newKey]
-			: Array.isArray(v)
-			? v
-			: []
+		const remain = Array.isArray(values[remainKey]) ? values[remainKey] : []
+		const news = Array.isArray(values[newKey]) ? values[newKey] : []
 
 		return (remain?.length || 0) + (news?.length || 0)
 	}
