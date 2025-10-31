@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
@@ -61,7 +62,7 @@ const GenericFormDialog = ({
 			setSubmitted(false)
 			reset(startValues)
 		}
-	}, [open, reset, startValues])
+	}, [open])
 
 	const handleClose = useCallback(() => {
 		reset(startValues)
@@ -79,8 +80,6 @@ const GenericFormDialog = ({
 		setLoading(true)
 		try {
 			await onSubmit({ values, closeDialog: handleClose, setField })
-		} catch (e) {
-			console.log(e)
 		} finally {
 			setLoading(false)
 		}

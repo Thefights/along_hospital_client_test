@@ -48,6 +48,25 @@ export default function useFieldRenderer(
 		normalizedImageKeysRef.current.clear()
 	}, [values])
 
+	const getImageKeyNames = (fieldKey) => {
+		const base = String(fieldKey).split('.').pop() || ''
+		const cap = base ? base.charAt(0).toUpperCase() + base.slice(1) : ''
+		return {
+			remainKey: `remain${cap}`,
+			newKey: `new${cap}`,
+			removeKey: `remove${cap}`,
+		}
+	}
+
+	const getImageCount = (f) => {
+		const { remainKey, newKey } = getImageKeyNames(f.key)
+
+		const remain = Array.isArray(values[remainKey]) ? values[remainKey] : []
+		const news = Array.isArray(values[newKey]) ? values[newKey] : []
+
+		return (remain?.length || 0) + (news?.length || 0)
+	}
+
 	const hasRequiredMissing = useCallback(
 		(fields) => {
 			const checkField = (f, v) => {
@@ -55,13 +74,11 @@ export default function useFieldRenderer(
 
 				if (f.type === 'image') {
 					const max = Number.isFinite(f.multiple) ? Math.max(1, Number(f.multiple)) : 1
-					if (max === 1) return !v
-					if (v && typeof v === 'object' && ('remainImages' in v || 'newImages' in v)) {
-						const total = (v.remainImages?.length || 0) + (v.newImages?.length || 0)
-						return total === 0
+					if (max === 1) {
+						return !v
 					}
-					if (Array.isArray(v)) return v.length === 0
-					return true
+
+					return getImageCount(f) === 0
 				}
 
 				if (f.type === 'array') return !Array.isArray(v) || v.length === 0
@@ -70,7 +87,8 @@ export default function useFieldRenderer(
 					const children = f.of || []
 					return children.some((c) => obj[c.key] === '' || obj[c.key] == null)
 				}
-				return false
+
+				return v == null || v === ''
 			}
 			return fields.some((f) => checkField(f, values[f.key]))
 		},
@@ -156,21 +174,10 @@ export default function useFieldRenderer(
 	}
 
 	const renderImageMultiple = (field) => {
-		const getImageKeyNames = (fieldKey) => {
-			const base = String(fieldKey).split('.').pop() || ''
-			const cap = base ? base.charAt(0).toUpperCase() + base.slice(1) : ''
-			return {
-				remainKey: `remain${cap}`,
-				newKey: `new${cap}`,
-				removeKey: `remove${cap}`,
-			}
-		}
-
 		const key = field.key
 		const { remainKey, newKey, removeKey } = getImageKeyNames(key)
 		const required = field.required ?? true
 		const max = Math.max(1, Number(field.multiple) || 1)
-		const v = values[key]
 
 		const toPreviewSrc = (val) => {
 			if (val instanceof File) return getUrlForFile(val)
@@ -178,19 +185,19 @@ export default function useFieldRenderer(
 			return ''
 		}
 
-		if (isStringArray(v) && !normalizedImageKeysRef.current.has(key)) {
+		const legacyVal = values[key]
+		if (isStringArray(legacyVal) && !normalizedImageKeysRef.current.has(key)) {
 			normalizedImageKeysRef.current.add(key)
-			setField(key, {
-				[remainKey]: v.filter(Boolean).slice(),
-				[newKey]: [],
-				[removeKey]: [],
-			})
+			const initialRemain = legacyVal.filter(Boolean).slice()
+			setField(remainKey, initialRemain)
+			setField(newKey, [])
+			setField(removeKey, [])
+			setField(key, undefined)
 		}
 
-		const isEditObj = v && typeof v === 'object' && (remainKey in v || newKey in v || removeKey in v)
-
-		const remain = isEditObj ? v[remainKey] || [] : []
-		const news = isEditObj ? v[newKey] || [] : Array.isArray(v) ? v : []
+		const remain = Array.isArray(values[remainKey]) ? values[remainKey] : []
+		const news = Array.isArray(values[newKey]) ? values[newKey] : []
+		const removedList = Array.isArray(values[removeKey]) ? values[removeKey] : []
 
 		const total = remain.length + news.length
 		const capacityLeft = Math.max(0, max - total)
@@ -199,36 +206,22 @@ export default function useFieldRenderer(
 		const addFiles = (filesList) => {
 			if (!filesList?.length || capacityLeft <= 0) return
 			const picked = Array.from(filesList).slice(0, capacityLeft)
-			if (isEditObj) {
-				setField(key, {
-					[remainKey]: remain,
-					[newKey]: [...news, ...picked],
-					[removeKey]: v[removeKey] || [],
-				})
-			} else {
-				setField(key, [...news, ...picked])
-			}
+			setField(newKey, [...news, ...picked])
 		}
 
 		const removeRemain = (idx) => {
-			if (!isEditObj) return
+			if (idx < 0 || idx >= remain.length) return
 			const nextRemain = remain.slice()
 			const removed = nextRemain.splice(idx, 1)[0]
-			setField(key, {
-				[remainKey]: nextRemain,
-				[newKey]: news,
-				[removeKey]: [...(v[removeKey] || []), removed],
-			})
+			setField(remainKey, nextRemain)
+			setField(removeKey, [...removedList, removed])
 		}
 
 		const removeNew = (idx) => {
+			if (idx < 0 || idx >= news.length) return
 			const nextNew = news.slice()
 			const removed = nextNew.splice(idx, 1)[0]
-			if (isEditObj) {
-				setField(key, { [remainKey]: remain, [newKey]: nextNew, [removeKey]: v[removeKey] || [] })
-			} else {
-				setField(key, nextNew)
-			}
+			setField(newKey, nextNew)
 			if (removed instanceof File) revokeUrlForFile(removed)
 		}
 
