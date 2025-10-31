@@ -42,6 +42,33 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 		[]
 	)
 
+	const handleUpdateSubmit = async ({ values, closeDialog }) => {
+		if (
+			await specialtyPut.submit(values, {
+				overrideUrl: ApiUrls.SPECIALTY.MANAGEMENT.DETAIL(selectedRow.id),
+			})
+		) {
+			closeDialog()
+			refetch()
+		}
+	}
+
+	const handleDeleteClick = async (row) => {
+		const isConfirmed = await confirm({
+			confirmText: t('button.delete'),
+			confirmColor: 'error',
+			title: t('specialty.title.delete'),
+			description: `${t('specialty.title.delete_confirm')} ${row.name}?`,
+		})
+
+		if (isConfirmed) {
+			await specialtyDelete.submit(undefined, {
+				overrideUrl: ApiUrls.SPECIALTY.MANAGEMENT.DETAIL(row.id),
+			})
+			refetch()
+		}
+	}
+
 	const fields = useMemo(
 		() => [
 			{ key: 'id', title: t('specialty.field.id'), width: 20, sortable: true, fixedColumn: true },
@@ -64,21 +91,7 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 							},
 							{
 								title: t('button.delete'),
-								onClick: async () => {
-									const isConfirmed = await confirm({
-										confirmText: t('button.delete'),
-										confirmColor: 'error',
-										title: t('specialty.title.deltete'),
-										description: `${t('specialty.title.delete_confirm')} ${row.name}?`,
-									})
-
-									if (isConfirmed) {
-										await specialtyDelete.submit(undefined, {
-											overrideUrl: ApiUrls.SPECIALTY.MANAGEMENT.DETAIL(row.id),
-										})
-										refetch()
-									}
-								},
+								onClick: () => handleDeleteClick(row),
 							},
 						]}
 					/>
@@ -149,16 +162,7 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 				submitLabel={t('button.update')}
 				submitButtonColor='success'
 				title={t('specialty.title.update')}
-				onSubmit={async ({ values, closeDialog }) => {
-					if (
-						await specialtyPut.submit(values, {
-							overrideUrl: ApiUrls.SPECIALTY.MANAGEMENT.DETAIL(selectedRow.id),
-						})
-					) {
-						closeDialog()
-						refetch()
-					}
-				}}
+				onSubmit={handleUpdateSubmit}
 			/>
 		</Paper>
 	)
