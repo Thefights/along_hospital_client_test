@@ -29,7 +29,7 @@ const SpecialtyManagementFilterSection = ({ filters = {}, setFilters, loading = 
 						<SearchBar
 							value={specialtyName}
 							setValue={setSpecialtyName}
-							placeholder={t('specialty.placeholder.search-specialty')}
+							placeholder={t('specialty.placeholder.search_specialty')}
 							onEnterDown={applyFilters}
 						/>
 					</Grid>

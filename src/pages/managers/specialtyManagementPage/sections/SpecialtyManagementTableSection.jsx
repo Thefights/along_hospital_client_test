@@ -25,12 +25,12 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 	})
 
 	const specialtyPut = useAxiosSubmit({
-		url: ApiUrls.SPECIALTY.MANAGEMENT.UPDATE,
+		url: ApiUrls.SPECIALTY.MANAGEMENT.DETAIL,
 		method: 'PUT',
 	})
 
 	const specialtyDelete = useAxiosSubmit({
-		url: ApiUrls.SPECIALTY.MANAGEMENT.DELETE,
+		url: ApiUrls.SPECIALTY.MANAGEMENT.DETAIL,
 		method: 'DELETE',
 	})
 
@@ -44,37 +44,39 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 
 	const fields = useMemo(
 		() => [
-			{ key: 'id', title: t('specialty.field.id'), width: 20, sortable: true, fixedColumn: true },
-			{ key: 'name', title: t('specialty.field.name'), width: 40, sortable: true },
+			{ key: 'id', title: 'ID', width: 20, sortable: true, fixedColumn: true },
+			{ key: 'name', title: 'Name', width: 40, sortable: true },
 
-			{ key: 'description', title: t('specialty.field.description'), width: 40, sortable: false },
+			{ key: 'description', title: 'Description', width: 40, sortable: false },
 			{
 				key: '',
 				title: '',
 				width: 5,
-				render: (row) => (
+				render: (value, row) => (
 					<ActionMenu
 						actions={[
 							{
-								title: t('button.edit'),
+								title: t('button.edit') || 'Edit',
 								onClick: () => {
 									setSelectedRow(row)
 									setOpenUpdate(true)
 								},
 							},
 							{
-								title: t('button.delete'),
+								title: t('button.delete') || 'Delete',
 								onClick: async () => {
 									const isConfirmed = await confirm({
-										confirmText: t('button.delete'),
+										confirmText: t('button.delete') || 'Delete',
 										confirmColor: 'error',
-										title: t('done_care_about_this.delete_title'),
-										description: `${t('specialty.delete_confirm')} ${row.name}?`,
+										title: t('done_care_about_this.delete_title') || 'Delete',
+										description: `${t('specialty.delete_confirm') || 'Are you sure you want to delete'} ${
+											row.name
+										}?`,
 									})
 
 									if (isConfirmed) {
 										await specialtyDelete.submit(undefined, {
-											overrideUrl: ApiUrls.SPECIALTY.MANAGEMENT.DELETE(row.id),
+											overrideUrl: ApiUrls.SPECIALTY.MANAGEMENT.DETAIL(row.id),
 										})
 										refetch()
 									}
@@ -85,27 +87,27 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 				),
 			},
 		],
-		[t, confirm, specialtyDelete, refetch]
+		[]
 	)
 
 	const upsertField = useMemo(
 		() => [
 			{
 				key: 'name',
-				title: t('specialty.field.name'),
+				title: 'Name',
 				type: 'text',
 				validate: [maxLen(255)],
 				required: true,
 			},
 			{
 				key: 'description',
-				title: t('specialty.field.description'),
+				title: 'Description',
 				type: 'text',
 				required: false,
 				validate: [maxLen(1000)],
 			},
 		],
-		[t]
+		[]
 	)
 
 	return (
@@ -154,7 +156,7 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 				fields={upsertField}
 				submitLabel={t('button.create')}
 				submitButtonColor='success'
-				title={t('button.create') + ' ' + t('specialty.title')}
+				title={t('button.create') + ' Specialty'}
 				onSubmit={async ({ values, closeDialog }) => {
 					if (await specialtyPost.submit(values)) {
 						closeDialog()
@@ -169,11 +171,11 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 				initialValues={selectedRow}
 				submitLabel={t('button.update')}
 				submitButtonColor='success'
-				title={t('button.update') + ' ' + t('specialty.title')}
+				title={t('button.update') + ' Specialty'}
 				onSubmit={async ({ values, closeDialog }) => {
 					if (
 						await specialtyPut.submit(values, {
-							overrideUrl: ApiUrls.SPECIALTY.MANAGEMENT.UPDATE(selectedRow.id),
+							overrideUrl: ApiUrls.SPECIALTY.MANAGEMENT.DETAIL(selectedRow.id),
 						})
 					) {
 						closeDialog()

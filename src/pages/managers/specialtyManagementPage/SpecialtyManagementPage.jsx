@@ -26,7 +26,7 @@ const SpecialtyManagementPage = () => {
 	return (
 		<Paper sx={{ p: 2 }}>
 			<Stack spacing={2}>
-				<Typography variant='h5'>{t('specialty.title.specialty-management')}</Typography>
+				<Typography variant='h5'>{t('specialty.title.specialty_management')}</Typography>
 				<SpecialtyManagementFilterSection
 					filters={filters}
 					setFilters={setFilters}
