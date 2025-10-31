@@ -44,10 +44,10 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 
 	const fields = useMemo(
 		() => [
-			{ key: 'id', title: 'ID', width: 20, sortable: true, fixedColumn: true },
-			{ key: 'name', title: 'Name', width: 40, sortable: true },
+			{ key: 'id', title: t('specialty.field.id'), width: 20, sortable: true, fixedColumn: true },
+			{ key: 'name', title: t('specialty.field.name'), width: 40, sortable: true },
 
-			{ key: 'description', title: 'Description', width: 40, sortable: false },
+			{ key: 'description', title: t('specialty.field.description'), width: 40, sortable: false },
 			{
 				key: '',
 				title: '',
@@ -56,22 +56,20 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 					<ActionMenu
 						actions={[
 							{
-								title: t('button.edit') || 'Edit',
+								title: t('button.edit'),
 								onClick: () => {
 									setSelectedRow(row)
 									setOpenUpdate(true)
 								},
 							},
 							{
-								title: t('button.delete') || 'Delete',
+								title: t('button.delete'),
 								onClick: async () => {
 									const isConfirmed = await confirm({
-										confirmText: t('button.delete') || 'Delete',
+										confirmText: t('button.delete'),
 										confirmColor: 'error',
-										title: t('done_care_about_this.delete_title') || 'Delete',
-										description: `${t('specialty.delete_confirm') || 'Are you sure you want to delete'} ${
-											row.name
-										}?`,
+										title: t('specialty.title.deltete'),
+										description: `${t('specialty.title.delete_confirm')} ${row.name}?`,
 									})
 
 									if (isConfirmed) {
@@ -94,14 +92,14 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 		() => [
 			{
 				key: 'name',
-				title: 'Name',
+				title: t('specialty.field.name'),
 				type: 'text',
 				validate: [maxLen(255)],
 				required: true,
 			},
 			{
 				key: 'description',
-				title: 'Description',
+				title: t('specialty.field.description'),
 				type: 'text',
 				required: false,
 				validate: [maxLen(1000)],
@@ -116,27 +114,6 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 				<Button variant='contained' color='primary' onClick={() => setOpenCreate(true)}>
 					{t('button.create')}
 				</Button>
-				{/* <ConfirmationButton
-					confirmButtonColor='error'
-					confirmButtonText={t('button.delete')}
-					confirmationTitle={t('done_care_about_this.delete_title')}
-					confirmationDescription={t('done_care_about_this.delete_description', {
-						number: selectedIds.length,
-					})}
-					onConfirm={async () => {
-						// perform delete for selected ids
-						if (!selectedIds || selectedIds.length === 0) return
-						await Promise.all(
-							selectedIds.map((id) => axiosConfig.delete(ApiUrls.SPECIALTY.INDEX + `/${id}`))
-						)
-						refetch()
-						setSelectedIds([])
-					}}
-					color='error'
-					variant='outlined'
-				>
-					{t('done_care_about_this.delete_selected', { number: selectedIds.length })}
-				</ConfirmationButton> */}
 			</Stack>
 			<GenericTable
 				data={specialties}
@@ -156,7 +133,7 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 				fields={upsertField}
 				submitLabel={t('button.create')}
 				submitButtonColor='success'
-				title={t('button.create') + ' Specialty'}
+				title={t('specialty.title.create')}
 				onSubmit={async ({ values, closeDialog }) => {
 					if (await specialtyPost.submit(values)) {
 						closeDialog()
@@ -171,7 +148,7 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 				initialValues={selectedRow}
 				submitLabel={t('button.update')}
 				submitButtonColor='success'
-				title={t('button.update') + ' Specialty'}
+				title={t('specialty.title.update')}
 				onSubmit={async ({ values, closeDialog }) => {
 					if (
 						await specialtyPut.submit(values, {
