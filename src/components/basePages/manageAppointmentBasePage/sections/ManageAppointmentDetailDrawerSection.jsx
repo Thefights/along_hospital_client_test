@@ -13,11 +13,18 @@ import {
 import { getEnumLabelByValue } from '@/utils/handleStringUtil'
 import { Avatar, Box, Chip, Stack, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
+import { useEffect } from 'react'
 
 const ManageAppointmentDetailDrawerSection = ({ appointment, open, onClose, buttons }) => {
 	const { t } = useTranslation()
 	const _enum = useEnum()
 	const theme = useTheme()
+
+	useEffect(() => {
+		if (!appointment) {
+			onClose()
+		}
+	}, [appointment, onClose])
 
 	const styleForStatus = appointment
 		? defaultAppointmentStatusStyle(theme, appointment?.appointmentStatus)

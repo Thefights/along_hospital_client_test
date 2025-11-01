@@ -34,15 +34,14 @@ const PatientAppointmentHistoryPage = () => {
 		method: 'PUT',
 		data: { reason: cancelReason },
 		onSuccess: async () => {
-			await getAppointments.fetch()
 			setSelectedAppointment(null)
+			await getAppointments.fetch()
 		},
 	})
 
 	const handleCancelAppointment = async () => {
-		try {
-			await cancelAppointment.submit()
-		} finally {
+		var response = await cancelAppointment.submit()
+		if (response) {
 			setCancelReason('')
 			setOpenCancelDialog(false)
 		}
