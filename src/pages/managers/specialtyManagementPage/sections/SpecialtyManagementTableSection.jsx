@@ -47,6 +47,12 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 		refetch()
 	}
 
+	const handleCreateSubmit = async ({ values, closeDialog }) => {
+		await specialtyPost.submit(values)
+		closeDialog()
+		refetch()
+	}
+
 	const handleDeleteClick = async (row) => {
 		const isConfirmed = await confirm({
 			confirmText: t('button.delete'),
@@ -141,12 +147,7 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 				submitLabel={t('button.create')}
 				submitButtonColor='success'
 				title={t('specialty.title.create')}
-				onSubmit={async ({ values, closeDialog }) => {
-					if (await specialtyPost.submit(values)) {
-						closeDialog()
-						refetch()
-					}
-				}}
+				onSubmit={handleCreateSubmit}
 			/>
 			<GenericFormDialog
 				open={openUpdate}
