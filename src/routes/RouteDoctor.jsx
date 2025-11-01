@@ -1,5 +1,6 @@
 import { routeUrls } from '@/configs/routeUrls'
 import LayoutDoctor from '@/layouts/LayoutDoctor'
+import NotFoundPage from '@/pages/commons/NotFoundPage'
 import CreateMedicalHistoryPage from '@/pages/doctors/createMedicalHistoryPage/CreateMedicalHistoryPage'
 import DoctorAppointmentManagementPage from '@/pages/doctors/doctorAppointmentManagementPage/DoctorAppointmentManagementPage'
 import DoctorMedicalHistoryManagementPage from '@/pages/doctors/doctorMedicalHistoryManagementPage/DoctorMedicalHistoryManagementPage'
@@ -23,6 +24,8 @@ const RouteDoctor = () => {
 					<Route path={routeUrls.DOCTOR.MEDICAL_HISTORY.CREATE} element={<CreateMedicalHistoryPage />} />
 				</Route>
 			</Route>
+
+			<Route path='*' element={<NotFoundPage />} />
 		</Routes>
 	)
 }

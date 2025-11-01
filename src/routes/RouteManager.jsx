@@ -1,5 +1,6 @@
 import { routeUrls } from '@/configs/routeUrls'
 import LayoutManager from '@/layouts/LayoutManager'
+import NotFoundPage from '@/pages/commons/NotFoundPage'
 import ComplaintManagementPage from '@/pages/managers/complaintManagementPage/ComplaintManagementPage'
 import ManagerAppointmentManagementPage from '@/pages/managers/managerAppointmentManagementPage/ManagerAppointmentManagementPage'
 import ManagerBlogManagementPage from '@/pages/managers/managerBlogManagementPage/ManagerBlogManagementPage'
@@ -30,6 +31,8 @@ const RouteManager = () => {
 					<Route path={routeUrls.MANAGER.SPECIALTY_MANAGEMENT} element={<SpecialtyManagementPage />} />
 				</Route>
 			</Route>
+
+			<Route path='*' element={<NotFoundPage />} />
 		</Routes>
 	)
 }
