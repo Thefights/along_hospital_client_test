@@ -72,7 +72,7 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 	const fields = useMemo(
 		() => [
 			{ key: 'id', title: t('specialty.field.id'), width: 20, sortable: true, fixedColumn: true },
-			{ key: 'name', title: t('specialty.field.name'), width: 40, sortable: true },
+			{ key: 'name', title: t('specialty.field.name'), width: 20, sortable: true },
 
 			{ key: 'description', title: t('specialty.field.description'), width: 40, sortable: false },
 			{

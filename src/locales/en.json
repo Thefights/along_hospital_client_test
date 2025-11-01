@@ -490,5 +490,22 @@
             "continue_with": "Continue with Google",
             "locale": "en"
         }
-    }
+        },
+        "specialty": {
+            "title": {
+                "delete": "Delete Specialty",
+                "delete_confirm": "Are you sure you want to delete",
+                "create": "Create Specialty",
+                "update": "Update Specialty",
+                "specialty_management": "Specialty Management"
+            },
+            "field": {
+                "id": "ID",
+                "name": "Specialty Name",
+                "description": "Description"
+            },
+            "placeholder": {
+                "search_specialty": "Search specialty..."
+            }
+        }
 }

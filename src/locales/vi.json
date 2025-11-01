@@ -490,5 +490,22 @@
             "continue_with": "Tiếp tục với Google",
             "locale": "vi"
         }
-    }
+        },
+        "specialty": {
+            "title": {
+                "delete": "Xóa chuyên khoa",
+                "delete_confirm": "Bạn có chắc muốn xóa",
+                "create": "Tạo chuyên khoa",
+                "update": "Cập nhật chuyên khoa",
+                "specialty_management": "Quản lý chuyên khoa"
+            },
+            "field": {
+                "id": "Mã",
+                "name": "Tên chuyên khoa",
+                "description": "Mô tả"
+            },
+            "placeholder": {
+                "search_specialty": "Tìm kiếm chuyên khoa..."
+            }
+        }
 }
