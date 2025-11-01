@@ -64,11 +64,11 @@ export function useAxiosSubmit({
 				})
 
 				setResponse(response)
-				await onSuccess(response)
+				Promise.resolve(onSuccess?.(response))
 				return response
 			} catch (err) {
 				setError(err)
-				await onError(err)
+				Promise.resolve(onError(err))
 				return undefined
 			} finally {
 				setLoading(false)
