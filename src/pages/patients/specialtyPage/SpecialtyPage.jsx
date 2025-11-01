@@ -27,8 +27,6 @@ const SpecialtyPage = () => {
 		url: ApiUrls.SPECIALTY.GET_ALL,
 		selector: (state) => state.management.specialties,
 		setStore: setSpecialtiesStore,
-		dataToStore: (response) => response ?? [],
-		dataToGet: (store) => store ?? [],
 	})
 
 	const [searchTerm, setSearchTerm] = useState('')
