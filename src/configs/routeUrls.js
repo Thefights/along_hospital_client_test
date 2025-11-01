@@ -64,5 +64,6 @@ export const routeUrls = {
 			DETAIL: (id) => `/medical-history/${id}`,
 		},
 		COMPLAINT_MANAGEMENT: '/complaint',
+		SPECIALTY_MANAGEMENT: '/specialty',
 	},
 }

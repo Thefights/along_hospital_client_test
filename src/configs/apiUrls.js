@@ -35,6 +35,11 @@ export const ApiUrls = {
 	SPECIALTY: {
 		INDEX: `/specialty`,
 		GET_ALL: `/specialty/all`,
+		MANAGEMENT: {
+			INDEX: `/specialty-management`,
+			GET_ALL: `/specialty-management/all`,
+			DETAIL: (id) => `/specialty-management/${id}`,
+		},
 	},
 	MEDICINE: {
 		INDEX: `/medicine`,
