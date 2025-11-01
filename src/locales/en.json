@@ -386,14 +386,35 @@
         "faq": "FAQ",
         "privacy_policy": "Privacy Policy",
         "terms_of_service": "Terms of Service",
-        "our_hospital": "Our Hospital",
-        "career": "Career"
-    },
-    "done_care_about_this": {
-        "delete_selected": "Delete {number} selected",
-        "delete_title": "Delete selected users?",
-        "delete_description": "Are you sure you want to delete {number} selected item(s)? This action cannot be undone."
-    },
+		"our_hospital": "Our Hospital",
+		"career": "Career"
+	},
+	"specialty": {
+		"title": {
+			"page": "Specialties",
+			"list": "Specialties A–Z",
+			"detail": "Specialty detail"
+		},
+		"description": {
+			"page_intro": "Browse the full list of specialties available across our hospital system.",
+			"list": "Use the search or alphabet filter to find the specialty you need."
+		},
+		"button": {
+			"view_detail": "View detail",
+			"book_appointment": "Book appointment"
+		},
+		"placeholder": {
+			"no_description": "Information is being updated.",
+			"no_featured": "Featured specialties will be updated soon.",
+			"no_result_title": "No specialties found",
+			"no_result_subtitle": "Try adjusting the filters or searching with another keyword."
+		}
+	},
+	"done_care_about_this": {
+		"delete_selected": "Delete {number} selected",
+		"delete_title": "Delete selected users?",
+		"delete_description": "Are you sure you want to delete {number} selected item(s)? This action cannot be undone."
+	},
     "blog": {
         "title": {
             "list": "News & Blog",
