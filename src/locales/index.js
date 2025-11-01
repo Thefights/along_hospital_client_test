@@ -1,2 +1,2 @@
-export * as en from './en.json'
-export * as vi from './vi.json'
+export { default as en } from './en'
+export { default as vi } from './vi'

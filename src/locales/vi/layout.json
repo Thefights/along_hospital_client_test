@@ -1,0 +1,40 @@
+{
+    "header": {
+        "home": "Trang chủ",
+        "medicine": "Thuốc",
+        "service": "Dịch vụ",
+        "medical_service": "Dịch vụ y tế",
+        "doctor": "Bác sĩ",
+        "specialty": "Chuyên khoa",
+        "blog": "Blog",
+        "about_us": "Về chúng tôi",
+        "user_menu": {
+            "profile": "Hồ sơ",
+            "appointments": "Cuộc hẹn",
+            "medical_history": "Lịch sử y tế",
+            "order_history": "Lịch sử đơn hàng",
+            "change_password": "Đổi mật khẩu",
+            "setting": "Cài đặt",
+            "logout": "Đăng xuất"
+        }
+    },
+    "footer": {
+        "__________comment1": "For footer section links",
+        "medical": "Y tế",
+        "resources": "Tài nguyên",
+        "support": "Hỗ trợ",
+        "about": "Về chúng tôi",
+        "__________comment2": "For footer section titles",
+        "medical_service": "Dịch vụ y tế",
+        "doctor": "Bác sĩ",
+        "specialty": "Chuyên khoa",
+        "blog": "Blog",
+        "medicine": "Thuốc",
+        "contact_us": "Liên hệ",
+        "faq": "Câu hỏi thường gặp",
+        "privacy_policy": "Chính sách bảo mật",
+        "terms_of_service": "Điều khoản dịch vụ",
+        "our_hospital": "Bệnh viện của chúng tôi",
+        "career": "Nghề nghiệp"
+    }
+}
