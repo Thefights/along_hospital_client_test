@@ -30,7 +30,6 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 	})
 
 	const specialtyDelete = useAxiosSubmit({
-		url: ApiUrls.SPECIALTY.MANAGEMENT.DETAIL,
 		method: 'DELETE',
 	})
 
