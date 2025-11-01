@@ -15,10 +15,12 @@
         "add_row": "Thêm dòng",
         "login": "Đăng nhập",
         "filter": "Lọc",
+        "reset_filter": "Đặt lại bộ lọc",
         "next": "Tiếp theo",
         "resend_in": "Gửi lại sau",
         "toggle_language": "Chuyển đổi ngôn ngữ",
-        "toggle_theme": "Chuyển đổi giao diện"
+        "toggle_theme": "Chuyển đổi giao diện",
+        "delete_selected": "Xóa đã chọn"
     },
     "text": {
         "all": "Tất cả",
@@ -83,6 +85,13 @@
         "gender": {
             "male": "Nam",
             "female": "Nữ",
+            "other": "Khác"
+        },
+        "blog_type": {
+            "health": "Sức khỏe",
+            "news": "Tin tức",
+            "promotion": "Khuyến mãi",
+            "guide": "Hướng dẫn",
             "other": "Khác"
         },
         "appointment_status": {
@@ -383,6 +392,63 @@
         "delete_selected": "Xóa {number} mục đã chọn",
         "delete_title": "Xóa người dùng đã chọn?",
         "delete_description": "Bạn có chắc chắn muốn xóa {number} mục đã chọn không? Hành động này không thể hoàn tác."
+    },
+    "specialty": {
+    "title": {
+      "list": "Danh sách Chuyên Khoa"
+    },
+    "description": {
+      "list": "Tìm và chọn chuyên khoa phù hợp với bạn"
+    },
+    "button": {
+      "view_detail": "Xem chi tiết",
+      "book_appointment": "Đặt lịch khám"
+    },
+    "placeholder": {
+      "no_result_title": "Không tìm thấy chuyên khoa",
+      "no_result_subtitle": "Hãy thử đổi từ khóa hoặc ký tự lọc.",
+      "no_description": "Chưa có mô tả"
+    }
+  },
+    "blog": {
+        "title": {
+            "list": "Tin tức & Blog",
+            "detail": "Blog",
+            "header_subtitle": "Tin tức bệnh viện & bài viết chăm sóc sức khỏe",
+            "untitled": "Không có tiêu đề"
+        },
+        "field": {
+            "title": "Tiêu đề",
+            "type": "Loại bài viết",
+            "content": "Nội dung",
+            "cover_image": "Ảnh bìa",
+            "preview": "Xem trước",
+            "image": "Hình ảnh",
+            "page_info": "Trang {current} / {total}"
+        },
+        "placeholder": {
+            "select_type": "-- Chọn loại --"
+        },
+        "button": {
+            "choose_image": "Chọn ảnh",
+            "remove_image": "Xóa ảnh"
+        },
+        "text": {
+            "read_more": "Đọc thêm →",
+            "no_posts": "Không có bài viết nào",
+            "no_posts_subtitle": "Thử điều chỉnh bộ lọc của bạn hoặc quay lại sau để xem nội dung mới.",
+            "image_alt": "Hình bài viết",
+            "recent_posts": "Bài viết mới",
+            "no_recent": "Chưa có bài viết mới.",
+            "published_on": "Đăng ngày {date}",
+            "all": "Tất cả"
+        },
+        "dialog": {
+            "delete_title": "Xóa blog",
+            "delete_description": "Bạn có chắc chắn muốn xóa blog '{title}' không?",
+            "delete_many_title": "Xóa nhiều blog",
+            "delete_many_description": "Bạn có chắc chắn muốn xóa {number} blog đã chọn không?"
+        }
     },
     "auth": {
         "hero": {

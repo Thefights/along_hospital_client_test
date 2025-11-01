@@ -21,10 +21,7 @@ export const getObjectConvertingToFormData = (object, form = new FormData(), seg
 		return key
 	}
 
-	if (object == null) {
-		if (segments.length) form.append(buildKey(segments), '')
-		return form
-	}
+	if (object === undefined || object === null) return form
 
 	if (isFiley(object)) {
 		form.append(buildKey(segments), object)
