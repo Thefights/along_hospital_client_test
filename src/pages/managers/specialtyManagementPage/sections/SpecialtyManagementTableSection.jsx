@@ -7,7 +7,7 @@ import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useConfirm } from '@/hooks/useConfirm'
 import useTranslation from '@/hooks/useTranslation'
 import { maxLen } from '@/utils/validateUtil'
-import { Button, Paper, Stack } from '@mui/material'
+import { Button, Paper, Stack, Tooltip, Typography } from '@mui/material'
 import { useMemo, useState } from 'react'
 
 const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, refetch }) => {
@@ -73,8 +73,26 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 		() => [
 			{ key: 'id', title: t('specialty.field.id'), width: 20, sortable: true, fixedColumn: true },
 			{ key: 'name', title: t('specialty.field.name'), width: 20, sortable: true },
-
-			{ key: 'description', title: t('specialty.field.description'), width: 40, sortable: false },
+			{
+				key: 'description',
+				title: t('specialty.field.description'),
+				width: 40,
+				sortable: false,
+				render: (value) => {
+					const text = value ?? ''
+					return (
+						<Tooltip title={text} arrow placement='top' disableInteractive>
+							<Typography
+								variant='body2'
+								noWrap
+								sx={{ width: '100%', overflow: 'hidden', textOverflow: 'ellipsis' }}
+							>
+								{text || '-'}
+							</Typography>
+						</Tooltip>
+					)
+				},
+			},
 			{
 				key: '',
 				title: '',
