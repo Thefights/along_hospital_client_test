@@ -70,7 +70,7 @@ const SpecialtyListSection = ({
 
 			<SearchBar widthPercent={0} value={searchTerm} setValue={onSearchChange} />
 
-			<Stack direction='row' flexWrap='wrap' spacing={1} rowGap={1}>
+			<Stack direction='row' flexWrap='wrap' gap={1}>
 				{letters.map((letter) => {
 					const isActive = activeLetter === letter
 					const isAvailable =
