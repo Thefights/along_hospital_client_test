@@ -25,7 +25,7 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 	})
 
 	const specialtyPut = useAxiosSubmit({
-		url: ApiUrls.SPECIALTY.MANAGEMENT.DETAIL,
+		url: ApiUrls.SPECIALTY.MANAGEMENT.DETAIL(selectedRow.id),
 		method: 'PUT',
 	})
 
@@ -43,14 +43,9 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 	)
 
 	const handleUpdateSubmit = async ({ values, closeDialog }) => {
-		if (
-			await specialtyPut.submit(values, {
-				overrideUrl: ApiUrls.SPECIALTY.MANAGEMENT.DETAIL(selectedRow.id),
-			})
-		) {
-			closeDialog()
-			refetch()
-		}
+		await specialtyPut.submit(values)
+		closeDialog()
+		refetch()
 	}
 
 	const handleDeleteClick = async (row) => {
