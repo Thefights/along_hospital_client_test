@@ -113,6 +113,11 @@
             "routine_checkup": "Kiểm tra định kỳ",
             "emergency": "Cấp cứu"
         },
+        "appointment_time_slot": {
+            "half_hour": "30 phút",
+            "one_hour": "1 giờ",
+            "two_hours": "2 giờ"
+        },
         "appointment_meeting_type": {
             "in_person": "Trực tiếp",
             "telehealth": "Y tế từ xa"
@@ -221,6 +226,11 @@
             "upcoming": "Sắp tới",
             "completed": "Đã hoàn thành"
         },
+        "placeholder": {
+            "search_doctor": "Tìm kiếm theo tên bác sĩ...",
+            "search_patient": "Tìm kiếm theo tên bệnh nhân...",
+            "no_doctor_assigned": "Chưa có bác sĩ được chỉ định"
+        },
         "button": {
             "cancel_appointment": "Hủy cuộc hẹn",
             "deny_assignment": "Từ chối cuộc hẹn",
@@ -232,6 +242,7 @@
         "field": {
             "purpose": "Mục đích",
             "specialty": "Chuyên khoa",
+            "time_slot": "Khung thời gian",
             "payment_status": "Trạng thái thanh toán",
             "status": "Trạng thái",
             "type": "Loại",
@@ -240,8 +251,6 @@
             "end_date": "Ngày kết thúc",
             "patient": "Bệnh nhân",
             "doctor": "Bác sĩ",
-            "search_doctor": "Tìm kiếm theo tên bác sĩ...",
-            "search_patient": "Tìm kiếm theo tên bệnh nhân...",
             "cancel_reason": "Lý do hủy",
             "refuse_reason": "Lý do từ chối"
         },
@@ -394,22 +403,22 @@
         "delete_description": "Bạn có chắc chắn muốn xóa {number} mục đã chọn không? Hành động này không thể hoàn tác."
     },
     "specialty": {
-    "title": {
-      "list": "Danh sách Chuyên Khoa"
+        "title": {
+            "list": "Danh sách Chuyên Khoa"
+        },
+        "description": {
+            "list": "Tìm và chọn chuyên khoa phù hợp với bạn"
+        },
+        "button": {
+            "view_detail": "Xem chi tiết",
+            "book_appointment": "Đặt lịch khám"
+        },
+        "placeholder": {
+            "no_result_title": "Không tìm thấy chuyên khoa",
+            "no_result_subtitle": "Hãy thử đổi từ khóa hoặc ký tự lọc.",
+            "no_description": "Chưa có mô tả"
+        }
     },
-    "description": {
-      "list": "Tìm và chọn chuyên khoa phù hợp với bạn"
-    },
-    "button": {
-      "view_detail": "Xem chi tiết",
-      "book_appointment": "Đặt lịch khám"
-    },
-    "placeholder": {
-      "no_result_title": "Không tìm thấy chuyên khoa",
-      "no_result_subtitle": "Hãy thử đổi từ khóa hoặc ký tự lọc.",
-      "no_description": "Chưa có mô tả"
-    }
-  },
     "blog": {
         "title": {
             "list": "Tin tức & Blog",
@@ -556,22 +565,22 @@
             "continue_with": "Tiếp tục với Google",
             "locale": "vi"
         }
+    },
+    "specialty": {
+        "title": {
+            "delete": "Xóa chuyên khoa",
+            "delete_confirm": "Bạn có chắc muốn xóa",
+            "create": "Tạo chuyên khoa",
+            "update": "Cập nhật chuyên khoa",
+            "specialty_management": "Quản lý chuyên khoa"
         },
-        "specialty": {
-            "title": {
-                "delete": "Xóa chuyên khoa",
-                "delete_confirm": "Bạn có chắc muốn xóa",
-                "create": "Tạo chuyên khoa",
-                "update": "Cập nhật chuyên khoa",
-                "specialty_management": "Quản lý chuyên khoa"
-            },
-            "field": {
-                "id": "Mã",
-                "name": "Tên chuyên khoa",
-                "description": "Mô tả"
-            },
-            "placeholder": {
-                "search_specialty": "Tìm kiếm chuyên khoa..."
-            }
+        "field": {
+            "id": "Mã",
+            "name": "Tên chuyên khoa",
+            "description": "Mô tả"
+        },
+        "placeholder": {
+            "search_specialty": "Tìm kiếm chuyên khoa..."
         }
+    }
 }

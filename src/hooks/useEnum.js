@@ -26,6 +26,20 @@ export default function useEnum() {
 			{ value: EnumConfig.AppointmentStatus.Cancelled, label: t('enum.appointment_status.cancelled') },
 			{ value: EnumConfig.AppointmentStatus.Refused, label: t('enum.appointment_status.refused') },
 		],
+		appointmentTimeSlotOptions: [
+			{
+				value: EnumConfig.AppointmentTimeSlot.HalfHour,
+				label: t('enum.appointment_time_slot.half_hour'),
+			},
+			{
+				value: EnumConfig.AppointmentTimeSlot.OneHour,
+				label: t('enum.appointment_time_slot.one_hour'),
+			},
+			{
+				value: EnumConfig.AppointmentTimeSlot.TwoHours,
+				label: t('enum.appointment_time_slot.two_hours'),
+			},
+		],
 		appointmentPaymentStatusOptions: [
 			{
 				value: EnumConfig.AppointmentPaymentStatus.None,

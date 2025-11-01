@@ -102,6 +102,11 @@
             "cancelled": "Cancelled",
             "refused": "Refused"
         },
+        "appointment_time_slot": {
+            "half_hour": "30 minutes",
+            "one_hour": "1 hour",
+            "two_hours": "2 hours"
+        },
         "appointment_payment_status": {
             "none": "None",
             "pending": "Pending",
@@ -222,6 +227,11 @@
             "upcoming": "Upcoming",
             "completed": "Completed"
         },
+        "placeholder": {
+            "search_doctor": "Search by Doctor name...",
+            "search_patient": "Search by Patient name...",
+            "no_doctor_assigned": "No doctor assigned"
+        },
         "button": {
             "cancel_appointment": "Cancel Appointment",
             "deny_assignment": "Deny Assignment",
@@ -233,6 +243,7 @@
         "field": {
             "purpose": "Purpose",
             "specialty": "Specialty",
+            "time_slot": "Time Slot",
             "payment_status": "Payment Status",
             "status": "Status",
             "type": "Type",
@@ -241,8 +252,6 @@
             "end_date": "End Date",
             "patient": "Patient",
             "doctor": "Doctor",
-            "search_doctor": "Search by Doctor name...",
-            "search_patient": "Search by Patient name...",
             "cancel_reason": "Cancel Reason",
             "refuse_reason": "Refuse Reason"
         },
