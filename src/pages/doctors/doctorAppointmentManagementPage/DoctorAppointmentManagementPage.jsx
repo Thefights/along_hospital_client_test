@@ -37,8 +37,8 @@ const DoctorAppointmentManagementPage = () => {
 		url: ApiUrls.APPOINTMENT.MANAGEMENT.CONFIRM(selectedAppointment?.id),
 		method: 'PUT',
 		onSuccess: async () => {
-			await getAppointments.fetch()
 			setSelectedAppointment(null)
+			await getAppointments.fetch()
 		},
 	})
 	const completeAppointment = useAxiosSubmit({
@@ -55,8 +55,8 @@ const DoctorAppointmentManagementPage = () => {
 		url: ApiUrls.APPOINTMENT.MANAGEMENT.DENY_ASSIGNMENT(selectedAppointment?.id),
 		method: 'PUT',
 		onSuccess: async () => {
-			await getAppointments.fetch()
 			setSelectedAppointment(null)
+			await getAppointments.fetch()
 		},
 	})
 

@@ -123,7 +123,7 @@ const CreateAppointmentPage = () => {
 			key: 'specialtyId',
 			title: t('appointment.field.specialty'),
 			type: 'select',
-			options: specialtiesList.map((s) => ({ label: s.name, value: s.id })) || [],
+			options: specialtiesList.map((s) => ({ label: s.name, value: s.id })),
 		},
 	]
 

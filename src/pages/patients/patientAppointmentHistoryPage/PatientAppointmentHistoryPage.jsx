@@ -34,17 +34,15 @@ const PatientAppointmentHistoryPage = () => {
 		method: 'PUT',
 		data: { reason: cancelReason },
 		onSuccess: async () => {
-			setSelectedAppointment(null)
+			handleCloseCancelDialog()
+			setOpenCancelDialog(false)
 			await getAppointments.fetch()
 		},
 	})
 
-	const handleCancelAppointment = async () => {
-		var response = await cancelAppointment.submit()
-		if (response) {
-			setCancelReason('')
-			setOpenCancelDialog(false)
-		}
+	const handleCloseCancelDialog = () => {
+		setOpenCancelDialog(false)
+		setCancelReason('')
 	}
 
 	return (
@@ -71,11 +69,8 @@ const PatientAppointmentHistoryPage = () => {
 			<ConfirmationDialog
 				key={selectedAppointment?.id}
 				open={openCancelDialog}
-				onClose={() => {
-					setOpenCancelDialog(false)
-					setCancelReason('')
-				}}
-				onConfirm={handleCancelAppointment}
+				onClose={handleCloseCancelDialog}
+				onConfirm={async () => await cancelAppointment.submit()}
 				title={t('appointment.dialog.confirm_cancel_title')}
 				description={
 					<Stack spacing={1}>
