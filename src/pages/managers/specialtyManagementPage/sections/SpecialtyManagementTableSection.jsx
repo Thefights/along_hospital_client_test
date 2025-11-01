@@ -42,15 +42,21 @@ const SpecialtyManagementTableSection = ({ specialties, loading, sort, setSort, 
 	)
 
 	const handleUpdateSubmit = async ({ values, closeDialog }) => {
-		await specialtyPut.submit(values)
-		closeDialog()
-		refetch()
+		const respond = await specialtyPut.submit(values)
+
+		if (respond) {
+			closeDialog()
+			refetch()
+		}
 	}
 
 	const handleCreateSubmit = async ({ values, closeDialog }) => {
-		await specialtyPost.submit(values)
-		closeDialog()
-		refetch()
+		const respond = await specialtyPost.submit(values)
+
+		if (respond) {
+			closeDialog()
+			refetch()
+		}
 	}
 
 	const handleDeleteClick = async (row) => {
