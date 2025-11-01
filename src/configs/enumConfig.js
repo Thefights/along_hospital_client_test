@@ -85,4 +85,12 @@ export const EnumConfig = {
 		Resolved: 'Resolved',
 		Closed: 'Closed',
 	},
+
+	BlogType: {
+		Health: 'Health',
+		News: 'News',
+		Promotion: 'Promotion',
+		Guide: 'Guide',
+		Other: 'Other',
+	},
 }

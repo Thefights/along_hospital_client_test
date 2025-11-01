@@ -69,3 +69,15 @@ export const defaultLineClampStyle = (lines = 2) => ({
 	WordBreak: 'break-word',
 	WebkitBoxOrient: 'vertical',
 })
+
+export const defaultBlogTypeStyle = (theme, blogType) => {
+	const map = {
+		[EnumConfig.BlogType.Health]: theme.palette.success,
+		[EnumConfig.BlogType.News]: theme.palette.info,
+		[EnumConfig.BlogType.Promotion]: theme.palette.warning,
+		[EnumConfig.BlogType.Guide]: theme.palette.secondary,
+		[EnumConfig.BlogType.Other]: theme.palette.primary,
+	}
+	const p = map[blogType] || theme.palette.primary
+	return { bg: p.softBg || p.main + '1A', border: p.softBorder || p.main + '33', color: p.main }
+}

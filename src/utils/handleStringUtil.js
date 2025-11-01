@@ -41,3 +41,10 @@ export const getEnumLabelByValue = (enumArray, value) => {
 	})
 	return found ? found.label ?? (typeof found === 'string' ? found : String(value)) : null
 }
+
+export const stripHtml = (html) => {
+	if (!html || typeof html !== 'string') return ''
+	const doc = new DOMParser().parseFromString(html, 'text/html')
+	const text = doc.body.textContent || ''
+	return text
+}

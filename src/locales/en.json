@@ -15,10 +15,13 @@
         "add_row": "Add Row",
         "login": "Login",
         "filter": "Filter",
+        "reset_filter": "Reset Filter",
+        "creating": "Creating...",
         "next": "Next",
         "resend_in": "Resend in",
         "toggle_language": "Toggle language",
-        "toggle_theme": "Toggle theme"
+        "toggle_theme": "Toggle theme",
+        "delete_selected": "Delete selected"
     },
     "text": {
         "all": "All",
@@ -83,6 +86,13 @@
         "gender": {
             "male": "Male",
             "female": "Female",
+            "other": "Other"
+        },
+        "blog_type": {
+            "health": "Health",
+            "news": "News",
+            "promotion": "Promotion",
+            "guide": "Guide",
             "other": "Other"
         },
         "appointment_status": {
@@ -405,6 +415,53 @@
 		"delete_title": "Delete selected users?",
 		"delete_description": "Are you sure you want to delete {number} selected item(s)? This action cannot be undone."
 	},
+        "our_hospital": "Our Hospital",
+        "career": "Career"
+    },
+    "done_care_about_this": {
+        "delete_selected": "Delete {number} selected",
+        "delete_title": "Delete selected users?",
+        "delete_description": "Are you sure you want to delete {number} selected item(s)? This action cannot be undone."
+    },
+    "blog": {
+        "title": {
+            "list": "News & Blog",
+            "detail": "Blog",
+            "header_subtitle": "Hospital news & health articles",
+            "untitled": "Untitled"
+        },
+        "field": {
+            "title": "Title",
+            "type": "Blog Type",
+            "content": "Content",
+            "cover_image": "Cover Image",
+            "preview": "Preview",
+            "image": "Image",
+            "page_info": "Page {current} / {total}"
+        },
+        "placeholder": {
+            "select_type": "-- Select Type --"
+        },
+        "button": {
+            "choose_image": "Choose Image",
+            "remove_image": "Remove Image"
+        },
+        "text": {
+            "read_more": "Read more →",
+            "no_posts": "No blog posts found.",
+            "no_posts_subtitle": "Try adjusting your filters or check back later for new content.",
+            "image_alt": "Blog image",
+            "recent_posts": "Recent Blogs",
+            "no_recent": "No recent blogs available.",
+            "published_on": "Published on {date}"
+        },
+        "dialog": {
+            "delete_title": "Delete blog",
+            "delete_description": "Are you sure you want to delete blog '{title}'?",
+            "delete_many_title": "Delete multiple blogs",
+            "delete_many_description": "Are you sure you want to delete {number} selected blogs?"
+        }
+    },
     "auth": {
         "hero": {
             "subtitle": "Connecting patients and doctors through secure, convenient telemedicine",
