@@ -73,7 +73,7 @@ const ManageAppointmentFilterBarSection = ({
 			? undefined
 			: {
 					key: 'patientName',
-					title: t('appointment.field.search_patient'),
+					title: t('appointment.placeholder.search_patient'),
 					type: 'search',
 					required: false,
 			  },
@@ -81,7 +81,7 @@ const ManageAppointmentFilterBarSection = ({
 			? undefined
 			: {
 					key: 'doctorName',
-					title: t('appointment.field.search_doctor'),
+					title: t('appointment.placeholder.search_doctor'),
 					type: 'search',
 					required: false,
 			  },

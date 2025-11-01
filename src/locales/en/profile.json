@@ -1,0 +1,42 @@
+{
+    "profile": {
+        "title": {
+            "personal_information": "Personal Information"
+        },
+        "placeholder": {
+            "no_phone": "No phone number provided",
+            "no_email": "No email provided",
+            "no_gender": "No gender provided",
+            "no_date_of_birth": "No date of birth provided",
+            "no_address": "No address provided",
+            "no_height": "No height provided",
+            "no_weight": "No weight provided",
+            "no_allergies": "No allergies recorded"
+        },
+        "field": {
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone",
+            "address": "Address",
+            "city": "City",
+            "country": "Country",
+            "date_of_birth": "Date of Birth",
+            "gender": "Gender",
+            "medical_number": "Medical Number",
+            "height": "Height",
+            "weight": "Weight",
+            "height_weight": "Height/Weight",
+            "blood_type": "Blood Type",
+            "allergy": {
+                "allergies": "Allergies",
+                "name": "Name",
+                "severity": "Severity",
+                "reaction": "Reaction"
+            },
+            "hire_date": "Hire Date",
+            "department": "Department",
+            "qualification": "Qualification",
+            "specialty": "Specialty"
+        }
+    }
+}

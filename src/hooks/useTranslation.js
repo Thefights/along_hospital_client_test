@@ -30,7 +30,9 @@ export const getTranslation = (key, params) => {
 	let language = window?.localStorage?.getItem('language') || 'en'
 	try {
 		language = JSON.parse(language)
-	} catch {}
+	} catch {
+		/* empty */
+	}
 
 	const dict = resolveDict(translations, language)
 	const fallbackDict = resolveDict(translations, 'en')

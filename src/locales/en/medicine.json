@@ -1,0 +1,14 @@
+{
+    "medicine": {
+        "field": {
+            "name": "Medicine Name",
+            "brand": "Brand",
+            "images": "Images",
+            "unit": "Unit",
+            "medicine_category": {
+                "name": "Medicine Category",
+                "description": "Description"
+            }
+        }
+    }
+}
