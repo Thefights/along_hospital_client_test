@@ -1,5 +1,5 @@
 {
-    "medicine": {
+   "medicine": {
         "field": {
             "name": "Tên thuốc",
             "brand": "Thương hiệu",
@@ -8,6 +8,60 @@
             "medicine_category": {
                 "name": "Danh mục thuốc",
                 "description": "Mô tả"
+            },
+            "price":"Giá",
+            "action": "Hành động",
+            "quantity": "Số lượng",
+            "min_quantity": "Số lượng tối thiểu",
+            "max_quantity": "Số lượng tối đa"
+        },
+        "title":{
+            "medicine_management": "Quản Lí Thuốc"
+        },
+         "text": {
+            "no_data": "Không có dữ liệu",
+            "total":"Tổng"
+        },
+            "filter": {
+            "title": "Bộ lọc thuốc",
+            "category": "Loại thuốc",
+            "unit": "Đơn vị",
+            "searchPlaceholder": "Tìm theo tên thuốc..."
+        },
+        "button": {
+            "add": "Thêm thuốc",
+            "update": "Cập nhật thuốc",
+            "delete": "Xóa thuốc",
+            "reset":"Reset"
+        },
+        "table": {
+            "name": "Tên thuốc",
+            "brand": "Thương hiệu",
+            "unit": "Đơn vị",
+            "category": "Danh mục",
+            "images": "Hình ảnh",
+            "actions": "Hành động"
+        },
+        "placeholder": {
+            "no_data": "Không có dữ liệu..."
+        },
+        "dialog": {
+        "create_title": "Thêm thuốc mới",
+        "update_title": "Cập nhật thuốc",
+        "confirm_delete_title": "Xóa thuốc?",
+        "confirm_delete_description": "Bạn có chắc chắn muốn xóa \"{{name}}\" không?"
+        },
+         "enum": {
+            "medicine_unit": {
+                "tablet": "Viên nén",
+                "capsule": "Viên nang",
+                "milliliter": "Millilít",
+                "milligram": "Miligam",
+                "drop": "Giọt",
+                "spoon": "Thìa",
+                "bottle": "Chai",
+                "tube": "Tuýp",
+                "other": "Khác"
             }
         }
     }
