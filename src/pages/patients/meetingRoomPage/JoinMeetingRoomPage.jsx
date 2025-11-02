@@ -46,7 +46,7 @@ const JoinMeetingRoomPage = () => {
 
 			<Box px={{ xs: 2, md: 10 }}>
 				<Paper
-					elevation={0}
+					elevation={5}
 					sx={{
 						p: { xs: 2.5, md: 3 },
 						borderRadius: 3,

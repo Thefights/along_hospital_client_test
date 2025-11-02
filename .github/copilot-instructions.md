@@ -11,6 +11,9 @@ This is a React 19 + Vite hospital management client application using Material-
 
 ## Development Patterns
 
+### Communication preferences
+- When interacting with the user named "Thefight", always respond in Vietnamese.
+
 ### Import Convention
 - Use `@/` alias for all internal imports (configured in `vite.config.js`)
 - Example: `import useAuth from '@/hooks/useAuth'`

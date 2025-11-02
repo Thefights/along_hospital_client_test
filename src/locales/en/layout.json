@@ -16,7 +16,8 @@
             "change_password": "Change Password",
             "setting": "Setting",
             "logout": "Logout"
-        }
+        },
+        "meeting_room": "Join Meeting Room"
     },
     "footer": {
         "__________comment1": "For footer section links",

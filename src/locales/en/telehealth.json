@@ -1,0 +1,42 @@
+{
+    "meeting_room": {
+        "title": {
+            "join_meeting": "Join a meeting",
+            "appointment_time": "Appointment time",
+            "duration": "Duration",
+            "duration_left": "left",
+            "note": "Please keep this page open. Your doctor will join shortly.",
+            "placeholder_meeting_id": "Enter meeting ID or code..."
+        },
+        "subtitle": {
+            "enter_meeting": "Enter the meeting ID or code to join"
+        },
+        "consultation_complete_title": "Consultation completed",
+        "consultation_complete_subtitle": "Your telehealth visit has ended successfully",
+        "chief_complaint": "Chief complaint",
+        "diagnosis": "Diagnosis",
+        "recommendations": "Recommendations",
+        "sample_chief_complaint": "Headache and mild fever for two days.",
+        "sample_diagnosis": "Viral upper respiratory infection (suspected).",
+        "sample_rec_1": "Drink plenty of fluids.",
+        "sample_rec_2": "Get adequate rest.",
+        "sample_rec_3": "Take prescribed medication as directed.",
+        "sample_rec_4": "Seek follow-up if symptoms worsen.",
+        "schedule_follow_up": "Schedule a follow-up",
+        "back_to_home": "Back to home",
+        "summary_notice": "A summary of your consultation has been recorded. You can review it in your Medical History.",
+        "mic": "Microphone",
+        "camera": "Camera",
+        "chat": "Chat",
+        "end_call": "End call",
+        "chat_title": "Chat",
+        "no_messages": "No messages yet.",
+        "chat_input_placeholder": "Type a message and press Enter",
+        "create_medical_history": "Create medical history",
+        "remote_placeholder": "Remote video will appear here",
+        "doctor_avatar_url": "",
+        "message": {
+            "waiting_for_doctor": "Waiting for your doctor to join…"
+        }
+    }
+}

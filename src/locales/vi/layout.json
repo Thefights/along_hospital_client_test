@@ -16,7 +16,8 @@
             "change_password": "Đổi mật khẩu",
             "setting": "Cài đặt",
             "logout": "Đăng xuất"
-        }
+        },
+        "meeting_room": "Vào phòng chat"
     },
     "footer": {
         "__________comment1": "For footer section links",
