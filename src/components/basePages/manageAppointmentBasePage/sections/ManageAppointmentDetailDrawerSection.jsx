@@ -1,5 +1,8 @@
 import GenericDrawer from '@/components/generals/GenericDrawer'
-import { defaultAppointmentStatusStyle } from '@/configs/defaultStylesConfig'
+import {
+	defaultAppointmentPaymentStatusStyle,
+	defaultAppointmentStatusStyle,
+} from '@/configs/defaultStylesConfig'
 import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
@@ -10,11 +13,18 @@ import {
 import { getEnumLabelByValue } from '@/utils/handleStringUtil'
 import { Avatar, Box, Chip, Stack, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
+import { useEffect } from 'react'
 
 const ManageAppointmentDetailDrawerSection = ({ appointment, open, onClose, buttons }) => {
 	const { t } = useTranslation()
 	const _enum = useEnum()
 	const theme = useTheme()
+
+	useEffect(() => {
+		if (!appointment) {
+			onClose()
+		}
+	}, [appointment, onClose])
 
 	const styleForStatus = appointment
 		? defaultAppointmentStatusStyle(theme, appointment?.appointmentStatus)
@@ -39,6 +49,19 @@ const ManageAppointmentDetailDrawerSection = ({ appointment, open, onClose, butt
 						</Stack>
 					),
 					of: [
+						{
+							label: t('appointment.field.payment_status'),
+							value: (
+								<Chip
+									label={getEnumLabelByValue(
+										_enum.appointmentPaymentStatusOptions,
+										appointment?.appointmentPaymentStatus
+									)}
+									size='small'
+									color={defaultAppointmentPaymentStatusStyle(appointment?.appointmentPaymentStatus)}
+								/>
+							),
+						},
 						{
 							label: t('appointment.field.type'),
 							value: getEnumLabelByValue(_enum.appointmentTypeOptions, appointment?.appointmentType),

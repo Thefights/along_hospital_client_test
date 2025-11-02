@@ -27,6 +27,19 @@ components/
 └── textFields/     # Form input components
 ```
 
+### MUI Grid (v2) note
+- When using Material-UI Grid in this project, prefer the `size` prop instead of `xs` (MUI Grid v2 removed the `xs` shorthand). Example:
+
+```jsx
+// old
+<Grid item xs={6} />
+
+// new (use `size`)
+<Grid item size={6} />
+```
+
+Use `size` consistently for new code and when updating existing Grid usages.
+
 ### Custom Hooks Pattern
 Located in `src/hooks/`, these provide core functionality:
 - `useAuth()` - Authentication state and methods

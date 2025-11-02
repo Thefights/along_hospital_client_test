@@ -1,4 +1,5 @@
 import { ApiUrls } from '@/configs/apiUrls'
+import axiosConfig from '@/configs/axiosConfig'
 import { EnumConfig } from '@/configs/enumConfig'
 import { routeUrls } from '@/configs/routeUrls'
 import useAuth from '@/hooks/useAuth'
@@ -83,10 +84,16 @@ const CompleteProfilePage = () => {
 		url: ApiUrls.AUTH.COMPLETE_PROFILE,
 		method: 'POST',
 		data: payload,
-		onSuccess: async (resp) => {
-			const { accessToken } = resp.data
-			if (!accessToken) return
-			await login(accessToken)
+		onSuccess: async () => {
+			const currentRefreshToken = localStorage.getItem('refreshToken')
+
+			const refreshResponse = await axiosConfig.post(ApiUrls.AUTH.REFRESH_TOKEN, {
+				refreshToken: JSON.parse(currentRefreshToken),
+			})
+
+			const { accessToken, refreshToken } = refreshResponse.data
+
+			await login(accessToken, refreshToken)
 
 			navigate('/', { replace: true })
 		},

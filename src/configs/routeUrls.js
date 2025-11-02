@@ -56,11 +56,17 @@ export const routeUrls = {
 	},
 	MANAGER: {
 		DASHBOARD: '/',
-		APPOINTMENT_MANAGEMENT: '/appointment',
+		APPOINTMENT_MANAGEMENT: '/appointments',
+		BLOG: {
+			INDEX: '/blogs',
+			CREATE: '/blogs/create',
+			UPDATE: (blogId = ':id') => `/blogs/edit/${blogId}`,
+		},
 		MEDICAL_HISTORY: {
 			INDEX: '/medical-history',
 			DETAIL: (id) => `/medical-history/${id}`,
 		},
 		COMPLAINT_MANAGEMENT: '/complaint',
+		SPECIALTY_MANAGEMENT: '/specialty',
 	},
 }

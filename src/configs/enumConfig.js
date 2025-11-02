@@ -31,14 +31,25 @@ export const EnumConfig = {
 		Cancelled: 'Cancelled',
 		Refused: 'Refused',
 	},
+	AppointmentTimeSlot: {
+		HalfHour: 'HalfHour',
+		OneHour: 'OneHour',
+		TwoHours: 'TwoHours',
+	},
+	AppointmentPaymentStatus: {
+		None: 'None',
+		Pending: 'Pending',
+		Completed: 'Completed',
+		Failed: 'Failed',
+	},
 	AppointmentType: {
 		Consultation: 'Consultation',
-		FollowUp: 'Follow-up',
-		RoutineCheckup: 'Routine Check-up',
+		FollowUp: 'FollowUp',
+		RoutineCheckup: 'RoutineCheckup',
 		Emergency: 'Emergency',
 	},
 	AppointmentMeetingType: {
-		InPerson: 'In-Person',
+		InPerson: 'InPerson',
 		Telehealth: 'Telehealth',
 	},
 
@@ -78,5 +89,13 @@ export const EnumConfig = {
 		Draft: 'Draft',
 		Resolved: 'Resolved',
 		Closed: 'Closed',
+	},
+
+	BlogType: {
+		Health: 'Health',
+		News: 'News',
+		Promotion: 'Promotion',
+		Guide: 'Guide',
+		Other: 'Other',
 	},
 }

@@ -10,6 +10,7 @@ export const ApiUrls = {
 		FORGOT_PASSWORD_RESET: '/auth/forgot-password/reset',
 		LOGOUT: '/auth/logout',
 		CURRENT_ACCOUNT: '/auth/me',
+		REFRESH_TOKEN: '/auth/refresh',
 		COMPLETE_PROFILE: '/user/complete-profile',
 	},
 	USER: {
@@ -20,6 +21,7 @@ export const ApiUrls = {
 	PATIENT: {
 		MANAGEMENT: {
 			INDEX: `/patient-management`,
+			DETAIL: (id) => `/patient-management/${id}`,
 			GET_ALL: `/patient-management/all`,
 		},
 	},
@@ -33,6 +35,11 @@ export const ApiUrls = {
 	SPECIALTY: {
 		INDEX: `/specialty`,
 		GET_ALL: `/specialty/all`,
+		MANAGEMENT: {
+			INDEX: `/specialty-management`,
+			GET_ALL: `/specialty-management/all`,
+			DETAIL: (id) => `/specialty-management/${id}`,
+		},
 	},
 	MEDICINE: {
 		INDEX: `/medicine`,
@@ -78,6 +85,7 @@ export const ApiUrls = {
 		CREATE_COMPLAINT: (medicalHistoryId) => `/medical-history/${medicalHistoryId}/complaint`,
 		MANAGEMENT: {
 			INDEX: `/medical-history-management`,
+			DETAIL: (id) => `/medical-history-management/${id}`,
 			GET_ALL_BY_CURRENT_DOCTOR: `/medical-history-management/doctor`,
 			COMPLETE: (medicalHistoryId) => `/medical-history-management/complete/${medicalHistoryId}`,
 			MEDICAL_HISTORY_DETAIL: (medicalHistoryId, medicalServiceId = null) =>
@@ -86,6 +94,13 @@ export const ApiUrls = {
 				}`,
 			PRESCRIPTION: (medicalHistoryId) =>
 				`/medical-history-management/${medicalHistoryId}/prescription`,
+		},
+	},
+	BLOG: {
+		INDEX: `/blog`,
+		MANAGEMENT: {
+			INDEX: `/Blog-Management`,
+			DETAIL: (id) => `/Blog-Management/${id}`,
 		},
 	},
 }

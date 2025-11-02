@@ -1,4 +1,5 @@
 import { ApiUrls } from '@/configs/apiUrls'
+import { routeUrls } from '@/configs/routeUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useEnum from '@/hooks/useEnum'
 import useFetch from '@/hooks/useFetch'
@@ -12,11 +13,13 @@ import { setProfileStore } from '@/redux/reducers/patientReducer'
 import { maxLen } from '@/utils/validateUtil'
 import { Grid, Paper } from '@mui/material'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const CreateAppointmentPage = () => {
 	const { t } = useTranslation()
 	const _enum = useEnum()
+	const navigate = useNavigate()
 
 	const [submitted, setSubmitted] = useState(false)
 
@@ -47,6 +50,10 @@ const CreateAppointmentPage = () => {
 		method: 'POST',
 		data: values,
 	})
+
+	const specialtiesList = Array.isArray(getSpecialty.data?.collection)
+		? getSpecialty.data.collection
+		: []
 
 	const patientFields = [
 		{
@@ -100,6 +107,12 @@ const CreateAppointmentPage = () => {
 		{ key: 'date', title: t('text.date'), type: 'date' },
 		{ key: 'time', title: t('text.time'), type: 'time' },
 		{
+			key: 'timeSlot',
+			title: t('appointment.field.time_slot'),
+			type: 'select',
+			options: _enum.appointmentTimeSlotOptions,
+		},
+		{
 			key: 'purpose',
 			title: t('appointment.field.purpose'),
 			multiple: 4,
@@ -110,7 +123,7 @@ const CreateAppointmentPage = () => {
 			key: 'specialtyId',
 			title: t('appointment.field.specialty'),
 			type: 'select',
-			options: getSpecialty.data?.map((s) => ({ label: s.name, value: s.id })) || [],
+			options: specialtiesList.map((s) => ({ label: s.name, value: s.id })),
 		},
 	]
 
@@ -123,7 +136,10 @@ const CreateAppointmentPage = () => {
 		if (!ok || isMissing) {
 			toast.warn(t('error.fill_all_required'))
 		} else {
-			await postAppointment.submit()
+			const response = await postAppointment.submit()
+			if (response) {
+				navigate(routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.APPOINTMENT.INDEX))
+			}
 		}
 	}
 

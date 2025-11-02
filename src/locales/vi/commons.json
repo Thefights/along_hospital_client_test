@@ -1,0 +1,99 @@
+{
+    "button": {
+        "close": "Đóng",
+        "submit": "Gửi",
+        "submitting": "Đang gửi",
+        "cancel": "Hủy",
+        "back": "Quay lại",
+        "add": "Thêm",
+        "create": "Tạo",
+        "update": "Cập nhật",
+        "complete": "Hoàn thành",
+        "confirm": "Xác nhận",
+        "delete": "Xóa",
+        "save": "Lưu",
+        "add_row": "Thêm dòng",
+        "login": "Đăng nhập",
+        "filter": "Lọc",
+        "reset_filter": "Đặt lại bộ lọc",
+        "next": "Tiếp theo",
+        "resend_in": "Gửi lại sau",
+        "toggle_language": "Chuyển đổi ngôn ngữ",
+        "toggle_theme": "Chuyển đổi giao diện",
+        "delete_selected": "Xóa đã chọn"
+    },
+    "text": {
+        "all": "Tất cả",
+        "search": "Tìm kiếm...",
+        "loading": "Đang tải...",
+        "filter": "Lọc",
+        "filters": "Bộ lọc",
+        "image_preview": "Xem trước hình ảnh",
+        "select_options": "Chọn tùy chọn",
+        "date": "Ngày",
+        "time": "Thời gian",
+        "start_date": "Ngày bắt đầu",
+        "end_date": "Ngày kết thúc",
+        "step": "Bước",
+        "more": "Nữa",
+        "result": "Kết quả",
+        "rows_per_page": "Số dòng mỗi trang",
+        "role": {
+            "manager": "Quản lý",
+            "doctor": "Bác sĩ",
+            "patient": "Bệnh nhân",
+            "guest": "Khách"
+        },
+        "placeholder": {
+            "no_data": "Không có dữ liệu...",
+            "no_data_subtitle": "Không có gì để hiển thị ở đây"
+        }
+    },
+    "tooltip": {
+        "menu": "Menu",
+        "edit": "Chỉnh sửa",
+        "delete": "Xóa",
+        "cart": "Giỏ hàng",
+        "create_appointment": "Tạo cuộc hẹn",
+        "switch_dark": "Chuyển sang chế độ tối",
+        "switch_light": "Chuyển sang chế độ sáng",
+        "collapse": "Thu gọn",
+        "expand": "Mở rộng",
+        "view_detail_medical_history": "Xem chi tiết lịch sử y tế"
+    },
+    "dialog": {
+        "doctor_picker": {
+            "title": "Chọn bác sĩ",
+            "confirm_button": "Chọn"
+        },
+        "patient_info": {
+            "basic_info": "Thông tin cơ bản",
+            "health_info": "Thông tin sức khỏe",
+            "allergies": "Dị ứng",
+            "allergy_table": {
+                "name": "Tên",
+                "severity": "Mức độ nghiêm trọng",
+                "reaction": "Phản ứng",
+                "add_allergy": "Thêm dị ứng"
+            }
+        },
+        "doctor_info": {
+            "basic_info": "Thông tin cơ bản",
+            "professional_info": "Thông tin chuyên môn"
+        }
+    },
+    "error": {
+        "required": "Trường này là bắt buộc",
+        "invalid_email": "Vui lòng nhập email hợp lệ",
+        "invalid_phone": "Vui lòng nhập số điện thoại hợp lệ",
+        "invalid_date": "Vui lòng nhập ngày hợp lệ",
+        "invalid_time": "Vui lòng nhập thời gian hợp lệ",
+        "invalid_number": "Vui lòng nhập số hợp lệ",
+        "weak_password": "Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt",
+        "min_length": "Phải có ít nhất {min} ký tự, hiện tại {current}",
+        "max_length": "Không được vượt quá {max} ký tự, hiện tại {current}/{max}",
+        "min_number": "Số tối thiểu là {min}",
+        "max_number": "Số tối đa là {max}",
+        "fill_all_required": "Vui lòng điền tất cả các trường bắt buộc"
+    }
+}

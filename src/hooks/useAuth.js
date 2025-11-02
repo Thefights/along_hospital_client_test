@@ -9,7 +9,7 @@ import { useContext } from 'react'
  * @returns {{
  *  auth: RootState['auth'],
  * 	hasRole: (required: (string|number)[]) => boolean,
- * 	login: (token: string) => Promise<void>,
+ * 	login: (accessToken: string, refreshToken: string) => Promise<void>,
  * 	logout: () => void
  * }}
  */
@@ -19,7 +19,7 @@ export default function useAuth() {
 	return {
 		auth: ctx.auth,
 		hasRole: (required) => ctx.hasRole(required),
-		login: (token, role) => ctx.login(token, role),
+		login: (accessToken, refreshToken, role) => ctx.login(accessToken, refreshToken, role),
 		logout: () => ctx.logout(),
 	}
 }

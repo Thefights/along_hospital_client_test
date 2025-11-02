@@ -3,11 +3,19 @@ import useTranslation from './useTranslation'
 
 export default function useEnum() {
 	const { t } = useTranslation()
+
 	return {
 		genderOptions: [
 			{ value: EnumConfig.Gender.Male, label: t('enum.gender.male') },
 			{ value: EnumConfig.Gender.Female, label: t('enum.gender.female') },
 			{ value: EnumConfig.Gender.Other, label: t('enum.gender.other') },
+		],
+		blogTypeOptions: [
+			{ value: EnumConfig.BlogType.Health, label: t('enum.blog_type.health') },
+			{ value: EnumConfig.BlogType.News, label: t('enum.blog_type.news') },
+			{ value: EnumConfig.BlogType.Promotion, label: t('enum.blog_type.promotion') },
+			{ value: EnumConfig.BlogType.Guide, label: t('enum.blog_type.guide') },
+			{ value: EnumConfig.BlogType.Other, label: t('enum.blog_type.other') },
 		],
 
 		// For appointments
@@ -17,6 +25,38 @@ export default function useEnum() {
 			{ value: EnumConfig.AppointmentStatus.Completed, label: t('enum.appointment_status.completed') },
 			{ value: EnumConfig.AppointmentStatus.Cancelled, label: t('enum.appointment_status.cancelled') },
 			{ value: EnumConfig.AppointmentStatus.Refused, label: t('enum.appointment_status.refused') },
+		],
+		appointmentTimeSlotOptions: [
+			{
+				value: EnumConfig.AppointmentTimeSlot.HalfHour,
+				label: t('enum.appointment_time_slot.half_hour'),
+			},
+			{
+				value: EnumConfig.AppointmentTimeSlot.OneHour,
+				label: t('enum.appointment_time_slot.one_hour'),
+			},
+			{
+				value: EnumConfig.AppointmentTimeSlot.TwoHours,
+				label: t('enum.appointment_time_slot.two_hours'),
+			},
+		],
+		appointmentPaymentStatusOptions: [
+			{
+				value: EnumConfig.AppointmentPaymentStatus.None,
+				label: t('enum.appointment_payment_status.none'),
+			},
+			{
+				value: EnumConfig.AppointmentPaymentStatus.Pending,
+				label: t('enum.appointment_payment_status.pending'),
+			},
+			{
+				value: EnumConfig.AppointmentPaymentStatus.Completed,
+				label: t('enum.appointment_payment_status.completed'),
+			},
+			{
+				value: EnumConfig.AppointmentPaymentStatus.Failed,
+				label: t('enum.appointment_payment_status.failed'),
+			},
 		],
 		appointmentTypeOptions: [
 			{

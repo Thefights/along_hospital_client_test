@@ -11,6 +11,8 @@ import { useCallback, useState } from 'react'
  * @param {'POST'|'GET'|'PUT'|'DELETE'} [config.method='POST']
  * @param {Object} [config.data={}]
  * @param {Object|string} [config.params={}]
+ * @param {(response) => Promise<any>} [config.onSuccess=async (response) => Promise.resolve(response)]
+ * @param {(error) => Promise<any>} [config.onError=async (error) => Promise.resolve(error)]
  * @returns {{loading: boolean, error: Error|null, response: any|null, submit: function(overrideValues, { overrideUrl, overrideParam }): Promise<any>}}
  */
 export function useAxiosSubmit({
@@ -62,11 +64,11 @@ export function useAxiosSubmit({
 				})
 
 				setResponse(response)
-				await onSuccess(response)
+				Promise.resolve(onSuccess?.(response))
 				return response
 			} catch (err) {
 				setError(err)
-				await onError(err)
+				Promise.resolve(onError(err))
 				return undefined
 			} finally {
 				setLoading(false)

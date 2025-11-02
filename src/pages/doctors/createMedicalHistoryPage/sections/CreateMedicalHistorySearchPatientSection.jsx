@@ -18,7 +18,7 @@ const CreateMedicalHistorySearchPatientSection = ({
 			<Stack direction='row' spacing={2} alignItems='center'>
 				<Box sx={{ flex: 1 }}>
 					<SearchBar
-						placeholder={t('medical_history.placeholder.search_patient_phone_name_email')}
+						placeholder={t('medical_history.placeholder.search_patient_in_create')}
 						value={searchTerm}
 						onChange={(e) => setSearchTerm(e.target.value)}
 					/>

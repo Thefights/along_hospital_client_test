@@ -44,12 +44,24 @@ const ComplaintManagementPage = () => {
 					loading={getComplaints.loading}
 					sort={sort}
 					setSort={setSort}
-					onClassifyComplaint={async (type, id) =>
-						await classifyComplaint.submit(
+					onClassifyComplaint={async (type, id) => {
+						const response = await classifyComplaint.submit(
 							{ type },
 							{ overrideUrl: ApiUrls.COMPLAINT.MANAGEMENT.CLASSIFY(id) }
 						)
-					}
+
+						if (response) {
+							getComplaints.setData((prevData) => {
+								const updatedCollection = prevData.collection.map((complaint) => {
+									if (complaint.id === id) {
+										return { ...complaint, complaintType: type }
+									}
+									return complaint
+								})
+								return { ...prevData, collection: updatedCollection }
+							})
+						}
+					}}
 				/>
 				<GenericTablePagination
 					totalPage={getComplaints.data?.totalPage}

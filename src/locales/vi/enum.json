@@ -1,0 +1,72 @@
+{
+    "enum": {
+        "gender": {
+            "male": "Nam",
+            "female": "Nữ",
+            "other": "Khác"
+        },
+        "blog_type": {
+            "health": "Sức khỏe",
+            "news": "Tin tức",
+            "promotion": "Khuyến mãi",
+            "guide": "Hướng dẫn",
+            "other": "Khác"
+        },
+        "appointment_status": {
+            "scheduled": "Đã lên lịch",
+            "confirmed": "Đã xác nhận",
+            "completed": "Đã hoàn thành",
+            "cancelled": "Đã hủy",
+            "refused": "Đã từ chối"
+        },
+        "appointment_payment_status": {
+            "none": "Không",
+            "pending": "Đang chờ",
+            "completed": "Đã hoàn thành",
+            "failed": "Thất bại"
+        },
+        "appointment_type": {
+            "consultation": "Tư vấn",
+            "follow_up": "Tái khám",
+            "routine_checkup": "Kiểm tra định kỳ",
+            "emergency": "Cấp cứu"
+        },
+        "appointment_time_slot": {
+            "half_hour": "30 phút",
+            "one_hour": "1 giờ",
+            "two_hours": "2 giờ"
+        },
+        "appointment_meeting_type": {
+            "in_person": "Trực tiếp",
+            "telehealth": "Y tế từ xa"
+        },
+        "severity_level": {
+            "mild": "Nhẹ",
+            "moderate": "Trung bình",
+            "severe": "Nghiêm trọng"
+        },
+        "medical_history_status": {
+            "draft": "Bản nháp",
+            "processed": "Đã xử lý",
+            "paid": "Đã thanh toán"
+        },
+        "complaint_topic": {
+            "service": "Dịch vụ",
+            "billing": "Thanh toán",
+            "doctor": "Bác sĩ",
+            "medicine": "Thuốc",
+            "others": "Khác"
+        },
+        "complaint_type": {
+            "neutral": "Trung lập",
+            "positive": "Tích cực",
+            "negative": "Tiêu cực"
+        },
+        "complaint_resolve_status": {
+            "pending": "Đang chờ xử lý",
+            "draft": "Đã soạn thảo",
+            "resolved": "Đã giải quyết",
+            "closed": "Đã đóng"
+        }
+    }
+}

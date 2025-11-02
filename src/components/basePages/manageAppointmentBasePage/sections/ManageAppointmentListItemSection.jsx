@@ -1,4 +1,8 @@
-import { defaultAppointmentStatusStyle, defaultLineClampStyle } from '@/configs/defaultStylesConfig'
+import {
+	defaultAppointmentPaymentStatusStyle,
+	defaultAppointmentStatusStyle,
+	defaultLineClampStyle,
+} from '@/configs/defaultStylesConfig'
 import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
 import { formatDateAndTimeBasedOnCurrentLanguage } from '@/utils/formatDateUtil'
@@ -44,12 +48,14 @@ const ManageAppointmentListItemSection = ({ appointment, onClick }) => {
 											<br />
 										</Fragment>
 									))}
+								{t('appointment.field.time_slot')}:{' '}
+								{getEnumLabelByValue(_enum.appointmentTimeSlotOptions, appointment?.timeSlot)}
 							</Typography>
 						</Box>
 						<Stack spacing={0.5} sx={{ flex: 1, minWidth: 0 }}>
 							<Stack
 								direction={{ xs: 'column', md: 'row' }}
-								spacing={{ xs: 0.2, md: 1 }}
+								gap={{ xs: 0.2, md: 1 }}
 								flexWrap={'wrap'}
 								divider={
 									<Divider orientation='vertical' variant='middle' flexItem sx={{ borderRightWidth: 2 }} />
@@ -57,29 +63,31 @@ const ManageAppointmentListItemSection = ({ appointment, onClick }) => {
 							>
 								{[
 									{
-										text: `${t('appointment.field.type')}: ${getEnumLabelByValue(
-											_enum.appointmentTypeOptions,
-											appointment?.appointmentType
-										)}`,
+										label: t('appointment.field.type'),
+										value: getEnumLabelByValue(_enum.appointmentTypeOptions, appointment?.appointmentType),
 									},
 									{
-										text: `${t('appointment.field.meeting_type')}: ${getEnumLabelByValue(
+										label: t('appointment.field.meeting_type'),
+										value: getEnumLabelByValue(
 											_enum.appointmentMeetingTypeOptions,
 											appointment?.appointmentMeetingType
-										)}`,
+										),
 									},
 									{
-										text: `${t('appointment.field.specialty')}: ${appointment?.specialty?.name}`,
+										label: t('appointment.field.specialty'),
+										value: appointment?.specialty?.name,
 									},
 									{
-										text: `${t('appointment.field.patient')}: ${appointment?.patient?.name}`,
+										label: t('appointment.field.patient'),
+										value: appointment?.patient?.name,
 									},
 									{
-										text: `${t('appointment.field.doctor')}: ${appointment?.doctor?.name}`,
+										label: t('appointment.field.doctor'),
+										value: appointment?.doctor?.name ?? '-',
 									},
 								].map((item, index) => (
 									<Typography variant='body2' key={appointment?.id + index}>
-										{item.text}
+										{item.label}: {item.value}
 									</Typography>
 								))}
 							</Stack>
@@ -87,11 +95,31 @@ const ManageAppointmentListItemSection = ({ appointment, onClick }) => {
 								{appointment?.purpose}
 							</Typography>
 						</Stack>
-						<Chip
-							label={getEnumLabelByValue(_enum.appointmentStatusOptions, appointment?.appointmentStatus)}
-							size='small'
-							sx={{ bgcolor: s.bg, color: s.color, border: `1px solid ${s.border}` }}
-						/>
+						<Stack spacing={1} alignItems='end'>
+							<Stack direction={'row'}>
+								<Typography variant='subtitle2' sx={{ mr: 1 }}>
+									{t('appointment.field.payment_status')}:
+								</Typography>
+								<Chip
+									label={getEnumLabelByValue(
+										_enum.appointmentPaymentStatusOptions,
+										appointment?.appointmentPaymentStatus
+									)}
+									size='small'
+									color={defaultAppointmentPaymentStatusStyle(appointment?.appointmentPaymentStatus)}
+								/>
+							</Stack>
+							<Stack direction={'row'}>
+								<Typography variant='subtitle2' sx={{ mr: 1 }}>
+									{t('appointment.field.status')}:
+								</Typography>
+								<Chip
+									label={getEnumLabelByValue(_enum.appointmentStatusOptions, appointment?.appointmentStatus)}
+									size='small'
+									sx={{ bgcolor: s.bg, color: s.color, border: `1px solid ${s.border}` }}
+								/>
+							</Stack>
+						</Stack>
 					</Stack>
 				</CardContent>
 			</CardActionArea>

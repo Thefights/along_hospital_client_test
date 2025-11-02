@@ -16,13 +16,6 @@ const PatientAppointmentHistoryPage = () => {
 	const [openCancelDialog, setOpenCancelDialog] = useState(false)
 	const [cancelReason, setCancelReason] = useState('')
 	const [filters, setFilters] = useState({
-		startDate: '',
-		endDate: '',
-		status: '',
-		type: '',
-		meetingType: '',
-		specialtyId: '',
-		search: '',
 		page: 1,
 		pageSize: 5,
 	})
@@ -41,22 +34,15 @@ const PatientAppointmentHistoryPage = () => {
 		method: 'PUT',
 		data: { reason: cancelReason },
 		onSuccess: async () => {
+			handleCloseCancelDialog()
+			setOpenCancelDialog(false)
 			await getAppointments.fetch()
-			setSelectedAppointment(null)
 		},
 	})
 
-	const handleCancelAppointment = async () => {
-		try {
-			await cancelAppointment.submit()
-		} finally {
-			setCancelReason('')
-			setOpenCancelDialog(false)
-		}
-	}
-
-	const onFilterClick = async (values) => {
-		setFilters((prev) => ({ ...prev, page: 1, ...values }))
+	const handleCloseCancelDialog = () => {
+		setOpenCancelDialog(false)
+		setCancelReason('')
 	}
 
 	return (
@@ -67,7 +53,6 @@ const PatientAppointmentHistoryPage = () => {
 				setFilters={setFilters}
 				selectedAppointment={selectedAppointment}
 				setSelectedAppointment={setSelectedAppointment}
-				onFilterClick={onFilterClick}
 				totalPage={getAppointments.data?.totalPage || 1}
 				appointments={getAppointments.data?.collection || []}
 				specialties={specialtiesStore.data || []}
@@ -84,11 +69,8 @@ const PatientAppointmentHistoryPage = () => {
 			<ConfirmationDialog
 				key={selectedAppointment?.id}
 				open={openCancelDialog}
-				onClose={() => {
-					setOpenCancelDialog(false)
-					setCancelReason('')
-				}}
-				onConfirm={handleCancelAppointment}
+				onClose={handleCloseCancelDialog}
+				onConfirm={async () => await cancelAppointment.submit()}
 				title={t('appointment.dialog.confirm_cancel_title')}
 				description={
 					<Stack spacing={1}>
