@@ -94,7 +94,7 @@ const ValidationTextField = (
 		const result = {}
 
 		if (Object.keys(inputProps).length > 0) {
-			result.input = { ...result.input, ...inputProps }
+			result.input = { ...result.input, inputProps }
 		}
 
 		if (readOnly) {
