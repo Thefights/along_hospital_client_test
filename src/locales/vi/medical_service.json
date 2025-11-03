@@ -1,0 +1,30 @@
+{
+  "medical_service": {
+    "title": {
+      "management": "Quản lý Dịch vụ Y tế"
+    },
+    "text": {
+      "total": "Tổng số dịch vụ y tế",
+      "no_data": "Không có dữ liệu dịch vụ y tế"
+    },
+    "field": {
+      "id": "Mã số",
+      "name": "Tên dịch vụ",
+      "description": "Mô tả",
+      "price": "Giá",
+      "specialty": "Chuyên khoa",
+      "actions": "Hành động"
+    },
+    "dialog": {
+      "create_title": "Tạo mới Dịch vụ Y tế",
+      "update_title": "Cập nhật Dịch vụ Y tế",
+      "confirm_delete_title": "Xác nhận Xóa",
+      "confirm_delete_description": "Bạn có chắc muốn xóa dịch vụ y tế: {{name}} không?"
+    },
+    "button": {
+      "create": "Tạo Dịch vụ Y tế",
+      "update": "Cập nhật Dịch vụ Y tế",
+      "delete": "Xóa Dịch vụ Y tế"
+    }
+  }
+}

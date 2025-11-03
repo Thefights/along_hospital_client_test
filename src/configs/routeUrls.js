@@ -65,5 +65,7 @@ export const routeUrls = {
 		},
 		COMPLAINT_MANAGEMENT: '/complaint',
 		SPECIALTY_MANAGEMENT: '/specialty',
+		DEPARTMENT_MANAGEMENT: '/department',
+		MEDICAL_SERVICE: '/medical-service',
 	},
 }

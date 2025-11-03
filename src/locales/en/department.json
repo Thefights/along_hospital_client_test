@@ -1,0 +1,28 @@
+{
+  "department": {
+    "title": {
+      "department_management": "Department Management"
+    },
+    "text": {
+      "total": "Total departments",
+      "no_data": "No department data available"
+    },
+    "field": {
+      "id": "ID",
+      "name": "Department Name",
+      "location": "Location",
+      "actions": "Actions"
+    },
+    "dialog": {
+      "create_title": "Create New Department",
+      "update_title": "Update Department",
+      "confirm_delete_title": "Confirm Deletion",
+      "confirm_delete_description": "Are you sure you want to delete department: {{name}}?"
+    },
+    "button": {
+      "create": "Create Department",
+      "update": "Update Department",
+      "delete": "Delete Department"
+    }
+  }
+}
