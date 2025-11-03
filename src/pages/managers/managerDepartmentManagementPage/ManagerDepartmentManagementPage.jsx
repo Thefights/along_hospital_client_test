@@ -11,18 +11,23 @@ const ManagerDepartmentManagementPage = () => {
 	const { t } = useTranslation()
 	const confirm = useConfirm()
 
-	const [filters, setFilters] = useState({ search: '', page: 1, pageSize: 10 })
+	const [filters, setFilters] = useState({ search: '' })
+	const [appliedFilters, setAppliedFilters] = useState({ search: '' })
+	const [page, setPage] = useState(1)
+	const [pageSize, setPageSize] = useState(10)
+
 	const [departments, setDepartments] = useState([])
 	const [totalDepartments, setTotalDepartments] = useState(0)
 	const [selectedRows, setSelectedRows] = useState([])
 	const [selectedDepartment, setSelectedDepartment] = useState(null)
 	const [openCreateDialog, setOpenCreateDialog] = useState(false)
 	const [openUpdateDialog, setOpenUpdateDialog] = useState(false)
+	const [sort, setSort] = useState(null)
 
 	const getAllDepartments = useAxiosSubmit({
 		url: ApiUrls.DEPARTMENT.MANAGEMENT.GET_ALL,
 		method: 'GET',
-		params: filters,
+		params: { ...appliedFilters, page, pageSize },
 		onSuccess: (res) => {
 			const data = res?.data
 			setDepartments(data?.collection || [])
@@ -32,7 +37,7 @@ const ManagerDepartmentManagementPage = () => {
 
 	useEffect(() => {
 		getAllDepartments.submit()
-	}, [filters])
+	}, [appliedFilters, page, pageSize])
 
 	const createDepartment = useAxiosSubmit({
 		url: ApiUrls.DEPARTMENT.MANAGEMENT.CREATE,
@@ -64,7 +69,17 @@ const ManagerDepartmentManagementPage = () => {
 		},
 	})
 
-	const handleFilterClick = () => setFilters((prev) => ({ ...prev, page: 1 }))
+	const handleFilterClick = () => {
+		setPage(1)
+		setAppliedFilters(filters)
+	}
+
+	const handleResetFilterClick = () => {
+		setFilters({ search: '' })
+		setAppliedFilters({ search: '' })
+		setPage(1)
+		setPageSize(10)
+	}
 
 	const formFields = [
 		{ key: 'name', title: t('department.field.name'), required: true },
@@ -119,14 +134,21 @@ const ManagerDepartmentManagementPage = () => {
 				headerTitleKey='department.title.department_management'
 				departments={departments}
 				totalDepartments={totalDepartments}
-				totalPage={Math.ceil(totalDepartments / filters.pageSize)}
+				totalPage={Math.max(1, Math.ceil(totalDepartments / pageSize))}
 				filters={filters}
 				setFilters={setFilters}
 				selectedRows={selectedRows}
 				setSelectedRows={setSelectedRows}
 				onFilterClick={handleFilterClick}
+				onResetFilterClick={handleResetFilterClick}
 				fields={tableFields}
 				onCreateClick={() => setOpenCreateDialog(true)}
+				sort={sort}
+				setSort={setSort}
+				page={page}
+				setPage={setPage}
+				pageSize={pageSize}
+				setPageSize={setPageSize}
 				loading={
 					getAllDepartments.loading ||
 					createDepartment.loading ||

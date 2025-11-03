@@ -11,49 +11,48 @@ const ManageMedicalServiceManagementPage = () => {
 	const { t } = useTranslation()
 	const confirm = useConfirm()
 
-	const [filters, setFilters] = useState({ search: '', page: 1, pageSize: 10 })
+	// Filters
+	const [filters, setFilters] = useState({ name: '' })
+	const [appliedFilters, setAppliedFilters] = useState({ name: '' })
+
+	// Pagination
+	const [page, setPage] = useState(1)
+	const [pageSize, setPageSize] = useState(10)
+
+	// Data
 	const [medicalServices, setMedicalServices] = useState([])
 	const [totalMedicalServices, setTotalMedicalServices] = useState(0)
 	const [selectedRows, setSelectedRows] = useState([])
 	const [selectedMedicalService, setSelectedMedicalService] = useState(null)
+
+	// Dialogs
 	const [openCreateDialog, setOpenCreateDialog] = useState(false)
 	const [openUpdateDialog, setOpenUpdateDialog] = useState(false)
+	const [sort, setSort] = useState(null)
 
+	// Specialties
 	const [specialties, setSpecialties] = useState([])
 
+	// Hooks
 	const getAllSpecialties = useAxiosSubmit({
 		url: ApiUrls.SPECIALTY.GET_ALL,
 		method: 'GET',
 		onSuccess: (res) => {
-			console.log(res)
 			const data = res?.data || []
-			setSpecialties(
-				data.map((x) => ({
-					label: x.name,
-					value: x.id,
-				}))
-			)
+			setSpecialties(data.map((x) => ({ label: x.name, value: x.id })))
 		},
 	})
-
-	useEffect(() => {
-		getAllSpecialties.submit()
-	}, [])
 
 	const getAllMedicalServices = useAxiosSubmit({
 		url: ApiUrls.MEDICAL_SERVICE.MANAGEMENT.GET_ALL,
 		method: 'GET',
-		params: filters,
+		params: { ...appliedFilters, page, pageSize },
 		onSuccess: (res) => {
 			const data = res?.data
 			setMedicalServices(data?.collection || [])
 			setTotalMedicalServices(data?.totalCount || 0)
 		},
 	})
-
-	useEffect(() => {
-		getAllMedicalServices.submit()
-	}, [filters])
 
 	const createMedicalService = useAxiosSubmit({
 		url: ApiUrls.MEDICAL_SERVICE.MANAGEMENT.CREATE,
@@ -85,7 +84,33 @@ const ManageMedicalServiceManagementPage = () => {
 		},
 	})
 
-	const handleFilterClick = () => setFilters((prev) => ({ ...prev, page: 1 }))
+	// Effects
+	useEffect(() => {
+		async function fetchSpecialties() {
+			await getAllSpecialties.submit()
+		}
+		fetchSpecialties()
+	}, [])
+
+	useEffect(() => {
+		async function fetchMedicalServices() {
+			await getAllMedicalServices.submit()
+		}
+		fetchMedicalServices()
+	}, [appliedFilters, page, pageSize])
+
+	// Handlers
+	const handleFilterClick = () => {
+		setPage(1)
+		setAppliedFilters(filters)
+	}
+
+	const handleResetFilterClick = () => {
+		setFilters({ name: '' })
+		setAppliedFilters({ name: '' })
+		setPage(1)
+		setPageSize(10)
+	}
 
 	const formFields = [
 		{ key: 'name', title: t('medical_service.field.name'), required: true },
@@ -94,6 +119,7 @@ const ManageMedicalServiceManagementPage = () => {
 			title: t('medical_service.field.description'),
 			required: true,
 			multiline: true,
+			rows: 3,
 		},
 		{ key: 'price', title: t('medical_service.field.price'), required: true, type: 'number' },
 		{
@@ -137,15 +163,12 @@ const ManageMedicalServiceManagementPage = () => {
 									confirmText: t('button.delete'),
 									confirmColor: 'error',
 									title: t('medical_service.dialog.confirm_delete_title'),
-									description: t('medical_service.dialog.confirm_delete_description', {
-										name: row.name,
-									}),
+									description: t('medical_service.dialog.confirm_delete_description', { name: row.name }),
 								})
-								if (isConfirmed) {
+								if (isConfirmed)
 									await deleteMedicalService.submit(null, {
 										overrideUrl: ApiUrls.MEDICAL_SERVICE.MANAGEMENT.DELETE(row.id),
 									})
-								}
 							},
 						},
 					]}
@@ -160,14 +183,21 @@ const ManageMedicalServiceManagementPage = () => {
 				headerTitleKey='medical_service.title.management'
 				medicalServices={medicalServices}
 				totalMedicalServices={totalMedicalServices}
-				totalPage={Math.ceil(totalMedicalServices / filters.pageSize)}
+				totalPage={Math.max(1, Math.ceil(totalMedicalServices / pageSize))}
 				filters={filters}
 				setFilters={setFilters}
 				selectedRows={selectedRows}
 				setSelectedRows={setSelectedRows}
 				onFilterClick={handleFilterClick}
+				onResetFilterClick={handleResetFilterClick}
 				fields={tableFields}
 				onCreateClick={() => setOpenCreateDialog(true)}
+				sort={sort}
+				setSort={setSort}
+				page={page}
+				setPage={setPage}
+				pageSize={pageSize}
+				setPageSize={setPageSize}
 				loading={
 					getAllMedicalServices.loading ||
 					createMedicalService.loading ||
