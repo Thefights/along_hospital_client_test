@@ -13,10 +13,13 @@ import {
 import { getEnumLabelByValue } from '@/utils/handleStringUtil'
 import { LocalPharmacy, Print, Vaccines } from '@mui/icons-material'
 import { Avatar, Box, Button, Chip, Stack, Typography } from '@mui/material'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const ManagementMedicalHistoryDetailDrawerSection = ({ open, onClose, item }) => {
 	const { t } = useTranslation()
 	const _enum = useEnum()
+	const location = useLocation()
+	const navigate = useNavigate()
 
 	const fields = !item
 		? []
@@ -153,7 +156,12 @@ const ManagementMedicalHistoryDetailDrawerSection = ({ open, onClose, item }) =>
 
 	const buttons = (
 		<Stack direction='row' spacing={2}>
-			<Button variant='contained' color='primary' fullWidth>
+			<Button
+				variant='contained'
+				color='primary'
+				onClick={() => navigate(`${location.pathname}/${item.id}`)}
+				fullWidth
+			>
 				{t('medical_history.button.view_full_detail')}
 			</Button>
 			<Button variant='outlined' startIcon={<Print />} fullWidth>

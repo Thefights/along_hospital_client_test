@@ -27,6 +27,7 @@ const UpsertPrescriptionDialog = ({
 			title: t('medical_history.field.prescription.doctor_note'),
 			type: 'text',
 			multiple: 2,
+			required: false,
 			validate: [maxLen(1000)],
 		},
 		{
