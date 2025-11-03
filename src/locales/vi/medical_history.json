@@ -11,7 +11,8 @@
             "chosen_patient": "Bệnh nhân đã chọn: {name}",
             "no_chosen_patient": "Chưa chọn bệnh nhân",
             "medical_record_info": "Thông tin hồ sơ (sẽ điền sau khi tạo)",
-            "medical_history_management": "Quản lý lịch sử y tế"
+            "medical_history_management": "Quản lý lịch sử y tế",
+            "medical_history_detail": "Chi tiết lịch sử y tế"
         },
         "placeholder": {
             "no_service": "Không có dịch vụ y tế nào được ghi nhận",
@@ -28,6 +29,9 @@
             "diagnosis": "Chẩn đoán",
             "completed_date": "Ngày hoàn thành",
             "follow_up_appointment_date": "Ngày hẹn tái khám",
+            "patient": "Bệnh nhân",
+            "doctor": "Bác sĩ",
+            "number_of_services": "Số dịch vụ",
             "medical_history_detail": {
                 "medical_service": "Dịch vụ y tế",
                 "service_name": "Tên dịch vụ",
@@ -38,6 +42,7 @@
                 "grand_total": "Tổng cộng"
             },
             "prescription": {
+                "prescription": "Đơn thuốc",
                 "doctor_note": "Ghi chú của bác sĩ",
                 "medication_days": "Số ngày dùng thuốc",
                 "prescription_details": "Chi tiết đơn thuốc",

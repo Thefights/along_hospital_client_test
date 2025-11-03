@@ -11,7 +11,8 @@
             "chosen_patient": "Chosen Patient: {name}",
             "no_chosen_patient": "No patient selected",
             "medical_record_info": "Medical Record Info (will be filled after creation)",
-            "medical_history_management": "Medical History Management"
+            "medical_history_management": "Medical History Management",
+            "medical_history_detail": "Medical History Detail"
         },
         "placeholder": {
             "no_service": "No medical services recorded",

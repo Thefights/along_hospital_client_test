@@ -55,7 +55,7 @@ const LayoutPatient = () => {
 		},
 		{
 			label: t('header.user_menu.medical_history'),
-			url: routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.MEDICAL_HISTORY),
+			url: routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.MEDICAL_HISTORY.INDEX),
 			icon: <AssignmentOutlined />,
 		},
 		{
