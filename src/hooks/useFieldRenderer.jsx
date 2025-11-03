@@ -93,7 +93,18 @@ export default function useFieldRenderer(
 
 				return v == null || v === ''
 			}
-			return fields.some((f) => checkField(f, values[f.key]))
+
+			return fields.some((f) => {
+				/*
+
+				// uncomment to debug missing required fields
+
+				const error = checkField(f, values[f.key])
+				if (error) console.log(f, values[f.key])
+				
+				*/
+				return checkField(f, values[f.key])
+			})
 		},
 		[values]
 	)

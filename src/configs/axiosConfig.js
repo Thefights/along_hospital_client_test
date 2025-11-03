@@ -35,8 +35,11 @@ axiosConfig.interceptors.response.use(
 		const { status, response } = error
 
 		let errorMessages = response?.data?.error
-		if (errorMessages && !Array.isArray(errorMessages)) {
+
+		if (typeof errorMessages === 'string') {
 			errorMessages = [errorMessages]
+		} else if (errorMessages && typeof errorMessages === 'object' && !Array.isArray(errorMessages)) {
+			errorMessages = Object.entries(errorMessages).map(([key, value]) => `[${key}] ${value}`)
 		}
 
 		switch (status) {

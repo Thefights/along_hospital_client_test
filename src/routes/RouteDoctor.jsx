@@ -1,3 +1,5 @@
+import MedicalHistoryDetailBasePage from '@/components/basePages/medicalHistoryDetailBasePage/MedicalHistoryDetailBasePage'
+import { ApiUrls } from '@/configs/apiUrls'
 import { routeUrls } from '@/configs/routeUrls'
 import LayoutDoctor from '@/layouts/LayoutDoctor'
 import CreateMedicalHistoryPage from '@/pages/doctors/createMedicalHistoryPage/CreateMedicalHistoryPage'
@@ -21,6 +23,10 @@ const RouteDoctor = () => {
 						element={<DoctorMedicalHistoryManagementPage />}
 					/>
 					<Route path={routeUrls.DOCTOR.MEDICAL_HISTORY.CREATE} element={<CreateMedicalHistoryPage />} />
+					<Route
+						path={routeUrls.DOCTOR.MEDICAL_HISTORY.DETAIL(':id')}
+						element={<MedicalHistoryDetailBasePage fetchUrl={ApiUrls.MEDICAL_HISTORY.MANAGEMENT.INDEX} />}
+					/>
 				</Route>
 			</Route>
 		</Routes>
