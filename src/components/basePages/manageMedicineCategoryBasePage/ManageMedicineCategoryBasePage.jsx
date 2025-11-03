@@ -1,13 +1,12 @@
-import React from 'react'
-import { Paper, Stack, Typography, Button } from '@mui/material'
-import GenericTable from '@/components/tables/GenericTable'
-import EmptyBox from '@/components/placeholders/EmptyBox'
-import SkeletonBox from '@/components/skeletons/SkeletonBox'
-import useTranslation from '@/hooks/useTranslation'
-import { GenericTablePagination } from '@/components/generals/GenericPagination'
-import ValidationTextField from '@/components/textFields/ValidationTextField'
 import FilterButton from '@/components/buttons/FilterButton'
 import ResetFilterButton from '@/components/buttons/ResetFilterButton'
+import { GenericTablePagination } from '@/components/generals/GenericPagination'
+import EmptyBox from '@/components/placeholders/EmptyBox'
+import SkeletonBox from '@/components/skeletons/SkeletonBox'
+import GenericTable from '@/components/tables/GenericTable'
+import ValidationTextField from '@/components/textFields/ValidationTextField'
+import useTranslation from '@/hooks/useTranslation'
+import { Button, Paper, Stack, Typography } from '@mui/material'
 
 const ManageMedicineCategoryBasePage = ({
 	headerTitleKey = 'medicine_category.title.medicine_category_management',

@@ -1,14 +1,11 @@
-import React, { useState } from 'react'
-import { Paper, Stack, Typography } from '@mui/material'
-import GenericTable from '@/components/tables/GenericTable'
-import GenericTabs from '@/components/generals/GenericTabs'
-import { GenericPagination, GenericTablePagination } from '@/components/generals/GenericPagination'
 import MedicineFilterBar from '@/components/basePages/manageMedicineBasePage/sections/MedicineFilterBar'
-import MedicineDetailDrawerSection from '@/components/basePages/manageMedicineBasePage/sections/MedicineDetailDrawerSection'
+import { GenericTablePagination } from '@/components/generals/GenericPagination'
 import EmptyBox from '@/components/placeholders/EmptyBox'
 import SkeletonBox from '@/components/skeletons/SkeletonBox'
-import useTranslation from '@/hooks/useTranslation'
+import GenericTable from '@/components/tables/GenericTable'
 import useEnum from '@/hooks/useEnum'
+import useTranslation from '@/hooks/useTranslation'
+import { Paper, Stack, Typography } from '@mui/material'
 
 const ManageMedicineBasePage = ({
 	headerTitleKey = 'medicine.title.medicine_management',
@@ -17,8 +14,6 @@ const ManageMedicineBasePage = ({
 	medicines = [],
 	filters = { search: '', category: '', page: 1, pageSize: 5 },
 	setFilters,
-	selectedMedicine,
-	setSelectedMedicine,
 	selectedRows,
 	setSelectedRows,
 	onFilterClick = () => {},
@@ -31,10 +26,6 @@ const ManageMedicineBasePage = ({
 }) => {
 	const { t } = useTranslation()
 	const _enum = useEnum()
-
-	const handleOpenDrawer = (medicine) => {
-		setSelectedMedicine(medicine)
-	}
 
 	return (
 		<Paper sx={{ p: 2 }}>

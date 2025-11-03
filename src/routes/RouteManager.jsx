@@ -7,9 +7,9 @@ import ManagerAppointmentManagementPage from '@/pages/managers/managerAppointmen
 import ManagerBlogManagementPage from '@/pages/managers/managerBlogManagementPage/ManagerBlogManagementPage'
 import BlogUpsertPage from '@/pages/managers/managerBlogUpsertPage/BlogUpsertPage'
 import ManagerMedicalHistoryManagementPage from '@/pages/managers/managerMedicalHistoryManagementPage/ManagerMedicalHistoryManagementPage'
-import SpecialtyManagementPage from '@/pages/managers/specialtyManagementPage/SpecialtyManagementPage'
-import ManagerMedicinePage from '@/pages/managers/managerMedicineManagementPage/ManagerMedicineManagementPage'
 import ManagerMedicineCategoryManagementPage from '@/pages/managers/managerMedicineCategoryManagementPage/ManagerMedicineCategoryManagementPage'
+import ManagerMedicinePage from '@/pages/managers/managerMedicineManagementPage/ManagerMedicineManagementPage'
+import SpecialtyManagementPage from '@/pages/managers/specialtyManagementPage/SpecialtyManagementPage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 

@@ -1,10 +1,10 @@
-import { MenuItem, Stack, Typography, Button } from '@mui/material'
 import FilterButton from '@/components/buttons/FilterButton'
+import ResetFilterButton from '@/components/buttons/ResetFilterButton'
 import SearchBar from '@/components/generals/SearchBar'
 import ValidationTextField from '@/components/textFields/ValidationTextField'
 import useTranslation from '@/hooks/useTranslation'
+import { Button, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
-import ResetFilterButton from '@/components/buttons/ResetFilterButton'
 
 export default function MedicineFilterBar({
 	filters,
