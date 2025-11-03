@@ -25,6 +25,9 @@ import useTranslation from './useTranslation'
  * @property {function(string|number, {value: string|number, label: string, disabled?: boolean}):JSX.Element} [renderOption]
  * @property {Array<FieldDefinition>} [of]
  * @property {Array<function(string):string>} [validate]
+ * @property {string|number} [minValue]
+ * @property {string|number} [maxValue]
+ * @property {function():void} [onEnterDown]
  * @property {import('@mui/material').TextFieldProps} [props]
  */
 
@@ -112,6 +115,8 @@ export default function useFieldRenderer(
 				value={getObjectValueFromStringPath(values, field.key) || ''}
 				onChange={handleChange}
 				validate={field.validate}
+				minValue={field.minValue}
+				maxValue={field.maxValue}
 				multiline={!!field.multiple}
 				minRows={field.multiple}
 				size={textFieldSize}
@@ -418,7 +423,7 @@ const fields = [
 	// Normal field
 	{ key: 'name', title: 'Name', validate: [maxLen(255)] },
 	// Changed type to 'email' and some customize props
-	{ key: 'email', title: 'Email', type: 'email', validate: [maxLen(255)], props: { variant: 'outlined', slotProps: { input: { readOnly: true } } } },
+	{ key: 'email', title: 'Email', type: 'email', validate: [maxLen(255)], props: { variant: 'outlined', readOnly: true } },
 	// Multiline field
 	{ key: 'description', title: 'Description', multiple: 4, validate: [maxLen(1000)] },
 	// Number field with numberRange validation
