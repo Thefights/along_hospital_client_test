@@ -39,8 +39,8 @@ const ManagementMedicalHistoryFilterSection = ({
 			type: 'select',
 			options: [
 				{ label: t('text.all'), value: '' },
-				..._enum.medicalHistoryStatusOptions.filter((option) =>
-					isPatient ? option.value !== EnumConfig.MedicalHistoryStatus.Draft : true
+				..._enum.medicalHistoryStatusOptions.filter(
+					(option) => !isPatient || option.value !== EnumConfig.MedicalHistoryStatus.Draft
 				),
 			],
 			required: false,
