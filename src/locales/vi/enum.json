@@ -29,7 +29,10 @@
             "consultation": "Tư vấn",
             "follow_up": "Tái khám",
             "routine_checkup": "Kiểm tra định kỳ",
-            "emergency": "Cấp cứu"
+            "lab_test": "Xét nghiệm",
+            "imaging": "Chẩn đoán hình ảnh",
+            "vaccination": "Tiêm chủng",
+            "procedure": "Thủ thuật y tế"
         },
         "appointment_time_slot": {
             "half_hour": "30 phút",

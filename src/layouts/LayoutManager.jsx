@@ -1,6 +1,5 @@
 import DashboardDrawer from '@/components/layouts/DashboardDrawer'
 import { default as DashboardHeader } from '@/components/layouts/DashboardHeader'
-import { ApiUrls } from '@/configs/apiUrls'
 import { routeUrls } from '@/configs/routeUrls'
 import useAuth from '@/hooks/useAuth'
 import useReduxStore from '@/hooks/useReduxStore'
@@ -26,7 +25,6 @@ const LayoutManager = () => {
 	const { t } = useTranslation()
 
 	const profileStore = useReduxStore({
-		url: ApiUrls.USER.PROFILE,
 		selector: (s) => s.patient.profile,
 		setStore: setProfileStore,
 	})

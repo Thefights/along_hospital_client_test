@@ -46,7 +46,10 @@ export const EnumConfig = {
 		Consultation: 'Consultation',
 		FollowUp: 'FollowUp',
 		RoutineCheckup: 'RoutineCheckup',
-		Emergency: 'Emergency',
+		LabTest: 'LabTest',
+		Imaging: 'Imaging',
+		Vaccination: 'Vaccination',
+		Procedure: 'Procedure',
 	},
 	AppointmentMeetingType: {
 		InPerson: 'InPerson',

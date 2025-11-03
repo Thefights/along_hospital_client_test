@@ -1,3 +1,21 @@
+export const formatDateBasedOnCurrentLanguage = (date) => {
+	if (!date) return ''
+	let language = localStorage.getItem('language') || 'en'
+	try {
+		language = JSON.parse(language)
+	} catch {
+		/* empty */
+	}
+	switch (language) {
+		case 'en':
+			return formatDateToMMDDYYYY(date)
+		case 'vi':
+			return formatDateToDDMMYYYY(date)
+		default:
+			return formatDateToMMDDYYYY(date)
+	}
+}
+
 export const formatDateAndTimeBasedOnCurrentLanguage = (date, time = null) => {
 	if (!date) return ''
 

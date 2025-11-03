@@ -1,3 +1,4 @@
+import { ApiUrls } from '@/configs/apiUrls'
 import { createSlice } from '@reduxjs/toolkit'
 
 const initState = {
@@ -10,7 +11,7 @@ const initState = {
 	medicines: [],
 }
 
-const managerSlice = createSlice({
+const managementSlice = createSlice({
 	name: 'manager',
 	initialState: initState,
 	reducers: {
@@ -38,7 +39,7 @@ const managerSlice = createSlice({
 	},
 })
 
-export const {
+const {
 	setDoctorsStore,
 	setPatientsStore,
 	setMedicineCategoriesStore,
@@ -46,6 +47,22 @@ export const {
 	setSpecialtiesStore,
 	setMedicalServicesStore,
 	setMedicinesStore,
-} = managerSlice.actions
+} = managementSlice.actions
 
-export default managerSlice.reducer
+setDoctorsStore.defaultUrl = ApiUrls.DOCTOR.MANAGEMENT.GET_ALL
+setPatientsStore.defaultUrl = ApiUrls.PATIENT.MANAGEMENT.GET_ALL
+setSpecialtiesStore.defaultUrl = ApiUrls.SPECIALTY.MANAGEMENT.GET_ALL
+setMedicalServicesStore.defaultUrl = ApiUrls.MEDICAL_SERVICE.MANAGEMENT.GET_ALL
+setMedicinesStore.defaultUrl = ApiUrls.MEDICINE.MANAGEMENT.GET_ALL
+
+export {
+	setDepartmentsStore,
+	setDoctorsStore,
+	setMedicalServicesStore,
+	setMedicineCategoriesStore,
+	setMedicinesStore,
+	setPatientsStore,
+	setSpecialtiesStore,
+}
+
+export default managementSlice.reducer

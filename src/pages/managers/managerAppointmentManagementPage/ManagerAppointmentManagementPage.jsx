@@ -27,7 +27,6 @@ const ManagerAppointmentManagementPage = () => {
 
 	const getAppointments = useFetch(ApiUrls.APPOINTMENT.MANAGEMENT.INDEX, filters, [filters])
 	const specialtiesStore = useReduxStore({
-		url: ApiUrls.SPECIALTY.GET_ALL,
 		selector: (state) => state.management.specialties,
 		setStore: setSpecialtiesStore,
 	})

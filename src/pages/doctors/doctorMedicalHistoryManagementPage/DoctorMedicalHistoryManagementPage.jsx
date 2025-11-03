@@ -18,7 +18,7 @@ const DoctorMedicalHistoryManagementPage = () => {
 	const [selectedItem, setSelectedItem] = useState(null)
 
 	const getMedicalHistories = useFetch(
-		ApiUrls.MEDICAL_HISTORY.MANAGEMENT.INDEX,
+		ApiUrls.MEDICAL_HISTORY.MANAGEMENT.GET_ALL_BY_CURRENT_DOCTOR,
 		{
 			...filters,
 			page,
@@ -27,10 +27,9 @@ const DoctorMedicalHistoryManagementPage = () => {
 		[filters, page, pageSize]
 	)
 	const getPatientStore = useReduxStore({
-		url: ApiUrls.PATIENT.MANAGEMENT.GET_ALL,
 		selector: (state) => state.management.patients,
 		setStore: setPatientsStore,
-		dataToGet: (patient) => patient.name,
+		dataToGet: (patients) => patients.map((patient) => patient.name),
 	})
 
 	return (
