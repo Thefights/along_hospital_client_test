@@ -81,7 +81,7 @@ export default function MedicineFilterBar({
 				<ResetFilterButton
 					loading={loading}
 					onResetFilterClick={() => {
-						const reset = { search: '', categoryId: '', medicineUnit: '', page: 1, pageSize: 10 }
+						const reset = { name: '', medicinecategoryId: '', medicineUnit: '', page: 1, pageSize: 10 }
 						setLocalFilters(reset)
 						setFilters(reset)
 						onFilterClick()

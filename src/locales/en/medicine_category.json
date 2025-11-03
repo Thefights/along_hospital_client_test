@@ -8,9 +8,7 @@
     },
     "title": {
       "medicine_category_management": "Medicine Category Management",
-      "management": "Category Management",
-      "create_title": "Create Medicine Category",
-      "update_title": "Update Medicine Category"
+      "management": "Category Management"
     },
     "text": {
       "no_data": "No data available",

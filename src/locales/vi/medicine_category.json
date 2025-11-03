@@ -8,9 +8,7 @@
     },
     "title": {
       "medicine_category_management": "Quản lý danh mục thuốc",
-      "management": "Quản lý danh mục",
-      "create_title": "Tạo danh mục thuốc",
-      "update_title": "Cập nhật danh mục thuốc"
+      "management": "Quản lý danh mục"
     },
     "text": {
       "no_data": "Không có dữ liệu",

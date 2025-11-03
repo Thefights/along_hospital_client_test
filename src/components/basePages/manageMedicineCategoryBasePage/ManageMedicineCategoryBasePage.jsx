@@ -1,8 +1,6 @@
 import FilterButton from '@/components/buttons/FilterButton'
 import ResetFilterButton from '@/components/buttons/ResetFilterButton'
 import { GenericTablePagination } from '@/components/generals/GenericPagination'
-import EmptyBox from '@/components/placeholders/EmptyBox'
-import SkeletonBox from '@/components/skeletons/SkeletonBox'
 import GenericTable from '@/components/tables/GenericTable'
 import ValidationTextField from '@/components/textFields/ValidationTextField'
 import useTranslation from '@/hooks/useTranslation'
@@ -13,23 +11,24 @@ const ManageMedicineCategoryBasePage = ({
 	totalCategories = 0,
 	totalPage = 0,
 	categories = [],
-	filters = { search: '', page: 1, pageSize: 10 },
+	filters = { name: '' },
 	setFilters,
 	setSelectedCategory,
-	selectedRows,
+	selectedRows = [],
 	setSelectedRows,
 	onFilterClick = () => {},
+	onResetFilterClick = () => {},
 	onCreateClick = () => {},
 	fields = [],
 	sort,
 	setSort,
 	loading = false,
+	page = 1,
+	setPage = () => {},
+	pageSize = 10,
+	setPageSize = () => {},
 }) => {
 	const { t } = useTranslation()
-
-	const handleRowClick = (category) => {
-		setSelectedCategory(category)
-	}
 
 	return (
 		<Paper sx={{ p: 2 }}>
@@ -53,21 +52,14 @@ const ManageMedicineCategoryBasePage = ({
 						label={t('text.search')}
 						size='small'
 						required={false}
-						value={filters.search}
-						onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+						value={filters.name ?? ''}
+						onChange={(e) => setFilters({ ...filters, name: e.target.value })}
 						sx={{ flex: 1, minWidth: 160 }}
 					/>
 					<FilterButton variant='contained' onClick={onFilterClick}>
 						{t('button.search')}
 					</FilterButton>
-					<ResetFilterButton
-						loading={loading}
-						onResetFilterClick={() => {
-							const reset = { search: '', page: 1, pageSize: 10 }
-							setFilters(reset)
-							onFilterClick()
-						}}
-					>
+					<ResetFilterButton loading={loading} onResetFilterClick={onResetFilterClick}>
 						{t('medicine_category.button.reset')}
 					</ResetFilterButton>
 					<Button variant='contained' color='success' onClick={onCreateClick} sx={{ minWidth: 120 }}>
@@ -76,31 +68,28 @@ const ManageMedicineCategoryBasePage = ({
 				</Stack>
 
 				<Stack spacing={2} sx={{ width: '100%' }}>
-					{loading ? (
-						<SkeletonBox numberOfBoxes={3} heights={[268 / 3]} />
-					) : categories.length === 0 ? (
-						<EmptyBox minHeight={300} text={t('text.no_data')} />
-					) : (
-						<GenericTable
-							data={categories}
-							fields={fields}
-							rowKey='id'
-							sort={sort}
-							setSort={setSort}
-							selectedRows={selectedRows}
-							setSelectedRows={setSelectedRows}
-							stickyHeader
-							onRowClick={handleRowClick}
-						/>
-					)}
+					<GenericTable
+						data={categories}
+						fields={fields}
+						rowKey='id'
+						sort={sort}
+						setSort={setSort}
+						selectedRows={selectedRows}
+						setSelectedRows={setSelectedRows}
+						stickyHeader
+						onRowClick={setSelectedCategory}
+					/>
 
 					<Stack justifyContent='center' px={2}>
 						<GenericTablePagination
 							totalPage={totalPage}
-							page={filters.page}
-							setPage={(page) => setFilters({ ...filters, page })}
-							pageSize={filters.pageSize}
-							setPageSize={(pageSize) => setFilters({ ...filters, pageSize, page: 1 })}
+							page={page}
+							setPage={setPage}
+							pageSize={pageSize}
+							setPageSize={(newSize) => {
+								setPageSize(newSize)
+								setPage(1)
+							}}
 							pageSizeOptions={[5, 10, 20]}
 							loading={loading}
 						/>

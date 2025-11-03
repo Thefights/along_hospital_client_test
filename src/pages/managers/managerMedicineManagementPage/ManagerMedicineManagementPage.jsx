@@ -14,7 +14,9 @@ const ManagerMedicineManagementPage = () => {
 	const _enum = useEnum()
 	const confirm = useConfirm()
 
-	const [filters, setFilters] = useState({ search: '', category: '', page: 1, pageSize: 10 })
+	const [filters, setFilters] = useState({ name: '', category: '' })
+	const [page, setPage] = useState(1)
+	const [pageSize, setPageSize] = useState(10)
 	const [medicines, setMedicines] = useState([])
 	const [totalMedicines, setTotalMedicines] = useState(0)
 	const [categories, setCategories] = useState([])
@@ -26,7 +28,7 @@ const ManagerMedicineManagementPage = () => {
 	const getAllMedicines = useAxiosSubmit({
 		url: ApiUrls.MEDICINE.MANAGEMENT.GET_ALL,
 		method: 'GET',
-		params: filters,
+		params: { ...filters, page, pageSize },
 		onSuccess: (res) => {
 			const data = res?.data
 			setMedicines(
@@ -38,7 +40,7 @@ const ManagerMedicineManagementPage = () => {
 
 	useEffect(() => {
 		getAllMedicines.submit()
-	}, [filters])
+	}, [filters, page, pageSize])
 
 	const getAllCategories = useAxiosSubmit({
 		url: ApiUrls.MEDICINE_CATEGORY.GET_ALL,
@@ -51,7 +53,7 @@ const ManagerMedicineManagementPage = () => {
 
 	useEffect(() => {
 		getAllCategories.submit()
-	})
+	}, [])
 
 	const createMedicine = useAxiosSubmit({
 		url: ApiUrls.MEDICINE.MANAGEMENT.CREATE,
@@ -81,7 +83,7 @@ const ManagerMedicineManagementPage = () => {
 		},
 	})
 
-	const handleFilterClick = () => setFilters((prev) => ({ ...prev, page: 1 }))
+	const handleFilterClick = () => setPage(1)
 
 	const formFields = [
 		{ key: 'name', title: t('medicine.field.name'), required: true },
@@ -161,13 +163,16 @@ const ManagerMedicineManagementPage = () => {
 				headerTitle={t('medicine.title.medicine_management')}
 				medicines={medicines}
 				totalMedicines={totalMedicines}
-				totalPage={Math.ceil(totalMedicines / filters.pageSize)}
+				totalPage={Math.ceil(totalMedicines / pageSize)}
 				filters={filters}
 				setFilters={setFilters}
+				page={page}
+				setPage={setPage}
+				pageSize={pageSize}
+				setPageSize={setPageSize}
 				selectedRows={selectedRows}
 				setSelectedRows={setSelectedRows}
 				onFilterClick={handleFilterClick}
-				setOpenCreateDialog={setOpenCreateDialog}
 				fields={tableFields}
 				categories={categories}
 				loading={
