@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 
 const DoctorManagementFilterSection = ({ filters = {}, setFilters, loading = false }) => {
 	const { t } = useTranslation()
+
 	const [doctorName, setDoctorName] = useState(filters?.name || '')
 
 	useEffect(() => {

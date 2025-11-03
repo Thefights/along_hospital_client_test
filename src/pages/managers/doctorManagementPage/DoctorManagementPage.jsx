@@ -1,4 +1,6 @@
 import { GenericTablePagination } from '@/components/generals/GenericPagination'
+import { ApiUrls } from '@/configs/apiUrls'
+import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
 import { Paper, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
@@ -6,32 +8,42 @@ import DoctorManagementFilterSection from './sections/DoctorManagementFilterSect
 import DoctorManagementTableSection from './sections/DoctorManagementTableSection'
 
 const DoctorManagementPage = () => {
-	// UI-only scaffold: local states to wire later
 	const [filters, setFilters] = useState({ name: '' })
 	const [sort, setSort] = useState({ key: 'id', direction: 'desc' })
 	const [page, setPage] = useState(1)
 	const [pageSize, setPageSize] = useState(10)
+
 	const { t } = useTranslation()
+
+	const getDoctors = useFetch(
+		ApiUrls.DOCTOR.MANAGEMENT.INDEX,
+		{ sort: `${sort.key} ${sort.direction}`, ...filters, page, pageSize },
+		[sort, filters, page, pageSize]
+	)
 
 	return (
 		<Paper sx={{ p: 2 }}>
 			<Stack spacing={2}>
 				<Typography variant='h5'>{t('doctor.title.doctor_management')}</Typography>
-				<DoctorManagementFilterSection filters={filters} setFilters={setFilters} loading={false} />
+				<DoctorManagementFilterSection
+					filters={filters}
+					setFilters={setFilters}
+					loading={getDoctors.loading}
+				/>
 				<DoctorManagementTableSection
-					doctors={[]}
-					loading={false}
+					doctors={getDoctors.data?.collection}
+					loading={getDoctors.loading}
 					sort={sort}
 					setSort={setSort}
-					refetch={() => {}}
+					refetch={getDoctors.fetch}
 				/>
 				<GenericTablePagination
-					totalPage={0}
+					totalPage={getDoctors.data?.totalPages}
 					page={page}
 					setPage={setPage}
 					pageSize={pageSize}
 					setPageSize={setPageSize}
-					loading={false}
+					loading={getDoctors.loading}
 				/>
 			</Stack>
 		</Paper>
