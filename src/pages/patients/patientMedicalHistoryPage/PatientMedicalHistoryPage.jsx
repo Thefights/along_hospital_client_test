@@ -27,7 +27,6 @@ const PatientMedicalHistoryPage = () => {
 		[filters, page, pageSize]
 	)
 	const getDoctorStore = useReduxStore({
-		url: ApiUrls.DOCTOR.MANAGEMENT.GET_ALL,
 		selector: (state) => state.management.doctors,
 		setStore: setDoctorsStore,
 		dataToGet: (doctor) => doctor.name,

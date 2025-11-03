@@ -23,7 +23,6 @@ const AuthProvider = ({ children }) => {
 	}, [accessToken, refreshToken])
 
 	const authStore = useReduxStore({
-		url: ApiUrls.AUTH.CURRENT_ACCOUNT,
 		selector: (s) => s.auth,
 		setStore: setAuthStore,
 	})

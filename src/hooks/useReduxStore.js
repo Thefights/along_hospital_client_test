@@ -17,7 +17,7 @@ import useFetch from './useFetch'
  * @param {(apiValue: any) => any} [params.dataToStore=(x)=>x]
  */
 export default function useReduxStore({
-	url,
+	url: overrideUrl,
 	selector,
 	setStore,
 	dataToGet = (x) => x,
@@ -26,7 +26,9 @@ export default function useReduxStore({
 	const dispatch = useDispatch()
 	const storeData = useSelector(selector)
 
-	const { loading, error, data: fetchedData, fetch } = useFetch(url, {}, [], false)
+	const finalUrl = overrideUrl || setStore?.defaultUrl || ''
+
+	const { loading, error, data: fetchedData, fetch } = useFetch(finalUrl, {}, [], false)
 
 	const needFetch = isEmptyValue(storeData)
 	useEffect(() => {
