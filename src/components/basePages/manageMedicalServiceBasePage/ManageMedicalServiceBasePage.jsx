@@ -39,32 +39,42 @@ const ManageMedicalServiceBasePage = ({
 					</Typography>
 				</Stack>
 
-				<Stack direction='row' spacing={1} alignItems='center' flexWrap='wrap'>
-					<ValidationTextField
-						variant='outlined'
-						label={t('text.search')}
-						size='small'
-						value={filters.name || ''}
-						onChange={(e) => setFilters({ ...filters, name: e.target.value })}
-						sx={{ flex: 1, minWidth: 160 }}
-					/>
-					<FilterButton
-						onClick={() => {
-							setPage(1)
-							onFilterClick()
-						}}
-					>
-						{t('button.search')}
-					</FilterButton>
-					<ResetFilterButton
-						loading={loading}
-						onResetFilterClick={() => {
-							setPage(1)
-							onResetFilterClick()
-						}}
-					>
-						{t('button.reset')}
-					</ResetFilterButton>
+				<Stack
+					direction='row'
+					spacing={2}
+					alignItems='center'
+					justifyContent='space-between'
+					flexWrap='wrap'
+				>
+					<Stack direction='row' spacing={1} alignItems='center' flexWrap='wrap'>
+						<ValidationTextField
+							variant='outlined'
+							label={t('text.search')}
+							size='small'
+							required={false}
+							value={filters.name || ''}
+							onChange={(e) => setFilters({ ...filters, name: e.target.value })}
+							sx={{ flex: 1, minWidth: 160 }}
+						/>
+						<FilterButton
+							onClick={() => {
+								setPage(1)
+								onFilterClick()
+							}}
+						>
+							{t('button.search')}
+						</FilterButton>
+						<ResetFilterButton
+							loading={loading}
+							onResetFilterClick={() => {
+								setPage(1)
+								onResetFilterClick()
+							}}
+						>
+							{t('button.reset')}
+						</ResetFilterButton>
+					</Stack>
+
 					<Button variant='contained' color='success' onClick={onCreateClick} sx={{ minWidth: 120 }}>
 						{t('button.create')}
 					</Button>

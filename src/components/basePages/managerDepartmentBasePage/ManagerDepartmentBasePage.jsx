@@ -39,19 +39,28 @@ const ManageDepartmentBasePage = ({
 					</Typography>
 				</Stack>
 
-				<Stack direction='row' spacing={1} alignItems='center' flexWrap='wrap'>
-					<ValidationTextField
-						variant='outlined'
-						label={t('text.search')}
-						size='small'
-						value={filters.search}
-						onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-						sx={{ flex: 1, minWidth: 160 }}
-					/>
-					<FilterButton onClick={onFilterClick}>{t('button.search')}</FilterButton>
-					<ResetFilterButton loading={loading} onResetFilterClick={onResetFilterClick}>
-						{t('button.reset')}
-					</ResetFilterButton>
+				<Stack
+					direction='row'
+					alignItems='center'
+					justifyContent='space-between'
+					flexWrap='wrap'
+					mb={2}
+				>
+					<Stack direction='row' spacing={1} alignItems='center' flexWrap='wrap'>
+						<ValidationTextField
+							variant='outlined'
+							label={t('text.search')}
+							size='small'
+							value={filters.search}
+							onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+							sx={{ flex: 1, minWidth: 160 }}
+						/>
+						<FilterButton onClick={onFilterClick}>{t('button.search')}</FilterButton>
+						<ResetFilterButton loading={loading} onResetFilterClick={onResetFilterClick}>
+							{t('button.reset')}
+						</ResetFilterButton>
+					</Stack>
+
 					<Button variant='contained' color='success' onClick={onCreateClick} sx={{ minWidth: 120 }}>
 						{t('button.create')}
 					</Button>
