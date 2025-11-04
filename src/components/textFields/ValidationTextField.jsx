@@ -12,6 +12,9 @@ import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useState 
  * @property {(value: string|number) => string|null} [validate]
  * @property {{value: string|number, label: string, disabled?: boolean}[]} [options=[]]
  * @property {function(string|number, {value: string|number, label: string, disabled?: boolean}):JSX.Element} [renderOption]
+ * @property {string|number} [minValue]
+ * @property {string|number} [maxValue]
+ * @property {boolean} [readOnly=false]
  */
 
 /**
@@ -29,6 +32,9 @@ const ValidationTextField = (
 		validate,
 		options = [],
 		renderOption,
+		minValue,
+		maxValue,
+		readOnly = false,
 		...props
 	},
 	ref
@@ -80,14 +86,30 @@ const ValidationTextField = (
 	useImperativeHandle(ref, () => ({ validate: run }), [run])
 
 	const internalSlotProps = useMemo(() => {
+		const inputProps = {}
+
+		if (minValue !== undefined) inputProps.min = minValue
+		if (maxValue !== undefined) inputProps.max = maxValue
+
+		const result = {}
+
+		if (Object.keys(inputProps).length > 0) {
+			result.input = { ...result.input, inputProps }
+		}
+
+		if (readOnly) {
+			result.input = { ...result.input, readOnly: true }
+		}
+
 		if (type === 'select') {
-			return { select: { displayEmpty: true }, inputLabel: { shrink: true } }
+			result.select = { displayEmpty: true }
+			result.inputLabel = { shrink: true }
+		} else if (type === 'date' || type === 'time' || type === 'file') {
+			result.inputLabel = { shrink: true }
 		}
-		if (type === 'date' || type === 'time' || type === 'file') {
-			return { inputLabel: { shrink: true } }
-		}
-		return undefined
-	}, [type])
+
+		return Object.keys(result).length > 0 ? result : undefined
+	}, [type, minValue, maxValue, readOnly])
 
 	const mergedSlotProps = useMemo(
 		() => getObjectMerged(internalSlotProps, slotProps),

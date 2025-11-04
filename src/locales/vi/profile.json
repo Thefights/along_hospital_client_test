@@ -1,0 +1,42 @@
+{
+    "profile": {
+        "title": {
+            "personal_information": "Thông tin cá nhân"
+        },
+        "placeholder": {
+            "no_phone": "Chưa có số điện thoại",
+            "no_email": "Chưa có email",
+            "no_gender": "Chưa có giới tính",
+            "no_date_of_birth": "Chưa có ngày sinh",
+            "no_address": "Chưa có địa chỉ",
+            "no_height": "Chưa có chiều cao",
+            "no_weight": "Chưa có cân nặng",
+            "no_allergies": "Chưa có dữ liệu dị ứng"
+        },
+        "field": {
+            "name": "Họ và tên",
+            "email": "Email",
+            "phone": "Số điện thoại",
+            "address": "Địa chỉ",
+            "city": "Thành phố",
+            "country": "Quốc gia",
+            "date_of_birth": "Ngày sinh",
+            "gender": "Giới tính",
+            "medical_number": "Mã số y tế",
+            "height": "Chiều cao",
+            "weight": "Cân nặng",
+            "height_weight": "Chiều cao/Cân nặng",
+            "blood_type": "Nhóm máu",
+            "allergy": {
+                "allergies": "Dị ứng",
+                "name": "Tên",
+                "severity": "Mức độ",
+                "reaction": "Phản ứng"
+            },
+            "hire_date": "Ngày tuyển dụng",
+            "department": "Khoa",
+            "qualification": "Trình độ",
+            "specialty": "Chuyên khoa"
+        }
+    }
+}

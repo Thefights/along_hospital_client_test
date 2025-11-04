@@ -185,19 +185,23 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 				)}
 			</Stack>
 
-			<PatientInfoDialog
-				open={openPatientInfo}
-				onClose={() => setOpenPatientInfo(false)}
-				patientInfo={medicalHistory?.patient}
-				loading={updatePatientInfo.loading}
-				isEditable={isDoctor}
-				onSave={async (values) => await updatePatientInfo.submit(values)}
-			/>
-			<DoctorInfoDialog
-				open={openDoctorInfo}
-				onClose={() => setOpenDoctorInfo(false)}
-				doctorInfo={medicalHistory?.doctor}
-			/>
+			{medicalHistory?.patient && (
+				<PatientInfoDialog
+					open={openPatientInfo}
+					onClose={() => setOpenPatientInfo(false)}
+					patientInfo={medicalHistory?.patient}
+					loading={updatePatientInfo.loading}
+					isEditable={isDoctor}
+					onSave={async (values) => await updatePatientInfo.submit(values)}
+				/>
+			)}
+			{medicalHistory?.doctor && (
+				<DoctorInfoDialog
+					open={openDoctorInfo}
+					onClose={() => setOpenDoctorInfo(false)}
+					doctorInfo={medicalHistory?.doctor}
+				/>
+			)}
 			<UpdateMedicalHistoryDialog
 				open={openUpdateMedicalHistory}
 				onClose={() => setOpenUpdateMedicalHistory(false)}

@@ -24,7 +24,10 @@ const UpdateMedicalHistoryDialog = ({
 			open={open}
 			onClose={onClose}
 			fields={fields}
-			initialValues={medicalHistory}
+			initialValues={{
+				diagnosis: medicalHistory?.diagnosis,
+				followUpAppointmentDate: medicalHistory?.followUpAppointmentDate,
+			}}
 			title={t('medical_history.dialog.title.update_medical_history')}
 			submitButtonColor='success'
 			submitLabel={t('button.update')}

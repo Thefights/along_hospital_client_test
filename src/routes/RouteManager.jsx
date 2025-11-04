@@ -1,3 +1,5 @@
+import MedicalHistoryDetailBasePage from '@/components/basePages/medicalHistoryDetailBasePage/MedicalHistoryDetailBasePage'
+import { ApiUrls } from '@/configs/apiUrls'
 import { routeUrls } from '@/configs/routeUrls'
 import LayoutManager from '@/layouts/LayoutManager'
 import NotFoundPage from '@/pages/commons/NotFoundPage'
@@ -28,6 +30,10 @@ const RouteManager = () => {
 					<Route
 						path={routeUrls.MANAGER.MEDICAL_HISTORY.INDEX}
 						element={<ManagerMedicalHistoryManagementPage />}
+					/>
+					<Route
+						path={routeUrls.MANAGER.MEDICAL_HISTORY.DETAIL(':id')}
+						element={<MedicalHistoryDetailBasePage fetchUrl={ApiUrls.MEDICAL_HISTORY.MANAGEMENT.INDEX} />}
 					/>
 					<Route path={routeUrls.MANAGER.SPECIALTY_MANAGEMENT} element={<SpecialtyManagementPage />} />
 					<Route path={routeUrls.MANAGER.DOCTOR_MANAGEMENT} element={<DoctorManagementPage />} />

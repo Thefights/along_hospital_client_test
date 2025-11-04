@@ -31,6 +31,11 @@ export const EnumConfig = {
 		Cancelled: 'Cancelled',
 		Refused: 'Refused',
 	},
+	AppointmentTimeSlot: {
+		HalfHour: 'HalfHour',
+		OneHour: 'OneHour',
+		TwoHours: 'TwoHours',
+	},
 	AppointmentPaymentStatus: {
 		None: 'None',
 		Pending: 'Pending',
@@ -39,12 +44,15 @@ export const EnumConfig = {
 	},
 	AppointmentType: {
 		Consultation: 'Consultation',
-		FollowUp: 'Follow-up',
-		RoutineCheckup: 'Routine Check-up',
-		Emergency: 'Emergency',
+		FollowUp: 'FollowUp',
+		RoutineCheckup: 'RoutineCheckup',
+		LabTest: 'LabTest',
+		Imaging: 'Imaging',
+		Vaccination: 'Vaccination',
+		Procedure: 'Procedure',
 	},
 	AppointmentMeetingType: {
-		InPerson: 'In-Person',
+		InPerson: 'InPerson',
 		Telehealth: 'Telehealth',
 	},
 

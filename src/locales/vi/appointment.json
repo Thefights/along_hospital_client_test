@@ -1,0 +1,60 @@
+{
+    "appointment": {
+        "title": {
+            "patient_info": "Thông tin bệnh nhân",
+            "appointment_info": "Thông tin cuộc hẹn",
+            "doctor_info": "Thông tin bác sĩ",
+            "create_appointment": "Tạo cuộc hẹn",
+            "create_appointment_note": "Lưu ý: Cuộc hẹn chỉ có thể được đặt trước ít nhất 7 ngày.",
+            "appointment_history": "Lịch sử cuộc hẹn",
+            "appointment_management": "Quản lý cuộc hẹn",
+            "appointment_detail": "Chi tiết cuộc hẹn",
+            "filters": "Bộ lọc",
+            "timelines": "Dòng thời gian",
+            "upcoming": "Sắp tới",
+            "completed": "Đã hoàn thành"
+        },
+        "placeholder": {
+            "search_doctor": "Tìm kiếm theo tên bác sĩ...",
+            "search_patient": "Tìm kiếm theo tên bệnh nhân...",
+            "no_doctor_assigned": "Chưa có bác sĩ được chỉ định"
+        },
+        "button": {
+            "cancel_appointment": "Hủy cuộc hẹn",
+            "deny_assignment": "Từ chối cuộc hẹn",
+            "accept_assignment": "Chấp nhận cuộc hẹn",
+            "complete_appointment": "Hoàn thành cuộc hẹn",
+            "assign_doctor": "Chỉ định bác sĩ",
+            "refuse_appointment": "Từ chối cuộc hẹn"
+        },
+        "field": {
+            "purpose": "Mục đích",
+            "specialty": "Chuyên khoa",
+            "time_slot": "Khung thời gian",
+            "payment_status": "Trạng thái thanh toán",
+            "status": "Trạng thái",
+            "type": "Loại",
+            "meeting_type": "Hình thức",
+            "start_date": "Ngày bắt đầu",
+            "end_date": "Ngày kết thúc",
+            "patient": "Bệnh nhân",
+            "doctor": "Bác sĩ",
+            "cancel_reason": "Lý do hủy",
+            "refuse_reason": "Lý do từ chối"
+        },
+        "dialog": {
+            "confirm_create_title": "Tạo cuộc hẹn?",
+            "confirm_create_description": "Bạn có chắc chắn muốn tạo cuộc hẹn này không?",
+            "confirm_cancel_title": "Hủy cuộc hẹn?",
+            "confirm_cancel_description": "Vui lòng cung cấp lý do hủy:",
+            "confirm_deny_title": "Từ chối cuộc hẹn?",
+            "confirm_deny_description": "Bạn có chắc chắn muốn từ chối cuộc hẹn này không? Hành động này không thể hoàn tác",
+            "confirm_accept_title": "Chấp nhận cuộc hẹn?",
+            "confirm_accept_description": "Bạn có chắc chắn muốn chấp nhận cuộc hẹn này không?",
+            "confirm_complete_title": "Hoàn thành cuộc hẹn?",
+            "confirm_complete_description": "Bạn có chắc chắn muốn đánh dấu cuộc hẹn này là đã hoàn thành không?",
+            "confirm_refuse_title": "Từ chối cuộc hẹn?",
+            "confirm_refuse_description": "Vui lòng cung cấp lý do từ chối:"
+        }
+    }
+}

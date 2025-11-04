@@ -24,7 +24,6 @@ const PatientAppointmentHistoryPage = () => {
 
 	const getAppointments = useFetch(ApiUrls.APPOINTMENT.INDEX, filters, [filters])
 	const specialtiesStore = useReduxStore({
-		url: ApiUrls.SPECIALTY.GET_ALL,
 		selector: (state) => state.management.specialties,
 		setStore: setSpecialtiesStore,
 	})
@@ -34,18 +33,15 @@ const PatientAppointmentHistoryPage = () => {
 		method: 'PUT',
 		data: { reason: cancelReason },
 		onSuccess: async () => {
+			handleCloseCancelDialog()
+			setOpenCancelDialog(false)
 			await getAppointments.fetch()
-			setSelectedAppointment(null)
 		},
 	})
 
-	const handleCancelAppointment = async () => {
-		try {
-			await cancelAppointment.submit()
-		} finally {
-			setCancelReason('')
-			setOpenCancelDialog(false)
-		}
+	const handleCloseCancelDialog = () => {
+		setOpenCancelDialog(false)
+		setCancelReason('')
 	}
 
 	return (
@@ -72,11 +68,8 @@ const PatientAppointmentHistoryPage = () => {
 			<ConfirmationDialog
 				key={selectedAppointment?.id}
 				open={openCancelDialog}
-				onClose={() => {
-					setOpenCancelDialog(false)
-					setCancelReason('')
-				}}
-				onConfirm={handleCancelAppointment}
+				onClose={handleCloseCancelDialog}
+				onConfirm={async () => await cancelAppointment.submit()}
 				title={t('appointment.dialog.confirm_cancel_title')}
 				description={
 					<Stack spacing={1}>

@@ -25,7 +25,6 @@ export default function CreateMedicalHistoryPage() {
 	const [openCreatePatientDialog, setOpenCreatePatientDialog] = useState(false)
 
 	const patientsStore = useReduxStore({
-		url: ApiUrls.PATIENT.MANAGEMENT.GET_ALL,
 		selector: (state) => state.management.patients,
 		setStore: setPatientsStore,
 	})

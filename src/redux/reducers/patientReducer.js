@@ -1,3 +1,4 @@
+import { ApiUrls } from '@/configs/apiUrls'
 import { createSlice } from '@reduxjs/toolkit'
 
 const initState = {
@@ -5,8 +6,6 @@ const initState = {
 	profile: {},
 	orders: [],
 	vouchers: [],
-	appointments: [],
-	medicalHistories: [],
 }
 
 const patientSlice = createSlice({
@@ -25,22 +24,14 @@ const patientSlice = createSlice({
 		setVouchersStore: (state, action) => {
 			state.vouchers = action.payload
 		},
-		setAppointmentsStore: (state, action) => {
-			state.appointments = action.payload
-		},
-		setMedicalHistoriesStore: (state, action) => {
-			state.medicalHistories = action.payload
-		},
 	},
 })
 
-export const {
-	setCartStore,
-	setProfileStore,
-	setOrdersStore,
-	setVouchersStore,
-	setAppointmentsStore,
-	setMedicalHistoriesStore,
-} = patientSlice.actions
+const { setCartStore, setProfileStore, setOrdersStore, setVouchersStore } = patientSlice.actions
+
+setCartStore.defaultUrl = ApiUrls.USER.CART
+setProfileStore.defaultUrl = ApiUrls.USER.PROFILE
+
+export { setCartStore, setOrdersStore, setProfileStore, setVouchersStore }
 
 export default patientSlice.reducer

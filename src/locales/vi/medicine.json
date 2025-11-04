@@ -1,0 +1,14 @@
+{
+    "medicine": {
+        "field": {
+            "name": "Tên thuốc",
+            "brand": "Thương hiệu",
+            "unit": "Đơn vị",
+            "images": "Hình ảnh",
+            "medicine_category": {
+                "name": "Danh mục thuốc",
+                "description": "Mô tả"
+            }
+        }
+    }
+}

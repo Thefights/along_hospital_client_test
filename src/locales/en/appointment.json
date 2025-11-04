@@ -1,0 +1,60 @@
+{
+    "appointment": {
+        "title": {
+            "patient_info": "Patient Info",
+            "appointment_info": "Appointment Info",
+            "doctor_info": "Doctor Info",
+            "create_appointment": "Create Appointment",
+            "create_appointment_note": "Note: Appointments can only be scheduled at least 7 days in advance.",
+            "appointment_history": "Appointment History",
+            "appointment_management": "Appointment Management",
+            "appointment_detail": "Appointment Detail",
+            "filters": "Filters",
+            "timelines": "Timelines",
+            "upcoming": "Upcoming",
+            "completed": "Completed"
+        },
+        "placeholder": {
+            "search_doctor": "Search by Doctor name...",
+            "search_patient": "Search by Patient name...",
+            "no_doctor_assigned": "No doctor assigned"
+        },
+        "button": {
+            "cancel_appointment": "Cancel Appointment",
+            "deny_assignment": "Deny Assignment",
+            "accept_assignment": "Accept Assignment",
+            "complete_appointment": "Complete Appointment",
+            "assign_doctor": "Assign Doctor",
+            "refuse_appointment": "Refuse Appointment"
+        },
+        "field": {
+            "purpose": "Purpose",
+            "specialty": "Specialty",
+            "time_slot": "Time Slot",
+            "payment_status": "Payment Status",
+            "status": "Status",
+            "type": "Type",
+            "meeting_type": "Meeting Type",
+            "start_date": "Start Date",
+            "end_date": "End Date",
+            "patient": "Patient",
+            "doctor": "Doctor",
+            "cancel_reason": "Cancel Reason",
+            "refuse_reason": "Refuse Reason"
+        },
+        "dialog": {
+            "confirm_create_title": "Create appointment?",
+            "confirm_create_description": "Are you sure to create this appointment?",
+            "confirm_cancel_title": "Cancel appointment?",
+            "confirm_cancel_description": "Please provide a reason for cancellation:",
+            "confirm_deny_title": "Deny assignment?",
+            "confirm_deny_description": "Are your sure to deny this assignment? This action cannot be undone",
+            "confirm_accept_title": "Accept assignment?",
+            "confirm_accept_description": "Are your sure to accept this assignment?",
+            "confirm_complete_title": "Complete appointment?",
+            "confirm_complete_description": "Are you sure to mark this appointment as completed?",
+            "confirm_refuse_title": "Refuse assignment?",
+            "confirm_refuse_description": "Please provide a reason for refusal:"
+        }
+    }
+}

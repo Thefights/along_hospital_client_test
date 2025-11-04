@@ -27,7 +27,6 @@ const ManagerAppointmentManagementPage = () => {
 
 	const getAppointments = useFetch(ApiUrls.APPOINTMENT.MANAGEMENT.INDEX, filters, [filters])
 	const specialtiesStore = useReduxStore({
-		url: ApiUrls.SPECIALTY.GET_ALL,
 		selector: (state) => state.management.specialties,
 		setStore: setSpecialtiesStore,
 	})
@@ -36,9 +35,9 @@ const ManagerAppointmentManagementPage = () => {
 		url: ApiUrls.APPOINTMENT.MANAGEMENT.ASSIGN_DOCTOR(selectedAppointment?.id, selectedDoctor?.id),
 		method: 'PUT',
 		onSuccess: async () => {
-			await getAppointments.fetch()
+			handleCloseDoctorPickerDialog()
 			setSelectedAppointment(null)
-			setSelectedDoctor(null)
+			await getAppointments.fetch()
 		},
 	})
 	const refuseAppointment = useAxiosSubmit({
@@ -46,18 +45,20 @@ const ManagerAppointmentManagementPage = () => {
 		method: 'PUT',
 		data: { reason: refuseReason },
 		onSuccess: async () => {
-			await getAppointments.fetch()
+			handleCloseRefuseDialog()
 			setSelectedAppointment(null)
+			await getAppointments.fetch()
 		},
 	})
 
-	const handleRefuseAppointment = async () => {
-		try {
-			await refuseAppointment.submit()
-		} finally {
-			setRefuseReason('')
-			setOpenRefuseDialog(false)
-		}
+	const handleCloseDoctorPickerDialog = () => {
+		setOpenDoctorPickerDialog(false)
+		setSelectedDoctor(null)
+	}
+
+	const handleCloseRefuseDialog = () => {
+		setOpenRefuseDialog(false)
+		setRefuseReason('')
 	}
 
 	return (
@@ -87,19 +88,15 @@ const ManagerAppointmentManagementPage = () => {
 			/>
 			<DoctorPickerDialog
 				open={openDoctorPickerDialog}
-				onClose={() => setOpenDoctorPickerDialog(false)}
+				onClose={handleCloseDoctorPickerDialog}
 				onDoctorSelected={setSelectedDoctor}
-				onSubmit={async ({ values, closeDialog }) => {
+				onSubmit={async ({ values }) =>
 					await assignDoctorToAppointment.submit({ doctorId: values.doctorId })
-					closeDialog()
-				}}
+				}
 			/>
 			<ConfirmationDialog
 				open={openRefuseDialog}
-				onClose={() => {
-					setOpenRefuseDialog(false)
-					setRefuseReason('')
-				}}
+				onClose={handleCloseRefuseDialog}
 				title={t('appointment.dialog.confirm_refuse_title')}
 				description={
 					<Stack spacing={1}>
@@ -117,7 +114,7 @@ const ManagerAppointmentManagementPage = () => {
 				}
 				confirmButtonText={t('appointment.button.refuse_appointment')}
 				confirmButtonColor='error'
-				onConfirm={handleRefuseAppointment}
+				onConfirm={async () => await refuseAppointment.submit()}
 			/>
 		</>
 	)

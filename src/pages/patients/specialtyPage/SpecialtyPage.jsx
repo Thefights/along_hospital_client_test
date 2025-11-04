@@ -1,4 +1,3 @@
-import { ApiUrls } from '@/configs/apiUrls'
 import { routeUrls } from '@/configs/routeUrls'
 import useReduxStore from '@/hooks/useReduxStore'
 import SpecialtyDetailDialog from '@/pages/patients/specialtyPage/sections/SpecialtyDetailDialog'
@@ -24,7 +23,6 @@ const SpecialtyPage = () => {
 	const navigate = useNavigate()
 
 	const specialtiesStore = useReduxStore({
-		url: ApiUrls.SPECIALTY.GET_ALL,
 		selector: (state) => state.management.specialties,
 		setStore: setSpecialtiesStore,
 	})

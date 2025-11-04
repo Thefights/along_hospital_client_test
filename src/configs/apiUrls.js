@@ -84,6 +84,7 @@ export const ApiUrls = {
 		CREATE_COMPLAINT: (medicalHistoryId) => `/medical-history/${medicalHistoryId}/complaint`,
 		MANAGEMENT: {
 			INDEX: `/medical-history-management`,
+			DETAIL: (id) => `/medical-history-management/${id}`,
 			GET_ALL_BY_CURRENT_DOCTOR: `/medical-history-management/doctor`,
 			COMPLETE: (medicalHistoryId) => `/medical-history-management/complete/${medicalHistoryId}`,
 			MEDICAL_HISTORY_DETAIL: (medicalHistoryId, medicalServiceId = null) =>

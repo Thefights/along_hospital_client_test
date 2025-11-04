@@ -26,6 +26,20 @@ export default function useEnum() {
 			{ value: EnumConfig.AppointmentStatus.Cancelled, label: t('enum.appointment_status.cancelled') },
 			{ value: EnumConfig.AppointmentStatus.Refused, label: t('enum.appointment_status.refused') },
 		],
+		appointmentTimeSlotOptions: [
+			{
+				value: EnumConfig.AppointmentTimeSlot.HalfHour,
+				label: t('enum.appointment_time_slot.half_hour'),
+			},
+			{
+				value: EnumConfig.AppointmentTimeSlot.OneHour,
+				label: t('enum.appointment_time_slot.one_hour'),
+			},
+			{
+				value: EnumConfig.AppointmentTimeSlot.TwoHours,
+				label: t('enum.appointment_time_slot.two_hours'),
+			},
+		],
 		appointmentPaymentStatusOptions: [
 			{
 				value: EnumConfig.AppointmentPaymentStatus.None,
@@ -54,7 +68,10 @@ export default function useEnum() {
 				value: EnumConfig.AppointmentType.RoutineCheckup,
 				label: t('enum.appointment_type.routine_checkup'),
 			},
-			{ value: EnumConfig.AppointmentType.Emergency, label: t('enum.appointment_type.emergency') },
+			{ value: EnumConfig.AppointmentType.LabTest, label: t('enum.appointment_type.lab_test') },
+			{ value: EnumConfig.AppointmentType.Imaging, label: t('enum.appointment_type.imaging') },
+			{ value: EnumConfig.AppointmentType.Vaccination, label: t('enum.appointment_type.vaccination') },
+			{ value: EnumConfig.AppointmentType.Procedure, label: t('enum.appointment_type.procedure') },
 		],
 		appointmentMeetingTypeOptions: [
 			{

@@ -1,0 +1,75 @@
+{
+    "enum": {
+        "gender": {
+            "male": "Male",
+            "female": "Female",
+            "other": "Other"
+        },
+        "blog_type": {
+            "health": "Health",
+            "news": "News",
+            "promotion": "Promotion",
+            "guide": "Guide",
+            "other": "Other"
+        },
+        "appointment_status": {
+            "scheduled": "Scheduled",
+            "confirmed": "Confirmed",
+            "completed": "Completed",
+            "cancelled": "Cancelled",
+            "refused": "Refused"
+        },
+        "appointment_time_slot": {
+            "half_hour": "30 minutes",
+            "one_hour": "1 hour",
+            "two_hours": "2 hours"
+        },
+        "appointment_payment_status": {
+            "none": "None",
+            "pending": "Pending",
+            "completed": "Completed",
+            "failed": "Failed"
+        },
+        "appointment_type": {
+            "consultation": "Consultation",
+            "follow_up": "Follow-up",
+            "routine_checkup": "Routine Check-up",
+            "lab_test": "Lab Test",
+            "imaging": "Imaging",
+            "vaccination": "Vaccination",
+            "procedure": "Procedure"
+        },
+        "appointment_meeting_type": {
+            "in_person": "In-person",
+            "telehealth": "Telehealth"
+        },
+        "severity_level": {
+            "mild": "Mild",
+            "moderate": "Moderate",
+            "severe": "Severe"
+        },
+        "medical_history_status": {
+            "draft": "Draft",
+            "processed": "Processed",
+            "paid": "Paid"
+        },
+        "complaint_topic": {
+            "service": "Service",
+            "billing": "Billing",
+            "doctor": "Doctor",
+            "medicine": "Medicine",
+            "others": "Others"
+        },
+        "complaint_type": {
+            "neutral": "Neutral",
+            "positive": "Positive",
+            "negative": "Negative"
+        },
+        "complaint_resolve_status": {
+            "pending": "Pending",
+            "draft": "Draft",
+            "resolved": "Resolved",
+            "closed": "Closed"
+        }
+    }
+}

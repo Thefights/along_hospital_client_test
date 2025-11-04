@@ -1,28 +1,33 @@
 import { ApiUrls } from '@/configs/apiUrls'
+import { routeUrls } from '@/configs/routeUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useEnum from '@/hooks/useEnum'
-import useFetch from '@/hooks/useFetch'
 import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
 import LeftCreateAppointmentSection from '@/pages/patients/createAppointmentPage/sections/LeftCreateAppointmentSection'
 import RightCreateAppointmentSection from '@/pages/patients/createAppointmentPage/sections/RightCreateAppointmentSection'
+import { setSpecialtiesStore } from '@/redux/reducers/managementReducer'
 import { setProfileStore } from '@/redux/reducers/patientReducer'
 import { maxLen } from '@/utils/validateUtil'
 import { Grid, Paper } from '@mui/material'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const CreateAppointmentPage = () => {
 	const { t } = useTranslation()
 	const _enum = useEnum()
+	const navigate = useNavigate()
 
 	const [submitted, setSubmitted] = useState(false)
 
-	const getSpecialty = useFetch(ApiUrls.SPECIALTY.INDEX)
-	const userProfile = useReduxStore({
-		url: ApiUrls.USER.PROFILE,
+	const getSpecialtyStore = useReduxStore({
+		selector: (state) => state.management.specialties,
+		setStore: setSpecialtiesStore,
+	})
+	const userProfileStore = useReduxStore({
 		selector: (state) => state.patient.profile,
 		setStore: setProfileStore,
 	})
@@ -34,7 +39,7 @@ const CreateAppointmentPage = () => {
 		specialtyId: '',
 	})
 	const { renderField, hasRequiredMissing } = useFieldRenderer(
-		{ ...userProfile, ...values },
+		{ ...userProfileStore.data, ...values },
 		setField,
 		handleChange,
 		registerRef,
@@ -48,9 +53,11 @@ const CreateAppointmentPage = () => {
 		data: values,
 	})
 
+	const specialtiesList = Array.isArray(getSpecialtyStore.data) ? getSpecialtyStore.data : []
+
 	const patientFields = [
 		{
-			key: 'fullName',
+			key: 'name',
 			title: t('profile.field.name'),
 			required: false,
 		},
@@ -97,8 +104,19 @@ const CreateAppointmentPage = () => {
 			type: 'select',
 			options: _enum.appointmentMeetingTypeOptions,
 		},
-		{ key: 'date', title: t('text.date'), type: 'date' },
+		{
+			key: 'date',
+			title: t('text.date'),
+			type: 'date',
+			minValue: new Date().toISOString().split('T')[0],
+		},
 		{ key: 'time', title: t('text.time'), type: 'time' },
+		{
+			key: 'timeSlot',
+			title: t('appointment.field.time_slot'),
+			type: 'select',
+			options: _enum.appointmentTimeSlotOptions,
+		},
 		{
 			key: 'purpose',
 			title: t('appointment.field.purpose'),
@@ -110,7 +128,7 @@ const CreateAppointmentPage = () => {
 			key: 'specialtyId',
 			title: t('appointment.field.specialty'),
 			type: 'select',
-			options: getSpecialty.data?.map((s) => ({ label: s.name, value: s.id })) || [],
+			options: specialtiesList.map((s) => ({ label: s.name, value: s.id })),
 		},
 	]
 
@@ -123,7 +141,10 @@ const CreateAppointmentPage = () => {
 		if (!ok || isMissing) {
 			toast.warn(t('error.fill_all_required'))
 		} else {
-			await postAppointment.submit()
+			const response = await postAppointment.submit()
+			if (response) {
+				navigate(routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.APPOINTMENT.INDEX))
+			}
 		}
 	}
 
@@ -143,7 +164,7 @@ const CreateAppointmentPage = () => {
 						appointmentFields={appointmentFields}
 						renderField={renderField}
 						handleSubmit={handleSubmit}
-						loadingGet={userProfile.loading || getSpecialty.loading}
+						loadingGet={userProfileStore.loading || getSpecialtyStore.loading}
 						loadingSubmit={postAppointment.loading}
 					/>
 				</Grid>

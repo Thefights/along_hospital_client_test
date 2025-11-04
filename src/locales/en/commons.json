@@ -1,0 +1,103 @@
+{
+    "button": {
+        "close": "Close",
+        "submit": "Submit",
+        "submitting": "Submitting",
+        "cancel": "Cancel",
+        "back": "Back",
+        "add": "Add",
+        "create": "Create",
+        "update": "Update",
+        "complete": "Complete",
+        "confirm": "Confirm",
+        "delete": "Delete",
+        "save": "Save",
+        "add_row": "Add Row",
+        "login": "Login",
+        "filter": "Filter",
+        "reset_filter": "Reset Filter",
+        "creating": "Creating...",
+        "next": "Next",
+        "resend_in": "Resend in",
+        "toggle_language": "Toggle language",
+        "toggle_theme": "Toggle theme",
+        "delete_selected": "Delete selected"
+    },
+    "text": {
+        "all": "All",
+        "search": "Search...",
+        "loading": "Loading...",
+        "filter": "Filter",
+        "filters": "Filters",
+        "image_preview": "Image Preview",
+        "select_options": "Select options",
+        "day": "Day",
+        "month": "Month",
+        "year": "Year",
+        "date": "Date",
+        "start_date": "Start Date",
+        "end_date": "End Date",
+        "time": "Time",
+        "step": "Step",
+        "more": "More",
+        "result": "Result",
+        "rows_per_page": "Rows per page",
+        "role": {
+            "manager": "Manager",
+            "doctor": "Doctor",
+            "patient": "Patient",
+            "guest": "Guest"
+        },
+        "placeholder": {
+            "no_data": "No data available...",
+            "no_data_subtitle": "There is nothing to display here"
+        }
+    },
+    "tooltip": {
+        "menu": "Menu",
+        "edit": "Edit",
+        "delete": "Delete",
+        "cart": "Cart",
+        "create_appointment": "Create Appointment",
+        "switch_dark": "Switch to dark mode",
+        "switch_light": "Switch to light mode",
+        "collapse": "Collapse",
+        "expand": "Expand",
+        "view_detail_medical_history": "View Medical History Details"
+    },
+    "dialog": {
+        "doctor_picker": {
+            "title": "Select Doctor",
+            "confirm_button": "Select"
+        },
+        "patient_info": {
+            "basic_info": "Basic Info",
+            "health_info": "Health Info",
+            "allergies": "Allergies",
+            "allergy_table": {
+                "name": "Name",
+                "severity": "Severity Level",
+                "reaction": "Reaction",
+                "add_allergy": "Add Allergy"
+            }
+        },
+        "doctor_info": {
+            "basic_info": "Basic Info",
+            "professional_info": "Professional Info"
+        }
+    },
+    "error": {
+        "required": "This field is required",
+        "invalid_email": "Please enter a valid email",
+        "invalid_phone": "Please enter a valid phone number",
+        "invalid_date": "Please enter a valid date",
+        "invalid_time": "Please enter a valid time",
+        "invalid_number": "Please enter a valid number",
+        "weak_password": "Password must contain at least 8 characters, including uppercase, lowercase, number, and special character",
+        "min_length": "Must be at least {min} characters, currently {current}",
+        "max_length": "Can't exceed {max} characters, currently {current}/{max}",
+        "min_number": "Minimum number is {min}",
+        "max_number": "Maximum number is {max}",
+        "fill_all_required": "Please fill all required fields"
+    }
+}

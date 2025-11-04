@@ -1,3 +1,5 @@
+import MedicalHistoryDetailBasePage from '@/components/basePages/medicalHistoryDetailBasePage/MedicalHistoryDetailBasePage'
+import { ApiUrls } from '@/configs/apiUrls'
 import { routeUrls } from '@/configs/routeUrls'
 import LayoutPatient from '@/layouts/LayoutPatient'
 import NotFoundPage from '@/pages/commons/NotFoundPage'
@@ -22,6 +24,10 @@ const RoutePatient = () => {
 					<Route
 						path={routeUrls.PATIENT.MEDICAL_HISTORY.INDEX}
 						element={<PatientMedicalHistoryPage />}
+					/>
+					<Route
+						path={routeUrls.PATIENT.MEDICAL_HISTORY.DETAIL(':id')}
+						element={<MedicalHistoryDetailBasePage fetchUrl={ApiUrls.MEDICAL_HISTORY.INDEX} />}
 					/>
 				</Route>
 			</Route>

@@ -1,4 +1,3 @@
-import { ApiUrls } from '@/configs/apiUrls'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
 import { setDoctorsStore } from '@/redux/reducers/managementReducer'
@@ -14,7 +13,6 @@ const DoctorPickerDialog = ({ open, onClose, onSubmit }) => {
 	const { t } = useTranslation()
 
 	const getDoctorStore = useReduxStore({
-		url: ApiUrls.DOCTOR.MANAGEMENT.GET_ALL,
 		selector: (state) => state.management.doctors,
 		setStore: setDoctorsStore,
 	})
