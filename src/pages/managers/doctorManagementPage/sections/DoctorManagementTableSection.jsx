@@ -4,7 +4,7 @@ import GenericTable from '@/components/tables/GenericTable'
 import { useConfirm } from '@/hooks/useConfirm'
 import useTranslation from '@/hooks/useTranslation'
 import { maxLen } from '@/utils/validateUtil'
-import { Button, Stack, Tooltip, Typography } from '@mui/material'
+import { Button, Stack } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 
 const DoctorManagementTableSection = ({ doctors, loading, sort, setSort, refetch = () => {} }) => {
@@ -61,30 +61,12 @@ const DoctorManagementTableSection = ({ doctors, loading, sort, setSort, refetch
 
 	const fields = useMemo(
 		() => [
-			{ key: 'id', title: t('doctor.field.id'), width: 20, sortable: true, fixedColumn: true },
-			{ key: 'name', title: t('doctor.field.name'), width: 20, sortable: true },
-			{ key: 'specialtyName', title: t('doctor.field.specialty'), width: 20, sortable: true },
-			{ key: 'phone', title: t('doctor.field.phone'), width: 15, sortable: true },
-			{
-				key: 'qualification',
-				title: t('doctor.field.qualification'),
-				width: 25,
-				sortable: false,
-				render: (value) => {
-					const text = value ?? ''
-					return (
-						<Tooltip title={text} arrow placement='top' disableInteractive>
-							<Typography
-								variant='body2'
-								noWrap
-								sx={{ width: '100%', overflow: 'hidden', textOverflow: 'ellipsis' }}
-							>
-								{text || '-'}
-							</Typography>
-						</Tooltip>
-					)
-				},
-			},
+			{ key: 'id', title: t('doctor.field.id'), width: 10, sortable: true, fixedColumn: true },
+			{ key: 'name', title: t('doctor.field.name'), width: 20, sortable: false },
+			{ key: 'gender', title: t('doctor.field.gender'), width: 20, sortable: false },
+			{ key: 'departmentName', title: t('doctor.field.department'), width: 25, sortable: false },
+			{ key: 'specialtyName', title: t('doctor.field.specialty'), width: 25, sortable: false },
+			{ key: 'qualification', title: t('doctor.field.qualification'), width: 15, sortable: false },
 			{
 				key: '',
 				title: '',
@@ -117,15 +99,15 @@ const DoctorManagementTableSection = ({ doctors, loading, sort, setSort, refetch
 				key: 'name',
 				title: t('doctor.field.name'),
 				type: 'text',
-				validate: [maxLen(255)],
+				validate: [maxLen(50)],
 				required: true,
 			},
 			{
 				key: 'phone',
 				title: t('doctor.field.phone'),
 				type: 'text',
-				validate: [maxLen(30)],
-				required: false,
+				validate: [maxLen(15)],
+				required: true,
 			},
 			{
 				key: 'gender',
@@ -136,9 +118,9 @@ const DoctorManagementTableSection = ({ doctors, loading, sort, setSort, refetch
 					{ label: t('enum.gender.female'), value: 'Female' },
 					{ label: t('enum.gender.other'), value: 'Other' },
 				],
-				required: false,
+				required: true,
 			},
-			{ key: 'dateOfBirth', title: t('doctor.field.date_of_birth'), type: 'date', required: false },
+			{ key: 'dateOfBirth', title: t('doctor.field.date_of_birth'), type: 'date', required: true },
 			{
 				key: 'specialtyId',
 				title: t('doctor.field.specialty'),
@@ -158,14 +140,14 @@ const DoctorManagementTableSection = ({ doctors, loading, sort, setSort, refetch
 				title: t('doctor.field.qualification'),
 				type: 'text',
 				validate: [maxLen(500)],
-				required: false,
+				required: true,
 			},
-			{ key: 'image', title: t('doctor.field.image'), type: 'image', required: false },
+			{ key: 'image', title: t('doctor.field.image'), type: 'image', required: true },
 			{
 				key: 'signatureImage',
 				title: t('doctor.field.signature_image'),
 				type: 'image',
-				required: false,
+				required: true,
 			},
 		],
 		[t]
