@@ -5,6 +5,12 @@
             "female": "Nữ",
             "other": "Khác"
         },
+        "qualification": {
+            "bachelor": "Cử nhân",
+            "master": "Thạc sĩ",
+            "phd": "Tiến sĩ",
+            "specialist": "Chuyên khoa"
+        },
         "blog_type": {
             "health": "Sức khỏe",
             "news": "Tin tức",

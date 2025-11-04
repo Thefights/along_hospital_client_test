@@ -9,6 +9,7 @@
         "field": {
             "id": "ID",
             "name": "Name",
+            "doctor": "Doctor",
             "specialty": "Specialty",
             "phone": "Phone",
             "qualification": "Qualification",

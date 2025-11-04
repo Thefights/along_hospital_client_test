@@ -9,6 +9,7 @@
         "field": {
             "id": "Mã",
             "name": "Tên",
+            "doctor": "Bác sĩ",
             "specialty": "Chuyên khoa",
             "phone": "Số điện thoại",
             "qualification": "Trình độ",
