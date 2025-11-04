@@ -32,6 +32,8 @@ export const routeUrls = {
 	PATIENT: {
 		CART: '/cart',
 		PROFILE: '/profile',
+		// Đường dẫn trang đánh giá của bệnh nhân
+		FEEDBACK: '/feedback',
 		MEDICAL_HISTORY: {
 			INDEX: '/medical-history',
 			DETAIL: (id) => `/medical-history/${id}`,

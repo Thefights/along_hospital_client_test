@@ -1,0 +1,11 @@
+{
+    "feedback": {
+        "title": "Đánh giá sản phẩm",
+        "submit_review": "Gửi đánh giá",
+        "total_reviews": "{{count}} đánh giá",
+        "filter": {
+            "all": "Tất cả"
+        },
+        "empty": "Chưa có đánh giá nào"
+    }
+}

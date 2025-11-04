@@ -1,0 +1,11 @@
+{
+    "feedback": {
+        "title": "Product reviews",
+        "submit_review": "Submit a review",
+        "total_reviews": "{{count}} reviews",
+        "filter": {
+            "all": "All"
+        },
+        "empty": "No reviews yet"
+    }
+}
