@@ -4,7 +4,7 @@ import GenericTable from '@/components/tables/GenericTable'
 import { useConfirm } from '@/hooks/useConfirm'
 import useTranslation from '@/hooks/useTranslation'
 import { maxLen } from '@/utils/validateUtil'
-import { Button, Paper, Stack, Tooltip, Typography } from '@mui/material'
+import { Button, Stack, Tooltip, Typography } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 
 const DoctorManagementTableSection = ({ doctors, loading, sort, setSort, refetch = () => {} }) => {
@@ -172,7 +172,7 @@ const DoctorManagementTableSection = ({ doctors, loading, sort, setSort, refetch
 	)
 
 	return (
-		<Paper sx={{ py: 1, px: 2, mt: 2 }}>
+		<>
 			<Stack spacing={2} direction='row' alignItems='center' justifyContent='flex-end' ml={2} mb={1.5}>
 				<Button variant='contained' color='primary' onClick={() => setOpenCreate(true)}>
 					{t('button.create')}
@@ -209,7 +209,7 @@ const DoctorManagementTableSection = ({ doctors, loading, sort, setSort, refetch
 				title={t('doctor.title.doctor_management')}
 				onSubmit={handleUpdateSubmit}
 			/>
-		</Paper>
+		</>
 	)
 }
 

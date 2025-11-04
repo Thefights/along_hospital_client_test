@@ -8,7 +8,7 @@ import DoctorManagementFilterSection from './sections/DoctorManagementFilterSect
 import DoctorManagementTableSection from './sections/DoctorManagementTableSection'
 
 const DoctorManagementPage = () => {
-	const [filters, setFilters] = useState({ name: '' })
+	const [filters, setFilters] = useState({ doctorName: '' })
 	const [sort, setSort] = useState({ key: 'id', direction: 'desc' })
 	const [page, setPage] = useState(1)
 	const [pageSize, setPageSize] = useState(10)
