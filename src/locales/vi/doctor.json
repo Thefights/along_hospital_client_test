@@ -1,0 +1,22 @@
+{
+    "doctor": {
+        "title": {
+            "doctor_management": "Quản lý bác sĩ"
+        },
+        "placeholder": {
+            "search_doctor": "Tìm kiếm bác sĩ..."
+        },
+        "field": {
+            "id": "Mã",
+            "name": "Tên",
+            "specialty": "Chuyên khoa",
+            "phone": "Số điện thoại",
+            "qualification": "Trình độ",
+            "gender": "Giới tính",
+            "date_of_birth": "Ngày sinh",
+            "department": "Khoa",
+            "image": "Hình ảnh",
+            "signature_image": "Chữ ký"
+        }
+    }
+}
