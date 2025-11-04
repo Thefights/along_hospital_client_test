@@ -1,77 +1,75 @@
-import ManageMedicineBasePage from '@/components/basePages/manageMedicineBasePage/ManageMedicineBasePage'
-import MedicineImagesPreview from '@/components/basePages/manageMedicineBasePage/sections/MedicineImagesPreview'
+import MedicineFilterBar from '@/components/basePages/manageMedicineBasePage/sections/MedicineFilterBarSection'
+import MedicineImagesPreview from '@/components/basePages/manageMedicineBasePage/sections/MedicineImagesPreviewSection'
 import GenericFormDialog from '@/components/dialogs/commons/GenericFormDialog'
 import ActionMenu from '@/components/generals/ActionMenu'
+import { GenericTablePagination } from '@/components/generals/GenericPagination'
+import GenericTable from '@/components/tables/GenericTable'
 import { ApiUrls } from '@/configs/apiUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useConfirm } from '@/hooks/useConfirm'
-import useEnum from '@/hooks/useEnum'
+import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
-import { Button, Stack } from '@mui/material'
+import { Button, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 
 const ManagerMedicineManagementPage = () => {
 	const { t } = useTranslation()
-	const _enum = useEnum()
 	const confirm = useConfirm()
 
-	const [filters, setFilters] = useState({ name: '', category: '' })
+	const [filters, setFilters] = useState({ name: '', medicineCategoryId: '', medicineUnit: '' })
 	const [page, setPage] = useState(1)
 	const [pageSize, setPageSize] = useState(10)
 	const [medicines, setMedicines] = useState([])
-	const [totalMedicines, setTotalMedicines] = useState(0)
 	const [categories, setCategories] = useState([])
 	const [selectedMedicine, setSelectedMedicine] = useState(null)
-	const [selectedRows, setSelectedRows] = useState([])
+	const [totalPage, setTotalPage] = useState([])
 	const [openCreateDialog, setOpenCreateDialog] = useState(false)
 	const [openUpdateDialog, setOpenUpdateDialog] = useState(false)
 
-	const getAllMedicines = useAxiosSubmit({
-		url: ApiUrls.MEDICINE.MANAGEMENT.GET_ALL,
-		method: 'GET',
-		params: { ...filters, page, pageSize },
-		onSuccess: (res) => {
-			const data = res?.data
+	const getAllMedicines = useFetch(
+		ApiUrls.MEDICINE.MANAGEMENT.INDEX,
+		{ ...filters, page, pageSize },
+		[filters, page, pageSize]
+	)
+	const getAllCategories = useFetch(ApiUrls.MEDICINE_CATEGORY.GET_ALL)
+
+	useEffect(() => {
+		if (getAllMedicines.data) {
+			const data = getAllMedicines.data
 			setMedicines(
-				data?.collection?.map((m) => ({ ...m, categoryName: m.medicineCategory?.name || '' })) || []
+				data.collection?.map((m) => ({
+					...m,
+					categoryName: m.medicineCategory?.name ?? '',
+				})) || []
 			)
-			setTotalMedicines(data?.totalCount || 0)
-		},
-	})
+			setTotalPage(data)
+		}
+	}, [getAllMedicines.data])
 
 	useEffect(() => {
-		getAllMedicines.submit()
-	}, [filters, page, pageSize])
-
-	const getAllCategories = useAxiosSubmit({
-		url: ApiUrls.MEDICINE_CATEGORY.GET_ALL,
-		method: 'GET',
-		onSuccess: (res) => {
-			const data = res?.data?.collection || []
-			setCategories(data.map((c) => ({ label: c.name, value: c.id })))
-		},
-	})
-
-	useEffect(() => {
-		getAllCategories.submit()
-	}, [])
+		if (getAllCategories.data) {
+			setCategories(getAllCategories.data.map((c) => ({ label: c.name, value: c.id })) || [])
+		}
+	}, [getAllCategories.data])
 
 	const createMedicine = useAxiosSubmit({
 		url: ApiUrls.MEDICINE.MANAGEMENT.CREATE,
 		method: 'POST',
 		onSuccess: async () => {
 			setOpenCreateDialog(false)
-			await getAllMedicines.submit()
+			await getAllMedicines.fetch()
 		},
 	})
 
 	const updateMedicine = useAxiosSubmit({
-		url: selectedMedicine ? ApiUrls.MEDICINE.MANAGEMENT.UPDATE(selectedMedicine.id) : '/medicine',
+		url: selectedMedicine
+			? ApiUrls.MEDICINE.MANAGEMENT.UPDATE(selectedMedicine.id)
+			: ApiUrls.MEDICINE.MANAGEMENT.INDEX,
 		method: 'PUT',
 		onSuccess: async () => {
 			setOpenUpdateDialog(false)
 			setSelectedMedicine(null)
-			await getAllMedicines.submit()
+			await getAllMedicines.fetch()
 		},
 	})
 
@@ -79,24 +77,15 @@ const ManagerMedicineManagementPage = () => {
 		method: 'DELETE',
 		onSuccess: async () => {
 			setSelectedMedicine(null)
-			setSelectedRows([])
-			await getAllMedicines.submit()
+			await getAllMedicines.fetch()
 		},
 	})
 
-	const handleFilterClick = () => setPage(1)
-
 	const formFields = [
-		{ key: 'name', title: t('medicine.field.name'), required: true },
+		{ key: 'name', title: t('medicine.field.name') },
 		{ key: 'brand', title: t('medicine.field.brand') },
-		{
-			key: 'medicineUnit',
-			title: t('medicine.field.unit'),
-			type: 'select',
-			options: _enum.medicineUnitOptions,
-			required: true,
-		},
-		{ key: 'price', title: t('medicine.field.price'), type: 'number', required: true },
+		{ key: 'medicineUnit', title: t('medicine.field.unit'), type: 'select' },
+		{ key: 'price', title: t('medicine.field.price'), type: 'number' },
 		{
 			key: 'medicineCategoryId',
 			title: t('medicine.field.medicine_category.name'),
@@ -118,8 +107,6 @@ const ManagerMedicineManagementPage = () => {
 		{
 			key: 'images',
 			title: t('medicine.field.images'),
-			type: 'image',
-			multiple: 5,
 			render: (_, row) => <MedicineImagesPreview images={row.images || []} rowId={row.id} />,
 		},
 		{
@@ -159,10 +146,17 @@ const ManagerMedicineManagementPage = () => {
 	]
 
 	return (
-		<>
+		<Paper sx={{ p: 2 }}>
+			<Stack direction='row' justifyContent='flex-end' mb={2}></Stack>
 			<Stack spacing={2}>
-				<Stack direction='row' justifyContent='flex-end' alignItems='center'>
-					{/* Nút Create bên phải */}
+				<Stack
+					direction='row'
+					alignItems='center'
+					justifyContent='space-between'
+					flexWrap='wrap'
+					rowGap={1}
+				>
+					<Typography variant='h5'>{t('medicine.title.medicine_management')}</Typography>
 					<Button
 						variant='contained'
 						color='success'
@@ -173,29 +167,35 @@ const ManagerMedicineManagementPage = () => {
 					</Button>
 				</Stack>
 
-				<ManageMedicineBasePage
-					headerTitle={t('medicine.title.medicine_management')}
-					medicines={medicines}
-					totalMedicines={totalMedicines}
-					totalPage={Math.ceil(totalMedicines / pageSize)}
+				<MedicineFilterBar
 					filters={filters}
-					setFilters={setFilters}
-					page={page}
-					setPage={setPage}
-					pageSize={pageSize}
-					setPageSize={setPageSize}
-					selectedRows={selectedRows}
-					setSelectedRows={setSelectedRows}
-					onFilterClick={handleFilterClick}
-					fields={tableFields}
 					categories={categories}
-					loading={
-						getAllMedicines.loading ||
-						createMedicine.loading ||
-						updateMedicine.loading ||
-						deleteMedicine.loading
-					}
+					loading={getAllMedicines.loading}
+					onFilterClick={(newValues) => {
+						setFilters(newValues)
+						setPage(1)
+					}}
+					onResetFilterClick={() => {
+						const resetFilters = { name: '', medicineCategoryId: '', medicineUnit: '' }
+						setFilters(resetFilters)
+						setPage(1)
+					}}
 				/>
+
+				<Stack spacing={2}>
+					<GenericTable data={medicines} fields={tableFields} rowKey='id' />
+					<Stack justifyContent='center' px={2}>
+						<GenericTablePagination
+							totalPage={totalPage}
+							page={page}
+							setPage={setPage}
+							pageSize={pageSize}
+							setPageSize={setPageSize}
+							pageSizeOptions={[5, 10, 20]}
+							loading={getAllMedicines.loading}
+						/>
+					</Stack>
+				</Stack>
 			</Stack>
 
 			<GenericFormDialog
@@ -206,8 +206,8 @@ const ManagerMedicineManagementPage = () => {
 				submitLabel={t('button.create')}
 				submitButtonColor='success'
 				onSubmit={async ({ values, closeDialog }) => {
-					await createMedicine.submit(values)
-					closeDialog()
+					const response = await createMedicine.submit(values)
+					if (response) closeDialog()
 				}}
 			/>
 
@@ -230,11 +230,11 @@ const ManagerMedicineManagementPage = () => {
 				submitLabel={t('button.update')}
 				submitButtonColor='info'
 				onSubmit={async ({ values, closeDialog }) => {
-					await updateMedicine.submit(values)
-					closeDialog()
+					const response = await updateMedicine.submit(values)
+					if (response) closeDialog()
 				}}
 			/>
-		</>
+		</Paper>
 	)
 }
 

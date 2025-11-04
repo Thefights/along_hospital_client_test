@@ -1,10 +1,14 @@
-import ManageMedicineCategoryBasePage from '@/components/basePages/manageMedicineCategoryBasePage/ManageMedicineCategoryBasePage'
+import MedicineCategoryFilterBar from '@/components/basePages/manageMedicineCategoryBasePage/section/MedicineCategoryFilterSection'
 import GenericFormDialog from '@/components/dialogs/commons/GenericFormDialog'
 import ActionMenu from '@/components/generals/ActionMenu'
+import { GenericTablePagination } from '@/components/generals/GenericPagination'
+import GenericTable from '@/components/tables/GenericTable'
 import { ApiUrls } from '@/configs/apiUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useConfirm } from '@/hooks/useConfirm'
+import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
+import { Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 
 const ManagerMedicineCategoryManagementPage = () => {
@@ -12,51 +16,52 @@ const ManagerMedicineCategoryManagementPage = () => {
 	const confirm = useConfirm()
 
 	const [filters, setFilters] = useState({ name: '' })
-	const [appliedFilters, setAppliedFilters] = useState({ name: '' })
 	const [page, setPage] = useState(1)
 	const [pageSize, setPageSize] = useState(10)
+
 	const [categories, setCategories] = useState([])
 	const [totalCategories, setTotalCategories] = useState(0)
+	const [totalPage, setTotalPage] = useState(1)
 	const [selectedCategory, setSelectedCategory] = useState(null)
 	const [selectedRows, setSelectedRows] = useState([])
-	const [openCreateDialog, setOpenCreateDialog] = useState(false)
-	const [openUpdateDialog, setOpenUpdateDialog] = useState(false)
 	const [sort, setSort] = useState(null)
 
-	const getAllCategories = useAxiosSubmit({
-		url: ApiUrls.MEDICINE_CATEGORY.GET_ALL,
-		method: 'GET',
-		params: { ...appliedFilters, page, pageSize },
-		onSuccess: (res) => {
-			const data = res?.data
-			const list = data?.collection || []
-			setCategories(list)
-			setTotalCategories(data?.totalCount || list.length)
-		},
-	})
+	const [openCreateDialog, setOpenCreateDialog] = useState(false)
+	const [openUpdateDialog, setOpenUpdateDialog] = useState(false)
+
+	const getAllCategories = useFetch(
+		ApiUrls.MEDICINE_CATEGORY.INDEX,
+		{ ...filters, page, pageSize },
+		[filters, page, pageSize]
+	)
 
 	useEffect(() => {
-		getAllCategories.submit()
-	}, [appliedFilters, page, pageSize])
+		if (getAllCategories.data) {
+			const data = getAllCategories.data
+			setCategories(data.collection || [])
+			setTotalCategories(data.totalCount || 0)
+			setTotalPage(data.totalPage || 1)
+		}
+	}, [getAllCategories.data])
 
 	const createCategory = useAxiosSubmit({
 		url: ApiUrls.MEDICINE_CATEGORY.CREATE,
 		method: 'POST',
 		onSuccess: async () => {
 			setOpenCreateDialog(false)
-			await getAllCategories.submit()
+			await getAllCategories.fetch()
 		},
 	})
 
 	const updateCategory = useAxiosSubmit({
 		url: selectedCategory
 			? ApiUrls.MEDICINE_CATEGORY.UPDATE(selectedCategory.id)
-			: '/medicine-category',
+			: ApiUrls.MEDICINE_CATEGORY.INDEX,
 		method: 'PUT',
 		onSuccess: async () => {
 			setOpenUpdateDialog(false)
 			setSelectedCategory(null)
-			await getAllCategories.submit()
+			await getAllCategories.fetch()
 		},
 	})
 
@@ -65,32 +70,9 @@ const ManagerMedicineCategoryManagementPage = () => {
 		onSuccess: async () => {
 			setSelectedCategory(null)
 			setSelectedRows([])
-			await getAllCategories.submit()
+			await getAllCategories.fetch()
 		},
 	})
-
-	const handleFilterClick = () => {
-		setPage(1)
-		setAppliedFilters(filters)
-	}
-
-	const handleResetFilterClick = () => {
-		setFilters({ name: '' })
-		setAppliedFilters({ name: '' })
-		setPage(1)
-		setPageSize(10)
-	}
-
-	const formFields = [
-		{ key: 'name', title: t('medicine_category.field.name'), required: true },
-		{
-			key: 'description',
-			title: t('medicine_category.field.description'),
-			required: true,
-			multiline: true,
-			rows: 3,
-		},
-	]
 
 	const tableFields = [
 		{ key: 'id', title: t('medicine_category.field.id'), width: 15 },
@@ -137,35 +119,78 @@ const ManagerMedicineCategoryManagementPage = () => {
 		},
 	]
 
+	const formFields = [
+		{ key: 'name', title: t('medicine_category.field.name') },
+		{
+			key: 'description',
+			title: t('medicine_category.field.description'),
+			multiline: true,
+			rows: 3,
+		},
+	]
+
 	return (
-		<>
-			<ManageMedicineCategoryBasePage
-				headerTitleKey='medicine_category.title.medicine_category_management'
-				categories={categories}
-				totalCategories={totalCategories}
-				totalPage={Math.max(1, Math.ceil(totalCategories / pageSize))}
-				filters={filters}
-				setFilters={setFilters}
-				setSelectedCategory={setSelectedCategory}
-				selectedRows={selectedRows}
-				setSelectedRows={setSelectedRows}
-				onFilterClick={handleFilterClick}
-				onResetFilterClick={handleResetFilterClick}
-				onCreateClick={() => setOpenCreateDialog(true)}
-				fields={tableFields}
-				sort={sort}
-				setSort={setSort}
-				page={page}
-				setPage={setPage}
-				pageSize={pageSize}
-				setPageSize={setPageSize}
-				loading={
-					getAllCategories.loading ||
-					createCategory.loading ||
-					updateCategory.loading ||
-					deleteCategory.loading
-				}
-			/>
+		<Paper sx={{ p: 2 }}>
+			<Stack spacing={2}>
+				<Stack
+					direction='row'
+					alignItems='center'
+					justifyContent='space-between'
+					flexWrap='wrap'
+					rowGap={1}
+				>
+					<Typography variant='h5'>
+						{t('medicine_category.title.medicine_category_management')}
+					</Typography>
+					<Typography variant='body2' sx={{ color: 'text.secondary' }}>
+						[{t('medicine.placeholder.total')}: {totalCategories}]
+					</Typography>
+				</Stack>
+
+				<MedicineCategoryFilterBar
+					filters={filters}
+					loading={getAllCategories.loading}
+					onFilterClick={(newValues) => {
+						setFilters({ ...newValues, page: 1 })
+						setPage(1)
+						getAllCategories.fetch({ params: { ...newValues, page: 1, pageSize } })
+					}}
+					onResetFilterClick={() => {
+						const resetFilters = { name: '', page: 1 }
+						setFilters(resetFilters)
+						setPage(1)
+						setPageSize(10)
+						getAllCategories.fetch({ params: { ...resetFilters, page: 1, pageSize: 10 } })
+					}}
+					setOpenCreateDialog={setOpenCreateDialog}
+				/>
+
+				<Stack spacing={2} sx={{ width: '100%' }}>
+					<GenericTable
+						data={categories}
+						fields={tableFields}
+						rowKey='id'
+						sort={sort}
+						setSort={setSort}
+						selectedRows={selectedRows}
+						setSelectedRows={setSelectedRows}
+						stickyHeader
+						onRowClick={setSelectedCategory}
+					/>
+
+					<Stack justifyContent='center' px={2}>
+						<GenericTablePagination
+							totalPage={totalPage}
+							page={page}
+							setPage={setPage}
+							pageSize={pageSize}
+							setPageSize={setPageSize}
+							pageSizeOptions={[5, 10, 20]}
+							loading={getAllCategories.loading}
+						/>
+					</Stack>
+				</Stack>
+			</Stack>
 
 			<GenericFormDialog
 				title={t('medicine_category.dialog.create_title')}
@@ -175,8 +200,8 @@ const ManagerMedicineCategoryManagementPage = () => {
 				submitLabel={t('button.create')}
 				submitButtonColor='success'
 				onSubmit={async ({ values, closeDialog }) => {
-					await createCategory.submit(values)
-					closeDialog()
+					const response = await createCategory.submit(values)
+					if (response) closeDialog()
 				}}
 			/>
 
@@ -189,11 +214,11 @@ const ManagerMedicineCategoryManagementPage = () => {
 				submitLabel={t('button.update')}
 				submitButtonColor='info'
 				onSubmit={async ({ values, closeDialog }) => {
-					await updateCategory.submit(values)
-					closeDialog()
+					const response = await updateCategory.submit(values)
+					if (response) closeDialog()
 				}}
 			/>
-		</>
+		</Paper>
 	)
 }
 

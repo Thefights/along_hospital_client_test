@@ -8,7 +8,7 @@ import ManagerBlogManagementPage from '@/pages/managers/managerBlogManagementPag
 import BlogUpsertPage from '@/pages/managers/managerBlogUpsertPage/BlogUpsertPage'
 import ManagerMedicalHistoryManagementPage from '@/pages/managers/managerMedicalHistoryManagementPage/ManagerMedicalHistoryManagementPage'
 import ManagerMedicineCategoryManagementPage from '@/pages/managers/managerMedicineCategoryManagementPage/ManagerMedicineCategoryManagementPage'
-import ManagerMedicinePage from '@/pages/managers/managerMedicineManagementPage/ManagerMedicineManagementPage'
+import ManagerMedicineManagemntPage from '@/pages/managers/managerMedicineManagementPage/ManagerMedicineManagementPage'
 import SpecialtyManagementPage from '@/pages/managers/specialtyManagementPage/SpecialtyManagementPage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
@@ -36,7 +36,10 @@ const RouteManager = () => {
 						element={<MedicalHistoryDetailBasePage fetchUrl={ApiUrls.MEDICAL_HISTORY.MANAGEMENT.INDEX} />}
 					/>
 					<Route path={routeUrls.MANAGER.SPECIALTY_MANAGEMENT} element={<SpecialtyManagementPage />} />
-					<Route path={routeUrls.MANAGER.MEDICINE_MANAGEMENT.INDEX} element={<ManagerMedicinePage />} />
+					<Route
+						path={routeUrls.MANAGER.MEDICINE_MANAGEMENT.INDEX}
+						element={<ManagerMedicineManagemntPage />}
+					/>
 					<Route
 						path={routeUrls.MANAGER.MEDICINE_CATEGORY_MANAGEMENT.INDEX}
 						element={<ManagerMedicineCategoryManagementPage />}

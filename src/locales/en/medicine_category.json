@@ -8,18 +8,13 @@
     },
     "title": {
       "medicine_category_management": "Medicine Category Management",
-      "management": "Category Management"
-    },
-    "text": {
-      "no_data": "No data available",
-      "total": "Total"
+      "management": "Category Management",
+      "filter":"Filter Category"
     },
     "button": {
-      "add": "Add Category",
       "update": "Update Category",
       "delete": "Delete Category",
       "search": "Search",
-      "create": "Create",
       "reset": "Reset"
     },
     "dialog": {
@@ -30,7 +25,8 @@
     },
     "placeholder": {
       "no_data": "No data...",
-      "search": "Search category..."
+      "search": "Search category...",
+      "total": "Total"
     }
   }
 }

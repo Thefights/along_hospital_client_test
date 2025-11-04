@@ -54,7 +54,7 @@ export const ApiUrls = {
 	},
 	MEDICINE_CATEGORY: {
 		INDEX: `/medicine-category`,
-		GET_ALL: `/medicine-category`,
+		GET_ALL: `/medicine-category/all`,
 		CREATE: `/medicine-category`,
 		UPDATE: (id) => `/medicine-category/${id}`,
 		DELETE: (id) => `/medicine-category/${id}`,

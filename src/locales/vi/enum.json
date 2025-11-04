@@ -67,6 +67,17 @@
             "draft": "Đã soạn thảo",
             "resolved": "Đã giải quyết",
             "closed": "Đã đóng"
+        },
+        "medicine_unit": {
+            "tablet": "Viên nén",
+            "capsule": "Viên nang",
+            "milliliter": "Millilít",
+            "milligram": "Miligam",
+            "drop": "Giọt",
+            "spoon": "Thìa",
+            "bottle": "Chai",
+            "tube": "Tuýp",
+            "other": "Khác"
         }
     }
 }

@@ -9,7 +9,7 @@
                 "name": "Medicine Category",
                 "description": "Description"
             },
-            "price":"Price",
+            "price": "Price",
             "action": "Action",
             "quantity": "Quantity",
             "min_quantity": "Minimum quantity",
@@ -17,10 +17,6 @@
         },
         "title": {
             "medicine_management": "Medicine Management"
-         },
-        "text": {
-            "no_data": "No data available",
-            "total":"Total"
         },
         "filter": {
             "title": "Medicine Filter",
@@ -43,26 +39,14 @@
             "actions": "Actions"
         },
         "placeholder": {
-            "no_data": "No data..."
-        },
-        "enum": {
-            "medicine_unit": {
-                "tablet": "Tablet",
-                "capsule": "Capsule",
-                "milliliter": "Milliliter",
-                "milligram": "Milligram",
-                "drop": "Drop",
-                "spoon": "Spoon",
-                "bottle": "Bottle",
-                "tube": "Tube",
-                "other": "Other"
-            }
+            "no_data": "No data...",
+            "total": "Total"
         },
         "dialog": {
-                "create_title": "Create New Medicine",
-                "update_title": "Update Medicine",
-                "confirm_delete_title": "Delete Medicine?",
-                "confirm_delete_description": "Are you sure you want to delete \"{{name}}\"?"
+            "create_title": "Create New Medicine",
+            "update_title": "Update Medicine",
+            "confirm_delete_title": "Delete Medicine?",
+            "confirm_delete_description": "Are you sure you want to delete \"{{name}}\"?"
         }
     }
 }

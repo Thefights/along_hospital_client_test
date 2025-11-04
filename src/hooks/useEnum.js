@@ -145,39 +145,39 @@ export default function useEnum() {
 		medicineUnitOptions: [
 			{
 				value: EnumConfig.MedicineUnit.Tablet,
-				label: t('medicine.enum.medicine_unit.tablet'),
+				label: t('enum.medicine_unit.tablet'),
 			},
 			{
 				value: EnumConfig.MedicineUnit.Capsule,
-				label: t('medicine.enum.medicine_unit.capsule'),
+				label: t('enum.medicine_unit.capsule'),
 			},
 			{
 				value: EnumConfig.MedicineUnit.Milliliter,
-				label: t('medicine.enum.medicine_unit.milliliter'),
+				label: t('enum.medicine_unit.milliliter'),
 			},
 			{
 				value: EnumConfig.MedicineUnit.Milligram,
-				label: t('medicine.enum.medicine_unit.milligram'),
+				label: t('enum.medicine_unit.milligram'),
 			},
 			{
 				value: EnumConfig.MedicineUnit.Drop,
-				label: t('medicine.enum.medicine_unit.drop'),
+				label: t('enum.medicine_unit.drop'),
 			},
 			{
 				value: EnumConfig.MedicineUnit.Spoon,
-				label: t('medicine.enum.medicine_unit.spoon'),
+				label: t('enum.medicine_unit.spoon'),
 			},
 			{
 				value: EnumConfig.MedicineUnit.Bottle,
-				label: t('medicine.enum.medicine_unit.bottle'),
+				label: t('enum.medicine_unit.bottle'),
 			},
 			{
 				value: EnumConfig.MedicineUnit.Tube,
-				label: t('medicine.enum.medicine_unit.tube'),
+				label: t('enum.medicine_unit.tube'),
 			},
 			{
 				value: EnumConfig.MedicineUnit.Other,
-				label: t('medicine.enum.medicine_unit.other'),
+				label: t('enum.medicine_unit.other'),
 			},
 		],
 	}
