@@ -42,7 +42,7 @@ const ManagerMedicineManagementPage = () => {
 					categoryName: m.medicineCategory?.name ?? '',
 				})) || []
 			)
-			setTotalPage(data)
+			setTotalPage(data.totalPage)
 		}
 	}, [getAllMedicines.data])
 
@@ -57,7 +57,7 @@ const ManagerMedicineManagementPage = () => {
 		method: 'POST',
 		onSuccess: async () => {
 			setOpenCreateDialog(false)
-			await getAllMedicines.fetch()
+			await getAllMedicines.fetch({ params: { ...filters, page, pageSize } })
 		},
 	})
 
@@ -69,7 +69,7 @@ const ManagerMedicineManagementPage = () => {
 		onSuccess: async () => {
 			setOpenUpdateDialog(false)
 			setSelectedMedicine(null)
-			await getAllMedicines.fetch()
+			await getAllMedicines.fetch({ params: { ...filters, page, pageSize } })
 		},
 	})
 
@@ -77,7 +77,7 @@ const ManagerMedicineManagementPage = () => {
 		method: 'DELETE',
 		onSuccess: async () => {
 			setSelectedMedicine(null)
-			await getAllMedicines.fetch()
+			await getAllMedicines.fetch({ params: { ...filters, page, pageSize } })
 		},
 	})
 
@@ -147,15 +147,8 @@ const ManagerMedicineManagementPage = () => {
 
 	return (
 		<Paper sx={{ p: 2 }}>
-			<Stack direction='row' justifyContent='flex-end' mb={2}></Stack>
 			<Stack spacing={2}>
-				<Stack
-					direction='row'
-					alignItems='center'
-					justifyContent='space-between'
-					flexWrap='wrap'
-					rowGap={1}
-				>
+				<Stack direction='row' alignItems='center' justifyContent='space-between'>
 					<Typography variant='h5'>{t('medicine.title.medicine_management')}</Typography>
 					<Button
 						variant='contained'
@@ -174,11 +167,13 @@ const ManagerMedicineManagementPage = () => {
 					onFilterClick={(newValues) => {
 						setFilters(newValues)
 						setPage(1)
+						getAllMedicines.fetch({ params: { ...newValues, page: 1, pageSize } })
 					}}
 					onResetFilterClick={() => {
 						const resetFilters = { name: '', medicineCategoryId: '', medicineUnit: '' }
 						setFilters(resetFilters)
 						setPage(1)
+						getAllMedicines.fetch({ params: { ...resetFilters, page: 1, pageSize } })
 					}}
 				/>
 
