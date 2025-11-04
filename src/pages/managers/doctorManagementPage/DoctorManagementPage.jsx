@@ -8,20 +8,20 @@ import DoctorManagementFilterSection from './sections/DoctorManagementFilterSect
 import DoctorManagementTableSection from './sections/DoctorManagementTableSection'
 
 const DoctorManagementPage = () => {
+	const { t } = useTranslation()
+
 	const [filters, setFilters] = useState({ doctorName: '', specialtyId: '' })
 	const [sort, setSort] = useState({ key: 'id', direction: 'desc' })
 	const [page, setPage] = useState(1)
 	const [pageSize, setPageSize] = useState(10)
-
-	const { t } = useTranslation()
 
 	const getDoctors = useFetch(
 		ApiUrls.DOCTOR.MANAGEMENT.INDEX,
 		{ sort: `${sort.key} ${sort.direction}`, ...filters, page, pageSize },
 		[sort, filters, page, pageSize]
 	)
-
 	const getSpecialties = useFetch(ApiUrls.SPECIALTY.GET_ALL)
+	const getDepartments = useFetch(ApiUrls.DEPARTMENT.GET_ALL)
 
 	return (
 		<Paper sx={{ p: 2 }}>
@@ -35,6 +35,8 @@ const DoctorManagementPage = () => {
 				/>
 				<DoctorManagementTableSection
 					doctors={getDoctors.data?.collection}
+					specialties={getSpecialties.data}
+					departments={getDepartments.data}
 					loading={getDoctors.loading}
 					sort={sort}
 					setSort={setSort}

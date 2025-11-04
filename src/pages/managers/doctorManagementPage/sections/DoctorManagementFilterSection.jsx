@@ -16,8 +16,6 @@ const DoctorManagementFilterSection = ({
 
 	const [doctorName, setDoctorName] = useState(filters?.doctorName || '')
 
-	console.log(filters?.specialtyId)
-
 	const { values, handleChange, setField, registerRef } = useForm(filters)
 	const { renderField } = useFieldRenderer(
 		values,
