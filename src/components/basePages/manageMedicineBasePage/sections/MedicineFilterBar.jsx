@@ -3,7 +3,7 @@ import ResetFilterButton from '@/components/buttons/ResetFilterButton'
 import SearchBar from '@/components/generals/SearchBar'
 import ValidationTextField from '@/components/textFields/ValidationTextField'
 import useTranslation from '@/hooks/useTranslation'
-import { Button, Stack, Typography } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 
 export default function MedicineFilterBar({
@@ -87,9 +87,6 @@ export default function MedicineFilterBar({
 						onFilterClick()
 					}}
 				/>
-				<Button variant='contained' color='success' onClick={() => setOpenCreateDialog(true)}>
-					{t('button.create')}
-				</Button>
 			</Stack>
 		</Stack>
 	)

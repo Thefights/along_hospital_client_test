@@ -7,6 +7,7 @@ import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useConfirm } from '@/hooks/useConfirm'
 import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
+import { Button, Stack } from '@mui/material'
 import { useEffect, useState } from 'react'
 
 const ManagerMedicineManagementPage = () => {
@@ -159,29 +160,43 @@ const ManagerMedicineManagementPage = () => {
 
 	return (
 		<>
-			<ManageMedicineBasePage
-				headerTitle={t('medicine.title.medicine_management')}
-				medicines={medicines}
-				totalMedicines={totalMedicines}
-				totalPage={Math.ceil(totalMedicines / pageSize)}
-				filters={filters}
-				setFilters={setFilters}
-				page={page}
-				setPage={setPage}
-				pageSize={pageSize}
-				setPageSize={setPageSize}
-				selectedRows={selectedRows}
-				setSelectedRows={setSelectedRows}
-				onFilterClick={handleFilterClick}
-				fields={tableFields}
-				categories={categories}
-				loading={
-					getAllMedicines.loading ||
-					createMedicine.loading ||
-					updateMedicine.loading ||
-					deleteMedicine.loading
-				}
-			/>
+			<Stack spacing={2}>
+				<Stack direction='row' justifyContent='flex-end' alignItems='center'>
+					{/* Nút Create bên phải */}
+					<Button
+						variant='contained'
+						color='success'
+						onClick={() => setOpenCreateDialog(true)}
+						sx={{ minWidth: 120 }}
+					>
+						{t('button.create')}
+					</Button>
+				</Stack>
+
+				<ManageMedicineBasePage
+					headerTitle={t('medicine.title.medicine_management')}
+					medicines={medicines}
+					totalMedicines={totalMedicines}
+					totalPage={Math.ceil(totalMedicines / pageSize)}
+					filters={filters}
+					setFilters={setFilters}
+					page={page}
+					setPage={setPage}
+					pageSize={pageSize}
+					setPageSize={setPageSize}
+					selectedRows={selectedRows}
+					setSelectedRows={setSelectedRows}
+					onFilterClick={handleFilterClick}
+					fields={tableFields}
+					categories={categories}
+					loading={
+						getAllMedicines.loading ||
+						createMedicine.loading ||
+						updateMedicine.loading ||
+						deleteMedicine.loading
+					}
+				/>
+			</Stack>
 
 			<GenericFormDialog
 				title={t('medicine.dialog.create_title')}

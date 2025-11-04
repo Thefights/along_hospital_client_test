@@ -45,23 +45,31 @@ const ManageMedicineCategoryBasePage = ({
 						[{t('medicine.text.total')}: {totalCategories}]
 					</Typography>
 				</Stack>
+				<Stack
+					direction='row'
+					alignItems='center'
+					justifyContent='space-between'
+					flexWrap='wrap'
+					spacing={2}
+				>
+					<Stack direction='row' spacing={1} alignItems='center' flexWrap='wrap'>
+						<ValidationTextField
+							variant='outlined'
+							label={t('text.search')}
+							size='small'
+							required={false}
+							value={filters.name ?? ''}
+							onChange={(e) => setFilters({ ...filters, name: e.target.value })}
+							sx={{ flex: 1, minWidth: 160 }}
+						/>
+						<FilterButton variant='contained' onClick={onFilterClick}>
+							{t('button.search')}
+						</FilterButton>
+						<ResetFilterButton loading={loading} onResetFilterClick={onResetFilterClick}>
+							{t('medicine_category.button.reset')}
+						</ResetFilterButton>
+					</Stack>
 
-				<Stack direction='row' spacing={1} alignItems='center' flexWrap='wrap'>
-					<ValidationTextField
-						variant='outlined'
-						label={t('text.search')}
-						size='small'
-						required={false}
-						value={filters.name ?? ''}
-						onChange={(e) => setFilters({ ...filters, name: e.target.value })}
-						sx={{ flex: 1, minWidth: 160 }}
-					/>
-					<FilterButton variant='contained' onClick={onFilterClick}>
-						{t('button.search')}
-					</FilterButton>
-					<ResetFilterButton loading={loading} onResetFilterClick={onResetFilterClick}>
-						{t('medicine_category.button.reset')}
-					</ResetFilterButton>
 					<Button variant='contained' color='success' onClick={onCreateClick} sx={{ minWidth: 120 }}>
 						{t('button.create')}
 					</Button>
