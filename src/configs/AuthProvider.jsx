@@ -5,8 +5,10 @@ import { useLocalStorage } from '@/hooks/useStorage'
 import { resetAuthStore, setAuthStore } from '@/redux/reducers/authReducer'
 import { createContext, useEffect, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { ApiUrls } from './apiUrls'
 import axiosConfig from './axiosConfig'
+import { routeUrls } from './routeUrls'
 
 export const AuthContext = createContext(null)
 
@@ -14,6 +16,8 @@ const AuthProvider = ({ children }) => {
 	const dispatch = useDispatch()
 	const [accessToken, setAccessToken, removeAccessToken] = useLocalStorage('accessToken')
 	const [refreshToken, setRefreshToken, removeRefreshToken] = useLocalStorage('refreshToken')
+
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		const fetchToken = async () => {
@@ -38,6 +42,7 @@ const AuthProvider = ({ children }) => {
 				await axiosConfig.post(ApiUrls.AUTH.LOGOUT, { refreshToken })
 			}
 		} finally {
+			navigate(routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.LOGIN))
 			removeAccessToken()
 			removeRefreshToken()
 			dispatch(resetAuthStore())

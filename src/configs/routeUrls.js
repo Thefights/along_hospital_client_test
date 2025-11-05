@@ -71,5 +71,6 @@ export const routeUrls = {
 		},
 		COMPLAINT_MANAGEMENT: '/complaint',
 		SPECIALTY_MANAGEMENT: '/specialty',
+		VOUCHER_MANAGEMENT: '/voucher',
 	},
 }

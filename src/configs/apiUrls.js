@@ -112,4 +112,11 @@ export const ApiUrls = {
 			DETAIL: (id) => `/Blog-Management/${id}`,
 		},
 	},
+	VOUCHER: {
+		INDEX: `/voucher`,
+		MANAGEMENT: {
+			INDEX: `/voucher-management`,
+			DETAIL: (id) => `/voucher-management/${id}`,
+		},
+	},
 }

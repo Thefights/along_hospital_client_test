@@ -114,4 +114,18 @@ export const EnumConfig = {
 		Tube: 'Tube',
 		Other: 'Other',
 	},
+
+	//Voucher
+	VoucherStatus: {
+		Active: 'Active',
+		Expired: 'Expired',
+	},
+	VoucherType: {
+		Patient: 'Patient',
+		Medicine: 'Medicine',
+	},
+	DiscountType: {
+		Percentage: 'Percentage',
+		FixedAmount: 'FixedAmount',
+	},
 }
