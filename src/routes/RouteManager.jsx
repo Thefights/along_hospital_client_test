@@ -1,6 +1,8 @@
 import MedicalHistoryDetailBasePage from '@/components/basePages/medicalHistoryDetailBasePage/MedicalHistoryDetailBasePage'
 import { ApiUrls } from '@/configs/apiUrls'
+import { EnumConfig } from '@/configs/enumConfig'
 import { routeUrls } from '@/configs/routeUrls'
+import useAuth from '@/hooks/useAuth'
 import LayoutManager from '@/layouts/LayoutManager'
 import NotFoundPage from '@/pages/commons/NotFoundPage'
 import ComplaintManagementPage from '@/pages/managers/complaintManagementPage/ComplaintManagementPage'
@@ -16,9 +18,18 @@ import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 
 const RouteManager = () => {
+	const { auth, getReturnUrlByRole } = useAuth()
+
 	return (
 		<Routes>
-			<Route element={<ProtectedRoute allowRoles={[]} />}>
+			<Route
+				element={
+					<ProtectedRoute
+						allowRoles={[EnumConfig.Role.Manager]}
+						unauthorizedPath={getReturnUrlByRole(auth?.role)}
+					/>
+				}
+			>
 				<Route element={<LayoutManager />}>
 					<Route path={routeUrls.MANAGER.DASHBOARD} element={<div>Dashboard</div>} />
 					<Route

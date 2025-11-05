@@ -19,7 +19,11 @@ const ProtectedRoute = ({
 		return <Navigate to={redirectPath} replace state={{ from: location }} />
 	}
 
-	if (auth.stage !== EnumConfig.AuthStage.Done && location.pathname !== completeProfilePath) {
+	if (
+		auth.stage &&
+		auth.stage !== EnumConfig.AuthStage.Done &&
+		location.pathname !== completeProfilePath
+	) {
 		return <Navigate to={completeProfilePath} replace />
 	}
 

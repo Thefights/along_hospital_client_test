@@ -33,7 +33,7 @@ const CompleteProfilePage = () => {
 	const fields = [
 		{
 			key: 'name',
-			title: t('profile.field.full_name') || t('profile.field.name'),
+			title: t('profile.field.name'),
 			type: 'text',
 			validate: [minLen(2), maxLen(255)],
 			props: { placeholder: t('profile.placeholder.name') },

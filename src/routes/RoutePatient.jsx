@@ -1,6 +1,8 @@
 import MedicalHistoryDetailBasePage from '@/components/basePages/medicalHistoryDetailBasePage/MedicalHistoryDetailBasePage'
 import { ApiUrls } from '@/configs/apiUrls'
+import { EnumConfig } from '@/configs/enumConfig'
 import { routeUrls } from '@/configs/routeUrls'
+import useAuth from '@/hooks/useAuth'
 import LayoutPatient from '@/layouts/LayoutPatient'
 import NotFoundPage from '@/pages/commons/NotFoundPage'
 import CreateAppointmentPage from '@/pages/patients/createAppointmentPage/CreateAppointmentPage'
@@ -11,9 +13,18 @@ import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 
 const RoutePatient = () => {
+	const { auth, getReturnUrlByRole } = useAuth()
+
 	return (
 		<Routes>
-			<Route element={<ProtectedRoute allowRoles={[]} />}>
+			<Route
+				element={
+					<ProtectedRoute
+						allowRoles={[EnumConfig.Role.Patient]}
+						unauthorizedPath={getReturnUrlByRole(auth?.role)}
+					/>
+				}
+			>
 				<Route element={<LayoutPatient />}>
 					<Route path={routeUrls.PATIENT.PROFILE} element={<ProfilePage />} />
 					<Route path={routeUrls.PATIENT.APPOINTMENT.CREATE} element={<CreateAppointmentPage />} />
