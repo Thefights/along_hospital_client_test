@@ -30,6 +30,7 @@ const GenericFormDialog = ({
 	submitLabel,
 	submitButtonColor = 'primary',
 	maxWidth = 'sm',
+	onValuesChange = (values) => Promise.resolve(values),
 	onSubmit = ({ values, closeDialog, setField }) =>
 		Promise.resolve({ values, closeDialog, setField }),
 	additionalButtons = [],
@@ -63,6 +64,10 @@ const GenericFormDialog = ({
 			reset(startValues)
 		}
 	}, [open])
+
+	useEffect(() => {
+		onValuesChange?.(values)
+	}, [values])
 
 	const handleClose = useCallback(() => {
 		reset(startValues)
