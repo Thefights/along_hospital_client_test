@@ -47,10 +47,6 @@ const DoctorManagementTableSection = ({
 		url: ApiUrls.DOCTOR.MANAGEMENT.DETAIL(selectedRow.id),
 		method: 'PUT',
 	})
-	const deleteDoctor = useAxiosSubmit({
-		url: ApiUrls.DOCTOR.MANAGEMENT.DETAIL(''),
-		method: 'DELETE',
-	})
 	const deleteSelectedDoctors = useAxiosSubmit({
 		url: ApiUrls.DOCTOR.MANAGEMENT.DELETE_SELECTED,
 		method: 'DELETE',
@@ -73,24 +69,6 @@ const DoctorManagementTableSection = ({
 			refetch()
 		}
 	}
-
-	const handleDeleteClick = useCallback(
-		async (row) => {
-			const isConfirmed = await confirm({
-				confirmText: t('button.delete'),
-				confirmColor: 'error',
-				title: t('doctor.title.doctor_management'),
-				description: `${t('specialty.title.delete_confirm')} ${row.name}?`,
-			})
-			if (isConfirmed) {
-				const res = await deleteDoctor.submit(null, {
-					overrideUrl: ApiUrls.DOCTOR.MANAGEMENT.DETAIL(row.id),
-				})
-				if (res) refetch()
-			}
-		},
-		[confirm, t, deleteDoctor, refetch]
-	)
 
 	const handleDeleteSelectedClick = useCallback(async () => {
 		if (selectedIds.length === 0) return
@@ -134,16 +112,12 @@ const DoctorManagementTableSection = ({
 									setOpenUpdate(true)
 								},
 							},
-							{
-								title: t('button.delete'),
-								onClick: () => handleDeleteClick(row),
-							},
 						]}
 					/>
 				),
 			},
 		],
-		[t, handleDeleteClick]
+		[t]
 	)
 
 	const upsertFields = useMemo(

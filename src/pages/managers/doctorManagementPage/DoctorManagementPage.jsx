@@ -1,7 +1,9 @@
 import { GenericTablePagination } from '@/components/generals/GenericPagination'
 import { ApiUrls } from '@/configs/apiUrls'
 import useFetch from '@/hooks/useFetch'
+import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
+import { setDepartmentsStore, setSpecialtiesStore } from '@/redux/reducers/managementReducer'
 import { Paper, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 import DoctorManagementFilterSection from './sections/DoctorManagementFilterSection'
@@ -20,8 +22,16 @@ const DoctorManagementPage = () => {
 		{ sort: `${sort.key} ${sort.direction}`, ...filters, page, pageSize },
 		[sort, filters, page, pageSize]
 	)
-	const getSpecialties = useFetch(ApiUrls.SPECIALTY.GET_ALL)
-	const getDepartments = useFetch(ApiUrls.DEPARTMENT.GET_ALL)
+
+	const specialtyStore = useReduxStore({
+		selector: (state) => state.management.specialties,
+		setStore: setSpecialtiesStore,
+	})
+
+	const departmentStore = useReduxStore({
+		selector: (state) => state.management.departments,
+		setStore: setDepartmentsStore,
+	})
 
 	return (
 		<Paper sx={{ p: 2 }}>
@@ -31,12 +41,12 @@ const DoctorManagementPage = () => {
 					filters={filters}
 					setFilters={setFilters}
 					loading={getDoctors.loading}
-					specialties={getSpecialties.data}
+					specialties={specialtyStore.data}
 				/>
 				<DoctorManagementTableSection
 					doctors={getDoctors.data?.collection}
-					specialties={getSpecialties.data}
-					departments={getDepartments.data}
+					specialties={specialtyStore.data}
+					departments={departmentStore.data}
 					loading={getDoctors.loading}
 					sort={sort}
 					setSort={setSort}
