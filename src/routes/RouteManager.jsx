@@ -8,7 +8,7 @@ import ManagerBlogManagementPage from '@/pages/managers/managerBlogManagementPag
 import BlogUpsertPage from '@/pages/managers/managerBlogUpsertPage/BlogUpsertPage'
 import ManagerDepartmentManagementPage from '@/pages/managers/managerDepartmentManagementPage/ManagerDepartmentManagementPage'
 import ManagerMedicalHistoryManagementPage from '@/pages/managers/managerMedicalHistoryManagementPage/ManagerMedicalHistoryManagementPage'
-import ManageMedicalServiceManagementPage from '@/pages/managers/managerMedicalServiceManagementPage/ManagerMedicalServiceManagemnetPage'
+import ManagerMedicalServiceManagementPage from '@/pages/managers/managerMedicalServiceManagementPage/ManagerMedicalServiceManagemnetPage'
 import SpecialtyManagementPage from '@/pages/managers/specialtyManagementPage/SpecialtyManagementPage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
@@ -37,7 +37,7 @@ const RouteManager = () => {
 					/>
 					<Route
 						path={routeUrls.MANAGER.MEDICAL_SERVICE}
-						element={<ManageMedicalServiceManagementPage />}
+						element={<ManagerMedicalServiceManagementPage />}
 					/>
 					<Route
 						path={routeUrls.MANAGER.MEDICAL_HISTORY.DETAIL(':id')}
