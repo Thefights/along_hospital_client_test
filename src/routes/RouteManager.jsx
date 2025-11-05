@@ -8,6 +8,7 @@ import ManagerBlogManagementPage from '@/pages/managers/managerBlogManagementPag
 import BlogUpsertPage from '@/pages/managers/managerBlogUpsertPage/BlogUpsertPage'
 import ManagerMedicalHistoryManagementPage from '@/pages/managers/managerMedicalHistoryManagementPage/ManagerMedicalHistoryManagementPage'
 import SpecialtyManagementPage from '@/pages/managers/specialtyManagementPage/SpecialtyManagementPage'
+import ProfilePage from '@/pages/ProfilePage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 
@@ -17,6 +18,7 @@ const RouteManager = () => {
 			<Route element={<ProtectedRoute allowRoles={[]} />}>
 				<Route element={<LayoutManager />}>
 					<Route path={routeUrls.MANAGER.DASHBOARD} element={<div>Dashboard</div>} />
+					<Route path={routeUrls.MANAGER.PROFILE} element={<ProfilePage />} />
 					<Route
 						path={routeUrls.MANAGER.APPOINTMENT_MANAGEMENT}
 						element={<ManagerAppointmentManagementPage />}

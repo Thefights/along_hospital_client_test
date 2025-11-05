@@ -5,6 +5,7 @@ import LayoutDoctor from '@/layouts/LayoutDoctor'
 import CreateMedicalHistoryPage from '@/pages/doctors/createMedicalHistoryPage/CreateMedicalHistoryPage'
 import DoctorAppointmentManagementPage from '@/pages/doctors/doctorAppointmentManagementPage/DoctorAppointmentManagementPage'
 import DoctorMedicalHistoryManagementPage from '@/pages/doctors/doctorMedicalHistoryManagementPage/DoctorMedicalHistoryManagementPage'
+import ProfilePage from '@/pages/ProfilePage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 
@@ -14,6 +15,7 @@ const RouteDoctor = () => {
 			<Route element={<ProtectedRoute allowRoles={[]} />}>
 				<Route element={<LayoutDoctor />}>
 					<Route path='/' element={<div>Dashboard</div>} />
+					<Route path={routeUrls.DOCTOR.PROFILE} element={<ProfilePage />} />
 					<Route
 						path={routeUrls.DOCTOR.APPOINTMENT_MANAGEMENT}
 						element={<DoctorAppointmentManagementPage />}
