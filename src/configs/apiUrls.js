@@ -43,10 +43,21 @@ export const ApiUrls = {
 	},
 	MEDICINE: {
 		INDEX: `/medicine`,
+		GETALL: `/medicine`,
 		MANAGEMENT: {
 			INDEX: `/medicine-management`,
 			GET_ALL: `/medicine-management/all`,
+			CREATE: `/medicine-management`,
+			UPDATE: (id) => `/medicine-management/${id}`,
+			DELETE: (id) => `/medicine-management/${id}`,
 		},
+	},
+	MEDICINE_CATEGORY: {
+		INDEX: `/medicine-category`,
+		GET_ALL: `/medicine-category/all`,
+		CREATE: `/medicine-category`,
+		UPDATE: (id) => `/medicine-category/${id}`,
+		DELETE: (id) => `/medicine-category/${id}`,
 	},
 	MEDICAL_SERVICE: {
 		INDEX: `/medical-service`,

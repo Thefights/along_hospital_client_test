@@ -70,6 +70,17 @@
             "draft": "Draft",
             "resolved": "Resolved",
             "closed": "Closed"
+        },
+        "medicine_unit": {
+            "tablet": "Tablet",
+            "capsule": "Capsule",
+            "milliliter": "Milliliter",
+            "milligram": "Milligram",
+            "drop": "Drop",
+            "spoon": "Spoon",
+            "bottle": "Bottle",
+            "tube": "Tube",
+            "other": "Other"
         }
     }
 }

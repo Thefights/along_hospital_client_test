@@ -101,4 +101,17 @@ export const EnumConfig = {
 		Guide: 'Guide',
 		Other: 'Other',
 	},
+
+	// For medicines
+	MedicineUnit: {
+		Tablet: 'Tablet',
+		Capsule: 'Capsule',
+		Milliliter: 'Milliliter',
+		Milligram: 'Milligram',
+		Drop: 'Drop',
+		Spoon: 'Spoon',
+		Bottle: 'Bottle',
+		Tube: 'Tube',
+		Other: 'Other',
+	},
 }

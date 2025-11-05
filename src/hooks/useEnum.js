@@ -145,6 +145,44 @@ export default function useEnum() {
 				label: t('enum.complaint_resolve_status.closed'),
 			},
 		],
+		medicineUnitOptions: [
+			{
+				value: EnumConfig.MedicineUnit.Tablet,
+				label: t('enum.medicine_unit.tablet'),
+			},
+			{
+				value: EnumConfig.MedicineUnit.Capsule,
+				label: t('enum.medicine_unit.capsule'),
+			},
+			{
+				value: EnumConfig.MedicineUnit.Milliliter,
+				label: t('enum.medicine_unit.milliliter'),
+			},
+			{
+				value: EnumConfig.MedicineUnit.Milligram,
+				label: t('enum.medicine_unit.milligram'),
+			},
+			{
+				value: EnumConfig.MedicineUnit.Drop,
+				label: t('enum.medicine_unit.drop'),
+			},
+			{
+				value: EnumConfig.MedicineUnit.Spoon,
+				label: t('enum.medicine_unit.spoon'),
+			},
+			{
+				value: EnumConfig.MedicineUnit.Bottle,
+				label: t('enum.medicine_unit.bottle'),
+			},
+			{
+				value: EnumConfig.MedicineUnit.Tube,
+				label: t('enum.medicine_unit.tube'),
+			},
+			{
+				value: EnumConfig.MedicineUnit.Other,
+				label: t('enum.medicine_unit.other'),
+			},
+		],
 	}
 }
 
