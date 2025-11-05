@@ -7,15 +7,15 @@ import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useConfirm } from '@/hooks/useConfirm'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
+import DepartmentFilterBarSection from '@/pages/managers/managerDepartmentManagementPage/section/DepartmentFilterBarSection'
 import { Button, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-import DepartmentFilterBarSection from '@/components/basePages/managerDepartmentBasePage/section/DepartmentFilterBarSection'
 
 const ManagerDepartmentManagementPage = () => {
 	const { t } = useTranslation()
 	const confirm = useConfirm()
 
-	const [filters, setFilters] = useState({ search: '' })
+	const [filters, setFilters] = useState({ name: '' })
 	const [page, setPage] = useState(1)
 	const [pageSize, setPageSize] = useState(10)
 	const [departments, setDepartments] = useState([])
@@ -43,19 +43,17 @@ const ManagerDepartmentManagementPage = () => {
 		method: 'POST',
 		onSuccess: async () => {
 			setOpenCreateDialog(false)
-			await getAllDepartments.fetch({ params: { ...filters, page, pageSize } })
+			await getAllDepartments.fetch()
 		},
 	})
 
 	const updateDepartment = useAxiosSubmit({
-		url: selectedDepartment
-			? ApiUrls.DEPARTMENT.MANAGEMENT.UPDATE(selectedDepartment.id)
-			: ApiUrls.DEPARTMENT.MANAGEMENT.CREATE,
+		url: ApiUrls.DEPARTMENT.MANAGEMENT.UPDATE(selectedDepartment?.id),
 		method: 'PUT',
 		onSuccess: async () => {
 			setOpenUpdateDialog(false)
 			setSelectedDepartment(null)
-			await getAllDepartments.fetch({ params: { ...filters, page, pageSize } })
+			await getAllDepartments.fetch()
 		},
 	})
 
@@ -63,7 +61,7 @@ const ManagerDepartmentManagementPage = () => {
 		method: 'DELETE',
 		onSuccess: async () => {
 			setSelectedDepartment(null)
-			await getAllDepartments.fetch({ params: { ...filters, page, pageSize } })
+			await getAllDepartments.fetch()
 		},
 	})
 
@@ -133,13 +131,11 @@ const ManagerDepartmentManagementPage = () => {
 					onFilterClick={(newFilters) => {
 						setFilters(newFilters)
 						setPage(1)
-						getAllDepartments.fetch({ params: { ...newFilters, page: 1, pageSize } })
 					}}
 					onResetFilterClick={() => {
-						const reset = { search: '' }
+						const reset = { name: '' }
 						setFilters(reset)
 						setPage(1)
-						getAllDepartments.fetch({ params: { ...reset, page: 1, pageSize } })
 					}}
 				/>
 

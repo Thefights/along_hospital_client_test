@@ -1,3 +1,4 @@
+import MedicalServiceFilterBarSection from '@/pages/managers/managerMedicalServiceManagementPage/section/MedicalServiceFilterBarSection'
 import GenericFormDialog from '@/components/dialogs/commons/GenericFormDialog'
 import ActionMenu from '@/components/generals/ActionMenu'
 import { GenericTablePagination } from '@/components/generals/GenericPagination'
@@ -10,8 +11,6 @@ import useTranslation from '@/hooks/useTranslation'
 import { Button, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 
-import MedicalServiceFilterBarSection from '@/components/basePages/manageMedicalServiceBasePage/section/MedicalServiceFilterBarSection'
-
 const ManageMedicalServiceManagementPage = () => {
 	const { t } = useTranslation()
 	const confirm = useConfirm()
@@ -19,12 +18,10 @@ const ManageMedicalServiceManagementPage = () => {
 	const [filters, setFilters] = useState({ name: '' })
 	const [page, setPage] = useState(1)
 	const [pageSize, setPageSize] = useState(10)
-
 	const [medicalServices, setMedicalServices] = useState([])
 	const [totalPage, setTotalPage] = useState(1)
 	const [selectedRows, setSelectedRows] = useState([])
 	const [selectedMedicalService, setSelectedMedicalService] = useState(null)
-
 	const [openCreateDialog, setOpenCreateDialog] = useState(false)
 	const [openUpdateDialog, setOpenUpdateDialog] = useState(false)
 
@@ -38,7 +35,7 @@ const ManageMedicalServiceManagementPage = () => {
 		if (getAllMedicalServices.data) {
 			const data = getAllMedicalServices.data
 			setMedicalServices(data.collection || [])
-			setTotalPage(Math.max(1, Math.ceil((data.totalCount || 0) / pageSize)))
+			setTotalPage(data.totalPage)
 		}
 	}, [getAllMedicalServices.data, pageSize])
 
@@ -52,9 +49,7 @@ const ManageMedicalServiceManagementPage = () => {
 	})
 
 	const updateMedicalService = useAxiosSubmit({
-		url: selectedMedicalService
-			? ApiUrls.MEDICAL_SERVICE.MANAGEMENT.UPDATE(selectedMedicalService.id)
-			: ApiUrls.MEDICAL_SERVICE.MANAGEMENT.CREATE,
+		url:  ApiUrls.MEDICAL_SERVICE.MANAGEMENT.UPDATE(selectedMedicalService?.id),
 		method: 'PUT',
 		onSuccess: async () => {
 			setOpenUpdateDialog(false)
@@ -113,6 +108,18 @@ const ManageMedicalServiceManagementPage = () => {
 		},
 	]
 
+	const formFields = [
+		{ key: 'name', title: t('medical_service.field.name'), required: true },
+		{
+			key: 'description',
+			title: t('medical_service.field.description'),
+			required: true,
+			multiline: true,
+			rows: 3,
+		},
+		{ key: 'price', title: t('medical_service.field.price'), required: true, type: 'number' },
+	]
+
 	return (
 		<Paper sx={{ p: 2 }}>
 			<Stack spacing={2}>
@@ -129,13 +136,10 @@ const ManageMedicalServiceManagementPage = () => {
 					onFilterClick={(newFilters) => {
 						setFilters(newFilters)
 						setPage(1)
-						getAllMedicalServices.fetch({ params: { ...newFilters, page: 1, pageSize } })
 					}}
 					onResetFilterClick={() => {
-						const reset = { name: '' }
-						setFilters(reset)
+						setFilters({ name: '' })
 						setPage(1)
-						getAllMedicalServices.fetch({ params: { ...reset, page: 1, pageSize } })
 					}}
 				/>
 
@@ -156,6 +160,7 @@ const ManageMedicalServiceManagementPage = () => {
 						setPageSize(size)
 						setPage(1)
 					}}
+					pageSizeOptions={[5, 10, 20]}
 					loading={getAllMedicalServices.loading}
 				/>
 			</Stack>
@@ -164,17 +169,7 @@ const ManageMedicalServiceManagementPage = () => {
 				title={t('medical_service.dialog.create_title')}
 				open={openCreateDialog}
 				onClose={() => setOpenCreateDialog(false)}
-				fields={[
-					{ key: 'name', title: t('medical_service.field.name'), required: true },
-					{
-						key: 'description',
-						title: t('medical_service.field.description'),
-						required: true,
-						multiline: true,
-						rows: 3,
-					},
-					{ key: 'price', title: t('medical_service.field.price'), required: true, type: 'number' },
-				]}
+				fields={formFields}
 				submitLabel={t('button.create')}
 				submitButtonColor='success'
 				onSubmit={async ({ values, closeDialog }) => {
@@ -187,17 +182,7 @@ const ManageMedicalServiceManagementPage = () => {
 				title={t('medical_service.dialog.update_title')}
 				open={openUpdateDialog}
 				onClose={() => setOpenUpdateDialog(false)}
-				fields={[
-					{ key: 'name', title: t('medical_service.field.name'), required: true },
-					{
-						key: 'description',
-						title: t('medical_service.field.description'),
-						required: true,
-						multiline: true,
-						rows: 3,
-					},
-					{ key: 'price', title: t('medical_service.field.price'), required: true, type: 'number' },
-				]}
+				fields={formFields}
 				initialValues={selectedMedicalService || {}}
 				submitLabel={t('button.update')}
 				submitButtonColor='info'

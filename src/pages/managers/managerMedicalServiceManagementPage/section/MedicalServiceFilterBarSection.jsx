@@ -4,15 +4,16 @@ import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
 import { Stack, Typography } from '@mui/material'
+import { useEffect } from 'react'
 
-const DepartmentFilterBarSection = ({
+const MedicalServiceFilterBarSection = ({
 	filters,
 	loading = false,
 	onFilterClick = () => {},
 	onResetFilterClick = () => {},
 }) => {
 	const { t } = useTranslation()
-	const { values, handleChange, setField, registerRef } = useForm(filters)
+	const { values, handleChange, setField, registerRef, reset } = useForm(filters)
 	const { renderField } = useFieldRenderer(
 		values,
 		setField,
@@ -23,14 +24,11 @@ const DepartmentFilterBarSection = ({
 		'small'
 	)
 
-	const fields = [
-		{
-			key: 'search',
-			title: t('text.search'),
-			type: 'search',
-			required: false,
-		},
-	]
+	const fields = [{ key: 'name', title: t('text.search'), type: 'search', required: false }]
+
+	useEffect(() => {
+		reset(filters)
+	}, [filters, reset])
 
 	return (
 		<Stack
@@ -44,18 +42,18 @@ const DepartmentFilterBarSection = ({
 				borderRadius: 1,
 			}}
 		>
-			<Typography variant='caption'>{t('department.title.filter')}</Typography>
+			<Typography variant='caption'>{t('medical_service.title.filter')}</Typography>
 			<Stack direction='row' spacing={2} alignItems='center'>
 				{fields.map(renderField)}
 				<FilterButton onFilterClick={() => onFilterClick(values)} loading={loading} />
 				<ResetFilterButton
 					loading={loading}
-					onResetFilterClick={onResetFilterClick}
-					sx={{ minWidth: 10 }}
+					onResetFilterClick={() => onResetFilterClick(reset)}
+					sx={{ minWidth: 180 }}
 				/>
 			</Stack>
 		</Stack>
 	)
 }
 
-export default DepartmentFilterBarSection
+export default MedicalServiceFilterBarSection
