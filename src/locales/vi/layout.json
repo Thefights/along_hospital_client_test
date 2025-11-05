@@ -9,6 +9,7 @@
         "blog": "Blog",
         "about_us": "Về chúng tôi",
         "user_menu": {
+            "dashboard": "Bảng điều khiển",
             "profile": "Hồ sơ",
             "appointments": "Cuộc hẹn",
             "medical_history": "Lịch sử y tế",

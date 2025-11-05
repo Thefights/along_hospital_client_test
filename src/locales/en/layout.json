@@ -9,6 +9,7 @@
         "blog": "Blog",
         "about_us": "About Us",
         "user_menu": {
+            "dashboard": "Dashboard",
             "profile": "Profile",
             "appointments": "Appointments",
             "medical_history": "Medical History",

@@ -1,11 +1,14 @@
 import Footer from '@/components/layouts/Footer'
 import Header from '@/components/layouts/Header'
+import { EnumConfig } from '@/configs/enumConfig'
 import { routeUrls } from '@/configs/routeUrls'
+import useAuth from '@/hooks/useAuth'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
 import { setCartStore, setProfileStore } from '@/redux/reducers/patientReducer'
 import {
 	AssignmentOutlined,
+	Dashboard,
 	EventAvailable,
 	HistoryOutlined,
 	LockReset,
@@ -26,7 +29,11 @@ const LayoutPatient = () => {
 		dataToGet: (cart) => cart?.cartDetails?.length || 0,
 	})
 
+	const { auth, getReturnUrlByRole } = useAuth()
+	const isPatient = auth?.role === EnumConfig.Role.Patient
+
 	const { t } = useTranslation()
+
 	const items = [
 		{ label: t('header.home'), url: '/' },
 		{
@@ -40,6 +47,14 @@ const LayoutPatient = () => {
 		{ label: t('header.specialty'), url: routeUrls.HOME.SPECIALTY },
 		{ label: t('header.blog'), url: routeUrls.HOME.BLOG },
 		{ label: t('header.about_us'), url: routeUrls.HOME.ABOUT_US },
+	]
+
+	const notUserMenuItems = [
+		{
+			label: t('header.user_menu.dashboard'),
+			url: getReturnUrlByRole(auth?.role),
+			icon: <Dashboard />,
+		},
 	]
 
 	const userMenuItems = [
@@ -109,7 +124,7 @@ const LayoutPatient = () => {
 			<Header
 				items={items}
 				isAuthenticated={true}
-				userMenuItems={userMenuItems}
+				userMenuItems={isPatient ? userMenuItems : notUserMenuItems}
 				profile={profileStore.data}
 				cartCount={cartCountStore.data}
 			/>
