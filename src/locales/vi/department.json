@@ -1,7 +1,8 @@
 {
   "department": {
     "title": {
-      "department_management": "Quản lý phòng ban"
+      "department_management": "Quản lý phòng ban",
+      "filter":"Bộ lọc phòng ban"
     },
     "text": {
       "total": "Tổng số phòng ban",
@@ -17,7 +18,7 @@
       "create_title": "Tạo phòng ban mới",
       "update_title": "Cập nhật phòng ban",
       "confirm_delete_title": "Xác nhận xoá phòng ban",
-      "confirm_delete_description": "Bạn có chắc muốn xoá phòng ban: {{name}} không?"
+      "confirm_delete_description": "Bạn có chắc muốn xoá phòng ban: {name} không?"
     },
     "button": {
       "create": "Tạo mới",

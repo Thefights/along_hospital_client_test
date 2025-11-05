@@ -1,7 +1,8 @@
 {
   "department": {
     "title": {
-      "department_management": "Department Management"
+      "department_management": "Department Management",
+      "filter": "Department Filter"
     },
     "text": {
       "total": "Total departments",

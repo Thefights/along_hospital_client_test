@@ -1,50 +1,49 @@
-import ManageDepartmentBasePage from '@/components/basePages/managerDepartmentBasePage/ManagerDepartmentBasePage'
 import GenericFormDialog from '@/components/dialogs/commons/GenericFormDialog'
 import ActionMenu from '@/components/generals/ActionMenu'
+import { GenericTablePagination } from '@/components/generals/GenericPagination'
+import GenericTable from '@/components/tables/GenericTable'
 import { ApiUrls } from '@/configs/apiUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useConfirm } from '@/hooks/useConfirm'
+import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
+import { Button, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
+import DepartmentFilterBarSection from '@/components/basePages/managerDepartmentBasePage/section/DepartmentFilterBarSection'
 
 const ManagerDepartmentManagementPage = () => {
 	const { t } = useTranslation()
 	const confirm = useConfirm()
 
 	const [filters, setFilters] = useState({ search: '' })
-	const [appliedFilters, setAppliedFilters] = useState({ search: '' })
 	const [page, setPage] = useState(1)
 	const [pageSize, setPageSize] = useState(10)
-
 	const [departments, setDepartments] = useState([])
-	const [totalDepartments, setTotalDepartments] = useState(0)
-	const [selectedRows, setSelectedRows] = useState([])
+	const [totalPage, setTotalPage] = useState(0)
 	const [selectedDepartment, setSelectedDepartment] = useState(null)
 	const [openCreateDialog, setOpenCreateDialog] = useState(false)
 	const [openUpdateDialog, setOpenUpdateDialog] = useState(false)
-	const [sort, setSort] = useState(null)
 
-	const getAllDepartments = useAxiosSubmit({
-		url: ApiUrls.DEPARTMENT.MANAGEMENT.GET_ALL,
-		method: 'GET',
-		params: { ...appliedFilters, page, pageSize },
-		onSuccess: (res) => {
-			const data = res?.data
-			setDepartments(data?.collection || [])
-			setTotalDepartments(data?.totalCount || 0)
-		},
-	})
+	const getAllDepartments = useFetch(
+		ApiUrls.DEPARTMENT.MANAGEMENT.GET_ALL,
+		{ ...filters, page, pageSize },
+		[filters, page, pageSize]
+	)
 
 	useEffect(() => {
-		getAllDepartments.submit()
-	}, [appliedFilters, page, pageSize])
+		if (getAllDepartments.data) {
+			const data = getAllDepartments.data
+			setDepartments(data.collection || [])
+			setTotalPage(data.totalPage || 1)
+		}
+	}, [getAllDepartments.data])
 
 	const createDepartment = useAxiosSubmit({
 		url: ApiUrls.DEPARTMENT.MANAGEMENT.CREATE,
 		method: 'POST',
 		onSuccess: async () => {
 			setOpenCreateDialog(false)
-			await getAllDepartments.submit()
+			await getAllDepartments.fetch({ params: { ...filters, page, pageSize } })
 		},
 	})
 
@@ -56,7 +55,7 @@ const ManagerDepartmentManagementPage = () => {
 		onSuccess: async () => {
 			setOpenUpdateDialog(false)
 			setSelectedDepartment(null)
-			await getAllDepartments.submit()
+			await getAllDepartments.fetch({ params: { ...filters, page, pageSize } })
 		},
 	})
 
@@ -64,27 +63,9 @@ const ManagerDepartmentManagementPage = () => {
 		method: 'DELETE',
 		onSuccess: async () => {
 			setSelectedDepartment(null)
-			setSelectedRows([])
-			await getAllDepartments.submit()
+			await getAllDepartments.fetch({ params: { ...filters, page, pageSize } })
 		},
 	})
-
-	const handleFilterClick = () => {
-		setPage(1)
-		setAppliedFilters(filters)
-	}
-
-	const handleResetFilterClick = () => {
-		setFilters({ search: '' })
-		setAppliedFilters({ search: '' })
-		setPage(1)
-		setPageSize(10)
-	}
-
-	const formFields = [
-		{ key: 'name', title: t('department.field.name'), required: true },
-		{ key: 'location', title: t('department.field.location'), required: true },
-	]
 
 	const tableFields = [
 		{ key: 'id', title: 'ID', width: 10 },
@@ -111,9 +92,7 @@ const ManagerDepartmentManagementPage = () => {
 									confirmText: t('button.delete'),
 									confirmColor: 'error',
 									title: t('department.dialog.confirm_delete_title'),
-									description: t('department.dialog.confirm_delete_description', {
-										name: row.name,
-									}),
+									description: t('department.dialog.confirm_delete_description', { name: row.name }),
 								})
 								if (isConfirmed) {
 									await deleteDepartment.submit(null, {
@@ -128,34 +107,60 @@ const ManagerDepartmentManagementPage = () => {
 		},
 	]
 
+	const formFields = [
+		{ key: 'name', title: t('department.field.name'), required: true },
+		{ key: 'location', title: t('department.field.location'), required: true },
+	]
+
 	return (
-		<>
-			<ManageDepartmentBasePage
-				headerTitleKey='department.title.department_management'
-				departments={departments}
-				totalDepartments={totalDepartments}
-				totalPage={Math.max(1, Math.ceil(totalDepartments / pageSize))}
-				filters={filters}
-				setFilters={setFilters}
-				selectedRows={selectedRows}
-				setSelectedRows={setSelectedRows}
-				onFilterClick={handleFilterClick}
-				onResetFilterClick={handleResetFilterClick}
-				fields={tableFields}
-				onCreateClick={() => setOpenCreateDialog(true)}
-				sort={sort}
-				setSort={setSort}
-				page={page}
-				setPage={setPage}
-				pageSize={pageSize}
-				setPageSize={setPageSize}
-				loading={
-					getAllDepartments.loading ||
-					createDepartment.loading ||
-					updateDepartment.loading ||
-					deleteDepartment.loading
-				}
-			/>
+		<Paper sx={{ p: 2 }}>
+			<Stack spacing={2}>
+				<Stack direction='row' alignItems='center' justifyContent='space-between'>
+					<Typography variant='h5'>{t('department.title.department_management')}</Typography>
+					<Button
+						variant='contained'
+						color='success'
+						onClick={() => setOpenCreateDialog(true)}
+						sx={{ minWidth: 120 }}
+					>
+						{t('button.create')}
+					</Button>
+				</Stack>
+
+				<DepartmentFilterBarSection
+					filters={filters}
+					loading={getAllDepartments.loading}
+					onFilterClick={(newFilters) => {
+						setFilters(newFilters)
+						setPage(1)
+						getAllDepartments.fetch({ params: { ...newFilters, page: 1, pageSize } })
+					}}
+					onResetFilterClick={() => {
+						const reset = { search: '' }
+						setFilters(reset)
+						setPage(1)
+						getAllDepartments.fetch({ params: { ...reset, page: 1, pageSize } })
+					}}
+				/>
+
+				<Stack spacing={2}>
+					<GenericTable data={departments} fields={tableFields} rowKey='id' />
+					<Stack justifyContent='center' px={2}>
+						<GenericTablePagination
+							totalPage={totalPage}
+							page={page}
+							setPage={setPage}
+							pageSize={pageSize}
+							setPageSize={(size) => {
+								setPageSize(size)
+								setPage(1)
+							}}
+							pageSizeOptions={[5, 10, 20]}
+							loading={getAllDepartments.loading}
+						/>
+					</Stack>
+				</Stack>
+			</Stack>
 
 			<GenericFormDialog
 				title={t('department.dialog.create_title')}
@@ -183,7 +188,7 @@ const ManagerDepartmentManagementPage = () => {
 					closeDialog()
 				}}
 			/>
-		</>
+		</Paper>
 	)
 }
 
