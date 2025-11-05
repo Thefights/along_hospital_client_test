@@ -126,12 +126,7 @@ const ManageMedicalServiceManagementPage = () => {
 
 	const formFields = [
 		{ key: 'name', title: t('medical_service.field.name') },
-		{
-			key: 'description',
-			title: t('medical_service.field.description'),
-			multiline: true,
-			rows: 3,
-		},
+		{ key: 'description', title: t('medical_service.field.description') },
 		{ key: 'price', title: t('medical_service.field.price'), type: 'number' },
 		{
 			key: 'specialtyId',
