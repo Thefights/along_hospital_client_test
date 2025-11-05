@@ -149,7 +149,7 @@ const VoucherDetailDialog = ({ open, onClose, voucher }) => {
 						<Typography variant='subtitle1' fontWeight={600} gutterBottom>
 							{t('voucher.section.usage_info')}
 						</Typography>
-						{voucher.voucherType === EnumConfig.VoucherType.Medicine && (
+						{voucher.voucherType === EnumConfig.VoucherType.Patient && (
 							<InfoRow label={t('voucher.field.quantity')} value={voucher.quantity || 0} />
 						)}
 						<InfoRow
@@ -203,7 +203,7 @@ const VoucherDetailDialog = ({ open, onClose, voucher }) => {
 								<Box
 									component='img'
 									src={getImageFromCloud(voucher.image)}
-									alt={getImageFromCloud(voucher.name)}
+									alt={voucher.name}
 									sx={{
 										width: '100%',
 										maxWidth: 400,

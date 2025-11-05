@@ -18,11 +18,9 @@ const VoucherManagementPage = () => {
 
 	const { t } = useTranslation()
 
-	const getVouchers = useFetch(ApiUrls.VOUCHER.MANAGEMENT.INDEX, { ...filters, page, pageSize }, [
-		filters,
-		page, // tach cai nay ra
-		pageSize,
-	])
+	const voucherParams = { ...filters, page, pageSize }
+	const voucherDeps = [filters, page, pageSize]
+	const getVouchers = useFetch(ApiUrls.VOUCHER.MANAGEMENT.INDEX, voucherParams, voucherDeps)
 
 	return (
 		<Paper sx={{ p: 2 }}>

@@ -67,7 +67,7 @@ const GenericFormDialog = ({
 
 	useEffect(() => {
 		onValuesChange?.(values)
-	}, [values])
+	}, [values, onValuesChange])
 
 	const handleClose = useCallback(() => {
 		reset(startValues)

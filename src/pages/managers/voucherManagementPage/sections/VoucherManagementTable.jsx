@@ -269,7 +269,7 @@ const VoucherManagementTable = ({ vouchers, loading, refetch }) => {
 				),
 			},
 		],
-		[]
+		[t]
 	)
 
 	const medicineOptions = useMemo(() => {
@@ -320,12 +320,7 @@ const VoucherManagementTable = ({ vouchers, loading, refetch }) => {
 				open={openUpdate}
 				onClose={() => setOpenUpdate(false)}
 				initialValues={selectedRow}
-				medicineOptions={
-					getMedicines.data?.map((medicine) => ({
-						value: medicine.id,
-						label: medicine.name,
-					})) || []
-				}
+				medicineOptions={medicineOptions}
 				submitLabel={t('button.update')}
 				submitButtonColor='success'
 				title={t('voucher.title.update')}
