@@ -1,0 +1,18 @@
+{
+    "shop": {
+        "title": "Cửa hàng thuốc",
+        "text": {
+            "no_products": "Không tìm thấy thuốc nào"
+        },
+        "button": {
+            "add_to_cart": "Thêm vào giỏ",
+            "view_details": "Xem chi tiết"
+        },
+        "filter": {
+            "title": "Bộ lọc",
+            "price": "Khoảng giá",
+            "category": "Danh mục",
+            "search": "Tìm kiếm thuốc..."
+        }
+    }
+}

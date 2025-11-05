@@ -7,6 +7,9 @@ import CreateMedicalHistoryPage from '@/pages/doctors/createMedicalHistoryPage/C
 import HomePage from '@/pages/guests/HomePage'
 import BlogDetailPage from '@/pages/guests/viewBlogDetailPage/BlogDetailPage'
 import BlogPage from '@/pages/guests/viewBlogPage/BlogPage'
+//sai tên
+import MedicineDetailPage from '@/pages/guests/viewMedicineDetailPage/ViewMedicineDetailPage'
+import ShopPage from '@/pages/guests/viewMedicinePage/ShopPage'
 import SpecialtyPage from '@/pages/patients/specialtyPage/SpecialtyPage'
 import TestTable from '@/pages/TestTable'
 import { Route, Routes } from 'react-router-dom'
@@ -21,9 +24,12 @@ const RouteGuest = () => {
 				{/* This is route with layout */}
 				<Route element={auth?.role !== null ? <LayoutPatient /> : <LayoutGuest />}>
 					<Route path='/' index element={<HomePage />} />
+					<Route path={routeUrls.HOME.MEDICINE} element={<ShopPage />} />
+					<Route></Route>
 					<Route path={routeUrls.HOME.SPECIALTY} element={<SpecialtyPage />} />
 					<Route path={routeUrls.HOME.BLOG} element={<BlogPage />} />
 					<Route path={`${routeUrls.HOME.BLOG}/:id`} element={<BlogDetailPage />} />
+					<Route path={`${routeUrls.HOME.MEDICINE}/:id`} element={<MedicineDetailPage />} />
 					{process.env.NODE_ENV === 'development' && (
 						<>
 							<Route path='/test' element={<TestTable />} />
