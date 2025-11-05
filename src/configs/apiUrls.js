@@ -114,4 +114,12 @@ export const ApiUrls = {
 			DETAIL: (id) => `/Blog-Management/${id}`,
 		},
 	},
+	DEPARTMENT: {
+		INDEX: `/department`,
+		MANAGEMENT: {
+			INDEX: `/department-management`,
+			GET_ALL: `/department-management/all`,
+			DETAIL: (id) => `/department-management/${id}`,
+		},
+	},
 }
