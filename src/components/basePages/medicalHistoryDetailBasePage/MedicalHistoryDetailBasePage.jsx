@@ -7,7 +7,7 @@ import { useConfirm } from '@/hooks/useConfirm'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
 import { Box, Grid, Stack } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Fade, Slide } from 'react-awesome-reveal'
 import { useParams } from 'react-router-dom'
 import DoctorInfoDialog from '../../dialogs/DoctorInfoDialog'
@@ -52,6 +52,12 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 		data: medicalHistory,
 		setData: setMedicalHistory,
 	} = useFetch(`${fetchUrl}/${id}`, {}, [id])
+
+	const getPaymentUrl = useFetch(ApiUrls.MEDICAL_HISTORY.MANAGEMENT.PAYMENT_URL(id), {}, [], false)
+
+	useEffect(() => {
+		console.log(getPaymentUrl.data)
+	}, [getPaymentUrl.data])
 
 	const updateMedicalHistory = useAxiosSubmit({
 		url: `${ApiUrls.MEDICAL_HISTORY.MANAGEMENT.INDEX}/${medicalHistory?.id}`,
@@ -116,7 +122,7 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 					loading={loading}
 				/>
 
-				<Fade>
+				<Fade triggerOnce>
 					<MedicalHistoryDetailServiceSection
 						medicalHistoryDetails={medicalHistory?.medicalHistoryDetails}
 						medicalHistoryStatus={medicalHistory?.medicalHistoryStatus}
@@ -141,7 +147,7 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 
 				<Grid container spacing={2}>
 					<Grid size={{ xs: 12, md: 6 }}>
-						<Slide direction='left'>
+						<Slide direction='left' triggerOnce>
 							<MedicalHistoryDetailPrescriptionSection
 								prescription={medicalHistory?.prescription}
 								medicalHistoryStatus={medicalHistory?.medicalHistoryStatus}
@@ -155,7 +161,7 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 					</Grid>
 
 					<Grid size={{ xs: 12, md: 6 }}>
-						<Slide direction='right'>
+						<Slide direction='right' triggerOnce>
 							<MedicalHistoryDetailComplaintSection
 								complaint={medicalHistory?.complaint}
 								role={role}
@@ -172,6 +178,7 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 						role={role}
 						medicalHistoryStatus={medicalHistory?.medicalHistoryStatus}
 						onClickUpdateMedicalHistory={() => setOpenUpdateMedicalHistory(true)}
+						onClickPayment={async () => await getPaymentUrl.fetch()}
 						onClickCompleteMedicalHistory={async () => {
 							var response = await completeMedicalHistory.submit()
 							if (response) {
@@ -293,7 +300,7 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 						setOpenCreatePrescription(false)
 						setMedicalHistory((prev) => ({
 							...prev,
-							prescription: response,
+							prescription: response.data,
 						}))
 					}
 				}}
@@ -308,7 +315,7 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 						setOpenUpdatePrescription(false)
 						setMedicalHistory((prev) => ({
 							...prev,
-							prescription: response,
+							prescription: response.data,
 						}))
 					}
 				}}

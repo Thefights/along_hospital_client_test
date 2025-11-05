@@ -105,6 +105,7 @@ export const ApiUrls = {
 				}`,
 			PRESCRIPTION: (medicalHistoryId) =>
 				`/medical-history-management/${medicalHistoryId}/prescription`,
+			PAYMENT_URL: (medicalHistoryId) => `/medical-history-management/${medicalHistoryId}/payment-url`,
 		},
 	},
 	BLOG: {

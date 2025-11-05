@@ -30,27 +30,11 @@ const PatientInfoDialog = ({
 	loading = false,
 	isEditable,
 }) => {
-	const defaultValues = {
-		id: patientInfo.id || '',
-		name: patientInfo.name || '',
-		image: patientInfo.image || '',
-		dateOfBirth: patientInfo.dateOfBirth || '',
-		gender: patientInfo.gender || '',
-		address: patientInfo.address || '',
-		phone: patientInfo.phone || '',
-		email: patientInfo.email || '',
-		medicalNumber: patientInfo.medicalNumber || '',
-		height: patientInfo.height || '',
-		weight: patientInfo.weight || '',
-		bloodType: patientInfo.bloodType || '',
-		allergies: patientInfo.allergies || [],
-	}
-
 	const [submitted, setSubmitted] = useState(false)
 	const { t } = useTranslation()
 	const _enum = useEnum()
 
-	const { values, setField, handleChange, registerRef, reset, validateAll } = useForm(defaultValues)
+	const { values, setField, handleChange, registerRef, reset, validateAll } = useForm(patientInfo)
 	const { renderField, hasRequiredMissing } = useFieldRenderer(
 		values,
 		setField,

@@ -9,28 +9,32 @@ const ProtectedRoute = ({
 	redirectPath = routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.LOGIN),
 	unauthorizedPath = '/',
 }) => {
-	const authStore = useReduxStore({
+	const location = useLocation()
+	const completeProfilePath = routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.COMPLETE_PROFILE)
+
+	const { data: auth, fetchedOnce } = useReduxStore({
 		selector: (s) => s.auth,
 		setStore: setAuthStore,
 	})
 
 	const hasRole = (roles) => {
-		return String(roles).toLowerCase().includes(authStore.data.role?.toLowerCase())
+		if (!auth?.role) return false
+		return roles.map((r) => String(r).toLowerCase()).includes(auth.role.toLowerCase())
 	}
-
-	const location = useLocation()
-
-	const completeProfilePath = routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.COMPLETE_PROFILE)
 
 	if (allowRoles.length === 0) return <Outlet />
 
-	if (!authStore.data.role) {
+	if (!fetchedOnce) {
+		return <Outlet />
+	}
+
+	if (!auth?.role) {
 		return <Navigate to={redirectPath} replace state={{ from: location }} />
 	}
 
 	if (
-		authStore.data.stage &&
-		authStore.data.stage !== EnumConfig.AuthStage.Done &&
+		auth.stage &&
+		auth.stage !== EnumConfig.AuthStage.Done &&
 		location.pathname !== completeProfilePath
 	) {
 		return <Navigate to={completeProfilePath} replace />

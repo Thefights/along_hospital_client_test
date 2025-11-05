@@ -45,10 +45,10 @@ const UpsertPrescriptionDialog = ({
 					key: 'medicineId',
 					title: t('medical_history.field.prescription.prescription_detail.medicine'),
 					type: 'select',
-					options: medicineStore.data || [],
-					renderOption: (option) => (
+					options: medicineStore.data.map((medicine) => ({ value: medicine.id, label: medicine })) || [],
+					renderOption: (_, label) => (
 						<Stack direction='row' spacing={1} alignItems='center' sx={{ width: '100%' }}>
-							<Avatar src={getImageFromCloud(option.image)} alt={option.name} />
+							<Avatar src={getImageFromCloud(label.image)} alt={label.name} />
 							<Stack sx={{ width: '100%' }}>
 								{[
 									{
@@ -56,14 +56,14 @@ const UpsertPrescriptionDialog = ({
 										label: t('medicine.field.name'),
 									},
 									{ key: 'brand', label: t('medicine.field.brand') },
-									{ key: 'unit', label: t('medicine.field.unit') },
+									{ key: 'medicineUnit', label: t('medicine.field.unit') },
 								].map((field) => (
 									<Stack key={field.key} direction={'row'} justifyContent={'space-between'}>
 										<Typography variant='body2' color='text.secondary'>
 											{field.label}
 										</Typography>
 										<Typography variant='body2' color='text.secondary' textAlign={'right'}>
-											{getObjectValueFromStringPath(option, field.key) ?? '-'}
+											{getObjectValueFromStringPath(label, field.key) ?? '-'}
 										</Typography>
 									</Stack>
 								))}

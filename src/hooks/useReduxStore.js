@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { isEmptyValue } from '@/utils/handleBooleanUtil'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import useFetch from './useFetch'
 
@@ -30,7 +30,9 @@ export default function useReduxStore({
 
 	const { loading, error, data: fetchedData, fetch } = useFetch(finalUrl, {}, [], false)
 
+	const [fetchedOnce, setFetchedOnce] = useState(false)
 	const needFetch = isEmptyValue(storeData)
+
 	useEffect(() => {
 		if (needFetch) fetch()
 	}, [needFetch, fetch])
@@ -39,6 +41,7 @@ export default function useReduxStore({
 		if (fetchedData != null) {
 			const payload = dataToStore(fetchedData)
 			dispatch(setStore(payload))
+			setFetchedOnce(true)
 		}
 	}, [fetchedData])
 
@@ -52,5 +55,5 @@ export default function useReduxStore({
 		[dispatch, setStore, storeData]
 	)
 
-	return { loading, error, data, fetch, resetStore }
+	return { loading, error, data, fetch, resetStore, fetchedOnce }
 }
