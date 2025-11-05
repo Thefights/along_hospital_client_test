@@ -5,6 +5,12 @@
             "female": "Female",
             "other": "Other"
         },
+        "qualification": {
+            "bachelor": "Bachelor",
+            "master": "Master",
+            "phd": "PhD",
+            "specialist": "Specialist"
+        },
         "blog_type": {
             "health": "Health",
             "news": "News",
