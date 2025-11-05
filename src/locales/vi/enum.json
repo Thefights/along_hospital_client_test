@@ -81,6 +81,14 @@
             "bottle": "Chai",
             "tube": "Tuýp",
             "other": "Khác"
+        },
+        "voucher_status": {
+            "active": "Đang hoạt động",
+            "expired": "Hết hạn"
+        },
+        "voucher_type": {
+            "patient": "Bệnh nhân",
+            "medicine": "Thuốc"
         }
     }
 }

@@ -21,7 +21,9 @@
         "resend_in": "Resend in",
         "toggle_language": "Toggle language",
         "toggle_theme": "Toggle theme",
-        "delete_selected": "Delete selected"
+        "delete_selected": "Delete selected",
+        "view_detail": "View Detail",
+        "edit": "Edit"
     },
     "text": {
         "all": "All",
