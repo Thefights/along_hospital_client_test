@@ -109,4 +109,17 @@ export const EnumConfig = {
 		PhD: 'PhD',
 		Specialist: 'Specialist',
 	},
+
+	// For medicines
+	MedicineUnit: {
+		Tablet: 'Tablet',
+		Capsule: 'Capsule',
+		Milliliter: 'Milliliter',
+		Milligram: 'Milligram',
+		Drop: 'Drop',
+		Spoon: 'Spoon',
+		Bottle: 'Bottle',
+		Tube: 'Tube',
+		Other: 'Other',
+	},
 }
