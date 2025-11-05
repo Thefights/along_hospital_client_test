@@ -53,7 +53,9 @@ axiosConfig.interceptors.response.use(
 				break
 			case 500:
 			default:
-				toast.error('Occurred a server error, please try again later')
+				toast.error(
+					`Occurred a server error, please try again later: ${response?.data?.message || error.message}`
+				)
 				break
 		}
 		return Promise.reject(error)
