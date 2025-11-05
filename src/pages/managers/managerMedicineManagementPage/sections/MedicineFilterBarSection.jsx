@@ -16,7 +16,7 @@ const MedicineFilterBarSection = ({
 }) => {
 	const { t } = useTranslation()
 	const _enum = useEnum()
-
+	
 	const { reset, values, handleChange, setField, registerRef } = useForm(filters)
 	const { renderField } = useFieldRenderer(
 		values,
@@ -33,20 +33,14 @@ const MedicineFilterBarSection = ({
 			key: 'medicineCategoryId',
 			title: t('medicine.filter.category'),
 			type: 'select',
-			options: [
-				{ value: '', label: t('text.all') },
-				...(categories?.map((c) => ({ value: c.value, label: c.label })) || []),
-			],
+			options: [{ value: '', label: t('text.all') }, ...(categories || [])],
 			required: false,
 		},
 		{
 			key: 'medicineUnit',
 			title: t('medicine.filter.unit'),
 			type: 'select',
-			options: [
-				{ value: '', label: t('text.all') },
-				...(_enum.medicineUnitOptions?.map((u) => ({ value: u.value, label: u.label })) || []),
-			],
+			options: [{ value: '', label: t('text.all') }, ...(_enum.medicineUnitOptions || [])],
 			required: false,
 		},
 	]
@@ -61,7 +55,7 @@ const MedicineFilterBarSection = ({
 	]
 
 	useEffect(() => {
-		reset(filters) 
+		reset(filters)
 	}, [filters, reset])
 
 	return (

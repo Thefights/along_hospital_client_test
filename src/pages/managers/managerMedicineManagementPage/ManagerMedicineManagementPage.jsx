@@ -1,5 +1,3 @@
-import MedicineFilterBar from '@/components/basePages/manageMedicineBasePage/sections/MedicineFilterBarSection'
-import MedicineImagesPreview from '@/components/basePages/manageMedicineBasePage/sections/MedicineImagesPreviewSection'
 import GenericFormDialog from '@/components/dialogs/commons/GenericFormDialog'
 import ActionMenu from '@/components/generals/ActionMenu'
 import { GenericTablePagination } from '@/components/generals/GenericPagination'
@@ -7,14 +5,18 @@ import GenericTable from '@/components/tables/GenericTable'
 import { ApiUrls } from '@/configs/apiUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useConfirm } from '@/hooks/useConfirm'
+import useEnum from '@/hooks/useEnum'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
+import MedicineImagesPreview from '@/pages/managers/managerMedicineManagementPage/sections//MedicineImagesPreviewSection'
+import MedicineFilterBar from '@/pages/managers/managerMedicineManagementPage/sections/MedicineFilterBarSection'
 import { Button, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 
 const ManagerMedicineManagementPage = () => {
 	const { t } = useTranslation()
 	const confirm = useConfirm()
+	const _enum = useEnum()
 
 	const [filters, setFilters] = useState({ name: '', medicineCategoryId: '', medicineUnit: '' })
 	const [page, setPage] = useState(1)
@@ -77,7 +79,12 @@ const ManagerMedicineManagementPage = () => {
 	const formFields = [
 		{ key: 'name', title: t('medicine.field.name') },
 		{ key: 'brand', title: t('medicine.field.brand') },
-		{ key: 'medicineUnit', title: t('medicine.field.unit'), type: 'select' },
+		{
+			key: 'medicineUnit',
+			title: t('medicine.field.unit'),
+			type: 'select',
+			options: _enum.medicineUnitOptions,
+		},
 		{ key: 'price', title: t('medicine.field.price'), type: 'number' },
 		{
 			key: 'medicineCategoryId',
