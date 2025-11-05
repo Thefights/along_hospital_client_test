@@ -5,7 +5,7 @@ import { GenericTablePagination } from '@/components/generals/GenericPagination'
 import { EnumConfig } from '@/configs/enumConfig'
 import useTranslation from '@/hooks/useTranslation'
 import { Paper, Stack, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import EmptyBox from '../../placeholders/EmptyBox'
 import SkeletonBox from '../../skeletons/SkeletonBox'
 import ManageAppointmentTabsSection from './sections/ManageAppointmentTabsSection'
@@ -17,6 +17,10 @@ const ManageAppointmentBasePage = ({
 	specialties = [],
 	filters,
 	setFilters,
+	page,
+	setPage,
+	pageSize,
+	setPageSize,
 	selectedAppointment,
 	setSelectedAppointment,
 	loading = false,
@@ -30,6 +34,10 @@ const ManageAppointmentBasePage = ({
 		setSelectedAppointment(appt)
 		setDrawerOpen(true)
 	}
+
+	useEffect(() => {
+		setPage(1)
+	}, [filters, setPage])
 
 	return (
 		<Paper sx={{ p: 2 }}>
@@ -95,10 +103,10 @@ const ManageAppointmentBasePage = ({
 					<Stack justifyContent={'center'} px={2}>
 						<GenericTablePagination
 							totalPage={totalPage}
-							page={filters.page}
-							setPage={(page) => setFilters({ ...filters, page })}
-							pageSize={filters.pageSize}
-							setPageSize={(pageSize) => setFilters({ ...filters, pageSize })}
+							page={page}
+							setPage={setPage}
+							pageSize={pageSize}
+							setPageSize={setPageSize}
 							pageSizeOptions={[5, 10, 20]}
 							loading={loading}
 						/>

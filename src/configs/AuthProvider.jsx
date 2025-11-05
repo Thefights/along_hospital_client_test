@@ -46,15 +46,6 @@ const AuthProvider = ({ children }) => {
 		}
 	}
 
-	const hasRole = (required) => {
-		if (!required?.length) return true
-
-		const auth = authStore.data
-		if (!auth?.role) return false
-		required = required.map((r) => String(r).toUpperCase())
-		return required.includes(String(auth?.role)?.toUpperCase() || null)
-	}
-
 	const getReturnUrlByRole = (role) => {
 		switch (String(role).toLowerCase()) {
 			case EnumConfig.Role.Doctor.toLowerCase():
@@ -68,7 +59,7 @@ const AuthProvider = ({ children }) => {
 	}
 
 	const value = useMemo(
-		() => ({ auth: authStore.data, login, logout, hasRole, getReturnUrlByRole }),
+		() => ({ auth: authStore.data, login, logout, getReturnUrlByRole }),
 		[authStore.data]
 	)
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
