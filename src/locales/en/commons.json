@@ -43,6 +43,7 @@
         "step": "Step",
         "more": "More",
         "result": "Result",
+        "none": "None",
         "rows_per_page": "Rows per page",
         "role": {
             "manager": "Manager",

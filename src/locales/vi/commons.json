@@ -42,6 +42,7 @@
         "step": "Bước",
         "more": "Nữa",
         "result": "Kết quả",
+        "none": "Không",
         "rows_per_page": "Số dòng mỗi trang",
         "role": {
             "manager": "Quản lý",

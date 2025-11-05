@@ -102,6 +102,14 @@ export const EnumConfig = {
 		Other: 'Other',
 	},
 
+	//For Doctors
+	Qualification: {
+		Bachelor: 'Bachelor',
+		Master: 'Master',
+		PhD: 'PhD',
+		Specialist: 'Specialist',
+	},
+
 	// For medicines
 	MedicineUnit: {
 		Tablet: 'Tablet',

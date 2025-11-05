@@ -54,6 +54,7 @@ setPatientsStore.defaultUrl = ApiUrls.PATIENT.MANAGEMENT.GET_ALL
 setSpecialtiesStore.defaultUrl = ApiUrls.SPECIALTY.MANAGEMENT.GET_ALL
 setMedicalServicesStore.defaultUrl = ApiUrls.MEDICAL_SERVICE.MANAGEMENT.GET_ALL
 setMedicinesStore.defaultUrl = ApiUrls.MEDICINE.MANAGEMENT.GET_ALL
+setDepartmentsStore.defaultUrl = ApiUrls.DEPARTMENT.MANAGEMENT.GET_ALL
 
 export {
 	setDepartmentsStore,

@@ -9,6 +9,18 @@ const axiosConfig = axios.create({
 		'Access-Control-Allow-Origin': '*',
 		'Access-Control-Allow-Headers': 'X-Requested-With',
 	},
+	paramsSerializer: {
+		serialize: (params) => {
+			return Object.entries(params)
+				.map(([key, value]) => {
+					if (Array.isArray(value)) {
+						return value.map((v) => `${encodeURIComponent(key)}=${encodeURIComponent(v)}`).join('&')
+					}
+					return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+				})
+				.join('&')
+		},
+	},
 })
 
 axiosConfig.interceptors.request.use(

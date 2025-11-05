@@ -1,0 +1,23 @@
+{
+    "doctor": {
+        "title": {
+            "doctor_management": "Doctor Management"
+        },
+        "placeholder": {
+            "search_doctor": "Search doctor..."
+        },
+        "field": {
+            "id": "ID",
+            "name": "Name",
+            "doctor": "Doctor",
+            "specialty": "Specialty",
+            "phone": "Phone",
+            "qualification": "Qualification",
+            "gender": "Gender",
+            "date_of_birth": "Date of Birth",
+            "department": "Department",
+            "image": "Image",
+            "signature_image": "Signature Image"
+        }
+    }
+}

@@ -2,7 +2,9 @@ import MedicalHistoryDetailBasePage from '@/components/basePages/medicalHistoryD
 import { ApiUrls } from '@/configs/apiUrls'
 import { routeUrls } from '@/configs/routeUrls'
 import LayoutManager from '@/layouts/LayoutManager'
+import NotFoundPage from '@/pages/commons/NotFoundPage'
 import ComplaintManagementPage from '@/pages/managers/complaintManagementPage/ComplaintManagementPage'
+import DoctorManagementPage from '@/pages/managers/doctorManagementPage/DoctorManagementPage'
 import ManagerAppointmentManagementPage from '@/pages/managers/managerAppointmentManagementPage/ManagerAppointmentManagementPage'
 import ManagerBlogManagementPage from '@/pages/managers/managerBlogManagementPage/ManagerBlogManagementPage'
 import BlogUpsertPage from '@/pages/managers/managerBlogUpsertPage/BlogUpsertPage'
@@ -37,7 +39,7 @@ const RouteManager = () => {
 						element={<MedicalHistoryDetailBasePage fetchUrl={ApiUrls.MEDICAL_HISTORY.MANAGEMENT.INDEX} />}
 					/>
 					<Route path={routeUrls.MANAGER.SPECIALTY_MANAGEMENT} element={<SpecialtyManagementPage />} />
-
+					<Route path={routeUrls.MANAGER.DOCTOR_MANAGEMENT} element={<DoctorManagementPage />} />
 					<Route
 						path={routeUrls.MANAGER.MEDICINE_MANAGEMENT.INDEX}
 						element={<ManagerMedicineManagemntPage />}
@@ -50,6 +52,8 @@ const RouteManager = () => {
 					<Route path={routeUrls.MANAGER.VOUCHER_MANAGEMENT} element={<VoucherManagementPage />} />
 				</Route>
 			</Route>
+
+			<Route path='*' element={<NotFoundPage />} />
 		</Routes>
 	)
 }

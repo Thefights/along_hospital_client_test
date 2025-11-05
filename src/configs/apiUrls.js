@@ -30,6 +30,8 @@ export const ApiUrls = {
 		MANAGEMENT: {
 			INDEX: `/doctor-management`,
 			GET_ALL: `/doctor-management/all`,
+			DETAIL: (id) => `/doctor-management/${id}`,
+			DELETE_SELECTED: `/doctor-management/selected`,
 		},
 	},
 	SPECIALTY: {
@@ -117,6 +119,14 @@ export const ApiUrls = {
 		MANAGEMENT: {
 			INDEX: `/voucher-management`,
 			DETAIL: (id) => `/voucher-management/${id}`,
+		},
+	},
+	DEPARTMENT: {
+		INDEX: `/department`,
+		MANAGEMENT: {
+			INDEX: `/department-management`,
+			GET_ALL: `/department-management/all`,
+			DETAIL: (id) => `/department-management/${id}`,
 		},
 	},
 }
