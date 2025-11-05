@@ -5,6 +5,7 @@ import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
 import { Stack, Typography } from '@mui/material'
+import { useEffect } from 'react'
 
 const MedicineFilterBarSection = ({
 	filters,
@@ -16,7 +17,7 @@ const MedicineFilterBarSection = ({
 	const { t } = useTranslation()
 	const _enum = useEnum()
 
-	const { values, handleChange, setField, registerRef } = useForm(filters)
+	const { reset, values, handleChange, setField, registerRef } = useForm(filters)
 	const { renderField } = useFieldRenderer(
 		values,
 		setField,
@@ -58,6 +59,10 @@ const MedicineFilterBarSection = ({
 			required: false,
 		},
 	]
+
+	useEffect(() => {
+		reset(filters) 
+	}, [filters, reset])
 
 	return (
 		<Stack

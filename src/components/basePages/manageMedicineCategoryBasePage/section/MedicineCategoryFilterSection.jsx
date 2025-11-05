@@ -4,16 +4,17 @@ import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
 import { Button, Stack, Typography } from '@mui/material'
+import { useEffect } from 'react'
 
 const MedicineCategoryFilterSection = ({
 	filters,
 	loading = false,
 	onFilterClick = () => {},
-	onResetFilterClick = () => {}, 
+	onResetFilterClick = () => {},
 	setOpenCreateDialog,
 }) => {
 	const { t } = useTranslation()
-	const { values, handleChange, setField, registerRef } = useForm(filters)
+	const { reset, values, handleChange, setField, registerRef } = useForm(filters)
 	const { renderField } = useFieldRenderer(
 		values,
 		setField,
@@ -32,6 +33,10 @@ const MedicineCategoryFilterSection = ({
 			required: false,
 		},
 	]
+
+	useEffect(() => {
+		reset(filters)
+	}, [filters, reset])
 
 	return (
 		<Stack
@@ -52,13 +57,13 @@ const MedicineCategoryFilterSection = ({
 					{fields.map(renderField)}
 
 					<FilterButton
-						onFilterClick={() => onFilterClick(values)} 
+						onFilterClick={() => onFilterClick(values)}
 						loading={loading}
 						sx={{ minWidth: 100 }}
 					/>
 					<ResetFilterButton
 						loading={loading}
-						onResetFilterClick={onResetFilterClick} 
+						onResetFilterClick={onResetFilterClick}
 						sx={{ minWidth: 180 }}
 					/>
 				</Stack>

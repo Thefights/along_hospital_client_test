@@ -36,12 +36,7 @@ const ManagerMedicineManagementPage = () => {
 	useEffect(() => {
 		if (getAllMedicines.data) {
 			const data = getAllMedicines.data
-			setMedicines(
-				data.collection?.map((m) => ({
-					...m,
-					categoryName: m.medicineCategory?.name ?? '',
-				})) || []
-			)
+			setMedicines(data.collection)
 			setTotalPage(data.totalPage)
 		}
 	}, [getAllMedicines.data])
@@ -57,19 +52,17 @@ const ManagerMedicineManagementPage = () => {
 		method: 'POST',
 		onSuccess: async () => {
 			setOpenCreateDialog(false)
-			await getAllMedicines.fetch({ params: { ...filters, page, pageSize } })
+			await getAllMedicines.fetch()
 		},
 	})
 
 	const updateMedicine = useAxiosSubmit({
-		url: selectedMedicine
-			? ApiUrls.MEDICINE.MANAGEMENT.UPDATE(selectedMedicine.id)
-			: ApiUrls.MEDICINE.MANAGEMENT.INDEX,
+		url: ApiUrls.MEDICINE.MANAGEMENT.UPDATE(selectedMedicine?.id),
 		method: 'PUT',
 		onSuccess: async () => {
 			setOpenUpdateDialog(false)
 			setSelectedMedicine(null)
-			await getAllMedicines.fetch({ params: { ...filters, page, pageSize } })
+			await getAllMedicines.fetch()
 		},
 	})
 
@@ -77,7 +70,7 @@ const ManagerMedicineManagementPage = () => {
 		method: 'DELETE',
 		onSuccess: async () => {
 			setSelectedMedicine(null)
-			await getAllMedicines.fetch({ params: { ...filters, page, pageSize } })
+			await getAllMedicines.fetch()
 		},
 	})
 
@@ -102,7 +95,12 @@ const ManagerMedicineManagementPage = () => {
 		{ key: 'name', title: t('medicine.field.name'), width: 15 },
 		{ key: 'brand', title: t('medicine.field.brand'), width: 15 },
 		{ key: 'medicineUnit', title: t('medicine.field.unit'), width: 10 },
-		{ key: 'categoryName', title: t('medicine.field.medicine_category.name'), width: 15 },
+		{
+			key: 'categoryName',
+			title: t('medicine.field.medicine_category.name'),
+			width: 15,
+			render: (_, row) => row.medicineCategory?.name || '-',
+		},
 		{ key: 'price', title: t('medicine.field.price'), width: 10 },
 		{
 			key: 'images',
@@ -167,13 +165,11 @@ const ManagerMedicineManagementPage = () => {
 					onFilterClick={(newValues) => {
 						setFilters(newValues)
 						setPage(1)
-						getAllMedicines.fetch({ params: { ...newValues, page: 1, pageSize } })
 					}}
 					onResetFilterClick={() => {
 						const resetFilters = { name: '', medicineCategoryId: '', medicineUnit: '' }
 						setFilters(resetFilters)
 						setPage(1)
-						getAllMedicines.fetch({ params: { ...resetFilters, page: 1, pageSize } })
 					}}
 				/>
 

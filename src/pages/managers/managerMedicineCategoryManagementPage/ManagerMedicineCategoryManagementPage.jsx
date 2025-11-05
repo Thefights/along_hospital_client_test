@@ -54,9 +54,7 @@ const ManagerMedicineCategoryManagementPage = () => {
 	})
 
 	const updateCategory = useAxiosSubmit({
-		url: selectedCategory
-			? ApiUrls.MEDICINE_CATEGORY.UPDATE(selectedCategory.id)
-			: ApiUrls.MEDICINE_CATEGORY.INDEX,
+		url: ApiUrls.MEDICINE_CATEGORY.UPDATE(selectedCategory?.id),
 		method: 'PUT',
 		onSuccess: async () => {
 			setOpenUpdateDialog(false)
@@ -151,16 +149,13 @@ const ManagerMedicineCategoryManagementPage = () => {
 					filters={filters}
 					loading={getAllCategories.loading}
 					onFilterClick={(newValues) => {
-						setFilters({ ...newValues, page: 1 })
+						setFilters({ ...newValues })
 						setPage(1)
-						getAllCategories.fetch({ params: { ...newValues, page: 1, pageSize } })
 					}}
 					onResetFilterClick={() => {
 						const resetFilters = { name: '', page: 1 }
 						setFilters(resetFilters)
 						setPage(1)
-						setPageSize(10)
-						getAllCategories.fetch({ params: { ...resetFilters, page: 1, pageSize: 10 } })
 					}}
 					setOpenCreateDialog={setOpenCreateDialog}
 				/>

@@ -46,7 +46,7 @@ export const ApiUrls = {
 		GETALL: `/medicine`,
 		MANAGEMENT: {
 			INDEX: `/medicine-management`,
-			GET_ALL: `/medicine-management`,
+			GET_ALL: `/medicine-management/all`,
 			CREATE: `/medicine-management`,
 			UPDATE: (id) => `/medicine-management/${id}`,
 			DELETE: (id) => `/medicine-management/${id}`,
