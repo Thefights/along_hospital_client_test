@@ -102,12 +102,7 @@ const ManagerMedicineManagementPage = () => {
 		{ key: 'name', title: t('medicine.field.name'), width: 15 },
 		{ key: 'brand', title: t('medicine.field.brand'), width: 15 },
 		{ key: 'medicineUnit', title: t('medicine.field.unit'), width: 10 },
-		{
-			key: 'categoryName',
-			title: t('medicine.field.medicine_category.name'),
-			width: 15,
-			render: (_, row) => row.medicineCategory?.name || '-',
-		},
+		{ key: 'medicineCategory.name', title: t('medicine.field.medicine_category.name'), width: 15 },
 		{ key: 'price', title: t('medicine.field.price'), width: 10 },
 		{
 			key: 'images',
