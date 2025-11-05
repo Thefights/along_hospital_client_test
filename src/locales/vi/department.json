@@ -2,11 +2,7 @@
   "department": {
     "title": {
       "department_management": "Quản lý phòng ban",
-      "filter":"Bộ lọc phòng ban"
-    },
-    "text": {
-      "total": "Tổng số phòng ban",
-      "no_data": "Không có dữ liệu phòng ban"
+      "filter": "Bộ lọc phòng ban"
     },
     "field": {
       "id": "Mã phòng ban",
@@ -19,11 +15,6 @@
       "update_title": "Cập nhật phòng ban",
       "confirm_delete_title": "Xác nhận xoá phòng ban",
       "confirm_delete_description": "Bạn có chắc muốn xoá phòng ban: {name} không?"
-    },
-    "button": {
-      "create": "Tạo mới",
-      "update": "Cập nhật",
-      "delete": "Xoá"
     }
   }
 }

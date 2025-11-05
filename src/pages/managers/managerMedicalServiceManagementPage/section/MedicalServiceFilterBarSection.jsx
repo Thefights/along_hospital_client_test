@@ -9,6 +9,7 @@ import { useEffect } from 'react'
 const MedicalServiceFilterBarSection = ({
 	filters,
 	loading = false,
+	specialties = [],
 	onFilterClick = () => {},
 	onResetFilterClick = () => {},
 }) => {
@@ -24,7 +25,16 @@ const MedicalServiceFilterBarSection = ({
 		'small'
 	)
 
-	const fields = [{ key: 'name', title: t('text.search'), type: 'search', required: false }]
+	const fields = [
+		{ key: 'name', title: t('text.search'), type: 'search', required: false },
+		{
+			key: 'specialtyId',
+			title: t('medical_service.field.specialty'),
+			type: 'select',
+			options: [{ value: '', label: t('text.all') }, ...(specialties || [])],
+			required: false,
+		},
+	]
 
 	useEffect(() => {
 		reset(filters)
@@ -45,7 +55,11 @@ const MedicalServiceFilterBarSection = ({
 			<Typography variant='caption'>{t('medical_service.title.filter')}</Typography>
 			<Stack direction='row' spacing={2} alignItems='center'>
 				{fields.map(renderField)}
-				<FilterButton onFilterClick={() => onFilterClick(values)} loading={loading} />
+				<FilterButton
+					onFilterClick={() => onFilterClick(values)}
+					loading={loading}
+					sx={{ minWidth: 100 }}
+				/>
 				<ResetFilterButton
 					loading={loading}
 					onResetFilterClick={() => onResetFilterClick(reset)}

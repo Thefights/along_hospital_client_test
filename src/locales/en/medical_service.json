@@ -1,11 +1,8 @@
 {
   "medical_service": {
     "title": {
-      "management": "Medical Service Management"
-    },
-    "text": {
-      "total": "Total medical services",
-      "no_data": "No medical service data available"
+      "management": "Medical Service Management",
+      "filter": "Medical Service Filter"
     },
     "field": {
       "id": "ID",
@@ -19,12 +16,7 @@
       "create_title": "Create New Medical Service",
       "update_title": "Update Medical Service",
       "confirm_delete_title": "Confirm Deletion",
-      "confirm_delete_description": "Are you sure you want to delete medical service: {{name}}?"
-    },
-    "button": {
-      "create": "Create Medical Service",
-      "update": "Update Medical Service",
-      "delete": "Delete Medical Service"
+      "confirm_delete_description": "Are you sure you want to delete medical service: {name}?"
     }
   }
 }

@@ -25,7 +25,7 @@ const ManagerDepartmentManagementPage = () => {
 	const [openUpdateDialog, setOpenUpdateDialog] = useState(false)
 
 	const getAllDepartments = useFetch(
-		ApiUrls.DEPARTMENT.MANAGEMENT.GET_ALL,
+		ApiUrls.DEPARTMENT.MANAGEMENT.INDEX,
 		{ ...filters, page, pageSize },
 		[filters, page, pageSize]
 	)
@@ -106,8 +106,8 @@ const ManagerDepartmentManagementPage = () => {
 	]
 
 	const formFields = [
-		{ key: 'name', title: t('department.field.name'), required: true },
-		{ key: 'location', title: t('department.field.location'), required: true },
+		{ key: 'name', title: t('department.field.name') },
+		{ key: 'location', title: t('department.field.location') },
 	]
 
 	return (
@@ -147,10 +147,7 @@ const ManagerDepartmentManagementPage = () => {
 							page={page}
 							setPage={setPage}
 							pageSize={pageSize}
-							setPageSize={(size) => {
-								setPageSize(size)
-								setPage(1)
-							}}
+							setPageSize={setPageSize}
 							pageSizeOptions={[5, 10, 20]}
 							loading={getAllDepartments.loading}
 						/>
@@ -166,8 +163,8 @@ const ManagerDepartmentManagementPage = () => {
 				submitLabel={t('button.create')}
 				submitButtonColor='success'
 				onSubmit={async ({ values, closeDialog }) => {
-					await createDepartment.submit(values)
-					closeDialog()
+					var response = await createDepartment.submit(values)
+					if (response) closeDialog()
 				}}
 			/>
 
@@ -180,8 +177,8 @@ const ManagerDepartmentManagementPage = () => {
 				submitLabel={t('button.update')}
 				submitButtonColor='info'
 				onSubmit={async ({ values, closeDialog }) => {
-					await updateDepartment.submit(values)
-					closeDialog()
+					var response = await updateDepartment.submit(values)
+					if (response) closeDialog()
 				}}
 			/>
 		</Paper>

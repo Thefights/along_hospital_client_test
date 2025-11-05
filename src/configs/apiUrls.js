@@ -50,12 +50,13 @@ export const ApiUrls = {
 	},
 	MEDICAL_SERVICE: {
 		INDEX: `/medical-service`,
+		GET_ALL: `/medical-service/all`,
 		MANAGEMENT: {
-			INDEX: `/medical-service`,
-			GET_ALL: `/medical-service`,
-			CREATE: `/medical-service`,
-			UPDATE: (id) => `/medical-service/${id}`,
-			DELETE: (id) => `/medical-service/${id}`,
+			INDEX: `/medical-service-management`,
+			GET_ALL: `/medical-service-management/all`,
+			CREATE: `/medical-service-management`,
+			UPDATE: (id) => `/medical-service-management/${id}`,
+			DELETE: (id) => `/medical-service-management/${id}`,
 		},
 	},
 	APPOINTMENT: {
@@ -106,12 +107,13 @@ export const ApiUrls = {
 	},
 	DEPARTMENT: {
 		INDEX: `/department`,
+		GET_ALL: `/department/all`,
 		MANAGEMENT: {
-			INDEX: `/department`,
-			GET_ALL: `/department`,
-			CREATE: `/department`,
-			UPDATE: (id) => `/department/${id}`,
-			DELETE: (id) => `/department/${id}`,
+			INDEX: `/department-management`,
+			GET_ALL: `/department-management/all`,
+			CREATE: `/department-management`,
+			UPDATE: (id) => `/department-management/${id}`,
+			DELETE: (id) => `/department-management/${id}`,
 		},
 	},
 }

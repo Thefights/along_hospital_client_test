@@ -1,4 +1,3 @@
-import MedicalServiceFilterBarSection from '@/pages/managers/managerMedicalServiceManagementPage/section/MedicalServiceFilterBarSection'
 import GenericFormDialog from '@/components/dialogs/commons/GenericFormDialog'
 import ActionMenu from '@/components/generals/ActionMenu'
 import { GenericTablePagination } from '@/components/generals/GenericPagination'
@@ -8,6 +7,7 @@ import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useConfirm } from '@/hooks/useConfirm'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
+import MedicalServiceFilterBarSection from '@/pages/managers/managerMedicalServiceManagementPage/section/MedicalServiceFilterBarSection'
 import { Button, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 
@@ -15,7 +15,8 @@ const ManageMedicalServiceManagementPage = () => {
 	const { t } = useTranslation()
 	const confirm = useConfirm()
 
-	const [filters, setFilters] = useState({ name: '' })
+	const [filters, setFilters] = useState({ name: '', specialtyId: '' })
+
 	const [page, setPage] = useState(1)
 	const [pageSize, setPageSize] = useState(10)
 	const [medicalServices, setMedicalServices] = useState([])
@@ -24,12 +25,26 @@ const ManageMedicalServiceManagementPage = () => {
 	const [selectedMedicalService, setSelectedMedicalService] = useState(null)
 	const [openCreateDialog, setOpenCreateDialog] = useState(false)
 	const [openUpdateDialog, setOpenUpdateDialog] = useState(false)
+	const [specialties, setSpecialties] = useState([])
 
 	const getAllMedicalServices = useFetch(
-		ApiUrls.MEDICAL_SERVICE.MANAGEMENT.GET_ALL,
+		ApiUrls.MEDICAL_SERVICE.MANAGEMENT.INDEX,
 		{ ...filters, page, pageSize },
 		[filters, page, pageSize]
 	)
+
+	const getAllSpecialties = useFetch(ApiUrls.SPECIALTY.MANAGEMENT.GET_ALL)
+
+	useEffect(() => {
+		if (getAllSpecialties.data) {
+			setSpecialties(
+				getAllSpecialties.data.map((s) => ({
+					label: s.name,
+					value: s.id,
+				})) || []
+			)
+		}
+	}, [getAllSpecialties.data])
 
 	useEffect(() => {
 		if (getAllMedicalServices.data) {
@@ -49,7 +64,7 @@ const ManageMedicalServiceManagementPage = () => {
 	})
 
 	const updateMedicalService = useAxiosSubmit({
-		url:  ApiUrls.MEDICAL_SERVICE.MANAGEMENT.UPDATE(selectedMedicalService?.id),
+		url: ApiUrls.MEDICAL_SERVICE.MANAGEMENT.UPDATE(selectedMedicalService?.id),
 		method: 'PUT',
 		onSuccess: async () => {
 			setOpenUpdateDialog(false)
@@ -69,9 +84,10 @@ const ManageMedicalServiceManagementPage = () => {
 
 	const tableFields = [
 		{ key: 'id', title: 'ID', width: 10 },
-		{ key: 'name', title: t('medical_service.field.name'), width: 25 },
-		{ key: 'description', title: t('medical_service.field.description'), width: 40 },
+		{ key: 'name', title: t('medical_service.field.name'), width: 15 },
+		{ key: 'description', title: t('medical_service.field.description'), width: 30 },
 		{ key: 'price', title: t('medical_service.field.price'), width: 15 },
+		{ key: 'specialtyName', title: t('medical_service.field.specialty'), width: 20 },
 		{
 			key: 'actions',
 			title: t('medical_service.field.actions'),
@@ -109,15 +125,20 @@ const ManageMedicalServiceManagementPage = () => {
 	]
 
 	const formFields = [
-		{ key: 'name', title: t('medical_service.field.name'), required: true },
+		{ key: 'name', title: t('medical_service.field.name') },
 		{
 			key: 'description',
 			title: t('medical_service.field.description'),
-			required: true,
 			multiline: true,
 			rows: 3,
 		},
-		{ key: 'price', title: t('medical_service.field.price'), required: true, type: 'number' },
+		{ key: 'price', title: t('medical_service.field.price'), type: 'number' },
+		{
+			key: 'specialtyId',
+			title: t('medical_service.field.specialty'),
+			type: 'select',
+			options: specialties,
+		},
 	]
 
 	return (
@@ -133,12 +154,13 @@ const ManageMedicalServiceManagementPage = () => {
 				<MedicalServiceFilterBarSection
 					filters={filters}
 					loading={getAllMedicalServices.loading}
+					specialties={specialties || []}
 					onFilterClick={(newFilters) => {
 						setFilters(newFilters)
 						setPage(1)
 					}}
 					onResetFilterClick={() => {
-						setFilters({ name: '' })
+						setFilters({ name: '', specialtyId: '' })
 						setPage(1)
 					}}
 				/>
@@ -156,10 +178,7 @@ const ManageMedicalServiceManagementPage = () => {
 					page={page}
 					setPage={setPage}
 					pageSize={pageSize}
-					setPageSize={(size) => {
-						setPageSize(size)
-						setPage(1)
-					}}
+					setPageSize={setPageSize}
 					pageSizeOptions={[5, 10, 20]}
 					loading={getAllMedicalServices.loading}
 				/>
@@ -173,8 +192,8 @@ const ManageMedicalServiceManagementPage = () => {
 				submitLabel={t('button.create')}
 				submitButtonColor='success'
 				onSubmit={async ({ values, closeDialog }) => {
-					await createMedicalService.submit(values)
-					closeDialog()
+					var response = await createMedicalService.submit(values)
+					if (response) closeDialog()
 				}}
 			/>
 
@@ -187,8 +206,8 @@ const ManageMedicalServiceManagementPage = () => {
 				submitLabel={t('button.update')}
 				submitButtonColor='info'
 				onSubmit={async ({ values, closeDialog }) => {
-					await updateMedicalService.submit(values)
-					closeDialog()
+					var response = await updateMedicalService.submit(values)
+					if (response) closeDialog()
 				}}
 			/>
 		</Paper>

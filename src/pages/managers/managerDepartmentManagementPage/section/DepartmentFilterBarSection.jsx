@@ -24,14 +24,7 @@ const DepartmentFilterBarSection = ({
 		'small'
 	)
 
-	const fields = [
-		{
-			key: 'name',
-			title: t('text.search'),
-			type: 'search',
-			required: false,
-		},
-	]
+	const fields = [{ key: 'name', title: t('text.search'), type: 'search', required: false }]
 
 	useEffect(() => {
 		reset(filters)
