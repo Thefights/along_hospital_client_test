@@ -1,0 +1,14 @@
+{
+    "payment": {
+        "cancel": {
+            "title": "Payment canceled",
+            "subtitle": "Thank you for your interest in Along Hospital services.",
+            "help": "If you need assistance, please contact our customer care."
+        },
+        "success": {
+            "title": "Payment successful",
+            "subtitle": "Thank you for using Along Hospital services.",
+            "wish": "Wishing you a healthy day!"
+        }
+    }
+}

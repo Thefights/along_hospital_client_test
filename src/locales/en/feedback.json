@@ -4,7 +4,8 @@
         "submit_review": "Submit a review",
         "total_reviews": "{{count}} reviews",
         "filter": {
-            "all": "All"
+            "all": "All",
+            "star": "{{count}} ⭐"
         },
         "empty": "No reviews yet",
         "rating_hint": "Select stars to rate",

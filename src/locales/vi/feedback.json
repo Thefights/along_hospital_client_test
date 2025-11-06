@@ -4,7 +4,8 @@
         "submit_review": "Gửi đánh giá",
         "total_reviews": "{{count}} đánh giá",
         "filter": {
-            "all": "Tất cả"
+            "all": "Tất cả",
+            "star": "{{count}} ⭐"
         },
         "empty": "Chưa có đánh giá nào",
         "rating_hint": "Chọn số sao để đánh giá",
