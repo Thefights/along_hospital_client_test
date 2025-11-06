@@ -1,6 +1,7 @@
-import useReduxStore from '@/hooks/useReduxStore'
+import EmptyPage from '@/components/placeholders/EmptyPage'
+import { ApiUrls } from '@/configs/apiUrls'
+import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
-import { setDoctorsStore } from '@/redux/reducers/patientReducer'
 import { getImageFromCloud } from '@/utils/commons'
 import {
 	Box,
@@ -10,42 +11,54 @@ import {
 	CardContent,
 	CardMedia,
 	Grid,
-	Paper,
+	Skeleton,
 	Stack,
 	Typography,
 } from '@mui/material'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 
-const SHOW_STEP = 12
-
-// removed server pagination helpers
-
-const DocCard = ({ doc }) => {
-	const name = doc?.name || doc?.fullName || doc?.doctorName || 'Doctor'
-	const qualification = doc?.qualification || doc?.degree || doc?.title || ''
-	const specialty =
-		doc?.specialty?.name || doc?.specialtyName || doc?.department?.name || doc?.departmentName || ''
-	const image = doc?.avatar || doc?.imageUrl || doc?.image || ''
-	const imgSrc = image ? getImageFromCloud(image) : '/placeholder-image.png'
+const DoctorCard = ({ doctor = {} }) => {
 	return (
-		<Card variant='outlined' sx={{ height: '100%' }}>
-			<CardActionArea sx={{ height: '100%' }}>
-				<CardMedia component='img' height={180} image={imgSrc} alt={name} />
-				<CardContent>
-					<Stack spacing={0.5}>
-						<Typography variant='subtitle1' fontWeight={700} noWrap>
-							{name}
+		<Card
+			sx={{
+				display: 'flex',
+				flexDirection: 'column',
+				height: '100%',
+				transition: '0.24s',
+				'&:hover': { boxShadow: 6, transform: 'translateY(-4px)' },
+			}}
+		>
+			<CardActionArea
+				sx={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch', height: '100%' }}
+			>
+				<CardMedia
+					component='img'
+					height='180'
+					image={getImageFromCloud(doctor.image) || '/placeholder-image.png'}
+					alt={doctor.name || 'Ảnh bác sĩ'}
+					onError={(e) => (e.currentTarget.src = '/placeholder-image.png')}
+				/>
+				<CardContent sx={{ flexGrow: 1 }}>
+					<Stack spacing={1}>
+						<Typography variant='h6' sx={{ fontWeight: 700 }}>
+							{doctor.name || '---'}
 						</Typography>
-						{qualification ? (
-							<Typography variant='body2' color='text.secondary' noWrap>
-								{qualification}
+						{doctor.specialtyName && (
+							<Typography variant='body2' color='text.secondary'>
+								Specialty: {doctor.specialtyName}
 							</Typography>
-						) : null}
-						{specialty ? (
-							<Typography variant='body2' color='text.secondary' noWrap>
-								{specialty}
+						)}
+						{doctor.departmentName && (
+							<Typography variant='body2' color='text.secondary'>
+								Department: {doctor.departmentName}
 							</Typography>
-						) : null}
+						)}
+
+						{doctor.qualification && (
+							<Typography variant='body2' color='text.secondary'>
+								Qualification: {doctor.qualification}
+							</Typography>
+						)}
 					</Stack>
 				</CardContent>
 			</CardActionArea>
@@ -53,62 +66,71 @@ const DocCard = ({ doc }) => {
 	)
 }
 
-const DoctorPage = () => {
+export default function DoctorPage() {
 	const { t } = useTranslation()
-	const [visible, setVisible] = useState(SHOW_STEP)
+	const { loading, data } = useFetch(ApiUrls.DOCTOR.GET_ALL)
+	const [visibleCount, setVisibleCount] = useState(6)
 
-	// Ensure translation result is string; otherwise use fallback
-	const tt = (key, fallback) => {
-		const v = t(key)
-		return typeof v === 'string' ? v : fallback
+	const doctors = Array.isArray(data) ? data : Array.isArray(data?.collection) ? data.collection : []
+
+	const safeDoctors = doctors || []
+
+	const handleLoadMore = () => {
+		setVisibleCount((v) => v + 6)
 	}
 
-	const store = useReduxStore({
-		selector: (s) => s.patient.doctors,
-		setStore: setDoctorsStore,
-	})
-
-	const doctors = useMemo(() => store.data || [], [store.data])
-	const visibleDoctors = useMemo(() => doctors.slice(0, visible), [doctors, visible])
-	const HAS_MORE = visible < doctors.length
-
 	return (
-		<Stack spacing={2} my={2}>
-			{/* Page Header Section */}
-			<Paper sx={{ p: 3, borderRadius: 2 }}>
-				<Typography variant='h4' fontWeight={800} gutterBottom>
-					{tt('doctor.title', 'Bác sĩ của chúng tôi')}
+		<Box sx={{ p: 2 }}>
+			{/* Page header */}
+			<Stack spacing={1} sx={{ mb: 3 }}>
+				<Typography variant='h4' sx={{ fontWeight: 700 }}>
+					{t('doctor.title.team')}
 				</Typography>
 				<Typography variant='body1' color='text.secondary'>
-					{tt(
-						'doctor.subtitle',
-						'Đội ngũ bác sĩ của chúng tôi quy tụ các chuyên gia đầu ngành với trình độ chuyên môn cao, luôn tận tâm vì sức khỏe người bệnh.'
-					)}
+					{t('doctor.text.description')}
 				</Typography>
-			</Paper>
+			</Stack>
 
-			{/* Doctor Listing Section */}
-			<Paper sx={{ p: 2, borderRadius: 2 }}>
-				<Grid container spacing={2}>
-					{visibleDoctors.map((doc) => (
-						<Grid key={doc.id ?? doc.doctorId ?? Math.random()} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-							<DocCard doc={doc} />
+			{/* Doctor list */}
+			{loading ? (
+				<Grid container spacing={3}>
+					{Array.from({ length: 6 }).map((_, index) => (
+						<Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
+							<Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+								<Skeleton variant='rectangular' height={180} />
+								<CardContent sx={{ flexGrow: 1 }}>
+									<Skeleton variant='text' width='60%' height={28} sx={{ mb: 1 }} />
+									<Skeleton variant='text' width='40%' height={20} sx={{ mb: 0.5 }} />
+									<Skeleton variant='text' width='80%' height={20} />
+								</CardContent>
+								<Box sx={{ p: 2, pt: 0 }}>
+									<Skeleton variant='rectangular' width={100} height={36} />
+								</Box>
+							</Card>
 						</Grid>
 					))}
 				</Grid>
+			) : safeDoctors.length === 0 ? (
+				<EmptyPage title={t('doctor.text.no_doctors')} showButton={false} />
+			) : (
+				<Stack spacing={4} alignItems='stretch'>
+					<Grid container spacing={3} sx={{ height: '100%' }}>
+						{safeDoctors.slice(0, visibleCount).map((d, idx) => (
+							<Grid size={{ xs: 12, sm: 6, md: 4 }} key={d.id ?? idx}>
+								<DoctorCard doctor={d} />
+							</Grid>
+						))}
+					</Grid>
 
-				<Box display='flex' justifyContent='center' mt={2}>
-					<Button
-						variant='outlined'
-						disabled={!HAS_MORE}
-						onClick={() => setVisible((v) => v + SHOW_STEP)}
-					>
-						{tt('button.load_more', 'Tải thêm')}
-					</Button>
-				</Box>
-			</Paper>
-		</Stack>
+					{visibleCount < safeDoctors.length && (
+						<Stack alignItems='center'>
+							<Button variant='outlined' onClick={handleLoadMore} sx={{ borderRadius: 3 }}>
+								{t('doctor.button.load_more')}
+							</Button>
+						</Stack>
+					)}
+				</Stack>
+			)}
+		</Box>
 	)
 }
-
-export default DoctorPage
