@@ -15,6 +15,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
  * @param {string} [props.submitLabel]
  * @param {'primary'|'secondary'|'success'|'error'|'info'|'warning'} [props.submitButtonColor='primary']
  * @param {'xs'|'sm'|'md'|'lg'|'xl'} [props.maxWidth='sm']
+ * @param {(values: Object) => Promise<Object>} [props.onValuesChange]
+ * @param {'standard'|'outlined'|'filled'} [props.textFieldVariant='standard']
  * @param {(params: {values: any, closeDialog: Function, setField: Function}) => Promise<any>} [props.onSubmit]
  * @param {Array<{label: string,
  *  color?: 'primary'|'secondary'|'success'|'error'|'info'|'warning',
@@ -31,6 +33,7 @@ const GenericFormDialog = ({
 	submitButtonColor = 'primary',
 	maxWidth = 'sm',
 	onValuesChange = (values) => Promise.resolve(values),
+	textFieldVariant = 'standard',
 	onSubmit = ({ values, closeDialog, setField }) =>
 		Promise.resolve({ values, closeDialog, setField }),
 	additionalButtons = [],
@@ -55,7 +58,7 @@ const GenericFormDialog = ({
 		handleChange,
 		registerRef,
 		submitted,
-		'standard'
+		textFieldVariant
 	)
 
 	useEffect(() => {

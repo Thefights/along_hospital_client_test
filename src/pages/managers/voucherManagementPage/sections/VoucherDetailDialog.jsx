@@ -20,6 +20,7 @@ import {
 	TableRow,
 	Typography,
 } from '@mui/material'
+import React from 'react'
 
 const VoucherDetailDialog = ({ open, onClose, voucher }) => {
 	const { t } = useTranslation()
@@ -56,7 +57,7 @@ const VoucherDetailDialog = ({ open, onClose, voucher }) => {
 				</Typography>
 			</Grid>
 			<Grid size={8}>
-				<Typography variant='body2'>{value}</Typography>
+				{React.isValidElement(value) ? value : <Typography variant='body2'>{value}</Typography>}
 			</Grid>
 		</Grid>
 	)
@@ -85,34 +86,26 @@ const VoucherDetailDialog = ({ open, onClose, voucher }) => {
 							label={t('voucher.field.description')}
 							value={voucher.description || t('voucher.placeholder.no_description')}
 						/>
-						<Grid container spacing={2} sx={{ mb: 1.5 }}>
-							<Grid size={4}>
-								<Typography variant='body2' color='text.secondary' fontWeight={600}>
-									{t('voucher.field.voucher_status')}:
-								</Typography>
-							</Grid>
-							<Grid size={8}>
+						<InfoRow
+							label={t('voucher.field.voucher_status')}
+							value={
 								<Chip
 									label={t(`voucher.status.${voucher.voucherStatus}`)}
 									color={getStatusColor(voucher.voucherStatus)}
 									size='small'
 								/>
-							</Grid>
-						</Grid>
-						<Grid container spacing={2} sx={{ mb: 1.5 }}>
-							<Grid size={4}>
-								<Typography variant='body2' color='text.secondary' fontWeight={600}>
-									{t('voucher.field.voucher_type')}:
-								</Typography>
-							</Grid>
-							<Grid size={8}>
+							}
+						/>
+						<InfoRow
+							label={t('voucher.field.voucher_type')}
+							value={
 								<Chip
 									label={t(`voucher.type.${voucher.voucherType}`)}
 									color={getTypeColor(voucher.voucherType)}
 									size='small'
 								/>
-							</Grid>
-						</Grid>
+							}
+						/>
 					</Box>
 
 					<Divider />
@@ -128,7 +121,7 @@ const VoucherDetailDialog = ({ open, onClose, voucher }) => {
 						<InfoRow
 							label={t('voucher.field.discount_value')}
 							value={
-								voucher.discountType === EnumConfig.DiscountType.Percentage
+								voucher.discountType === EnumConfig.VoucherDiscountType.Percentage
 									? `${voucher.discountValue}%`
 									: `${voucher.discountValue.toLocaleString()} VND`
 							}

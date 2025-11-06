@@ -2,6 +2,7 @@
 import ActionMenu from '@/components/generals/ActionMenu'
 import GenericTable from '@/components/tables/GenericTable'
 import { ApiUrls } from '@/configs/apiUrls'
+import { defaultVoucherStatusStyle, defaultVoucherTypeStyle } from '@/configs/defaultStylesConfig'
 import { EnumConfig } from '@/configs/enumConfig'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useConfirm } from '@/hooks/useConfirm'
@@ -23,7 +24,7 @@ const VoucherManagementTable = ({ vouchers, loading, refetch }) => {
 	const confirm = useConfirm()
 	const { t } = useTranslation()
 
-	const getMedicines = useFetch(ApiUrls.MEDICINE.MANAGEMENT.GET_ALL, {}, [], true)
+	const getMedicines = useFetch(ApiUrls.MEDICINE.MANAGEMENT.GET_ALL)
 
 	const voucherPost = useAxiosSubmit({
 		url: ApiUrls.VOUCHER.MANAGEMENT.INDEX,
@@ -49,7 +50,7 @@ const VoucherManagementTable = ({ vouchers, loading, refetch }) => {
 			quantity: '',
 			expireDate: '',
 			voucherType: EnumConfig.VoucherType.Patient,
-			discountType: EnumConfig.DiscountType.Percentage,
+			discountType: EnumConfig.VoucherDiscountType.Percentage,
 			image: null,
 			medicineIds: [{ medicineId: '' }],
 		}),
@@ -122,28 +123,6 @@ const VoucherManagementTable = ({ vouchers, loading, refetch }) => {
 		}
 	}
 
-	const getStatusColor = (status) => {
-		switch (status) {
-			case EnumConfig.VoucherStatus.Active:
-				return 'success'
-			case EnumConfig.VoucherStatus.Expired:
-				return 'error'
-			default:
-				return 'default'
-		}
-	}
-
-	const getTypeColor = (type) => {
-		switch (type) {
-			case EnumConfig.VoucherType.Patient:
-				return 'primary'
-			case EnumConfig.VoucherType.Medicine:
-				return 'secondary'
-			default:
-				return 'default'
-		}
-	}
-
 	const fields = useMemo(
 		() => [
 			{ key: 'id', title: t('voucher.field.id'), width: 5, fixedColumn: true },
@@ -154,7 +133,7 @@ const VoucherManagementTable = ({ vouchers, loading, refetch }) => {
 				title: t('voucher.field.discount_value'),
 				width: 8,
 				render: (value, row) => {
-					if (row.discountType === EnumConfig.DiscountType.Percentage) {
+					if (row.discountType === EnumConfig.VoucherDiscountType.Percentage) {
 						return `${value}%`
 					}
 					return `${value.toLocaleString()} VND`
@@ -184,7 +163,7 @@ const VoucherManagementTable = ({ vouchers, loading, refetch }) => {
 				render: (value) => (
 					<Chip
 						label={t(`voucher.status.${value}`)}
-						color={getStatusColor(value)}
+						color={defaultVoucherStatusStyle(value)}
 						size='small'
 						sx={{ fontWeight: 500 }}
 					/>
@@ -197,7 +176,7 @@ const VoucherManagementTable = ({ vouchers, loading, refetch }) => {
 				render: (value) => (
 					<Chip
 						label={t(`voucher.type.${value}`)}
-						color={getTypeColor(value)}
+						color={defaultVoucherTypeStyle(value)}
 						size='small'
 						sx={{ fontWeight: 500 }}
 					/>
@@ -273,16 +252,8 @@ const VoucherManagementTable = ({ vouchers, loading, refetch }) => {
 	)
 
 	const medicineOptions = useMemo(() => {
-		const raw = getMedicines.data
-		const collection = Array.isArray(raw)
-			? raw
-			: Array.isArray(raw?.collection)
-			? raw.collection
-			: Array.isArray(raw?.data)
-			? raw.data
-			: []
-
-		return collection.map((medicine) => ({
+		const raw = getMedicines.data?.collection
+		return raw?.map((medicine) => ({
 			value: medicine.id,
 			label: `${medicine.name}${medicine.brand ? ` - ${medicine.brand}` : ''}`,
 		}))

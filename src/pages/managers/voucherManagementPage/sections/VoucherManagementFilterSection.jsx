@@ -65,7 +65,7 @@ const VoucherManagementFilterSection = ({ filters, setFilters, loading = false }
 				))}
 				<Grid size={2}>
 					<FilterButton
-						onFilterClick={() => setFilters({ ...values, page: 1 })}
+						onFilterClick={() => setFilters({ ...values })}
 						fullWidth
 						loading={loading}
 						sx={{ flexGrow: 1 }}

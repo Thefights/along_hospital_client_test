@@ -132,7 +132,7 @@ export const EnumConfig = {
 		Patient: 'Patient',
 		Medicine: 'Medicine',
 	},
-	DiscountType: {
+	VoucherDiscountType: {
 		Percentage: 'Percentage',
 		FixedAmount: 'FixedAmount',
 	},

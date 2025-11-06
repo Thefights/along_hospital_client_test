@@ -8,11 +8,7 @@ import VoucherManagementFilterSection from './sections/VoucherManagementFilterSe
 import VoucherManagementTable from './sections/VoucherManagementTable'
 
 const VoucherManagementPage = () => {
-	const [filters, setFilters] = useState({
-		name: '',
-		voucherStatus: '',
-		voucherType: '',
-	})
+	const [filters, setFilters] = useState('')
 	const [page, setPage] = useState(1)
 	const [pageSize, setPageSize] = useState(10)
 

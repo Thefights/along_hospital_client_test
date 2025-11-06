@@ -1,5 +1,6 @@
 import GenericFormDialog from '@/components/dialogs/commons/GenericFormDialog'
 import { EnumConfig } from '@/configs/enumConfig'
+import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
 import { isFutureDate, isPercentage, maxLen } from '@/utils/validateUtil'
 import { useState } from 'react'
@@ -17,17 +18,15 @@ const VoucherFormDialog = ({
 }) => {
 	const { t } = useTranslation()
 	const [values, setValues] = useState(initialValues)
+	const _enum = useEnum()
 
 	const baseFields = [
 		{
 			key: 'voucherType',
 			title: t('voucher.field.voucher_type'),
 			type: 'select',
-			options: Object.keys(EnumConfig.VoucherType).map((key) => ({
-				value: EnumConfig.VoucherType[key],
-				label: t(`voucher.type.${EnumConfig.VoucherType[key]}`),
-			})),
-			props: { variant: 'outlined', readOnly: isUpdate },
+			options: _enum.voucherTypeOptions,
+			props: { readOnly: isUpdate },
 		},
 		{
 			key: 'name',
@@ -47,16 +46,14 @@ const VoucherFormDialog = ({
 			key: 'discountType',
 			title: t('voucher.field.discount_type'),
 			type: 'select',
-			options: Object.keys(EnumConfig.DiscountType).map((key) => ({
-				value: EnumConfig.DiscountType[key],
-				label: t(`voucher.discount_type.${EnumConfig.DiscountType[key]}`),
-			})),
+			options: _enum.voucherDiscountTypeOptions,
 		},
 		{
 			key: 'discountValue',
 			title: t('voucher.field.discount_value'),
 			type: 'number',
-			validate: values.discountType === EnumConfig.DiscountType.Percentage ? [isPercentage()] : [],
+			validate:
+				values.discountType === EnumConfig.VoucherDiscountType.Percentage ? [isPercentage()] : [],
 		},
 		{
 			key: 'minPurchaseAmount',
@@ -127,15 +124,14 @@ const VoucherFormDialog = ({
 	return (
 		<GenericFormDialog
 			open={open}
-			onClose={() => {
-				onClose()
-			}}
+			onClose={onClose}
 			title={title}
 			initialValues={initialValues}
 			fields={fields}
 			submitLabel={submitLabel}
 			submitButtonColor={submitButtonColor}
 			onValuesChange={setValues}
+			textFieldVariant={'outlined'}
 			onSubmit={handleSubmit}
 		/>
 	)

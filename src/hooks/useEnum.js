@@ -193,6 +193,16 @@ export default function useEnum() {
 			{ value: EnumConfig.VoucherType.Patient, label: t('enum.voucher_type.patient') },
 			{ value: EnumConfig.VoucherType.Medicine, label: t('enum.voucher_type.medicine') },
 		],
+		voucherDiscountTypeOptions: [
+			{
+				value: EnumConfig.VoucherDiscountType.Percentage,
+				label: t('enum.voucher_discount_type.percentage'),
+			},
+			{
+				value: EnumConfig.VoucherDiscountType.FixedAmount,
+				label: t('enum.voucher_discount_type.fixed_amount'),
+			},
+		],
 	}
 }
 
