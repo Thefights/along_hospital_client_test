@@ -55,7 +55,7 @@ export const ApiUrls = {
 		MANAGEMENT: {
 			INDEX: `/medical-service-management`,
 			GET_ALL: `/medical-service-management/all`,
-			DETAIL: (id) => `/medical-service-managementt/${id}`,
+			DETAIL: (id) => `/medical-service-management/${id}`,
 		},
 	},
 	APPOINTMENT: {

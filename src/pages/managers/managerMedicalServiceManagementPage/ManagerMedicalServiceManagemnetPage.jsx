@@ -55,7 +55,7 @@ const ManageMedicalServiceManagementPage = () => {
 	}, [getAllMedicalServices.data, pageSize])
 
 	const createMedicalService = useAxiosSubmit({
-		url: ApiUrls.MEDICAL_SERVICE.MANAGEMENT.CREATE,
+		url: ApiUrls.MEDICAL_SERVICE.MANAGEMENT.INDEX,
 		method: 'POST',
 		onSuccess: async () => {
 			setOpenCreateDialog(false)
@@ -64,7 +64,7 @@ const ManageMedicalServiceManagementPage = () => {
 	})
 
 	const updateMedicalService = useAxiosSubmit({
-		url: ApiUrls.MEDICAL_SERVICE.MANAGEMENT.UPDATE(selectedMedicalService?.id),
+		url: ApiUrls.MEDICAL_SERVICE.MANAGEMENT.DETAIL(selectedMedicalService?.id),
 		method: 'PUT',
 		onSuccess: async () => {
 			setOpenUpdateDialog(false)
@@ -113,7 +113,7 @@ const ManageMedicalServiceManagementPage = () => {
 								})
 								if (isConfirmed) {
 									await deleteMedicalService.submit(null, {
-										overrideUrl: ApiUrls.MEDICAL_SERVICE.MANAGEMENT.DELETE(row.id),
+										overrideUrl: ApiUrls.MEDICAL_SERVICE.MANAGEMENT.DETAIL(row.id),
 									})
 								}
 							},

@@ -39,7 +39,7 @@ const ManagerDepartmentManagementPage = () => {
 	}, [getAllDepartments.data])
 
 	const createDepartment = useAxiosSubmit({
-		url: ApiUrls.DEPARTMENT.MANAGEMENT.CREATE,
+		url: ApiUrls.DEPARTMENT.MANAGEMENT.INDEX,
 		method: 'POST',
 		onSuccess: async () => {
 			setOpenCreateDialog(false)
@@ -48,7 +48,7 @@ const ManagerDepartmentManagementPage = () => {
 	})
 
 	const updateDepartment = useAxiosSubmit({
-		url: ApiUrls.DEPARTMENT.MANAGEMENT.UPDATE(selectedDepartment?.id),
+		url: ApiUrls.DEPARTMENT.MANAGEMENT.DETAIL(selectedDepartment?.id),
 		method: 'PUT',
 		onSuccess: async () => {
 			setOpenUpdateDialog(false)
@@ -94,7 +94,7 @@ const ManagerDepartmentManagementPage = () => {
 								})
 								if (isConfirmed) {
 									await deleteDepartment.submit(null, {
-										overrideUrl: ApiUrls.DEPARTMENT.MANAGEMENT.DELETE(row.id),
+										overrideUrl: ApiUrls.DEPARTMENT.MANAGEMENT.DETAIL(row.id),
 									})
 								}
 							},
