@@ -1,41 +1,38 @@
 import axiosConfig from '@/configs/axiosConfig'
+import useAuth from '@/hooks/useAuth'
 import useMeetingSignalR from '@/hooks/useMeetingSignalR'
+import { useLocalStorage } from '@/hooks/useStorage'
+import useTranslation from '@/hooks/useTranslation'
 import useWebRtcPeer from '@/hooks/useWebRtcPeer'
 import { Box, Button, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-/**
- * TeleSessionCall
- * High-level component to orchestrate SignalR signaling + WebRTC peer for a tele-session call.
- *
- * Props: { transactionId: string, accessToken: string, role: 'Doctor'|'Patient' }
- */
-const TeleSessionCall = ({ transactionId, accessToken, role }) => {
+const TeleSessionCall = ({ transactionId }) => {
+	const { t } = useTranslation()
+	const { auth } = useAuth()
+	const [accessToken] = useLocalStorage('accessToken')
 	const localVideoRef = useRef(null)
 	const remoteVideoRef = useRef(null)
 	const [error, setError] = useState('')
 	const [participants, setParticipants] = useState([])
 	const [session, setSession] = useState(null)
-	const isCaller = role === 'Patient'
+	const isCaller = String(auth?.role || '').toLowerCase() === 'patient'
 
-	// fetch session credential/state
 	useEffect(() => {
-		if (!transactionId || !accessToken) return
+		if (!transactionId) return
 		let cancelled = false
 		;(async () => {
 			try {
-				const res = await axiosConfig.get(`/tele-session/${transactionId}`, {
-					headers: { Authorization: `Bearer ${accessToken}` },
-				})
+				const res = await axiosConfig.get(`/tele-session/${transactionId}`)
 				if (!cancelled) setSession(res?.data || res)
 			} catch {
-				if (!cancelled) setError('Phiên chưa sẵn sàng')
+				if (!cancelled) setError(t('telehealth.error.session_not_ready'))
 			}
 		})()
 		return () => {
 			cancelled = true
 		}
-	}, [transactionId, accessToken])
+	}, [transactionId, t])
 
 	const iceServers = useMemo(() => session?.iceServers || [], [session])
 
@@ -64,9 +61,8 @@ const TeleSessionCall = ({ transactionId, accessToken, role }) => {
 	const { sendOffer, sendAnswer, sendIceCandidate, leaveSession, startConnection, stopConnection } =
 		useMeetingSignalR({
 			transactionId,
-			accessToken,
+			accessToken: accessToken || '',
 			onJoinSucceeded: () => {
-				// patient initiates offer on successful join
 				if (isCaller) {
 					;(async () => {
 						const offer = await createOffer()
@@ -74,9 +70,8 @@ const TeleSessionCall = ({ transactionId, accessToken, role }) => {
 					})()
 				}
 			},
-			onJoinFailed: (err) => {
-				setError('Phiên chưa sẵn sàng')
-				console.error('JoinFailed', err)
+			onJoinFailed: () => {
+				setError(t('telehealth.error.session_not_ready'))
 			},
 			onParticipantJoined: (p) => setParticipants((prev) => [...prev.filter((x) => x.id !== p.id), p]),
 			onParticipantLeft: (id) => setParticipants((prev) => prev.filter((x) => x.id !== id)),
@@ -91,22 +86,17 @@ const TeleSessionCall = ({ transactionId, accessToken, role }) => {
 			onIceCandidate: async ({ candidate }) => {
 				await addIceCandidate(candidate)
 			},
-			onStateUpdated: (state) => {
-				// optional: reflect external state changes
-				console.info('state updated', state)
-			},
 		})
 
 	useEffect(() => {
-		// auto start signaling if session is valid
 		if (!session) return
 		if (session?.status && !['Scheduled', 'InProgress'].includes(session.status)) {
-			setError('Phiên chưa sẵn sàng')
+			setError(t('telehealth.error.session_not_ready'))
 			return
 		}
 		startConnection()
 		return () => stopConnection()
-	}, [session, startConnection, stopConnection])
+	}, [session, startConnection, stopConnection, t])
 
 	if (error) {
 		return (
@@ -135,7 +125,7 @@ const TeleSessionCall = ({ transactionId, accessToken, role }) => {
 
 			<Stack direction='row' spacing={1} sx={{ mt: 2 }}>
 				<Button variant='contained' onClick={startConnection}>
-					Start Call
+					{t('telehealth.button.start_call')}
 				</Button>
 				<Button
 					variant='outlined'
@@ -145,23 +135,23 @@ const TeleSessionCall = ({ transactionId, accessToken, role }) => {
 						leaveSession()
 					}}
 				>
-					Hang Up
+					{t('telehealth.button.hang_up')}
 				</Button>
 				<Button variant='outlined' onClick={toggleAudio}>
-					Mute/Unmute
+					{t('telehealth.button.mute_unmute')}
 				</Button>
 				<Button variant='outlined' onClick={toggleVideo}>
-					Toggle Video
+					{t('telehealth.button.toggle_video')}
 				</Button>
 			</Stack>
 
 			<Paper variant='outlined' sx={{ p: 1.5, mt: 2, borderRadius: 2 }}>
 				<Typography variant='subtitle2' sx={{ mb: 1 }}>
-					Participants
+					{t('telehealth.participants.title')}
 				</Typography>
 				{participants.length === 0 ? (
 					<Typography variant='body2' color='text.secondary'>
-						No participants
+						{t('telehealth.participants.empty')}
 					</Typography>
 				) : (
 					<ul style={{ margin: 0, paddingLeft: 16 }}>
