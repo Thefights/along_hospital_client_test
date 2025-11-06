@@ -22,20 +22,24 @@ const CreateMedicalHistoryDetailDialog = ({
 			key: 'medicalServiceId',
 			title: t('medical_history.field.medical_history_detail.medical_service'),
 			type: 'select',
-			options: medicalServiceStore?.data || [],
-			renderOption: (option) => (
+			options:
+				medicalServiceStore?.data.map((item) => ({
+					value: item.id,
+					label: item,
+				})) || [],
+			renderOption: (value, label) => (
 				<Stack direction={'row'} justifyContent={'space-between'} alignItems={'stretch'}>
 					<Stack>
-						<Typography variant='subtitle1'>{option?.name}</Typography>
+						<Typography variant='subtitle1'>{label?.name}</Typography>
 						<Typography variant='subtitle2' color='text.secondary'>
-							{option?.specialtyName}
+							{label?.specialtyName}
 						</Typography>
 						<Typography variant='caption' color='text.secondary' sx={{ ...defaultLineClampStyle(2) }}>
-							{option?.description}
+							{label?.description}
 						</Typography>
 					</Stack>
 					<Typography variant='subtitle2' color='primary'>
-						${option?.price ?? 0}
+						${label?.price ?? 0}
 					</Typography>
 				</Stack>
 			),

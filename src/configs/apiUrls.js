@@ -27,6 +27,7 @@ export const ApiUrls = {
 	},
 	DOCTOR: {
 		INDEX: `/doctor`,
+		GET_ALL: `/doctor/all`,
 		MANAGEMENT: {
 			INDEX: `/doctor-management`,
 			GET_ALL: `/doctor-management/all`,
@@ -45,7 +46,7 @@ export const ApiUrls = {
 	},
 	MEDICINE: {
 		INDEX: `/medicine`,
-		GETALL: `/medicine`,
+		GET_ALL: `/medicine/all`,
 		MANAGEMENT: {
 			INDEX: `/medicine-management`,
 			GET_ALL: `/medicine-management/all`,
@@ -63,6 +64,7 @@ export const ApiUrls = {
 	},
 	MEDICAL_SERVICE: {
 		INDEX: `/medical-service`,
+		GET_ALL: `/medical-service/all`,
 		MANAGEMENT: {
 			INDEX: `/medical-service-management`,
 			GET_ALL: `/medical-service-management/all`,

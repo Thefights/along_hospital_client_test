@@ -49,12 +49,13 @@ const {
 	setMedicinesStore,
 } = managementSlice.actions
 
-setDoctorsStore.defaultUrl = ApiUrls.DOCTOR.MANAGEMENT.GET_ALL
-setPatientsStore.defaultUrl = ApiUrls.PATIENT.MANAGEMENT.GET_ALL
-setSpecialtiesStore.defaultUrl = ApiUrls.SPECIALTY.MANAGEMENT.GET_ALL
-setMedicalServicesStore.defaultUrl = ApiUrls.MEDICAL_SERVICE.MANAGEMENT.GET_ALL
-setMedicinesStore.defaultUrl = ApiUrls.MEDICINE.MANAGEMENT.GET_ALL
-setDepartmentsStore.defaultUrl = ApiUrls.DEPARTMENT.MANAGEMENT.GET_ALL
+setDoctorsStore.defaultUrl = ApiUrls.DOCTOR.GET_ALL
+setPatientsStore.defaultUrl = ApiUrls.PATIENT.MANAGEMENT.GET_ALL // Only manager can get this
+setSpecialtiesStore.defaultUrl = ApiUrls.SPECIALTY.GET_ALL
+setMedicalServicesStore.defaultUrl = ApiUrls.MEDICAL_SERVICE.GET_ALL
+setMedicinesStore.defaultUrl = ApiUrls.MEDICINE.GET_ALL
+setDepartmentsStore.defaultUrl = ApiUrls.DEPARTMENT.MANAGEMENT.GET_ALL // Only manager can get this
+setMedicineCategoriesStore.defaultUrl = ApiUrls.MEDICINE_CATEGORY.GET_ALL
 
 export {
 	setDepartmentsStore,

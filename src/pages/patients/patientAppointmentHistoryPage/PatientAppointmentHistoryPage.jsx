@@ -42,7 +42,7 @@ const PatientAppointmentHistoryPage = () => {
 		data: { reason: cancelReason },
 		onSuccess: async () => {
 			handleCloseCancelDialog()
-			setOpenCancelDialog(false)
+			setSelectedAppointment(null)
 			await getAppointments.fetch()
 		},
 	})
