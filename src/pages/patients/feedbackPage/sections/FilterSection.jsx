@@ -1,4 +1,3 @@
-// Section bọc bộ lọc số sao, gộp UI trực tiếp
 import useTranslation from '@/hooks/useTranslation'
 import { Button, Paper, Stack } from '@mui/material'
 
