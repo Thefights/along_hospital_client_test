@@ -72,8 +72,6 @@ const FeedbackPage = ({ feedbacks, loading = false, hasMore: hasMoreProp = false
 		[]
 	)
 
-	console.log(editingItem)
-
 	const StarRatingInput = ({ value, onChange, title }) => {
 		const [hover, setHover] = useState(-1)
 		const show = hover !== -1 ? hover : Number(value) || 0

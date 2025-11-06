@@ -22,7 +22,7 @@ const ListSection = ({
 
 	const reportSubmit = useAxiosSubmit({ url: ApiUrls.FEEDBACK_REPORT.INDEX, method: 'POST' })
 	const [reportDialog, setReportDialog] = useState({ open: false, feedbackId: null })
-	const [reportedIds, setReportedIds] = useState(new Set())
+	// Removed reportedIds tracking per requirement: keep Report button enabled and text unchanged
 
 	const Item = ({ review }) => {
 		const isMe = String(review?.patientId ?? '') === String(currentUserId ?? '')
@@ -53,7 +53,6 @@ const ListSection = ({
 							</Stack>
 						)}
 
-						{/* Report button only for other users' feedbacks */}
 						{!isMe && (
 							<Button
 								size='small'
@@ -62,9 +61,9 @@ const ListSection = ({
 								onClick={() => {
 									setReportDialog({ open: true, feedbackId: review?.id })
 								}}
-								disabled={reportedIds.has(review?.id)}
+								disabled={false} // Always enabled
 							>
-								{reportedIds.has(review?.id) ? t('text.result') : t('button.report') || 'Report'}
+								{t('button.report') || 'Report'}
 							</Button>
 						)}
 					</Stack>
@@ -117,7 +116,6 @@ const ListSection = ({
 					}
 					const res = await reportSubmit.submit(payload)
 					if (res) {
-						setReportedIds((prev) => new Set(prev).add(reportDialog.feedbackId))
 						setReportDialog({ open: false, feedbackId: null })
 					}
 				}}
