@@ -1,6 +1,6 @@
 import { Container, Stack } from '@mui/material'
-import HeaderCardSection from './sections/HeaderCardSection'
-import InfoTabSection from './sections/InfoTabSection'
+import HeaderCardSection from './sections/ProfileHeaderCardSection'
+import InfoTabSection from './sections/ProfileInfoTabSection'
 
 const ViewProfileBasePage = ({
 	profile = {},
@@ -50,4 +50,3 @@ const ViewProfileBasePage = ({
 }
 
 export default ViewProfileBasePage
-

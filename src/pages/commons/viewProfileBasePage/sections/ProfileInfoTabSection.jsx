@@ -86,12 +86,12 @@ const InfoTabSection = ({
 				<Grid size={{ xs: 12, md: 6 }}>
 					<Stack spacing={2.5}>
 						{editMode ? (
-							renderField(fields[0])
+							renderField(fields.find((f) => f.key === 'name'))
 						) : (
 							<DrawerInfoRow label={t('profile.field.name')} value={profile?.name || '-'} />
 						)}
 						{editMode ? (
-							renderField(fields[1])
+							renderField(fields.find((f) => f.key === 'dateOfBirth'))
 						) : (
 							<DrawerInfoRow
 								label={t('profile.field.date_of_birth')}
@@ -99,7 +99,7 @@ const InfoTabSection = ({
 							/>
 						)}
 						{editMode ? (
-							renderField(fields[2])
+							renderField(fields.find((f) => f.key === 'gender'))
 						) : (
 							<DrawerInfoRow label={t('profile.field.gender')} value={genderLabel} />
 						)}
@@ -110,7 +110,7 @@ const InfoTabSection = ({
 						<DrawerInfoRow label={t('profile.field.email')} value={profile?.email || '-'} />
 						<DrawerInfoRow label={t('profile.field.phone')} value={profile?.phone || '-'} />
 						{editMode ? (
-							renderField(fields[3])
+							renderField(fields.find((f) => f.key === 'address'))
 						) : (
 							<DrawerInfoRow label={t('profile.field.address')} value={profile?.address || '-'} />
 						)}
