@@ -1,12 +1,12 @@
-import ViewProfileBasePage from '@/components/basePages/viewProfileBasePage/ViewProfileBasePage'
 import { ApiUrls } from '@/configs/apiUrls'
 import useAuth from '@/hooks/useAuth'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useForm } from '@/hooks/useForm'
 import useReduxStore from '@/hooks/useReduxStore'
+import ViewProfileBasePage from '@/pages/commons/viewProfileBasePage/ViewProfileBasePage'
 import { setProfileStore } from '@/redux/reducers/patientReducer'
 import { formatDateToSqlDate } from '@/utils/formatDateUtil'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 const ProfilePage = () => {
 	const { auth } = useAuth()
@@ -18,27 +18,26 @@ const ProfilePage = () => {
 		setStore: setProfileStore,
 	})
 
-	const { values, setField, handleChange, reset, registerRef, validateAll } = useForm({
-		name: '',
-		dateOfBirth: '',
-		gender: '',
-		address: '',
-		image: null,
-	})
+	const initialValues = useMemo(
+		() => ({
+			name: profileStore.data?.name || '',
+			dateOfBirth: profileStore.data?.dateOfBirth
+				? formatDateToSqlDate(profileStore.data.dateOfBirth)
+				: '',
+			gender: profileStore.data?.gender || '',
+			address: profileStore.data?.address || '',
+			image: null,
+		}),
+		[profileStore.data]
+	)
+
+	const { values, setField, handleChange, reset, registerRef, validateAll } = useForm(initialValues)
 
 	useEffect(() => {
 		if (profileStore.data && !editMode) {
-			reset({
-				name: profileStore.data.name || '',
-				dateOfBirth: profileStore.data.dateOfBirth
-					? formatDateToSqlDate(profileStore.data.dateOfBirth)
-					: '',
-				gender: profileStore.data.gender || '',
-				address: profileStore.data.address || '',
-				image: null,
-			})
+			reset(initialValues)
 		}
-	}, [profileStore.data, editMode, reset])
+	}, [profileStore.data, editMode, reset, initialValues])
 
 	const updateProfile = useAxiosSubmit({
 		url: ApiUrls.USER.PROFILE,
@@ -57,17 +56,7 @@ const ProfilePage = () => {
 	const handleCancel = () => {
 		setEditMode(false)
 		setSubmitted(false)
-		if (profileStore.data) {
-			reset({
-				name: profileStore.data.name || '',
-				dateOfBirth: profileStore.data.dateOfBirth
-					? formatDateToSqlDate(profileStore.data.dateOfBirth)
-					: '',
-				gender: profileStore.data.gender || '',
-				address: profileStore.data.address || '',
-				image: null,
-			})
-		}
+		reset(initialValues)
 	}
 
 	const handleSave = async () => {
@@ -75,18 +64,9 @@ const ProfilePage = () => {
 		const ok = validateAll()
 		if (!ok) return
 
-		const payload = {
-			name: values.name,
-			dateOfBirth: values.dateOfBirth || null,
-			gender: values.gender || null,
-			address: values.address || null,
-		}
+		const { image, ...rest } = values
 
-		if (values.image instanceof File) {
-			payload.image = values.image
-		}
-
-		await updateProfile.submit(payload)
+		await updateProfile.submit(image instanceof File ? values : rest)
 	}
 
 	return (
