@@ -5,14 +5,14 @@
             "team": "Bác sĩ của chúng tôi"
         },
         "text": {
-            "description": "Đội ngũ bác sĩ Bệnh viện ALong giàu kinh nghiệm, tận tâm và luôn đặt sức khỏe người bệnh lên hàng đầu.",
-            "no_doctors": "Hiện chưa có bác sĩ nào."
+            "description": "Đội ngũ bác sĩ Bệnh viện ALong giàu kinh nghiệm, tận tâm và luôn đặt sức khỏe người bệnh lên hàng đầu."
         },
         "button": {
             "load_more": "Xem thêm"
         },
         "placeholder": {
-            "search_doctor": "Tìm kiếm bác sĩ..."
+            "search_doctor": "Tìm kiếm bác sĩ...",
+            "no_doctors": "Hiện chưa có bác sĩ nào."
         },
         "field": {
             "id": "Mã",

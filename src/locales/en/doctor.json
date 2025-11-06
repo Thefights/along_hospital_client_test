@@ -5,14 +5,14 @@
             "team": "Our Doctors"
         },
         "text": {
-            "description": "ALong Hospital’s doctors are experienced, dedicated, and always put patients’ health first.",
-            "no_doctors": "No doctors available."
+            "description": "ALong Hospital’s doctors are experienced, dedicated, and always put patients’ health first."
         },
         "button": {
             "load_more": "Load more"
         },
         "placeholder": {
-            "search_doctor": "Search doctor..."
+            "search_doctor": "Search doctor...",
+            "no_doctors": "No doctors available."
         },
         "field": {
             "id": "ID",
