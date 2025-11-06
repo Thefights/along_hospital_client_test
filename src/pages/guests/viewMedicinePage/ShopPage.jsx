@@ -1,5 +1,4 @@
 import { ApiUrls } from '@/configs/apiUrls'
-import { routeUrls } from '@/configs/routeUrls'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
 import { Box, Pagination, Stack, Typography } from '@mui/material'
@@ -40,10 +39,6 @@ export default function ShopPage() {
 		})
 	}
 
-	const handleClickMedicine = (id) => {
-		navigate(routeUrls.HOME.MEDICINE_DETAIL(id))
-	}
-
 	const medicines = getAllMedicines.data?.collection || []
 	const totalPages = Math.ceil((getAllMedicines.data?.totalCount || 0) / filters.pageSize)
 	const categories = getAllCategories.data || []
@@ -55,7 +50,6 @@ export default function ShopPage() {
 			</Typography>
 
 			<Box sx={{ display: 'flex', gap: 3, alignItems: 'flex-start' }}>
-				{/* Sidebar */}
 				<Box sx={{ width: '25%', position: 'sticky', top: 96, alignSelf: 'flex-start' }}>
 					<ShopFilters
 						filters={filters}
@@ -66,7 +60,6 @@ export default function ShopPage() {
 					/>
 				</Box>
 
-				{/* Medicines Grid */}
 				<Box sx={{ width: '75%' }}>
 					<Box
 						sx={{
@@ -84,7 +77,6 @@ export default function ShopPage() {
 									flexShrink: 0,
 									cursor: 'pointer',
 								}}
-								onClick={() => handleClickMedicine(medicine.id)}
 							>
 								<MedicineCard medicine={medicine} />
 							</Box>
