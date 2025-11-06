@@ -28,6 +28,7 @@ const patientSlice = createSlice({
 		setDoctorsStore: (state, action) => {
 			state.doctors = action.payload || []
 		},
+		resetPatientStore: () => initState,
 	},
 })
 
