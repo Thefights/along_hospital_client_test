@@ -396,7 +396,6 @@ export default function useFieldRenderer(
 	}
 
 	const renderCustom = (field) => {
-		// Support custom renderer with value/onChange signature
 		const value = getObjectValueFromStringPath(values, field.key)
 		const setValue = (val) => setField(field.key, val)
 		const required = field.required ?? true
