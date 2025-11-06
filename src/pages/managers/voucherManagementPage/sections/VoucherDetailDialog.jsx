@@ -31,15 +31,11 @@ const VoucherDetailDialog = ({ open, onClose, voucher }) => {
 	const InfoRow = ({ label, value }) => (
 		<Grid container spacing={2} sx={{ mb: 1.5 }}>
 			<Grid size={4}>
-				{React.isValidElement(label) ? (
-					label
-				) : (
-					<Typography variant='text.secondary'>{label}</Typography>
-				)}
+				<Typography variant='body2' color='text.secondary' fontWeight={600}>
+					{label}:
+				</Typography>
 			</Grid>
-			<Grid size={8}>
-				{React.isValidElement(value) ? value : <Typography variant='body2'>{value}</Typography>}
-			</Grid>
+			<Grid size={8}>{React.isValidElement(value) ? value : <Typography>{value}</Typography>}</Grid>
 		</Grid>
 	)
 
