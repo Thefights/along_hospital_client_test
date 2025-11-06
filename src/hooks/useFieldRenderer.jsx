@@ -395,6 +395,26 @@ export default function useFieldRenderer(
 		)
 	}
 
+	const renderCustom = (field) => {
+		// Support custom renderer with value/onChange signature
+		const value = getObjectValueFromStringPath(values, field.key)
+		const setValue = (val) => setField(field.key, val)
+		const required = field.required ?? true
+		const showError = submitted && required && (value == null || value === '')
+
+		return (
+			<Stack key={field.key} spacing={0.5}>
+				{field.title ? <Typography variant='subtitle2'>{field.title}</Typography> : null}
+				{typeof field.render === 'function' ? field.render({ value, onChange: setValue }) : null}
+				{showError && (
+					<Typography variant='caption' color='error'>
+						{t('error.required')}
+					</Typography>
+				)}
+			</Stack>
+		)
+	}
+
 	const renderImage = (field) => {
 		const max = Number.isFinite(field.multiple) ? Math.max(1, Number(field.multiple)) : 1
 		return max > 1 ? renderImageMultiple(field) : renderImageSingle(field)
@@ -409,6 +429,7 @@ export default function useFieldRenderer(
 		image: renderImage,
 		object: renderObject,
 		array: renderArray,
+		custom: renderCustom,
 		_default: renderStandard,
 	}
 
