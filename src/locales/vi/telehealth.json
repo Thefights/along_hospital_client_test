@@ -38,5 +38,20 @@
         "message": {
             "waiting_for_doctor": "Đang chờ bác sĩ tham gia…"
         }
+    },
+    "telehealth": {
+        "error": {
+            "session_not_ready": "Phiên chưa sẵn sàng"
+        },
+        "button": {
+            "start_call": "Bắt đầu gọi",
+            "hang_up": "Kết thúc",
+            "mute_unmute": "Bật/Tắt mic",
+            "toggle_video": "Bật/Tắt video"
+        },
+        "participants": {
+            "title": "Người tham gia",
+            "empty": "Chưa có người tham gia"
+        }
     }
 }

@@ -38,5 +38,20 @@
         "message": {
             "waiting_for_doctor": "Waiting for your doctor to join…"
         }
+    },
+    "telehealth": {
+        "error": {
+            "session_not_ready": "Session is not ready yet"
+        },
+        "button": {
+            "start_call": "Start Call",
+            "hang_up": "Hang Up",
+            "mute_unmute": "Mute/Unmute",
+            "toggle_video": "Toggle Video"
+        },
+        "participants": {
+            "title": "Participants",
+            "empty": "No participants"
+        }
     }
 }
