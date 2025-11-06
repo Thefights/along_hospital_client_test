@@ -1,3 +1,4 @@
+import useTranslation from '@/hooks/useTranslation'
 import { CheckCircleOutline } from '@mui/icons-material'
 import { Box, Paper, Stack, Typography } from '@mui/material'
 import { keyframes } from '@mui/system'
@@ -9,6 +10,7 @@ const pulse = keyframes`
 `
 
 const PaymentReturnPage = () => {
+	const { t } = useTranslation()
 	return (
 		<Box sx={{ py: 6 }}>
 			<Paper elevation={0} sx={{ p: { xs: 3, md: 5 }, textAlign: 'center' }}>
@@ -27,13 +29,13 @@ const PaymentReturnPage = () => {
 					</Box>
 
 					<Typography variant='h5' fontWeight={800}>
-						Thanh toán thành công
+						{t('payment.success.title')}
 					</Typography>
 					<Typography variant='body1' color='text.secondary'>
-						Cảm ơn bạn đã sử dụng dịch vụ của Along Hospital.
+						{t('payment.success.subtitle')}
 					</Typography>
 					<Typography variant='body2' color='text.secondary' sx={{ fontStyle: 'italic' }}>
-						Chúc bạn một ngày thật nhiều sức khỏe!
+						{t('payment.success.wish')}
 					</Typography>
 				</Stack>
 			</Paper>
