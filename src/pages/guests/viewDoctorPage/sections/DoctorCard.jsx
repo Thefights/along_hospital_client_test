@@ -21,14 +21,13 @@ const DoctorCard = ({ doctor = {} }) => {
 				<CardMedia
 					component='img'
 					height='180'
-					image={getImageFromCloud(doctor.image) || '/placeholder-image.png'}
+					image={getImageFromCloud(doctor.image)}
 					alt={doctor.name || t('doctor.field.image')}
-					onError={(e) => (e.currentTarget.src = '/placeholder-image.png')}
 				/>
 				<CardContent sx={{ flexGrow: 1 }}>
 					<Stack spacing={1}>
 						<Typography variant='h6' sx={{ fontWeight: 700 }}>
-							{doctor.name || '---'}
+							{doctor.name}
 						</Typography>
 						{doctor.specialtyName && (
 							<Typography variant='body2' color='text.secondary'>

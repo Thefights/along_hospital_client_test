@@ -1,21 +1,24 @@
 import EmptyPage from '@/components/placeholders/EmptyPage'
-import { ApiUrls } from '@/configs/apiUrls'
-import useFetch from '@/hooks/useFetch'
+import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
+import { setDoctorsStore } from '@/redux/reducers/patientReducer'
 import { Box, Button, Card, CardContent, Grid, Skeleton, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 import DoctorCard from './sections/DoctorCard'
 
 export default function DoctorPage() {
 	const { t } = useTranslation()
-	const { loading, data } = useFetch(ApiUrls.DOCTOR.GET_ALL)
-	const [visibleCount, setVisibleCount] = useState(6)
 
-	const doctors = Array.isArray(data) ? data : Array.isArray(data?.collection) ? data.collection : []
+	const [visibleCount, setVisibleCount] = useState(6)
 
 	const handleLoadMore = () => {
 		setVisibleCount((v) => v + 6)
 	}
+
+	const doctorStore = useReduxStore({
+		selector: (state) => state.patient.doctors,
+		setStore: setDoctorsStore,
+	})
 
 	return (
 		<Box sx={{ p: 2 }}>
@@ -27,7 +30,7 @@ export default function DoctorPage() {
 					{t('doctor.text.description')}
 				</Typography>
 			</Stack>
-			{loading ? (
+			{doctorStore.loading ? (
 				<Grid container spacing={3}>
 					{Array.from({ length: 6 }).map((_, index) => (
 						<Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
@@ -45,19 +48,19 @@ export default function DoctorPage() {
 						</Grid>
 					))}
 				</Grid>
-			) : doctors.length === 0 ? (
+			) : doctorStore.data.length === 0 ? (
 				<EmptyPage title={t('doctor.text.no_doctors')} showButton={false} />
 			) : (
 				<Stack spacing={4} alignItems='stretch'>
 					<Grid container spacing={3} sx={{ height: '100%' }}>
-						{doctors.slice(0, visibleCount).map((d, idx) => (
+						{doctorStore.data.slice(0, visibleCount).map((d, idx) => (
 							<Grid size={{ xs: 12, sm: 6, md: 4 }} key={d.id ?? idx}>
 								<DoctorCard doctor={d} />
 							</Grid>
 						))}
 					</Grid>
 
-					{visibleCount < doctors.length && (
+					{visibleCount < doctorStore.data.length && (
 						<Stack alignItems='center'>
 							<Button variant='outlined' onClick={handleLoadMore} sx={{ borderRadius: 3 }}>
 								{t('doctor.button.load_more')}
