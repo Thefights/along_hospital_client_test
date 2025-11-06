@@ -9,6 +9,7 @@
         },
         "empty": "Chưa có đánh giá nào",
         "rating_hint": "Chọn số sao để đánh giá",
+        "rating": "Đánh giá",
         "rating_label": {
             "1": "Rất tệ",
             "2": "Tệ",

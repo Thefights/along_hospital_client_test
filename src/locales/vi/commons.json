@@ -19,12 +19,12 @@
         "filter": "Lọc",
         "reset_filter": "Đặt lại",
         "next": "Tiếp theo",
+        "load_more": "Xem thêm",
         "resend_in": "Gửi lại sau",
         "toggle_language": "Chuyển đổi ngôn ngữ",
         "toggle_theme": "Chuyển đổi giao diện",
         "delete_selected": "Xóa đã chọn",
-        "view_detail": "Xem chi tiết",
-        "edit": "Sửa"
+        "view_detail": "Xem chi tiết"
     },
     "text": {
         "all": "Tất cả",
@@ -32,6 +32,9 @@
         "loading": "Đang tải...",
         "filter": "Lọc",
         "filters": "Bộ lọc",
+        "me": "Tôi",
+        "user": "Người dùng",
+        "confirm_delete": "Bạn có chắc muốn xóa mục này không?",
         "image_preview": "Xem trước hình ảnh",
         "select_options": "Chọn tùy chọn",
         "day": "Ngày",

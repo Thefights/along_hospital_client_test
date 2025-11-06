@@ -9,6 +9,7 @@
         },
         "empty": "No reviews yet",
         "rating_hint": "Select stars to rate",
+        "rating": "Rating",
         "rating_label": {
             "1": "Very bad",
             "2": "Bad",
