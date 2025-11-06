@@ -1,6 +1,5 @@
 import Footer from '@/components/layouts/Footer'
 import Header from '@/components/layouts/Header'
-import { ApiUrls } from '@/configs/apiUrls'
 import { routeUrls } from '@/configs/routeUrls'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
@@ -17,13 +16,11 @@ import { Outlet } from 'react-router-dom'
 
 const LayoutPatient = () => {
 	const profileStore = useReduxStore({
-		url: ApiUrls.USER.PROFILE,
 		selector: (s) => s.patient.profile,
 		setStore: setProfileStore,
 	})
 
 	const cartCountStore = useReduxStore({
-		url: ApiUrls.USER.CART,
 		selector: (s) => s.patient.cart,
 		setStore: setCartStore,
 		dataToGet: (cart) => cart?.cartDetails?.length || 0,
@@ -58,7 +55,7 @@ const LayoutPatient = () => {
 		},
 		{
 			label: t('header.user_menu.medical_history'),
-			url: routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.MEDICAL_HISTORY),
+			url: routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.MEDICAL_HISTORY.INDEX),
 			icon: <AssignmentOutlined />,
 		},
 		{

@@ -1,5 +1,6 @@
 import { routeUrls } from '@/configs/routeUrls'
 import LayoutAuth from '@/layouts/LayoutAuth'
+import NotFoundPage from '@/pages/commons/NotFoundPage'
 import CompleteProfilePage from '@/pages/guests/Auth/CompleteProfilePage/CompleteProfilePage'
 import ForgotPasswordPage from '@/pages/guests/Auth/ForgotPasswordPage/ForgotPasswordPage'
 import ResetPasswordPage from '@/pages/guests/Auth/ForgotPasswordPage/ResetPasswordPage/ResetPasswordPage'
@@ -21,6 +22,8 @@ const RouteAuth = () => {
 				<Route path={routeUrls.AUTH.RESET_PASSWORD} element={<ResetPasswordPage />} />
 				<Route path={routeUrls.AUTH.COMPLETE_PROFILE} element={<CompleteProfilePage />} />
 			</Route>
+
+			<Route path='*' element={<NotFoundPage />} />
 		</Routes>
 	)
 }

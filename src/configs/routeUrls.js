@@ -65,7 +65,14 @@ export const routeUrls = {
 			INDEX: '/medical-history',
 			DETAIL: (id) => `/medical-history/${id}`,
 		},
+		MEDICINE_MANAGEMENT: {
+			INDEX: '/medicine',
+		},
+		MEDICINE_CATEGORY_MANAGEMENT: {
+			INDEX: '/medicine-category',
+		},
 		COMPLAINT_MANAGEMENT: '/complaint',
 		SPECIALTY_MANAGEMENT: '/specialty',
+		DOCTOR_MANAGEMENT: '/doctor',
 	},
 }

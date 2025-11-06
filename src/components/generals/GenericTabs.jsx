@@ -36,16 +36,28 @@ const GenericTabs = ({
 	tabs = [],
 	currentTab,
 	setCurrentTab = (tab) => {},
+	onReclickTab = (tab) => {},
 	direction = 'row',
 	maxWidth = '100%',
 	maxHeight,
 	loading = false,
 }) => {
 	const isActive = (tab) => {
-		if (currentTab === undefined || currentTab === null) return false
+		if (currentTab === undefined || currentTab === null) {
+			return tab.key === '' || tab.key === null || tab.key === undefined
+		}
+
 		if (typeof currentTab === 'string') return currentTab === tab.key
 		if (typeof currentTab === 'object') return currentTab.key === tab.key
 		return false
+	}
+
+	const handleClickTab = (tab) => {
+		if (isActive(tab)) {
+			onReclickTab?.(tab)
+		} else {
+			setCurrentTab(tab)
+		}
 	}
 
 	return (
@@ -66,7 +78,7 @@ const GenericTabs = ({
 					icon={tab.icon}
 					active={isActive(tab)}
 					disabled={tab.disabled || loading}
-					onClick={() => setCurrentTab(tab)}
+					onClick={() => handleClickTab(tab)}
 				/>
 			))}
 		</Stack>

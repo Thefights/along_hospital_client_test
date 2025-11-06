@@ -1,5 +1,4 @@
 import GenericFormDialog from '@/components/dialogs/commons/GenericFormDialog'
-import { ApiUrls } from '@/configs/apiUrls'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
 import { setMedicinesStore } from '@/redux/reducers/managementReducer'
@@ -18,7 +17,6 @@ const UpsertPrescriptionDialog = ({
 	const { t } = useTranslation()
 
 	const medicineStore = useReduxStore({
-		url: ApiUrls.MEDICINE.MANAGEMENT.GET_ALL,
 		selector: (state) => state.management.medicines,
 		setStore: setMedicinesStore,
 	})
@@ -29,6 +27,7 @@ const UpsertPrescriptionDialog = ({
 			title: t('medical_history.field.prescription.doctor_note'),
 			type: 'text',
 			multiple: 2,
+			required: false,
 			validate: [maxLen(1000)],
 		},
 		{

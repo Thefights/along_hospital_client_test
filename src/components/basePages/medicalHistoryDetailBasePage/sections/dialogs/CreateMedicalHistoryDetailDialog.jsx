@@ -1,5 +1,4 @@
 import GenericFormDialog from '@/components/dialogs/commons/GenericFormDialog'
-import { ApiUrls } from '@/configs/apiUrls'
 import { defaultLineClampStyle } from '@/configs/defaultStylesConfig'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
@@ -14,7 +13,6 @@ const CreateMedicalHistoryDetailDialog = ({
 }) => {
 	const { t } = useTranslation()
 	const medicalServiceStore = useReduxStore({
-		url: ApiUrls.MEDICAL_SERVICE.MANAGEMENT.GET_ALL,
 		selector: (state) => state.management.medicalServices,
 		setStore: setMedicalServicesStore,
 	})

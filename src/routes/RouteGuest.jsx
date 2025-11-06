@@ -3,6 +3,7 @@ import { routeUrls } from '@/configs/routeUrls'
 import useAuth from '@/hooks/useAuth'
 import LayoutGuest from '@/layouts/LayoutGuest'
 import LayoutPatient from '@/layouts/LayoutPatient'
+import NotFoundPage from '@/pages/commons/NotFoundPage'
 import CreateMedicalHistoryPage from '@/pages/doctors/createMedicalHistoryPage/CreateMedicalHistoryPage'
 import HomePage from '@/pages/guests/HomePage'
 import BlogDetailPage from '@/pages/guests/viewBlogDetailPage/BlogDetailPage'
@@ -32,6 +33,8 @@ const RouteGuest = () => {
 					)}
 				</Route>
 			</Route>
+
+			<Route path='*' element={<NotFoundPage />} />
 		</Routes>
 	)
 }

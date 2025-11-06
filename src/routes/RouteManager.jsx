@@ -2,11 +2,15 @@ import MedicalHistoryDetailBasePage from '@/components/basePages/medicalHistoryD
 import { ApiUrls } from '@/configs/apiUrls'
 import { routeUrls } from '@/configs/routeUrls'
 import LayoutManager from '@/layouts/LayoutManager'
+import NotFoundPage from '@/pages/commons/NotFoundPage'
 import ComplaintManagementPage from '@/pages/managers/complaintManagementPage/ComplaintManagementPage'
+import DoctorManagementPage from '@/pages/managers/doctorManagementPage/DoctorManagementPage'
 import ManagerAppointmentManagementPage from '@/pages/managers/managerAppointmentManagementPage/ManagerAppointmentManagementPage'
 import ManagerBlogManagementPage from '@/pages/managers/managerBlogManagementPage/ManagerBlogManagementPage'
 import BlogUpsertPage from '@/pages/managers/managerBlogUpsertPage/BlogUpsertPage'
 import ManagerMedicalHistoryManagementPage from '@/pages/managers/managerMedicalHistoryManagementPage/ManagerMedicalHistoryManagementPage'
+import ManagerMedicineCategoryManagementPage from '@/pages/managers/managerMedicineCategoryManagementPage/ManagerMedicineCategoryManagementPage'
+import ManagerMedicineManagemntPage from '@/pages/managers/managerMedicineManagementPage/ManagerMedicineManagementPage'
 import SpecialtyManagementPage from '@/pages/managers/specialtyManagementPage/SpecialtyManagementPage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
@@ -34,8 +38,19 @@ const RouteManager = () => {
 						element={<MedicalHistoryDetailBasePage fetchUrl={ApiUrls.MEDICAL_HISTORY.MANAGEMENT.INDEX} />}
 					/>
 					<Route path={routeUrls.MANAGER.SPECIALTY_MANAGEMENT} element={<SpecialtyManagementPage />} />
+					<Route path={routeUrls.MANAGER.DOCTOR_MANAGEMENT} element={<DoctorManagementPage />} />
+					<Route
+						path={routeUrls.MANAGER.MEDICINE_MANAGEMENT.INDEX}
+						element={<ManagerMedicineManagemntPage />}
+					/>
+					<Route
+						path={routeUrls.MANAGER.MEDICINE_CATEGORY_MANAGEMENT.INDEX}
+						element={<ManagerMedicineCategoryManagementPage />}
+					/>
 				</Route>
 			</Route>
+
+			<Route path='*' element={<NotFoundPage />} />
 		</Routes>
 	)
 }

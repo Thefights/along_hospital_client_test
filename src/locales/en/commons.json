@@ -31,6 +31,9 @@
         "filters": "Filters",
         "image_preview": "Image Preview",
         "select_options": "Select options",
+        "day": "Day",
+        "month": "Month",
+        "year": "Year",
         "date": "Date",
         "start_date": "Start Date",
         "end_date": "End Date",
@@ -38,6 +41,7 @@
         "step": "Step",
         "more": "More",
         "result": "Result",
+        "none": "None",
         "rows_per_page": "Rows per page",
         "role": {
             "manager": "Manager",

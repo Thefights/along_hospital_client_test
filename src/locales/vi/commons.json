@@ -30,6 +30,9 @@
         "filters": "Bộ lọc",
         "image_preview": "Xem trước hình ảnh",
         "select_options": "Chọn tùy chọn",
+        "day": "Ngày",
+        "month": "Tháng",
+        "year": "Năm",
         "date": "Ngày",
         "time": "Thời gian",
         "start_date": "Ngày bắt đầu",
@@ -37,6 +40,7 @@
         "step": "Bước",
         "more": "Nữa",
         "result": "Kết quả",
+        "none": "Không",
         "rows_per_page": "Số dòng mỗi trang",
         "role": {
             "manager": "Quản lý",
