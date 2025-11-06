@@ -9,7 +9,6 @@ import PatientMedicalHistoryPage from '@/pages/patients/patientMedicalHistoryPag
 import ProfilePage from '@/pages/profile/ProfilePage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
-
 const RoutePatient = () => {
 	return (
 		<Routes>
@@ -31,7 +30,6 @@ const RoutePatient = () => {
 					/>
 				</Route>
 			</Route>
-
 			<Route path='*' element={<NotFoundPage />} />
 		</Routes>
 	)

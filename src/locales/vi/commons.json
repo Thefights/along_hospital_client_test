@@ -7,7 +7,9 @@
         "back": "Quay lại",
         "add": "Thêm",
         "create": "Tạo",
+        "edit": "Chỉnh sửa",
         "update": "Cập nhật",
+        "report": "Báo cáo",
         "complete": "Hoàn thành",
         "confirm": "Xác nhận",
         "delete": "Xóa",
@@ -21,8 +23,7 @@
         "toggle_language": "Chuyển đổi ngôn ngữ",
         "toggle_theme": "Chuyển đổi giao diện",
         "delete_selected": "Xóa đã chọn",
-        "view_detail": "Xem chi tiết",
-        "edit": "Sửa"
+        "view_detail": "Xem chi tiết"
     },
     "text": {
         "all": "Tất cả",
@@ -30,6 +31,9 @@
         "loading": "Đang tải...",
         "filter": "Lọc",
         "filters": "Bộ lọc",
+        "me": "Tôi",
+        "user": "Người dùng",
+        "confirm_delete": "Bạn có chắc muốn xóa mục này không?",
         "image_preview": "Xem trước hình ảnh",
         "select_options": "Chọn tùy chọn",
         "day": "Ngày",
