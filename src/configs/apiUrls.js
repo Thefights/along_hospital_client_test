@@ -61,6 +61,12 @@ export const ApiUrls = {
 		UPDATE: (id) => `/medicine-category/${id}`,
 		DELETE: (id) => `/medicine-category/${id}`,
 	},
+	IMPORT: {
+		MANAGEMENT: {
+			INDEX: `/import-management`,
+			DETAIL: (id) => `/import-management/${id}`,
+		},
+	},
 	MEDICAL_SERVICE: {
 		INDEX: `/medical-service`,
 		MANAGEMENT: {

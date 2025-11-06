@@ -8,6 +8,7 @@ import { setProfileStore } from '@/redux/reducers/patientReducer'
 import {
 	ArticleRounded,
 	DashboardRounded,
+	FileUploadRounded,
 	Inventory2Rounded,
 	LocalHospitalRounded,
 	PeopleAltRounded,
@@ -67,6 +68,12 @@ const LayoutManager = () => {
 							url: '/admin/supplies',
 						},
 					],
+				},
+				{
+					key: 'import',
+					label: 'Import Management',
+					icon: <FileUploadRounded />,
+					url: routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.IMPORT_MANAGEMENT.INDEX),
 				},
 			],
 		},

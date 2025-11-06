@@ -69,6 +69,9 @@ export const routeUrls = {
 		MEDICINE_CATEGORY_MANAGEMENT: {
 			INDEX: '/medicine-category',
 		},
+		IMPORT_MANAGEMENT: {
+			INDEX: '/import-management',
+		},
 		COMPLAINT_MANAGEMENT: '/complaint',
 		SPECIALTY_MANAGEMENT: '/specialty',
 		DOCTOR_MANAGEMENT: '/doctor',
