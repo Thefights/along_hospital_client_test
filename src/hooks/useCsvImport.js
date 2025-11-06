@@ -1,0 +1,164 @@
+import { useCallback, useRef, useState } from 'react'
+
+export function useCsvImport({ delimiter = ',', hasHeader = true, onError, onSuccess } = {}) {
+	const [loading, setLoading] = useState(false)
+	const [error, setError] = useState(null)
+	const [data, setData] = useState(null)
+	const fileInputRef = useRef(null)
+
+	const parseCsv = useCallback(
+		(text) => {
+			const lines = text.split(/\r?\n/).filter((line) => line.trim() !== '')
+			if (lines.length === 0) {
+				throw new Error('File CSV rỗng')
+			}
+
+			let headers = []
+			let startIndex = 0
+
+			if (hasHeader) {
+				headers = lines[0].split(delimiter).map((h) => h.trim().replace(/^["']|["']$/g, ''))
+				startIndex = 1
+			} else {
+				// Nếu không có header, tạo header mặc định
+				const firstLine = lines[0].split(delimiter)
+				headers = firstLine.map((_, index) => `Column${index + 1}`)
+				startIndex = 0
+			}
+
+			const result = []
+			for (let i = startIndex; i < lines.length; i++) {
+				const line = lines[i]
+				const values = []
+				let currentValue = ''
+				let insideQuotes = false
+
+				// Parse line với xử lý quotes
+				for (let j = 0; j < line.length; j++) {
+					const char = line[j]
+					const nextChar = line[j + 1]
+
+					if (char === '"' || char === "'") {
+						if (insideQuotes && nextChar === char) {
+							currentValue += char
+							j++
+						} else {
+							insideQuotes = !insideQuotes
+						}
+					} else if (char === delimiter && !insideQuotes) {
+						values.push(currentValue.trim())
+						currentValue = ''
+					} else {
+						currentValue += char
+					}
+				}
+				values.push(currentValue.trim())
+				const row = {}
+				headers.forEach((header, index) => {
+					row[header] = values[index] || ''
+				})
+				result.push(row)
+			}
+
+			return result
+		},
+		[delimiter, hasHeader]
+	)
+
+	const handleFileRead = useCallback(
+		async (file) => {
+			if (!file) return
+
+			const fileName = file.name.toLowerCase()
+			if (!fileName.endsWith('.csv')) {
+				const err = new Error('File phải có định dạng CSV')
+				setError(err)
+				onError?.(err)
+				return
+			}
+
+			setLoading(true)
+			setError(null)
+
+			try {
+				const text = await new Promise((resolve, reject) => {
+					const reader = new FileReader()
+					reader.onload = (e) => resolve(e.target.result)
+					reader.onerror = (e) => reject(new Error('Không thể đọc file'))
+					reader.readAsText(file, 'UTF-8')
+				})
+
+				const parsedData = parseCsv(text)
+				setData(parsedData)
+				onSuccess?.(parsedData)
+			} catch (err) {
+				const error = err instanceof Error ? err : new Error('Lỗi khi đọc file CSV')
+				setError(error)
+				onError?.(error)
+			} finally {
+				setLoading(false)
+			}
+		},
+		[parseCsv, onError, onSuccess]
+	)
+
+	const selectFile = useCallback(() => {
+		if (fileInputRef.current) {
+			fileInputRef.current.click()
+		}
+	}, [])
+
+	const handleFileChange = useCallback(
+		(e) => {
+			const file = e.target.files?.[0]
+			if (file) {
+				handleFileRead(file)
+			}
+			// Reset input để có thể chọn lại cùng file
+			if (e.target) {
+				e.target.value = ''
+			}
+		},
+		[handleFileRead]
+	)
+
+	const reset = useCallback(() => {
+		setData(null)
+		setError(null)
+		setLoading(false)
+	}, [])
+
+	return {
+		loading,
+		error,
+		data,
+		selectFile,
+		reset,
+		fileInputRef,
+		handleFileChange,
+	}
+}
+
+// Example usage:
+/*
+const { loading, error, data, selectFile, reset, fileInputRef, handleFileChange } = useCsvImport({
+	delimiter: ',',
+	hasHeader: true,
+	onSuccess: (data) => {
+		console.log('CSV data:', data)
+	},
+	onError: (error) => {
+		console.error('Error:', error)
+	},
+})
+
+// Trong component:
+<input
+	type="file"
+	ref={fileInputRef}
+	onChange={handleFileChange}
+	accept=".csv"
+	style={{ display: 'none' }}
+/>
+<Button onClick={selectFile}>Import CSV</Button>
+*/
