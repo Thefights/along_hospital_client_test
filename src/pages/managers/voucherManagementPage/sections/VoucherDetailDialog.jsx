@@ -1,3 +1,4 @@
+import { defaultVoucherStatusStyle, defaultVoucherTypeStyle } from '@/configs/defaultStylesConfig'
 import { EnumConfig } from '@/configs/enumConfig'
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
@@ -26,28 +27,6 @@ const VoucherDetailDialog = ({ open, onClose, voucher }) => {
 	const { t } = useTranslation()
 
 	if (!voucher) return null
-
-	const getStatusColor = (status) => {
-		switch (status) {
-			case EnumConfig.VoucherStatus.Active:
-				return 'success'
-			case EnumConfig.VoucherStatus.Expired:
-				return 'error'
-			default:
-				return 'default'
-		}
-	}
-
-	const getTypeColor = (type) => {
-		switch (type) {
-			case EnumConfig.VoucherType.Patient:
-				return 'primary'
-			case EnumConfig.VoucherType.Medicine:
-				return 'secondary'
-			default:
-				return 'default'
-		}
-	}
 
 	const InfoRow = ({ label, value }) => (
 		<Grid container spacing={2} sx={{ mb: 1.5 }}>
@@ -91,7 +70,7 @@ const VoucherDetailDialog = ({ open, onClose, voucher }) => {
 							value={
 								<Chip
 									label={t(`voucher.status.${voucher.voucherStatus}`)}
-									color={getStatusColor(voucher.voucherStatus)}
+									color={defaultVoucherStatusStyle(voucher.voucherStatus)}
 									size='small'
 								/>
 							}
@@ -101,7 +80,7 @@ const VoucherDetailDialog = ({ open, onClose, voucher }) => {
 							value={
 								<Chip
 									label={t(`voucher.type.${voucher.voucherType}`)}
-									color={getTypeColor(voucher.voucherType)}
+									color={defaultVoucherTypeStyle(voucher.voucherType)}
 									size='small'
 								/>
 							}
