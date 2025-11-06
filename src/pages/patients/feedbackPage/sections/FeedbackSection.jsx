@@ -8,11 +8,16 @@ import useTranslation from '@/hooks/useTranslation'
 import { maxLen, numberRange } from '@/utils/validateUtil'
 import { Box, Grid, Rating, Typography } from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
-import FilterSection from './sections/FilterSection'
-import ListSection from './sections/ListSection'
-import SummarySection from './sections/SummarySection'
+import FilterSection from './FilterSection'
+import ListSection from './ListSection'
+import SummarySection from './SummarySection'
 
-const FeedbackPage = ({ feedbacks, loading = false, hasMore: hasMoreProp = false, onLoadMore }) => {
+const FeedbackSection = ({
+	feedbacks,
+	loading = false,
+	hasMore: hasMoreProp = false,
+	onLoadMore,
+}) => {
 	const { t } = useTranslation()
 	const { auth } = useAuth()
 	const confirm = useConfirm()
@@ -241,4 +246,4 @@ const FeedbackPage = ({ feedbacks, loading = false, hasMore: hasMoreProp = false
 	)
 }
 
-export default FeedbackPage
+export default FeedbackSection
