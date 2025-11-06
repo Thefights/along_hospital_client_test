@@ -1,11 +1,23 @@
 {
     "feedback": {
-        "title": "Đánh giá sản phẩm",
+        "title": "Đánh giá thuốc",
         "submit_review": "Gửi đánh giá",
         "total_reviews": "{{count}} đánh giá",
         "filter": {
             "all": "Tất cả"
         },
-        "empty": "Chưa có đánh giá nào"
+        "empty": "Chưa có đánh giá nào",
+        "rating_hint": "Chọn số sao để đánh giá",
+        "rating_label": {
+            "1": "Rất tệ",
+            "2": "Tệ",
+            "3": "Bình thường",
+            "4": "Hài lòng",
+            "5": "Tuyệt vời"
+        },
+        "content": "Nội dung",
+        "content_placeholder": "Viết nhận xét của bạn tại đây",
+        "report_title": "Báo cáo đánh giá",
+        "report_reason": "Lý do"
     }
 }

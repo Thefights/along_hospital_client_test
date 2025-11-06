@@ -1,11 +1,23 @@
 {
     "feedback": {
-        "title": "Product reviews",
+        "title": "Medicine reviews",
         "submit_review": "Submit a review",
         "total_reviews": "{{count}} reviews",
         "filter": {
             "all": "All"
         },
-        "empty": "No reviews yet"
+        "empty": "No reviews yet",
+        "rating_hint": "Select stars to rate",
+        "rating_label": {
+            "1": "Very bad",
+            "2": "Bad",
+            "3": "Okay",
+            "4": "Good",
+            "5": "Excellent"
+        },
+        "content": "Content",
+        "content_placeholder": "Write your review here",
+        "report_title": "Report feedback",
+        "report_reason": "Reason"
     }
 }
