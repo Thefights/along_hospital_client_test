@@ -7,6 +7,7 @@ import useTranslation from '@/hooks/useTranslation'
 import { setProfileStore } from '@/redux/reducers/patientReducer'
 import {
 	ArticleRounded,
+	CardGiftcardRounded,
 	DashboardRounded,
 	Inventory2Rounded,
 	LocalHospitalRounded,
@@ -65,6 +66,19 @@ const LayoutManager = () => {
 							label: 'Medical Supplies',
 							icon: <Inventory2Rounded />,
 							url: '/admin/supplies',
+						},
+					],
+				},
+				{
+					key: 'voucher',
+					label: 'Voucher',
+					icon: <CardGiftcardRounded />,
+					of: [
+						{
+							key: 'voucher',
+							label: 'Voucher',
+							icon: <CardGiftcardRounded />,
+							url: routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.VOUCHER_MANAGEMENT),
 						},
 					],
 				},

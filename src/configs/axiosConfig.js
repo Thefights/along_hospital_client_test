@@ -9,6 +9,18 @@ const axiosConfig = axios.create({
 		'Access-Control-Allow-Origin': '*',
 		'Access-Control-Allow-Headers': 'X-Requested-With',
 	},
+	paramsSerializer: {
+		serialize: (params) => {
+			return Object.entries(params)
+				.map(([key, value]) => {
+					if (Array.isArray(value)) {
+						return value.map((v) => `${encodeURIComponent(key)}=${encodeURIComponent(v)}`).join('&')
+					}
+					return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+				})
+				.join('&')
+		},
+	},
 })
 
 axiosConfig.interceptors.request.use(
@@ -53,7 +65,9 @@ axiosConfig.interceptors.response.use(
 				break
 			case 500:
 			default:
-				toast.error('Occurred a server error, please try again later')
+				toast.error(
+					`Occurred a server error, please try again later: ${response?.data?.message || error.message}`
+				)
 				break
 		}
 		return Promise.reject(error)

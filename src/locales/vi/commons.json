@@ -15,12 +15,14 @@
         "add_row": "Thêm dòng",
         "login": "Đăng nhập",
         "filter": "Lọc",
-        "reset_filter": "Đặt lại bộ lọc",
+        "reset_filter": "Đặt lại",
         "next": "Tiếp theo",
         "resend_in": "Gửi lại sau",
         "toggle_language": "Chuyển đổi ngôn ngữ",
         "toggle_theme": "Chuyển đổi giao diện",
-        "delete_selected": "Xóa đã chọn"
+        "delete_selected": "Xóa đã chọn",
+        "view_detail": "Xem chi tiết",
+        "edit": "Sửa"
     },
     "text": {
         "all": "Tất cả",
@@ -40,6 +42,7 @@
         "step": "Bước",
         "more": "Nữa",
         "result": "Kết quả",
+        "none": "Không",
         "rows_per_page": "Số dòng mỗi trang",
         "role": {
             "manager": "Quản lý",
@@ -97,6 +100,10 @@
         "max_length": "Không được vượt quá {max} ký tự, hiện tại {current}/{max}",
         "min_number": "Số tối thiểu là {min}",
         "max_number": "Số tối đa là {max}",
-        "fill_all_required": "Vui lòng điền tất cả các trường bắt buộc"
+        "fill_all_required": "Vui lòng điền tất cả các trường bắt buộc",
+        "invalid_percentage": "Phần trăm phải từ 0 đến 100",
+        "past_date": "Ngày không được ở quá khứ",
+        "not_match": "Giá trị không khớp",
+        "invalid_phone_or_email": "Vui lòng nhập số điện thoại hoặc email hợp lệ"
     }
 }

@@ -34,7 +34,14 @@ export const getObjectConvertingToFormData = (object, form = new FormData(), seg
 	}
 
 	if (Array.isArray(object)) {
-		object.forEach((v, i) => getObjectConvertingToFormData(v, form, segments.concat(i)))
+		if (object.every((v) => isFiley(v))) {
+			const key = buildKey(segments)
+			object.forEach((file) => {
+				form.append(key, file)
+			})
+		} else {
+			object.forEach((v, i) => getObjectConvertingToFormData(v, form, segments.concat(i)))
+		}
 		return form
 	}
 

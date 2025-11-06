@@ -101,4 +101,39 @@ export const EnumConfig = {
 		Guide: 'Guide',
 		Other: 'Other',
 	},
+
+	//For Doctors
+	Qualification: {
+		Bachelor: 'Bachelor',
+		Master: 'Master',
+		PhD: 'PhD',
+		Specialist: 'Specialist',
+	},
+
+	// For medicines
+	MedicineUnit: {
+		Tablet: 'Tablet',
+		Capsule: 'Capsule',
+		Milliliter: 'Milliliter',
+		Milligram: 'Milligram',
+		Drop: 'Drop',
+		Spoon: 'Spoon',
+		Bottle: 'Bottle',
+		Tube: 'Tube',
+		Other: 'Other',
+	},
+
+	//Voucher
+	VoucherStatus: {
+		Active: 'Active',
+		Expired: 'Expired',
+	},
+	VoucherType: {
+		Patient: 'Patient',
+		Medicine: 'Medicine',
+	},
+	VoucherDiscountType: {
+		Percentage: 'Percentage',
+		FixedAmount: 'FixedAmount',
+	},
 }

@@ -21,7 +21,9 @@
         "resend_in": "Resend in",
         "toggle_language": "Toggle language",
         "toggle_theme": "Toggle theme",
-        "delete_selected": "Delete selected"
+        "delete_selected": "Delete selected",
+        "view_detail": "View Detail",
+        "edit": "Edit"
     },
     "text": {
         "all": "All",
@@ -41,6 +43,7 @@
         "step": "Step",
         "more": "More",
         "result": "Result",
+        "none": "None",
         "rows_per_page": "Rows per page",
         "role": {
             "manager": "Manager",
@@ -98,6 +101,10 @@
         "max_length": "Can't exceed {max} characters, currently {current}/{max}",
         "min_number": "Minimum number is {min}",
         "max_number": "Maximum number is {max}",
-        "fill_all_required": "Please fill all required fields"
+        "fill_all_required": "Please fill all required fields",
+        "invalid_percentage": "Percentage must be between 0 and 100",
+        "past_date": "Date cannot be in the past",
+        "not_match": "Values do not match",
+        "invalid_phone_or_email": "Please enter a valid phone number or email"
     }
 }

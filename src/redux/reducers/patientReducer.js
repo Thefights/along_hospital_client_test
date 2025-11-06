@@ -24,14 +24,16 @@ const patientSlice = createSlice({
 		setVouchersStore: (state, action) => {
 			state.vouchers = action.payload
 		},
+		resetPatientStore: () => initState,
 	},
 })
 
-const { setCartStore, setProfileStore, setOrdersStore, setVouchersStore } = patientSlice.actions
+const { setCartStore, setProfileStore, setOrdersStore, setVouchersStore, resetPatientStore } =
+	patientSlice.actions
 
 setCartStore.defaultUrl = ApiUrls.USER.CART
 setProfileStore.defaultUrl = ApiUrls.USER.PROFILE
 
-export { setCartStore, setOrdersStore, setProfileStore, setVouchersStore }
+export { resetPatientStore, setCartStore, setOrdersStore, setProfileStore, setVouchersStore }
 
 export default patientSlice.reducer
