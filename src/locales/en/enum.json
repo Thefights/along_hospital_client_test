@@ -87,6 +87,14 @@
             "bottle": "Bottle",
             "tube": "Tube",
             "other": "Other"
+        },
+        "voucher_status": {
+            "active": "Active",
+            "expired": "Expired"
+        },
+        "voucher_type": {
+            "patient": "Patient",
+            "medicine": "Medicine"
         }
     }
 }

@@ -31,13 +31,26 @@ const patientSlice = createSlice({
 	},
 })
 
-const { setCartStore, setProfileStore, setOrdersStore, setVouchersStore, setDoctorsStore } =
-	patientSlice.actions
+const {
+	setCartStore,
+	setProfileStore,
+	setOrdersStore,
+	setVouchersStore,
+	setDoctorsStore,
+	resetPatientStore,
+} = patientSlice.actions
 
 setCartStore.defaultUrl = ApiUrls.USER.CART
 setProfileStore.defaultUrl = ApiUrls.USER.PROFILE
 setDoctorsStore.defaultUrl = ApiUrls.DOCTOR.GET_ALL
 
-export { setCartStore, setDoctorsStore, setOrdersStore, setProfileStore, setVouchersStore }
+export {
+	resetPatientStore,
+	setCartStore,
+	setDoctorsStore,
+	setOrdersStore,
+	setProfileStore,
+	setVouchersStore,
+}
 
 export default patientSlice.reducer

@@ -48,7 +48,12 @@ const DoctorInfoDialog = ({ open, onClose, doctorInfo = {} }) => {
 	)
 
 	const basicInfoFields = [
-		{ key: 'dateOfBirth', title: t('profile.field.date_of_birth'), type: 'date' },
+		{
+			key: 'dateOfBirth',
+			title: t('profile.field.date_of_birth'),
+			type: 'date',
+			maxValue: new Date().toISOString().split('T')[0],
+		},
 		{
 			key: 'gender',
 			title: t('profile.field.gender'),

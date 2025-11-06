@@ -3,6 +3,7 @@
 import useReduxStore from '@/hooks/useReduxStore'
 import { useLocalStorage } from '@/hooks/useStorage'
 import { resetAuthStore, setAuthStore } from '@/redux/reducers/authReducer'
+import { resetPatientStore } from '@/redux/reducers/patientReducer'
 import { createContext, useEffect, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { ApiUrls } from './apiUrls'
@@ -41,6 +42,7 @@ const AuthProvider = ({ children }) => {
 			removeAccessToken()
 			removeRefreshToken()
 			dispatch(resetAuthStore())
+			dispatch(resetPatientStore())
 		}
 	}
 
