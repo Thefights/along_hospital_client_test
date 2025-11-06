@@ -12,6 +12,7 @@ import ManagerMedicalHistoryManagementPage from '@/pages/managers/managerMedical
 import ManagerMedicineCategoryManagementPage from '@/pages/managers/managerMedicineCategoryManagementPage/ManagerMedicineCategoryManagementPage'
 import ManagerMedicineManagemntPage from '@/pages/managers/managerMedicineManagementPage/ManagerMedicineManagementPage'
 import SpecialtyManagementPage from '@/pages/managers/specialtyManagementPage/SpecialtyManagementPage'
+import ProfilePage from '@/pages/profile/ProfilePage'
 import VoucherManagementPage from '@/pages/managers/voucherManagementPage/VoucherManagementPage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
@@ -22,6 +23,7 @@ const RouteManager = () => {
 			<Route element={<ProtectedRoute allowRoles={[]} />}>
 				<Route element={<LayoutManager />}>
 					<Route path={routeUrls.MANAGER.DASHBOARD} element={<div>Dashboard</div>} />
+					<Route path={routeUrls.MANAGER.PROFILE} element={<ProfilePage />} />
 					<Route
 						path={routeUrls.MANAGER.APPOINTMENT_MANAGEMENT}
 						element={<ManagerAppointmentManagementPage />}

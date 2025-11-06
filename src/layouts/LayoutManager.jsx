@@ -92,7 +92,13 @@ const LayoutManager = () => {
 		},
 	]
 
-	const userMenuItems = [{ label: t('header.user_menu.profile'), url: '/profile', icon: <Person /> }]
+	const userMenuItems = [
+		{
+			label: t('header.user_menu.profile'),
+			url: routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.PROFILE),
+			icon: <Person />,
+		},
+	]
 
 	return (
 		<Stack direction={'row'}>

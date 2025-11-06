@@ -44,6 +44,7 @@ export const routeUrls = {
 	},
 	DOCTOR: {
 		DASHBOARD: '/',
+		PROFILE: '/profile',
 		APPOINTMENT_MANAGEMENT: '/appointment',
 		MEDICAL_HISTORY: {
 			INDEX: '/medical-history',
@@ -53,6 +54,7 @@ export const routeUrls = {
 	},
 	MANAGER: {
 		DASHBOARD: '/',
+		PROFILE: '/profile',
 		APPOINTMENT_MANAGEMENT: '/appointments',
 		BLOG: {
 			INDEX: '/blogs',

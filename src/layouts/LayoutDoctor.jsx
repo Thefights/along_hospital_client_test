@@ -1,5 +1,6 @@
 import { default as DashboardDrawer } from '@/components/layouts/DashboardDrawer'
 import DashboardHeader from '@/components/layouts/DashboardHeader'
+import { routeUrls } from '@/configs/routeUrls'
 import { default as useAuth } from '@/hooks/useAuth'
 import { default as useReduxStore } from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
@@ -70,7 +71,13 @@ const LayoutDoctor = () => {
 		},
 	]
 
-	const userMenuItems = [{ label: t('header.user_menu.profile'), url: '/profile', icon: <Person /> }]
+	const userMenuItems = [
+		{
+			label: t('header.user_menu.profile'),
+			url: routeUrls.BASE_ROUTE.DOCTOR(routeUrls.DOCTOR.PROFILE),
+			icon: <Person />,
+		},
+	]
 
 	return (
 		<Stack direction={'row'}>
