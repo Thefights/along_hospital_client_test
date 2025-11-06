@@ -68,7 +68,6 @@ const FeedbackSection = ({ medicineId }) => {
 
 	const summary = { total, average, distribution }
 
-	// rating labels should be localized
 	const ratingLabels = useMemo(
 		() => ({
 			1: t('feedback.rating_label.1'),
@@ -109,7 +108,6 @@ const FeedbackSection = ({ medicineId }) => {
 		)
 	}
 
-	// Guard: hide section if no medicineId provided
 	if (!medicineId) return null
 
 	return (
@@ -165,7 +163,7 @@ const FeedbackSection = ({ medicineId }) => {
 				fields={[
 					{
 						key: 'rating',
-						title: 'Rating',
+						title: t('feedback.rating'),
 						type: 'custom',
 						validate: [numberRange(1, 5)],
 						required: true,
@@ -204,7 +202,7 @@ const FeedbackSection = ({ medicineId }) => {
 				fields={[
 					{
 						key: 'rating',
-						title: 'Rating',
+						title: t('feedback.rating'),
 						type: 'custom',
 						validate: [numberRange(1, 5)],
 						required: true,

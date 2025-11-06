@@ -25,7 +25,7 @@ const ListSection = ({
 
 	const Item = ({ review }) => {
 		const isMe = String(review?.patientId ?? '') === String(currentUserId ?? '')
-		const name = isMe ? 'Me' : review?.patientName || review?.userName || 'User'
+		const name = isMe ? t('commons.text.me') : review?.patientName
 		const initials = name
 			?.split(' ')
 			.map((s) => s[0])
@@ -60,7 +60,6 @@ const ListSection = ({
 								onClick={() => {
 									setReportDialog({ open: true, feedbackId: review?.id })
 								}}
-								disabled={false}
 							>
 								{t('button.report')}
 							</Button>
@@ -106,14 +105,11 @@ const ListSection = ({
 					const isSelf = String(target?.patientId ?? '') === String(currentUserId ?? '')
 					if (isSelf) return
 					const payload = {
-						FeedbackId: reportDialog.feedbackId,
-						Reason: reason,
-						ReporterId: auth?.userId,
+						feedbackId: reportDialog.feedbackId,
+						reason: reason,
+						reporterId: auth?.userId,
 					}
-					const res = await reportSubmit.submit(payload)
-					if (res) {
-						setReportDialog({ open: false, feedbackId: null })
-					}
+					await reportSubmit.submit(payload)
 				}}
 			/>
 		</>
