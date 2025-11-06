@@ -1,9 +1,7 @@
 import useTranslation from '@/hooks/useTranslation'
 import { Box, Button, Grid, LinearProgress, Paper, Rating, Stack, Typography } from '@mui/material'
 
-// Section bọc phần tổng quan đánh giá
-
-const SummarySection = ({ summary, onOpenReview }) => {
+const FeedbackSummarySection = ({ summary, onOpenReview }) => {
 	const { t } = useTranslation()
 	const total = summary?.total || 0
 	const avg = Number(summary?.average || 0).toFixed(1)
@@ -21,10 +19,10 @@ const SummarySection = ({ summary, onOpenReview }) => {
 						</Typography>
 						<Rating name='avg-rating' value={Number(summary?.average || 0)} precision={0.1} readOnly />
 						<Typography variant='body2' color='text.secondary'>
-							{t('feedback.total_reviews', { count: total })}
+							{t('feedback.text.total_reviews', { count: total })}
 						</Typography>
 						<Button variant='contained' onClick={onOpenReview} sx={{ mt: 1 }}>
-							{t('feedback.submit_review')}
+							{t('feedback.button.submit_review')}
 						</Button>
 					</Stack>
 				</Grid>
@@ -55,4 +53,4 @@ const SummarySection = ({ summary, onOpenReview }) => {
 	)
 }
 
-export default SummarySection
+export default FeedbackSummarySection

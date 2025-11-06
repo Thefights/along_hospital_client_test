@@ -2,18 +2,11 @@ import EmptyPage from '@/components/placeholders/EmptyPage'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
 import { setDoctorsStore } from '@/redux/reducers/patientReducer'
-import { Box, Button, Card, CardContent, Grid, Skeleton, Stack, Typography } from '@mui/material'
-import { useState } from 'react'
-import DoctorCard from './sections/DoctorCard'
+import { Box, Card, CardContent, Grid, Skeleton, Stack, Typography } from '@mui/material'
+import DoctorCardSection from './sections/DoctorCardSection'
 
 export default function DoctorPage() {
 	const { t } = useTranslation()
-
-	const [visibleCount, setVisibleCount] = useState(6)
-
-	const handleLoadMore = () => {
-		setVisibleCount((v) => v + 6)
-	}
 
 	const doctorStore = useReduxStore({
 		selector: (state) => state.patient.doctors,
@@ -49,25 +42,15 @@ export default function DoctorPage() {
 					))}
 				</Grid>
 			) : doctorStore.data.length === 0 ? (
-				<EmptyPage title={t('doctor.text.no_doctors')} showButton={false} />
+				<EmptyPage title={t('doctor.placeholder.no_doctors')} showButton={false} />
 			) : (
-				<Stack spacing={4} alignItems='stretch'>
-					<Grid container spacing={3} sx={{ height: '100%' }}>
-						{doctorStore.data.slice(0, visibleCount).map((d, idx) => (
-							<Grid size={{ xs: 12, sm: 6, md: 4 }} key={d.id ?? idx}>
-								<DoctorCard doctor={d} />
-							</Grid>
-						))}
-					</Grid>
-
-					{visibleCount < doctorStore.data.length && (
-						<Stack alignItems='center'>
-							<Button variant='outlined' onClick={handleLoadMore} sx={{ borderRadius: 3 }}>
-								{t('doctor.button.load_more')}
-							</Button>
-						</Stack>
-					)}
-				</Stack>
+				<Grid container spacing={3} sx={{ height: '100%' }}>
+					{doctorStore.data.map((d, idx) => (
+						<Grid size={{ xs: 12, sm: 6, md: 4 }} key={d.id ?? idx}>
+							<DoctorCardSection doctor={d} />
+						</Grid>
+					))}
+				</Grid>
 			)}
 		</Box>
 	)

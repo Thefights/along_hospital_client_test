@@ -1,17 +1,14 @@
-import ReportFeedbackDialog from '@/components/dialogs/feedback/ReportFeedbackDialog'
 import { ApiUrls } from '@/configs/apiUrls'
 import useAuth from '@/hooks/useAuth'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useTranslation from '@/hooks/useTranslation'
+import ReportFeedbackDialog from '@/pages/patients/feedbackPage/dialogs/ReportFeedbackDialog'
 import { formatDatetimeToDDMMYYYY } from '@/utils/formatDateUtil'
 import { Avatar, Box, Button, Paper, Rating, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 
-const ListSection = ({
+const FeedbackListSection = ({
 	items,
-	hasMore = false,
-	onLoadMore = () => {},
-	loading = false,
 	onEdit = () => {},
 	onDelete = () => {},
 	canModify = () => false,
@@ -79,21 +76,13 @@ const ListSection = ({
 			<Paper sx={{ p: 2, borderRadius: 2 }}>
 				{items?.length === 0 && (
 					<Typography color='text.secondary' py={3} textAlign='center'>
-						{t('feedback.empty')}
+						{t('feedback.text.empty')}
 					</Typography>
 				)}
 
 				{items?.map((rv) => (
 					<Item key={rv.id} review={rv} />
 				))}
-
-				{hasMore && (
-					<Box display='flex' justifyContent='center' mt={2}>
-						<Button variant='outlined' onClick={onLoadMore} disabled={loading}>
-							{t('button.load_more')}
-						</Button>
-					</Box>
-				)}
 			</Paper>
 
 			<ReportFeedbackDialog
@@ -116,4 +105,4 @@ const ListSection = ({
 	)
 }
 
-export default ListSection
+export default FeedbackListSection

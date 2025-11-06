@@ -8,9 +8,9 @@ import useTranslation from '@/hooks/useTranslation'
 import { maxLen, numberRange } from '@/utils/validateUtil'
 import { Box, Grid, Rating, Typography } from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
-import FilterSection from './FilterSection'
-import ListSection from './ListSection'
-import SummarySection from './SummarySection'
+import FeedbackFilterSection from './FeedbackFilterSection'
+import FeedbackListSection from './FeedbackListSection'
+import FeedbackSummarySection from './FeedbackSummarySection'
 
 const FeedbackSection = ({ medicineId }) => {
 	const { t } = useTranslation()
@@ -113,14 +113,14 @@ const FeedbackSection = ({ medicineId }) => {
 	return (
 		<>
 			<Typography variant='h5' fontWeight={700} my={2}>
-				{t('feedback.title')}
+				{t('feedback.title.page')}
 			</Typography>
 			<Grid container spacing={2}>
 				<Grid size={{ xs: 12 }}>
-					<SummarySection summary={summary} onOpenReview={() => setOpenCreate(true)} />
+					<FeedbackSummarySection summary={summary} onOpenReview={() => setOpenCreate(true)} />
 				</Grid>
 				<Grid size={{ xs: 12 }}>
-					<FilterSection
+					<FeedbackFilterSection
 						selected={selectedStar}
 						counts={distribution}
 						onChange={(v) => {
@@ -129,7 +129,7 @@ const FeedbackSection = ({ medicineId }) => {
 					/>
 				</Grid>
 				<Grid size={{ xs: 12 }}>
-					<ListSection
+					<FeedbackListSection
 						items={visibleItems}
 						loading={!!getFeedbacksByMedicine.loading}
 						currentUserId={auth?.userId}
@@ -140,8 +140,8 @@ const FeedbackSection = ({ medicineId }) => {
 						}}
 						onDelete={async (rv) => {
 							const ok = await confirm({
-								title: t('feedback.title'),
-								description: t('text.confirm_delete'),
+								title: t('feedback.title.page'),
+								description: t('commons.text.confirm_delete'),
 								confirmText: t('button.delete'),
 								confirmColor: 'error',
 							})
@@ -163,7 +163,7 @@ const FeedbackSection = ({ medicineId }) => {
 				fields={[
 					{
 						key: 'rating',
-						title: t('feedback.rating'),
+						title: t('feedback.field.rating'),
 						type: 'custom',
 						validate: [numberRange(1, 5)],
 						required: true,
@@ -171,16 +171,16 @@ const FeedbackSection = ({ medicineId }) => {
 					},
 					{
 						key: 'content',
-						title: t('feedback.content'),
+						title: t('feedback.field.content'),
 						validate: [maxLen(1000)],
 						required: false,
-						props: { placeholder: t('feedback.content_placeholder') },
+						props: { placeholder: t('feedback.placeholder.content') },
 					},
 				]}
 				initialValues={{ rating: 5, content: '' }}
 				submitLabel={t('button.create')}
 				submitButtonColor='success'
-				title={t('feedback.submit_review')}
+				title={t('feedback.button.submit_review')}
 				onSubmit={async ({ values, closeDialog }) => {
 					const payload = {
 						content: values.content,
@@ -202,7 +202,7 @@ const FeedbackSection = ({ medicineId }) => {
 				fields={[
 					{
 						key: 'rating',
-						title: t('feedback.rating'),
+						title: t('feedback.field.rating'),
 						type: 'custom',
 						validate: [numberRange(1, 5)],
 						required: true,
@@ -210,10 +210,10 @@ const FeedbackSection = ({ medicineId }) => {
 					},
 					{
 						key: 'content',
-						title: t('feedback.content'),
+						title: t('feedback.field.content'),
 						validate: [maxLen(1000)],
 						required: false,
-						props: { placeholder: t('feedback.content_placeholder') },
+						props: { placeholder: t('feedback.placeholder.content') },
 					},
 				]}
 				initialValues={{ rating: editingItem?.rating ?? 5, content: editingItem?.content ?? '' }}

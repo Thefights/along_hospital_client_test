@@ -2,7 +2,7 @@ import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
 import { Card, CardActionArea, CardContent, CardMedia, Stack, Typography } from '@mui/material'
 
-const DoctorCard = ({ doctor = {} }) => {
+const DoctorCardSection = ({ doctor = {} }) => {
 	const { t } = useTranslation()
 
 	return (
@@ -52,4 +52,4 @@ const DoctorCard = ({ doctor = {} }) => {
 	)
 }
 
-export default DoctorCard
+export default DoctorCardSection

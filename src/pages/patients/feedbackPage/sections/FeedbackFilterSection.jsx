@@ -1,7 +1,7 @@
 import useTranslation from '@/hooks/useTranslation'
 import { Button, Paper, Stack } from '@mui/material'
 
-const FilterSection = ({ selected, counts, onChange }) => {
+const FeedbackFilterSection = ({ selected, counts, onChange }) => {
 	const { t } = useTranslation()
 
 	const allCount = Object.values(counts || {}).reduce((a, b) => a + (b || 0), 0)
@@ -33,4 +33,4 @@ const FilterSection = ({ selected, counts, onChange }) => {
 	)
 }
 
-export default FilterSection
+export default FeedbackFilterSection

@@ -8,12 +8,12 @@ const ReportFeedbackDialog = ({ open, onClose, onSubmit, initialReason = '' }) =
 		<GenericFormDialog
 			open={!!open}
 			onClose={onClose}
-			title={t('feedback.report_title')}
+			title={t('feedback.dialog.report_title')}
 			initialValues={{ reason: initialReason || '' }}
 			fields={[
 				{
 					key: 'reason',
-					title: t('feedback.report_reason'),
+					title: t('feedback.dialog.report_reason'),
 					multiple: 1,
 					required: true,
 				},
