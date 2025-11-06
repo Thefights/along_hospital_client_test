@@ -22,7 +22,6 @@ const ListSection = ({
 
 	const reportSubmit = useAxiosSubmit({ url: ApiUrls.FEEDBACK_REPORT.INDEX, method: 'POST' })
 	const [reportDialog, setReportDialog] = useState({ open: false, feedbackId: null })
-	// Removed reportedIds tracking per requirement: keep Report button enabled and text unchanged
 
 	const Item = ({ review }) => {
 		const isMe = String(review?.patientId ?? '') === String(currentUserId ?? '')
@@ -61,9 +60,9 @@ const ListSection = ({
 								onClick={() => {
 									setReportDialog({ open: true, feedbackId: review?.id })
 								}}
-								disabled={false} // Always enabled
+								disabled={false}
 							>
-								{t('button.report') || 'Report'}
+								{t('button.report')}
 							</Button>
 						)}
 					</Stack>
@@ -98,14 +97,11 @@ const ListSection = ({
 				)}
 			</Paper>
 
-			{/* Report dialog */}
 			<ReportFeedbackDialog
 				open={!!reportDialog.open}
 				onClose={() => setReportDialog({ open: false, feedbackId: null })}
-				loading={reportSubmit.loading}
 				onSubmit={async (reason) => {
 					if (!reportDialog.feedbackId) return
-					// Defensive check: prevent self-report
 					const target = items?.find((x) => x.id === reportDialog.feedbackId)
 					const isSelf = String(target?.patientId ?? '') === String(currentUserId ?? '')
 					if (isSelf) return

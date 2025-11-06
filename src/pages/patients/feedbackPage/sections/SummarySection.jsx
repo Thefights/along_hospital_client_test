@@ -13,7 +13,6 @@ const SummarySection = ({ summary, onOpenReview }) => {
 
 	return (
 		<Paper sx={{ p: 2, borderRadius: 2 }}>
-			{/* Điểm TB + tổng lượt + phân bố theo sao (gộp UI vào Section) */}
 			<Grid container spacing={2} alignItems='center'>
 				<Grid size={{ xs: 12, md: 4 }}>
 					<Stack alignItems='center' spacing={1} py={2}>

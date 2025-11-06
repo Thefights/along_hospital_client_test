@@ -12,12 +12,7 @@ import FilterSection from './FilterSection'
 import ListSection from './ListSection'
 import SummarySection from './SummarySection'
 
-const FeedbackSection = ({
-	feedbacks,
-	loading = false,
-	hasMore: hasMoreProp = false,
-	onLoadMore,
-}) => {
+const FeedbackSection = ({ medicineId }) => {
 	const { t } = useTranslation()
 	const { auth } = useAuth()
 	const confirm = useConfirm()
@@ -33,20 +28,21 @@ const FeedbackSection = ({
 		url: ApiUrls.FEEDBACK.DETAIL(editingItem?.id),
 		method: 'PUT',
 	})
-	const deleteFeedback = useAxiosSubmit({ url: ApiUrls.FEEDBACK.DETAIL(0), method: 'DELETE' })
+	const deleteFeedback = useAxiosSubmit({ method: 'DELETE' })
 
-	const getFeedbacksByMedicine = useFetch(ApiUrls.FEEDBACK.GET_FEEDBACK_BY_MEDICINE(1))
+	const getFeedbacksByMedicine = useFetch(
+		ApiUrls.FEEDBACK.GET_FEEDBACK_BY_MEDICINE(medicineId),
+		{},
+		[medicineId]
+	)
 
 	useEffect(() => {
-		if (Array.isArray(feedbacks)) {
-			setReviews(feedbacks)
-			return
-		}
 		const res = getFeedbacksByMedicine.data
 		if (!res) return
+
 		const items = Array.isArray(res) ? res : Array.isArray(res?.collection) ? res.collection : []
 		setReviews(items)
-	}, [feedbacks, getFeedbacksByMedicine.data])
+	}, [getFeedbacksByMedicine.data])
 
 	const distribution = useMemo(() => {
 		const d = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
@@ -72,9 +68,16 @@ const FeedbackSection = ({
 
 	const summary = { total, average, distribution }
 
+	// rating labels should be localized
 	const ratingLabels = useMemo(
-		() => ({ 1: 'Bad', 2: 'Poor', 3: 'Average', 4: 'Good', 5: 'Excellent' }),
-		[]
+		() => ({
+			1: t('feedback.rating_label.1'),
+			2: t('feedback.rating_label.2'),
+			3: t('feedback.rating_label.3'),
+			4: t('feedback.rating_label.4'),
+			5: t('feedback.rating_label.5'),
+		}),
+		[t]
 	)
 
 	const StarRatingInput = ({ value, onChange, title }) => {
@@ -106,6 +109,9 @@ const FeedbackSection = ({
 		)
 	}
 
+	// Guard: hide section if no medicineId provided
+	if (!medicineId) return null
+
 	return (
 		<>
 			<Typography variant='h5' fontWeight={700} my={2}>
@@ -127,10 +133,8 @@ const FeedbackSection = ({
 				<Grid size={{ xs: 12 }}>
 					<ListSection
 						items={visibleItems}
-						hasMore={!!hasMoreProp}
-						loading={!!loading}
+						loading={!!getFeedbacksByMedicine.loading}
 						currentUserId={auth?.userId}
-						onLoadMore={onLoadMore || (() => {})}
 						canModify={(rv) => String(rv?.patientId ?? '') === String(auth?.userId ?? '')}
 						onEdit={(rv) => {
 							setEditingItem(rv)
@@ -147,7 +151,9 @@ const FeedbackSection = ({
 							const res = await deleteFeedback.submit(null, {
 								overrideUrl: ApiUrls.FEEDBACK.DETAIL(rv.id),
 							})
-							if (res != null) setReviews((arr) => arr.filter((x) => x.id !== rv.id))
+							if (res != null) {
+								await getFeedbacksByMedicine.fetch()
+							}
 						}}
 					/>
 				</Grid>
@@ -182,18 +188,11 @@ const FeedbackSection = ({
 						content: values.content,
 						rating: Number(values.rating),
 						patientId: auth?.userId,
-						medicineId: 1,
+						medicineId,
 					}
 					const res = await createFeedback.submit(payload)
 					if (res) {
-						const item = {
-							id: res?.id ?? Date.now(),
-							userName: 'You',
-							rating: payload.rating,
-							content: payload.content,
-							createdAt: new Date().toISOString(),
-						}
-						setReviews((arr) => [item, ...arr])
+						await getFeedbacksByMedicine.fetch()
 						closeDialog()
 					}
 				}}
@@ -229,15 +228,11 @@ const FeedbackSection = ({
 						content: values.content,
 						rating: Number(values.rating),
 						patientId: auth?.userId,
-						medicineId: 1,
+						medicineId,
 					}
 					const res = await updateFeedback.submit(payload)
 					if (res) {
-						setReviews((arr) =>
-							arr.map((x) =>
-								x.id === editingItem.id ? { ...x, rating: payload.rating, content: payload.content } : x
-							)
-						)
+						await getFeedbacksByMedicine.fetch()
 						closeDialog()
 					}
 				}}

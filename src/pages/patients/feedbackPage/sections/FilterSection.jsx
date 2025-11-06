@@ -3,15 +3,16 @@ import { Button, Paper, Stack } from '@mui/material'
 
 const FilterSection = ({ selected, counts, onChange }) => {
 	const { t } = useTranslation()
+
 	const allCount = Object.values(counts || {}).reduce((a, b) => a + (b || 0), 0)
 
 	const options = [
 		{ label: t('feedback.filter.all'), value: null, count: allCount },
-		{ label: '5 ⭐', value: 5, count: counts?.[5] || 0 },
-		{ label: '4 ⭐', value: 4, count: counts?.[4] || 0 },
-		{ label: '3 ⭐', value: 3, count: counts?.[3] || 0 },
-		{ label: '2 ⭐', value: 2, count: counts?.[2] || 0 },
-		{ label: '1 ⭐', value: 1, count: counts?.[1] || 0 },
+		{ label: t('feedback.filter.star', { count: 5 }), value: 5, count: counts?.[5] || 0 },
+		{ label: t('feedback.filter.star', { count: 4 }), value: 4, count: counts?.[4] || 0 },
+		{ label: t('feedback.filter.star', { count: 3 }), value: 3, count: counts?.[3] || 0 },
+		{ label: t('feedback.filter.star', { count: 2 }), value: 2, count: counts?.[2] || 0 },
+		{ label: t('feedback.filter.star', { count: 1 }), value: 1, count: counts?.[1] || 0 },
 	]
 
 	return (
