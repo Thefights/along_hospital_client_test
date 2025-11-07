@@ -2,8 +2,7 @@ import { ApiUrls } from '@/configs/apiUrls'
 import useTranslation from '@/hooks/useTranslation'
 import { getEnv } from '@/utils/commons'
 import * as signalR from '@microsoft/signalr'
-import ChatIcon from '@mui/icons-material/Chat'
-import SendIcon from '@mui/icons-material/Send'
+import { Chat, Send } from '@mui/icons-material'
 import {
 	Box,
 	ClickAwayListener,
@@ -17,7 +16,7 @@ import {
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { useEffect, useRef, useState } from 'react'
-import ChatBotMessageBuble from './ChatBotMessageBuble'
+import ChatBotMessageBuble from './ChatBotMessageBubble'
 
 const ChatBotFloatingButton = () => {
 	const theme = useTheme()
@@ -66,6 +65,12 @@ const ChatBotFloatingButton = () => {
 		}
 
 		createConnection()
+
+		return () => {
+			if (connectionRef.current) {
+				connectionRef.current.stop()
+			}
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
@@ -95,7 +100,7 @@ const ChatBotFloatingButton = () => {
 		setMessages((prev) => [...prev, userMessage])
 		setInputValue('')
 		setIsSending(true)
-		connection.invoke('SendUserMessage', text)
+		connection.invoke('SendUserMessage', text).catch(() => setIsSending(false))
 	}
 
 	const handleKeyDown = (event) => {
@@ -207,13 +212,13 @@ const ChatBotFloatingButton = () => {
 								}}
 							/>
 							<IconButton onClick={handleSend} disabled={!canSend} loading={isSending}>
-								<SendIcon color={canSend ? 'primary' : 'disabled'} fontSize='small' />
+								<Send color={canSend ? 'primary' : 'disabled'} fontSize='small' />
 							</IconButton>
 						</Box>
 					</Paper>
 				)}
 				<Fab color='info' hidden={false} onClick={() => setIsOpen((prev) => !prev)}>
-					<ChatIcon />
+					<Chat />
 				</Fab>
 			</Box>
 		</ClickAwayListener>

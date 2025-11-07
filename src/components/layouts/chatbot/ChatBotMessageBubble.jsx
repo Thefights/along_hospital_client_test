@@ -1,14 +1,13 @@
-import SmartToyIcon from '@mui/icons-material/SmartToy'
+import { SmartToy } from '@mui/icons-material'
 import { Box, Stack, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 
-const ChatBotMessageBuble = ({ message }) => {
+const ChatBotMessageBubble = ({ message }) => {
 	const theme = useTheme()
 
 	if (message.role === 'user') {
 		return (
 			<Box
-				key={message.id}
 				sx={{
 					display: 'flex',
 					justifyContent: 'flex-end',
@@ -34,7 +33,6 @@ const ChatBotMessageBuble = ({ message }) => {
 	}
 	return (
 		<Box
-			key={message.id}
 			sx={{
 				display: 'flex',
 				justifyContent: 'flex-start',
@@ -54,7 +52,7 @@ const ChatBotMessageBuble = ({ message }) => {
 						border: `1px solid ${theme.palette.primary.softBorder || theme.palette.divider}`,
 					}}
 				>
-					<SmartToyIcon
+					<SmartToy
 						sx={{
 							fontSize: 18,
 							color: theme.palette.text.blue?.main || theme.palette.primary.main,
@@ -99,4 +97,4 @@ const ChatBotMessageBuble = ({ message }) => {
 	)
 }
 
-export default ChatBotMessageBuble
+export default ChatBotMessageBubble
