@@ -158,6 +158,12 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 	const updatePatientInfo = useAxiosSubmit({
 		url: ApiUrls.PATIENT.MANAGEMENT.DETAIL(medicalHistory?.patient.id),
 		method: 'PUT',
+		onSuccess: (response) => {
+			setMedicalHistory((prev) => ({
+				...prev,
+				patient: response.data,
+			}))
+		},
 	})
 
 	if (!loading && !medicalHistory) {

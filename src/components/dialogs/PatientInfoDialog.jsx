@@ -153,7 +153,7 @@ const PatientInfoDialog = ({
 
 		const response = await onSave(values)
 		if (response) {
-			handleClose()
+			onClose?.()
 		}
 	}
 
