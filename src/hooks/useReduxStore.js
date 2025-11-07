@@ -34,14 +34,16 @@ export default function useReduxStore({
 	const needFetch = isEmptyValue(storeData)
 
 	useEffect(() => {
-		if (needFetch) fetch()
+		if (needFetch) {
+			fetch()
+			setFetchedOnce(true)
+		}
 	}, [needFetch, fetch])
 
 	useEffect(() => {
 		if (fetchedData != null) {
 			const payload = dataToStore(fetchedData)
 			dispatch(setStore(payload))
-			setFetchedOnce(true)
 		}
 	}, [fetchedData])
 

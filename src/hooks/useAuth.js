@@ -8,7 +8,6 @@ import { useContext } from 'react'
 /**
  * @returns {{
  *  auth: RootState['auth'],
- * 	hasRole: (required: (string|number)[]) => boolean,
  * 	login: (accessToken: string, refreshToken: string) => Promise<void>,
  * 	logout: () => void,
  * 	getReturnUrlByRole: (role: string) => string

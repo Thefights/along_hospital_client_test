@@ -36,8 +36,8 @@ const ManageAppointmentBasePage = ({
 	}
 
 	useEffect(() => {
-		setPage(1)
-	}, [filters, setPage])
+		if (page !== 1) setPage(1)
+	}, [filters, page, setPage])
 
 	return (
 		<Paper sx={{ p: 2 }}>
