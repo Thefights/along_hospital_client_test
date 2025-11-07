@@ -46,7 +46,7 @@ export const ApiUrls = {
 	},
 	MEDICINE: {
 		INDEX: `/medicine`,
-		GETALL: `/medicine`,
+		GET_ALL: `/medicine/all`,
 		MANAGEMENT: {
 			INDEX: `/medicine-management`,
 			GET_ALL: `/medicine-management/all`,
@@ -64,6 +64,7 @@ export const ApiUrls = {
 	},
 	MEDICAL_SERVICE: {
 		INDEX: `/medical-service`,
+		GET_ALL: `/medical-service/all`,
 		MANAGEMENT: {
 			INDEX: `/medical-service-management`,
 			GET_ALL: `/medical-service-management/all`,
@@ -106,6 +107,7 @@ export const ApiUrls = {
 				}`,
 			PRESCRIPTION: (medicalHistoryId) =>
 				`/medical-history-management/${medicalHistoryId}/prescription`,
+			PAYMENT_URL: (medicalHistoryId) => `/medical-history-management/${medicalHistoryId}/payment-url`,
 		},
 	},
 	BLOG: {

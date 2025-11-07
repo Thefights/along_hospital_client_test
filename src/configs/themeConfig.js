@@ -23,6 +23,11 @@ const customTheme = (palette, otherComponents) => ({
 				'::-webkit-scrollbar-corner': {
 					background: 'transparent',
 				},
+				body: {
+					wordBreak: 'break-word',
+					overflowWrap: 'anywhere',
+					hyphens: 'auto',
+				},
 			}),
 		},
 		MuiPaper: { styleOverrides: { root: { borderRadius: 12 } } },

@@ -82,7 +82,7 @@
                 "update_medical_history": "Cập nhật lịch sử y tế",
                 "add_medical_service": "Thêm dịch vụ y tế",
                 "create_prescription": "Tạo đơn thuốc",
-                "upsert_prescription": "Cập nhật đơn thuốc",
+                "update_prescription": "Cập nhật đơn thuốc",
                 "create_complaint": "Tạo khiếu nại",
                 "respond_complaint": "Phản hồi khiếu nại"
             },

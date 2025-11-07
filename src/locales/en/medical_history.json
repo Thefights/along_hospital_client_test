@@ -82,7 +82,7 @@
                 "update_medical_history": "Update Medical History",
                 "add_medical_service": "Add Medical Service",
                 "create_prescription": "Create Prescription",
-                "upsert_prescription": "Upsert Prescription",
+                "update_prescription": "Update Prescription",
                 "create_complaint": "Create Complaint",
                 "respond_complaint": "Respond to Complaint"
             },

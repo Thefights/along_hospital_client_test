@@ -96,18 +96,19 @@
         "required": "Trường này là bắt buộc",
         "invalid_email": "Vui lòng nhập email hợp lệ",
         "invalid_phone": "Vui lòng nhập số điện thoại hợp lệ",
+        "invalid_phone_or_email": "Vui lòng nhập số điện thoại hoặc email hợp lệ",
+        "invalid_number": "Vui lòng nhập số hợp lệ",
         "invalid_date": "Vui lòng nhập ngày hợp lệ",
         "invalid_time": "Vui lòng nhập thời gian hợp lệ",
-        "invalid_number": "Vui lòng nhập số hợp lệ",
         "weak_password": "Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt",
         "min_length": "Phải có ít nhất {min} ký tự, hiện tại {current}",
         "max_length": "Không được vượt quá {max} ký tự, hiện tại {current}/{max}",
         "min_number": "Số tối thiểu là {min}",
         "max_number": "Số tối đa là {max}",
+        "not_match": "Giá trị không khớp",
+        "password_not_match": "Mật khẩu không khớp",
         "fill_all_required": "Vui lòng điền tất cả các trường bắt buộc",
         "invalid_percentage": "Phần trăm phải từ 0 đến 100",
-        "past_date": "Ngày không được ở quá khứ",
-        "not_match": "Giá trị không khớp",
-        "invalid_phone_or_email": "Vui lòng nhập số điện thoại hoặc email hợp lệ"
+        "past_date": "Ngày không được ở quá khứ"
     }
 }
