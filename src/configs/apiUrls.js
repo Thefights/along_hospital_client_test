@@ -13,6 +13,9 @@ export const ApiUrls = {
 		REFRESH_TOKEN: '/auth/refresh',
 		COMPLETE_PROFILE: '/user/complete-profile',
 	},
+	HUB: {
+		CHATBOT: '/hub/chatbot',
+	},
 	USER: {
 		INDEX: `/user`,
 		PROFILE: `/user/profile`,
