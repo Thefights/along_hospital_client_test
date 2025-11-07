@@ -8,10 +8,9 @@ import NotFoundPage from '@/pages/commons/NotFoundPage'
 import CreateAppointmentPage from '@/pages/patients/createAppointmentPage/CreateAppointmentPage'
 import PatientAppointmentHistoryPage from '@/pages/patients/patientAppointmentHistoryPage/PatientAppointmentHistoryPage'
 import PatientMedicalHistoryPage from '@/pages/patients/patientMedicalHistoryPage/PatientMedicalHistoryPage'
-import ProfilePage from '@/pages/patients/ProfilePage'
+import ProfilePage from '@/pages/profile/ProfilePage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
-
 const RoutePatient = () => {
 	const { auth, getReturnUrlByRole } = useAuth()
 
@@ -42,7 +41,6 @@ const RoutePatient = () => {
 					/>
 				</Route>
 			</Route>
-
 			<Route path='*' element={<NotFoundPage />} />
 		</Routes>
 	)

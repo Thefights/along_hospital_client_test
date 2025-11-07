@@ -117,12 +117,34 @@ export const ApiUrls = {
 			DETAIL: (id) => `/Blog-Management/${id}`,
 		},
 	},
+	VOUCHER: {
+		INDEX: `/voucher`,
+		MANAGEMENT: {
+			INDEX: `/voucher-management`,
+			DETAIL: (id) => `/voucher-management/${id}`,
+		},
+	},
 	DEPARTMENT: {
 		INDEX: `/department`,
 		MANAGEMENT: {
 			INDEX: `/department-management`,
 			GET_ALL: `/department-management/all`,
 			DETAIL: (id) => `/department-management/${id}`,
+		},
+	},
+	FEEDBACK: {
+		INDEX: `/feedback`,
+		DETAIL: (id) => `/feedback/${id}`,
+		GET_FEEDBACK_BY_MEDICINE: (medicineId) => `/feedback/medicine/${medicineId}`,
+	},
+	FEEDBACK_REPORT: {
+		INDEX: `/feedback-report`,
+		DETAIL: (id) => `/feedback-report/${id}`,
+		ME: `/feedback-report/me`,
+		MANAGEMENT: {
+			INDEX: `/feedback-report-management`,
+			RESOLVE: (id) => `/feedback-report-management/resolve/${id}`,
+			REJECT: (id) => `/feedback-report-management/reject/${id}`,
 		},
 	},
 }

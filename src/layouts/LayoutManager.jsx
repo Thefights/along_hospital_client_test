@@ -7,6 +7,7 @@ import useTranslation from '@/hooks/useTranslation'
 import { setProfileStore } from '@/redux/reducers/patientReducer'
 import {
 	ArticleRounded,
+	CardGiftcardRounded,
 	DashboardRounded,
 	Inventory2Rounded,
 	LocalHospitalRounded,
@@ -68,6 +69,19 @@ const LayoutManager = () => {
 						},
 					],
 				},
+				{
+					key: 'voucher',
+					label: 'Voucher',
+					icon: <CardGiftcardRounded />,
+					of: [
+						{
+							key: 'voucher',
+							label: 'Voucher',
+							icon: <CardGiftcardRounded />,
+							url: routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.VOUCHER_MANAGEMENT),
+						},
+					],
+				},
 			],
 		},
 		{
@@ -78,7 +92,13 @@ const LayoutManager = () => {
 		},
 	]
 
-	const userMenuItems = [{ label: t('header.user_menu.profile'), url: '/profile', icon: <Person /> }]
+	const userMenuItems = [
+		{
+			label: t('header.user_menu.profile'),
+			url: routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.PROFILE),
+			icon: <Person />,
+		},
+	]
 
 	return (
 		<Stack direction={'row'}>
