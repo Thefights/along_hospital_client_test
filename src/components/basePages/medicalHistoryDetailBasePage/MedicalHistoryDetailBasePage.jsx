@@ -54,7 +54,9 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 	const getPaymentUrl = useFetch(ApiUrls.MEDICAL_HISTORY.MANAGEMENT.PAYMENT_URL(id), {}, [], false)
 
 	useEffect(() => {
-		console.log(getPaymentUrl.data)
+		if (getPaymentUrl.data) {
+			window.open(getPaymentUrl.data, '_blank')
+		}
 	}, [getPaymentUrl.data])
 
 	// API Operations for medical history
@@ -241,6 +243,7 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 								}))
 							}
 						}}
+						loadingPayment={getPaymentUrl.loading}
 					/>
 				)}
 			</Stack>
