@@ -25,7 +25,8 @@
             "date_of_birth": "Ngày sinh",
             "department": "Khoa",
             "image": "Hình ảnh",
-            "signature_image": "Chữ ký"
+            "signature_image": "Chữ ký",
+            "password": "Mật khẩu"
         }
     }
 }
