@@ -1,0 +1,52 @@
+{
+	"import_management": {
+		"title": "Import Management",
+		"actions": {
+			"import_csv": "Import CSV",
+			"delete_selected": "Delete Selected ({count})"
+		},
+		"labels": {
+			"supplier_number": "Supplier #{id}",
+			"medicine_number": "Medicine #{id}"
+		},
+		"table": {
+			"id": "ID",
+			"date": "Date",
+			"supplier": "Supplier",
+			"note": "Note",
+			"items": "Items"
+		},
+		"form": {
+			"import_date": "Import Date",
+			"supplier": "Supplier",
+			"note": "Note",
+			"import_details": "Import Details",
+			"medicine": "Medicine",
+			"quantity": "Quantity",
+			"unit_price": "Unit Price"
+		},
+		"dialog": {
+			"create": {
+				"title": "Create Import"
+			},
+			"update": {
+				"title": "Update Import"
+			}
+		},
+		"confirm": {
+			"delete_many": {
+				"title": "Delete selected imports?",
+				"description": "Are you sure you want to delete {count} selected import(s)?"
+			},
+			"delete_one": {
+				"title": "Delete import?",
+				"description": "Are you sure you want to delete import #{id}?"
+			}
+		},
+		"summary": {
+			"import_detail_line": "{index}. {name} | Qty: {quantity} | Unit Price: {unitPrice}"
+		},
+		"import_success": "Import successfully completed."
+	}
+}
+
