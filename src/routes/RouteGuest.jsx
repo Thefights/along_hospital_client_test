@@ -3,6 +3,8 @@ import { routeUrls } from '@/configs/routeUrls'
 import useAuth from '@/hooks/useAuth'
 import LayoutGuest from '@/layouts/LayoutGuest'
 import LayoutPatient from '@/layouts/LayoutPatient'
+import MedicalHistoryInvoicePage from '@/pages/commons/invoicePage/MedicalHistoryInvoicePage'
+import PrescriptionPrintPage from '@/pages/commons/invoicePage/PrescriptionPrintPage'
 import NotFoundPage from '@/pages/commons/NotFoundPage'
 import CreateMedicalHistoryPage from '@/pages/doctors/createMedicalHistoryPage/CreateMedicalHistoryPage'
 import HomePage from '@/pages/guests/HomePage'
@@ -27,6 +29,14 @@ const RouteGuest = () => {
 					<Route path={routeUrls.HOME.DOCTOR} element={<DoctorPage />} />
 					<Route path={routeUrls.HOME.BLOG} element={<BlogPage />} />
 					<Route path={`${routeUrls.HOME.BLOG}/:id`} element={<BlogDetailPage />} />
+					<Route
+						path={routeUrls.HOME.MEDICAL_HISTORY_INVOICE(':id')}
+						element={<MedicalHistoryInvoicePage />}
+					/>
+					<Route
+						path={routeUrls.HOME.MEDICAL_HISTORY_PRINT_PRESCRIPTION(':id')}
+						element={<PrescriptionPrintPage />}
+					/>
 					{process.env.NODE_ENV === 'development' && (
 						<>
 							<Route path='/test' element={<TestTable />} />

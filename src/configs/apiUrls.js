@@ -98,6 +98,7 @@ export const ApiUrls = {
 	},
 	MEDICAL_HISTORY: {
 		INDEX: `/medical-history`,
+		DETAIL: (id) => `/medical-history/${id}`,
 		CREATE_COMPLAINT: (medicalHistoryId) => `/medical-history/${medicalHistoryId}/complaint`,
 		MANAGEMENT: {
 			INDEX: `/medical-history-management`,
