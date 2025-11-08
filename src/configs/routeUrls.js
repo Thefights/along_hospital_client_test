@@ -18,6 +18,8 @@ export const routeUrls = {
 		PRIVACY_POLICY: '/privacy-policy',
 		CAREER: '/career',
 		FAQ: '/faq',
+		MEDICAL_HISTORY_INVOICE: (id) => `/medical-history/invoice/${id}`,
+		MEDICAL_HISTORY_PRINT_PRESCRIPTION: (id) => `/medical-history/print-prescription/${id}`,
 	},
 	AUTH: {
 		LOGIN: '/login',
