@@ -87,7 +87,9 @@ const DashboardDrawer = ({
 									}}
 								/>
 							) : (
-								<ListSubheader sx={{ lineHeight: 0, my: 2 }}>{section.title}</ListSubheader>
+								<ListSubheader sx={{ lineHeight: 0, my: 2, position: 'relative' }}>
+									{section.title}
+								</ListSubheader>
 							)
 						}
 					>
