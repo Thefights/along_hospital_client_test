@@ -1,6 +1,6 @@
 import { getEnv } from '@/utils/commons'
 import * as signalR from '@microsoft/signalr'
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 
 /**
  * useMeetingSignalR
@@ -9,13 +9,14 @@ import { useCallback, useEffect, useRef } from 'react'
  * @param {Object} params
  * @param {string} params.transactionId - The tele-session transaction id
  * @param {string} params.accessToken - Bearer token used for hub authentication
+ * @param {string=} params.hubUrl - Optional SignalR hub URL from API
  * @param {function=} params.onJoinSucceeded - Callback when JoinSession succeeded (payload)
  * @param {function=} params.onJoinFailed - Callback when JoinSession failed (error)
  * @param {function=} params.onParticipantJoined - Callback when a participant joined (participant)
  * @param {function=} params.onParticipantLeft - Callback when a participant left (participantId)
- * @param {function=} params.onOffer - Callback when receiving SDP offer (payload)
- * @param {function=} params.onAnswer - Callback when receiving SDP answer (payload)
- * @param {function=} params.onIceCandidate - Callback when receiving ICE candidate ({ candidate })
+ * @param {function=} params.onOffer - Callback when receiving SDP offer (senderId, offer)
+ * @param {function=} params.onAnswer - Callback when receiving SDP answer (senderId, answer)
+ * @param {function=} params.onIceCandidate - Callback when receiving ICE candidate (senderId, candidate)
  * @param {function=} params.onStateUpdated - Callback when meeting state updated (state)
  *
  * @returns {{
@@ -31,6 +32,7 @@ import { useCallback, useEffect, useRef } from 'react'
 const useMeetingSignalR = ({
 	transactionId,
 	accessToken,
+	hubUrl,
 	onJoinSucceeded,
 	onJoinFailed,
 	onParticipantJoined,
@@ -44,18 +46,20 @@ const useMeetingSignalR = ({
 	const startedRef = useRef(false)
 	const attemptsRef = useRef(0)
 
-	const getHubUrl = () => {
+	const resolvedHubUrl = useMemo(() => {
+		// Ưu tiên sử dụng hubUrl từ props (API)
+		if (hubUrl) return hubUrl
+		// Fallback: kiểm tra env variable
 		const explicit = getEnv('VITE_SIGNALR_URL', '')
 		if (explicit) return explicit
-		// Fallback to derive from base API url by stripping trailing /api/vX
+		// Fallback cuối: suy ra từ base API url
 		const base = getEnv('VITE_BASE_API_URL', '').replace(/\/api\/.+$/, '')
 		return `${base}/hubs/tele-session`
-	}
+	}, [hubUrl])
 
 	const buildConnection = useCallback(() => {
-		const hubUrl = getHubUrl()
 		const conn = new signalR.HubConnectionBuilder()
-			.withUrl(hubUrl, {
+			.withUrl(resolvedHubUrl, {
 				accessTokenFactory: () => accessToken || '',
 				transport: signalR.HttpTransportType.WebSockets,
 				skipNegotiation: true,
@@ -75,13 +79,18 @@ const useMeetingSignalR = ({
 			'ParticipantLeft',
 			(participantId) => onParticipantLeft && onParticipantLeft(participantId)
 		)
-		conn.on('ReceiveOffer', (data) => onOffer && onOffer(data))
-		conn.on('ReceiveAnswer', (data) => onAnswer && onAnswer(data))
-		conn.on('ReceiveIceCandidate', (data) => onIceCandidate && onIceCandidate(data))
+		// Hub broadcasts: (senderId, offer/answer/candidate)
+		conn.on('ReceiveOffer', (senderId, offer) => onOffer && onOffer(senderId, offer))
+		conn.on('ReceiveAnswer', (senderId, answer) => onAnswer && onAnswer(senderId, answer))
+		conn.on(
+			'ReceiveIceCandidate',
+			(senderId, candidate) => onIceCandidate && onIceCandidate(senderId, candidate)
+		)
 		conn.on('StateUpdated', (state) => onStateUpdated && onStateUpdated(state))
 
 		return conn
 	}, [
+		resolvedHubUrl,
 		accessToken,
 		onAnswer,
 		onIceCandidate,
@@ -134,7 +143,7 @@ const useMeetingSignalR = ({
 	const sendOffer = useCallback(
 		async (offer) => {
 			if (!connectionRef.current) return
-			await connectionRef.current.invoke('SendOffer', { transactionId, offer })
+			await connectionRef.current.invoke('SendOffer', transactionId, offer)
 		},
 		[transactionId]
 	)
@@ -142,7 +151,7 @@ const useMeetingSignalR = ({
 	const sendAnswer = useCallback(
 		async (answer) => {
 			if (!connectionRef.current) return
-			await connectionRef.current.invoke('SendAnswer', { transactionId, answer })
+			await connectionRef.current.invoke('SendAnswer', transactionId, answer)
 		},
 		[transactionId]
 	)
@@ -150,7 +159,7 @@ const useMeetingSignalR = ({
 	const sendIceCandidate = useCallback(
 		async (candidate) => {
 			if (!connectionRef.current) return
-			await connectionRef.current.invoke('SendIceCandidate', { transactionId, candidate })
+			await connectionRef.current.invoke('SendIceCandidate', transactionId, candidate)
 		},
 		[transactionId]
 	)
@@ -158,7 +167,7 @@ const useMeetingSignalR = ({
 	const notifyState = useCallback(
 		async (state) => {
 			if (!connectionRef.current) return
-			await connectionRef.current.invoke('NotifyState', { transactionId, state })
+			await connectionRef.current.invoke('NotifyState', transactionId, state)
 		},
 		[transactionId]
 	)
@@ -166,7 +175,7 @@ const useMeetingSignalR = ({
 	const leaveSession = useCallback(async () => {
 		if (!connectionRef.current) return
 		try {
-			await connectionRef.current.invoke('LeaveSession', { transactionId })
+			await connectionRef.current.invoke('LeaveSession', transactionId)
 		} finally {
 			await stopConnection()
 		}
