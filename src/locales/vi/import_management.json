@@ -1,13 +1,16 @@
 {
 	"import_management": {
-		"title": "Quản lý nhập hàng",
-		"actions": {
+		"title": {
+			"main": "Quản lý nhập hàng"
+		},
+		"button": {
 			"import_csv": "Nhập CSV",
 			"delete_selected": "Xóa {count} phiếu nhập đã chọn"
 		},
-		"labels": {
+		"text": {
 			"supplier_number": "Nhà cung cấp #{id}",
-			"medicine_number": "Thuốc #{id}"
+			"medicine_number": "Thuốc #{id}",
+			"import_success": "Nhập dữ liệu thành công."
 		},
 		"table": {
 			"id": "ID",
@@ -16,7 +19,7 @@
 			"note": "Ghi chú",
 			"items": "Số mặt hàng"
 		},
-		"form": {
+		"field": {
 			"import_date": "Ngày nhập",
 			"supplier": "Nhà cung cấp",
 			"note": "Ghi chú",
@@ -43,10 +46,9 @@
 				"description": "Bạn có chắc chắn muốn xóa phiếu nhập #{id}?"
 			}
 		},
-		"summary": {
+		"placeholder": {
 			"import_detail_line": "{index}. {name} | SL: {quantity} | Đơn giá: {unitPrice}"
-		},
-		"import_success": "Nhập dữ liệu thành công."
+		}
 	}
 }
 

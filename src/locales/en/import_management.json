@@ -1,13 +1,16 @@
 {
 	"import_management": {
-		"title": "Import Management",
-		"actions": {
+		"title": {
+			"main": "Import Management"
+		},
+		"button": {
 			"import_csv": "Import CSV",
 			"delete_selected": "Delete Selected ({count})"
 		},
-		"labels": {
+		"text": {
 			"supplier_number": "Supplier #{id}",
-			"medicine_number": "Medicine #{id}"
+			"medicine_number": "Medicine #{id}",
+			"import_success": "Import successfully completed."
 		},
 		"table": {
 			"id": "ID",
@@ -16,7 +19,7 @@
 			"note": "Note",
 			"items": "Items"
 		},
-		"form": {
+		"field": {
 			"import_date": "Import Date",
 			"supplier": "Supplier",
 			"note": "Note",
@@ -43,10 +46,8 @@
 				"description": "Are you sure you want to delete import #{id}?"
 			}
 		},
-		"summary": {
+		"placeholder": {
 			"import_detail_line": "{index}. {name} | Qty: {quantity} | Unit Price: {unitPrice}"
-		},
-		"import_success": "Import successfully completed."
+		}
 	}
 }
-
