@@ -47,6 +47,8 @@
         "more": "Nữa",
         "result": "Kết quả",
         "none": "Không",
+        "no_": "STT.",
+        "sign_here": "Ký, ghi rõ họ tên",
         "rows_per_page": "Số dòng mỗi trang",
         "role": {
             "manager": "Quản lý",
