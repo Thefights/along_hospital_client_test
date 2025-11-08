@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from 'react'
+import useTranslation from '@/hooks/useTranslation'
 
 export function useCsvImport({ delimiter = ',', hasHeader = true, onError, onSuccess } = {}) {
 	const [loading, setLoading] = useState(false)
@@ -6,12 +7,13 @@ export function useCsvImport({ delimiter = ',', hasHeader = true, onError, onSuc
 	const [data, setData] = useState(null)
 	const [file, setFile] = useState(null)
 	const fileInputRef = useRef(null)
+	const { t } = useTranslation()
 
 	const parseCsv = useCallback(
 		(text) => {
 			const lines = text.split(/\r?\n/).filter((line) => line.trim() !== '')
 			if (lines.length === 0) {
-				throw new Error('File CSV rỗng')
+				throw new Error(t('error.csv.empty'))
 			}
 
 			let headers = []
@@ -72,7 +74,7 @@ export function useCsvImport({ delimiter = ',', hasHeader = true, onError, onSuc
 
 			const fileName = file.name.toLowerCase()
 			if (!fileName.endsWith('.csv')) {
-				const err = new Error('File phải có định dạng CSV')
+				const err = new Error(t('error.csv.invalid_format'))
 				setError(err)
 				onError?.(err, file)
 				return
@@ -86,7 +88,7 @@ export function useCsvImport({ delimiter = ',', hasHeader = true, onError, onSuc
 				const text = await new Promise((resolve, reject) => {
 					const reader = new FileReader()
 					reader.onload = (e) => resolve(e.target.result)
-					reader.onerror = (e) => reject(new Error('Không thể đọc file'))
+					reader.onerror = () => reject(new Error(t('error.csv.read_error')))
 					reader.readAsText(file, 'UTF-8')
 				})
 
@@ -94,7 +96,7 @@ export function useCsvImport({ delimiter = ',', hasHeader = true, onError, onSuc
 				setData(parsedData)
 				onSuccess?.(parsedData, file)
 			} catch (err) {
-				const error = err instanceof Error ? err : new Error('Lỗi khi đọc file CSV')
+				const error = err instanceof Error ? err : new Error(t('error.csv.parse_error'))
 				setError(error)
 				onError?.(error, file)
 			} finally {

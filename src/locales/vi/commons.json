@@ -98,6 +98,12 @@
         "max_length": "Không được vượt quá {max} ký tự, hiện tại {current}/{max}",
         "min_number": "Số tối thiểu là {min}",
         "max_number": "Số tối đa là {max}",
-        "fill_all_required": "Vui lòng điền tất cả các trường bắt buộc"
+        "fill_all_required": "Vui lòng điền tất cả các trường bắt buộc",
+        "csv": {
+            "empty": "File CSV rỗng",
+            "invalid_format": "File phải có định dạng CSV",
+            "read_error": "Không thể đọc file",
+            "parse_error": "Lỗi khi đọc file CSV"
+        }
     }
 }

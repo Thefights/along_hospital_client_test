@@ -99,6 +99,12 @@
         "max_length": "Can't exceed {max} characters, currently {current}/{max}",
         "min_number": "Minimum number is {min}",
         "max_number": "Maximum number is {max}",
-        "fill_all_required": "Please fill all required fields"
+        "fill_all_required": "Please fill all required fields",
+        "csv": {
+            "empty": "CSV file is empty",
+            "invalid_format": "File must be in CSV format",
+            "read_error": "Unable to read file",
+            "parse_error": "Failed to parse CSV file"
+        }
     }
 }
