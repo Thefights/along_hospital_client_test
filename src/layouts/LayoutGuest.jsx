@@ -1,3 +1,4 @@
+import ChatBotFloatingButton from '@/components/layouts/chatbot/ChatBotFloatingButton'
 import Footer from '@/components/layouts/Footer'
 import Header from '@/components/layouts/Header'
 import { routeUrls } from '@/configs/routeUrls'
@@ -63,6 +64,7 @@ const LayoutGuest = () => {
 			<Container sx={{ flexGrow: 1 }} maxWidth='lg'>
 				<Outlet />
 			</Container>
+			<ChatBotFloatingButton />
 			<Footer sections={footerSections} />
 		</Stack>
 	)

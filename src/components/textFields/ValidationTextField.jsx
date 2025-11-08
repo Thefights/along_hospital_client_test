@@ -142,7 +142,7 @@ const ValidationTextField = (
 				options.length > 0 &&
 				options.map((opt) => (
 					<MenuItem key={String(opt.value)} value={opt.value} disabled={opt.disabled}>
-						{renderOption ? renderOption(opt.value, opt) : opt.label}
+						{renderOption ? renderOption(opt.value, opt.label) : opt.label}
 					</MenuItem>
 				))}
 		</TextField>

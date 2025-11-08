@@ -8,6 +8,7 @@ import CreateMedicalHistoryPage from '@/pages/doctors/createMedicalHistoryPage/C
 import HomePage from '@/pages/guests/HomePage'
 import BlogDetailPage from '@/pages/guests/viewBlogDetailPage/BlogDetailPage'
 import BlogPage from '@/pages/guests/viewBlogPage/BlogPage'
+import DoctorPage from '@/pages/guests/viewDoctorPage/DoctorPage'
 import SpecialtyPage from '@/pages/patients/specialtyPage/SpecialtyPage'
 import CollectibleVoucherListPage from '@/pages/patients/voucherPage/CollectibleVoucherListPage'
 import TestTable from '@/pages/TestTable'
@@ -25,6 +26,7 @@ const RouteGuest = () => {
 					<Route path='/' index element={<HomePage />} />
 					<Route path={routeUrls.HOME.SPECIALTY} element={<SpecialtyPage />} />
 					<Route path={routeUrls.HOME.VOUCHERS} element={<CollectibleVoucherListPage />} />
+					<Route path={routeUrls.HOME.DOCTOR} element={<DoctorPage />} />
 					<Route path={routeUrls.HOME.BLOG} element={<BlogPage />} />
 					<Route path={`${routeUrls.HOME.BLOG}/:id`} element={<BlogDetailPage />} />
 					{process.env.NODE_ENV === 'development' && (

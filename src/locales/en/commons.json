@@ -7,7 +7,9 @@
         "back": "Back",
         "add": "Add",
         "create": "Create",
+        "edit": "Edit",
         "update": "Update",
+        "report": "Report",
         "complete": "Complete",
         "confirm": "Confirm",
         "delete": "Delete",
@@ -22,8 +24,7 @@
         "toggle_language": "Toggle language",
         "toggle_theme": "Toggle theme",
         "delete_selected": "Delete selected",
-        "view_detail": "View Detail",
-        "edit": "Edit"
+        "view_detail": "View Detail"
     },
     "text": {
         "all": "All",
@@ -31,6 +32,9 @@
         "loading": "Loading...",
         "filter": "Filter",
         "filters": "Filters",
+        "me": "Me",
+        "user": "User",
+        "confirm_delete": "Are you sure you want to delete this item?",
         "image_preview": "Image Preview",
         "select_options": "Select options",
         "day": "Day",
@@ -93,19 +97,19 @@
         "required": "This field is required",
         "invalid_email": "Please enter a valid email",
         "invalid_phone": "Please enter a valid phone number",
+        "invalid_phone_or_email": "Please enter a valid phone number or email",
+        "invalid_number": "Please enter a valid number",
         "invalid_date": "Please enter a valid date",
         "invalid_time": "Please enter a valid time",
-        "invalid_number": "Please enter a valid number",
         "weak_password": "Password must contain at least 8 characters, including uppercase, lowercase, number, and special character",
         "min_length": "Must be at least {min} characters, currently {current}",
         "max_length": "Can't exceed {max} characters, currently {current}/{max}",
         "min_number": "Minimum number is {min}",
         "max_number": "Maximum number is {max}",
+        "not_match": "Values do not match",
+        "password_not_match": "Passwords do not match",
         "fill_all_required": "Please fill all required fields",
         "invalid_percentage": "Percentage must be between 0 and 100",
-        "past_date": "Date cannot be in the past",
-        "not_match": "Values do not match",
-        "invalid_phone_or_email": "Please enter a valid phone number or email",
-        "password_not_match": "Passwords do not match"
+        "past_date": "Date cannot be in the past"
     }
 }

@@ -10,7 +10,7 @@ export const routeUrls = {
 		MEDICAL_SERVICE: '/medical-service',
 		MEDICINE: '/medicine',
 		SPECIALTY: '/specialty',
-		DOCTOR: '/doctor',
+		DOCTOR: '/doctors',
 		BLOG: '/blog',
 		ABOUT_US: '/about-us',
 		CONTACT: '/contact',
@@ -33,6 +33,7 @@ export const routeUrls = {
 	PATIENT: {
 		CART: '/cart',
 		PROFILE: '/profile',
+		FEEDBACK: '/feedback',
 		MEDICAL_HISTORY: {
 			INDEX: '/medical-history',
 			DETAIL: (id) => `/medical-history/${id}`,

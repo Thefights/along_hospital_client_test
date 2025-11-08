@@ -18,25 +18,10 @@ import {
 } from '@mui/material'
 
 const DoctorInfoDialog = ({ open, onClose, doctorInfo = {} }) => {
-	const defaultValues = {
-		id: doctorInfo.id || '',
-		name: doctorInfo.name || '',
-		image: doctorInfo.image || '',
-		dateOfBirth: doctorInfo.dateOfBirth || '',
-		gender: doctorInfo.gender || '',
-		address: doctorInfo.address || '',
-		phone: doctorInfo.phone || '',
-		email: doctorInfo.email || '',
-		hireDate: doctorInfo.hireDate || '',
-		department: doctorInfo.department || '',
-		qualification: doctorInfo.qualification || '',
-		specialty: doctorInfo.specialty || '',
-	}
-
 	const { t } = useTranslation()
 	const _enum = useEnum()
 
-	const { values, setField, handleChange, registerRef } = useForm(defaultValues)
+	const { values, setField, handleChange, registerRef } = useForm(doctorInfo)
 	const { renderField } = useFieldRenderer(
 		values,
 		setField,
@@ -83,7 +68,7 @@ const DoctorInfoDialog = ({ open, onClose, doctorInfo = {} }) => {
 			type: 'date',
 		},
 		{
-			key: 'department',
+			key: 'departmentName',
 			title: t('profile.field.department'),
 			type: 'text',
 			validate: [maxLen(100)],
@@ -95,7 +80,7 @@ const DoctorInfoDialog = ({ open, onClose, doctorInfo = {} }) => {
 			validate: [maxLen(100)],
 		},
 		{
-			key: 'specialty',
+			key: 'specialtyName',
 			title: t('profile.field.specialty'),
 			type: 'text',
 			validate: [maxLen(100)],

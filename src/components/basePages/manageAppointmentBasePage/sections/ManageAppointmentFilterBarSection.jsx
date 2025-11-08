@@ -1,4 +1,5 @@
 import FilterButton from '@/components/buttons/FilterButton'
+import ResetFilterButton from '@/components/buttons/ResetFilterButton'
 import { EnumConfig } from '@/configs/enumConfig'
 import useAuth from '@/hooks/useAuth'
 import useEnum from '@/hooks/useEnum'
@@ -21,7 +22,7 @@ const ManageAppointmentFilterBarSection = ({
 	const isPatient = role === EnumConfig.Role.Patient
 	const isDoctor = role === EnumConfig.Role.Doctor
 
-	const { values, handleChange, setField, registerRef } = useForm(filters)
+	const { values, handleChange, setField, registerRef, reset } = useForm(filters)
 	const { renderField } = useFieldRenderer(
 		values,
 		setField,
@@ -39,7 +40,13 @@ const ManageAppointmentFilterBarSection = ({
 			key: 'specialtyId',
 			title: t('appointment.field.specialty'),
 			type: 'select',
-			options: [{ value: '', label: t('text.all') }, ...specialties],
+			options: [
+				{ value: '', label: t('text.all') },
+				...specialties.map((spec) => ({
+					value: spec.id,
+					label: spec.name,
+				})),
+			],
 			required: false,
 		},
 	]
@@ -109,13 +116,24 @@ const ManageAppointmentFilterBarSection = ({
 			</Stack>
 			<Grid container spacing={2}>
 				{fields3rd.map((field) => (
-					<Grid size={fields3rd.length === 1 ? 10 : 5} key={field.key}>
+					<Grid size={{ xs: 12, md: fields3rd.length === 1 ? 8 : 4 }} key={field.key}>
 						{renderField(field)}
 					</Grid>
 				))}
-				<Grid size={2}>
+				<Grid size={{ xs: 6, md: 2 }}>
 					<FilterButton
-						onFilterClick={() => setFilters({ ...values, page: 1 })}
+						onFilterClick={() => setFilters(values)}
+						fullWidth
+						loading={loading}
+						sx={{ flexGrow: 1 }}
+					/>
+				</Grid>
+				<Grid size={{ xs: 6, md: 2 }}>
+					<ResetFilterButton
+						onResetFilterClick={() => {
+							reset({})
+							setFilters({})
+						}}
 						fullWidth
 						loading={loading}
 						sx={{ flexGrow: 1 }}

@@ -7,7 +7,7 @@ import { useConfirm } from '@/hooks/useConfirm'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
 import { Box, Grid, Stack } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Fade, Slide } from 'react-awesome-reveal'
 import { useParams } from 'react-router-dom'
 import DoctorInfoDialog from '../../dialogs/DoctorInfoDialog'
@@ -28,8 +28,6 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 
 	const { t } = useTranslation()
 	const confirm = useConfirm()
-
-	const [selectedMedicalServiceId, setSelectedMedicalServiceId] = useState(0)
 
 	const [openPatientInfo, setOpenPatientInfo] = useState(false)
 	const [openDoctorInfo, setOpenDoctorInfo] = useState(false)
@@ -53,6 +51,15 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 		setData: setMedicalHistory,
 	} = useFetch(`${fetchUrl}/${id}`, {}, [id])
 
+	const getPaymentUrl = useFetch(ApiUrls.MEDICAL_HISTORY.MANAGEMENT.PAYMENT_URL(id), {}, [], false)
+
+	useEffect(() => {
+		if (getPaymentUrl.data) {
+			window.open(getPaymentUrl.data, '_blank')
+		}
+	}, [getPaymentUrl.data])
+
+	// API Operations for medical history
 	const updateMedicalHistory = useAxiosSubmit({
 		url: `${ApiUrls.MEDICAL_HISTORY.MANAGEMENT.INDEX}/${medicalHistory?.id}`,
 		method: 'PUT',
@@ -62,18 +69,46 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 		method: 'PUT',
 	})
 
+	// API Operations for Medical history detail services
 	const addNewMedicalHistoryService = useAxiosSubmit({
 		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.MEDICAL_HISTORY_DETAIL(id),
 		method: 'POST',
+		onSuccess: (response) => {
+			setOpenAddMedicalHistoryService(false)
+			setMedicalHistory((prev) => {
+				const exists = prev.medicalHistoryDetails.some(
+					(item) => item.medicalServiceId === response.medicalServiceId
+				)
+				if (exists) {
+					return {
+						...prev,
+						medicalHistoryDetails: prev.medicalHistoryDetails.map((item) =>
+							item.medicalServiceId === response.medicalServiceId ? response.data : item
+						),
+					}
+				}
+				return {
+					...prev,
+					medicalHistoryDetails: [...prev.medicalHistoryDetails, response.data],
+				}
+			})
+		},
 	})
 	const deleteMedicalHistoryService = useAxiosSubmit({
-		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.MEDICAL_HISTORY_DETAIL(id, selectedMedicalServiceId),
 		method: 'DELETE',
 	})
 
+	// API Operations for Complaint
 	const createComplaint = useAxiosSubmit({
 		url: ApiUrls.MEDICAL_HISTORY.CREATE_COMPLAINT(id),
 		method: 'POST',
+		onSuccess: (response) => {
+			setOpenCreateComplaint(false)
+			setMedicalHistory((prev) => ({
+				...prev,
+				complaint: response.data,
+			}))
+		},
 	})
 	const responseAsDraftComplaint = useAxiosSubmit({
 		url: ApiUrls.COMPLAINT.MANAGEMENT.DRAFT(id),
@@ -86,20 +121,49 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 	const closeComplaint = useAxiosSubmit({
 		url: ApiUrls.COMPLAINT.MANAGEMENT.CLOSE(id),
 		method: 'PUT',
+		onSuccess: () => {
+			setOpenRespondComplaint(false)
+			setMedicalHistory((prev) => ({
+				...prev,
+				complaint: { ...prev.complaint, status: EnumConfig.ComplaintResolveStatus.Closed },
+			}))
+		},
 	})
 
+	// API Operations for Prescription
 	const createPrescription = useAxiosSubmit({
 		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.PRESCRIPTION(id),
 		method: 'POST',
+		onSuccess: (response) => {
+			setOpenCreatePrescription(false)
+			setMedicalHistory((prev) => ({
+				...prev,
+				prescription: response.data,
+			}))
+		},
 	})
 	const updatePrescription = useAxiosSubmit({
 		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.PRESCRIPTION(id),
 		method: 'PUT',
+		onSuccess: (response) => {
+			setOpenUpdatePrescription(false)
+			setMedicalHistory((prev) => ({
+				...prev,
+				prescription: response.data,
+			}))
+		},
 	})
 
+	// API Operations for Patient Info
 	const updatePatientInfo = useAxiosSubmit({
 		url: ApiUrls.PATIENT.MANAGEMENT.DETAIL(medicalHistory?.patient.id),
 		method: 'PUT',
+		onSuccess: (response) => {
+			setMedicalHistory((prev) => ({
+				...prev,
+				patient: response.data,
+			}))
+		},
 	})
 
 	if (!loading && !medicalHistory) {
@@ -116,7 +180,7 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 					loading={loading}
 				/>
 
-				<Fade>
+				<Fade triggerOnce>
 					<MedicalHistoryDetailServiceSection
 						medicalHistoryDetails={medicalHistory?.medicalHistoryDetails}
 						medicalHistoryStatus={medicalHistory?.medicalHistoryStatus}
@@ -124,10 +188,13 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 						loading={loading}
 						onOpenCreateMedicalHistoryService={() => setOpenAddMedicalHistoryService(true)}
 						onDeleteMedicalHistoryService={async (medicalServiceId) => {
-							setSelectedMedicalServiceId(medicalServiceId)
-							const response = await deleteMedicalHistoryService.submit()
+							const response = await deleteMedicalHistoryService.submit(undefined, {
+								overrideUrl: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.MEDICAL_HISTORY_DETAIL(
+									id,
+									medicalServiceId
+								),
+							})
 							if (response) {
-								setSelectedMedicalServiceId(0)
 								setMedicalHistory((prev) => ({
 									...prev,
 									medicalHistoryDetails: prev.medicalHistoryDetails.filter(
@@ -141,7 +208,7 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 
 				<Grid container spacing={2}>
 					<Grid size={{ xs: 12, md: 6 }}>
-						<Slide direction='left'>
+						<Slide direction='left' triggerOnce>
 							<MedicalHistoryDetailPrescriptionSection
 								prescription={medicalHistory?.prescription}
 								medicalHistoryStatus={medicalHistory?.medicalHistoryStatus}
@@ -155,7 +222,7 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 					</Grid>
 
 					<Grid size={{ xs: 12, md: 6 }}>
-						<Slide direction='right'>
+						<Slide direction='right' triggerOnce>
 							<MedicalHistoryDetailComplaintSection
 								complaint={medicalHistory?.complaint}
 								role={role}
@@ -172,6 +239,7 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 						role={role}
 						medicalHistoryStatus={medicalHistory?.medicalHistoryStatus}
 						onClickUpdateMedicalHistory={() => setOpenUpdateMedicalHistory(true)}
+						onClickPayment={async () => await getPaymentUrl.fetch()}
 						onClickCompleteMedicalHistory={async () => {
 							var response = await completeMedicalHistory.submit()
 							if (response) {
@@ -181,6 +249,7 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 								}))
 							}
 						}}
+						loadingPayment={getPaymentUrl.loading}
 					/>
 				)}
 			</Stack>
@@ -221,16 +290,7 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 			<CreateComplaintDialog
 				open={openCreateComplaint}
 				onClose={() => setOpenCreateComplaint(false)}
-				onSubmit={async (values) => {
-					const response = await createComplaint.submit(values)
-					if (response) {
-						setOpenCreateComplaint(false)
-						setMedicalHistory((prev) => ({
-							...prev,
-							complaint: response,
-						}))
-					}
-				}}
+				onSubmit={async (values) => await createComplaint.submit(values)}
 			/>
 			<RespondComplaintDialog
 				open={openRespondComplaint}
@@ -272,73 +332,26 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 						confirmText: t('button.close'),
 					})
 
-					if (!isConfirmed) return
-
-					const response = await closeComplaint.submit()
-					if (response) {
-						setOpenRespondComplaint(false)
-						setMedicalHistory((prev) => ({
-							...prev,
-							complaint: { ...prev.complaint, status: EnumConfig.ComplaintResolveStatus.Closed },
-						}))
+					if (isConfirmed) {
+						await closeComplaint.submit()
 					}
 				}}
 			/>
 			<UpsertPrescriptionDialog
 				open={openCreatePrescription}
 				onClose={() => setOpenCreatePrescription(false)}
-				onSubmit={async (values) => {
-					const response = await createPrescription.submit(values)
-					if (response) {
-						setOpenCreatePrescription(false)
-						setMedicalHistory((prev) => ({
-							...prev,
-							prescription: response,
-						}))
-					}
-				}}
+				onSubmit={async (values) => await createPrescription.submit(values)}
 			/>
 			<UpsertPrescriptionDialog
 				open={openUpdatePrescription}
 				initialValues={medicalHistory?.prescription}
 				onClose={() => setOpenUpdatePrescription(false)}
-				onSubmit={async (values) => {
-					const response = await updatePrescription.submit(values)
-					if (response) {
-						setOpenUpdatePrescription(false)
-						setMedicalHistory((prev) => ({
-							...prev,
-							prescription: response,
-						}))
-					}
-				}}
+				onSubmit={async (values) => await updatePrescription.submit(values)}
 			/>
 			<CreateMedicalHistoryDetailDialog
 				open={openAddMedicalHistoryService}
 				onClose={() => setOpenAddMedicalHistoryService(false)}
-				onSubmit={async (values) => {
-					const response = await addNewMedicalHistoryService.submit(values)
-					if (response) {
-						setOpenAddMedicalHistoryService(false)
-						setMedicalHistory((prev) => {
-							const exists = prev.medicalHistoryDetails.some(
-								(item) => item.medicalServiceId === response.medicalServiceId
-							)
-							if (exists) {
-								return {
-									...prev,
-									medicalHistoryDetails: prev.medicalHistoryDetails.map((item) =>
-										item.medicalServiceId === response.medicalServiceId ? response : item
-									),
-								}
-							}
-							return {
-								...prev,
-								medicalHistoryDetails: [...prev.medicalHistoryDetails, response],
-							}
-						})
-					}
-				}}
+				onSubmit={async (values) => await addNewMedicalHistoryService.submit(values)}
 			/>
 		</Box>
 	)
