@@ -64,7 +64,10 @@ export const ApiUrls = {
 	IMPORT: {
 		MANAGEMENT: {
 			INDEX: `/import-management`,
+			GET_ALL: `/import-management/all`,
 			DETAIL: (id) => `/import-management/${id}`,
+			DELETE_SELECTED: `/import-management/selected`,
+			BULK_IMPORT_FROM_EXCEL: `/import-management/bulk-import-from-excel`,
 		},
 	},
 	MEDICAL_SERVICE: {
@@ -126,6 +129,13 @@ export const ApiUrls = {
 			INDEX: `/department-management`,
 			GET_ALL: `/department-management/all`,
 			DETAIL: (id) => `/department-management/${id}`,
+		},
+	},
+	SUPPLIER: {
+		MANAGEMENT: {
+			INDEX: `/supplier-management`,
+			GET_ALL: `/supplier-management/all`,
+			DETAIL: (id) => `/supplier-management/${id}`,
 		},
 	},
 }
