@@ -136,4 +136,11 @@ export const EnumConfig = {
 		Percentage: 'Percentage',
 		FixedAmount: 'FixedAmount',
 	},
+
+	//Feedback
+	FeedbackReportStatus: {
+		Pending: 'Pending',
+		Resolved: 'Resolved',
+		Rejected: 'Rejected',
+	},
 }
