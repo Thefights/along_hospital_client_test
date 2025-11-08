@@ -16,6 +16,9 @@ const TeleSessionCall = ({ transactionId }) => {
 	const [error, setError] = useState('')
 	const [participants, setParticipants] = useState([])
 	const [session, setSession] = useState(null)
+	const [hasRemoteParticipant, setHasRemoteParticipant] = useState(false)
+	const [pendingOffer, setPendingOffer] = useState(null)
+	const [remoteConnectionId, setRemoteConnectionId] = useState(null)
 	const isCaller = String(auth?.role || '').toLowerCase() === 'patient'
 
 	useEffect(() => {
@@ -34,7 +37,8 @@ const TeleSessionCall = ({ transactionId }) => {
 		}
 	}, [transactionId, t])
 
-	const iceServers = useMemo(() => session?.iceServers || [], [session])
+	const iceServers = useMemo(() => session?.credentials?.iceServers ?? [], [session])
+	const signalRHubUrl = useMemo(() => session?.credentials?.signalR?.hubUrl, [session])
 
 	const onLocalStream = (stream) => {
 		if (localVideoRef.current) localVideoRef.current.srcObject = stream
@@ -62,41 +66,83 @@ const TeleSessionCall = ({ transactionId }) => {
 		useMeetingSignalR({
 			transactionId,
 			accessToken: accessToken || '',
+			hubUrl: signalRHubUrl,
 			onJoinSucceeded: () => {
-				if (isCaller) {
-					;(async () => {
-						const offer = await createOffer()
-						await sendOffer(offer)
-					})()
-				}
+				// Chỉ log hoặc đánh dấu đã vào phòng
+				console.log('Joined meeting room successfully')
 			},
 			onJoinFailed: () => {
 				setError(t('telehealth.error.session_not_ready'))
 			},
-			onParticipantJoined: (p) => setParticipants((prev) => [...prev.filter((x) => x.id !== p.id), p]),
-			onParticipantLeft: (id) => setParticipants((prev) => prev.filter((x) => x.id !== id)),
-			onOffer: async ({ offer }) => {
+			onParticipantJoined: (connectionId) => {
+				console.log('Participant joined:', connectionId)
+				// Thêm vào danh sách participants
+				setParticipants((prev) => {
+					const existing = prev.find((x) => x.id === connectionId)
+					if (existing) return prev
+					return [...prev, { id: connectionId, displayName: connectionId }]
+				})
+				// Đánh dấu có remote participant và lưu connectionId
+				setRemoteConnectionId(connectionId)
+				setHasRemoteParticipant(true)
+			},
+			onParticipantLeft: (connectionId) => {
+				console.log('Participant left:', connectionId)
+				setParticipants((prev) => prev.filter((x) => x.id !== connectionId))
+				// Nếu remote participant rời đi, reset state
+				if (connectionId === remoteConnectionId) {
+					setHasRemoteParticipant(false)
+					setRemoteConnectionId(null)
+				}
+			},
+			onOffer: async (senderId, offer) => {
 				await setRemoteDescription(offer)
 				const answer = await createAnswer()
 				await sendAnswer(answer)
 			},
-			onAnswer: async ({ answer }) => {
+			onAnswer: async (senderId, answer) => {
 				await setRemoteDescription(answer)
+				// Xóa pendingOffer khi nhận được answer
+				setPendingOffer(null)
 			},
-			onIceCandidate: async ({ candidate }) => {
+			onIceCandidate: async (senderId, candidate) => {
 				await addIceCandidate(candidate)
 			},
 		})
 
 	useEffect(() => {
 		if (!session) return
-		if (session?.status && !['Scheduled', 'InProgress'].includes(session.status)) {
-			setError(t('telehealth.error.session_not_ready'))
-			return
-		}
+		// Chờ có credentials trước khi kết nối
+		if (!session?.credentials) return
 		startConnection()
 		return () => stopConnection()
-	}, [session, startConnection, stopConnection, t])
+	}, [session, startConnection, stopConnection])
+
+	// Effect để tạo và gửi offer khi có remote participant
+	useEffect(() => {
+		if (!hasRemoteParticipant || !isCaller) return
+
+		// Tạo offer mới nếu chưa có
+		if (!pendingOffer) {
+			;(async () => {
+				try {
+					console.log('Creating and sending new offer')
+					const offer = await createOffer()
+					setPendingOffer(offer)
+					await sendOffer(offer)
+				} catch (err) {
+					console.error('Failed to create/send offer:', err)
+				}
+			})()
+		} else {
+			// Nếu đã có pendingOffer, gửi lại cho participant mới
+			console.log('Resending pending offer to new participant')
+			sendOffer(pendingOffer).catch((err) => {
+				console.error('Failed to resend offer:', err)
+			})
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [hasRemoteParticipant, isCaller])
 
 	if (error) {
 		return (

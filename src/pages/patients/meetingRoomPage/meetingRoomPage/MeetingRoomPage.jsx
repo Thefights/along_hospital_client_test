@@ -1,67 +1,35 @@
-import { routeUrls } from '@/configs/routeUrls'
-import { Box, Container, Stack } from '@mui/material'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import ChatSidebar from './section/ChatSidebar'
-import ControlBar from './section/ControlBar'
-import DoctorActions from './section/DoctorActions'
-import LocalMediaTest from './section/LocalMediaTest'
-import MeetingStatusBadge from './section/MeetingStatusBadge'
-import VideoStage from './section/VideoStage'
+import TeleSessionCall from '@/components/TeleSessionCall'
+import { Box, Container, Typography } from '@mui/material'
+import { useParams } from 'react-router-dom'
 
 const MeetingRoomPage = () => {
-	const navigate = useNavigate()
+	const { id: transactionId } = useParams()
 
-	const [micOn, setMicOn] = useState(true)
-	const [camOn, setCamOn] = useState(true)
-	const [showChat, setShowChat] = useState(false)
-	const [chatInput, setChatInput] = useState('')
-	const [messages, setMessages] = useState([])
-
-	// duration text is handled inside MeetingStatusBadge
+	// Nếu không có transactionId thì hiển thị lỗi
+	if (!transactionId) {
+		return (
+			<Box
+				sx={{
+					py: { xs: 2, md: 3 },
+					px: { xs: 1, md: 0 },
+					bgcolor: (t) => t.palette.background.default,
+				}}
+			>
+				<Container maxWidth='lg'>
+					<Typography variant='h5' color='error' align='center' sx={{ mt: 4 }}>
+						Lỗi: Không tìm thấy mã cuộc hẹn (Transaction ID)
+					</Typography>
+				</Container>
+			</Box>
+		)
+	}
 
 	return (
 		<Box
 			sx={{ py: { xs: 2, md: 3 }, px: { xs: 1, md: 0 }, bgcolor: (t) => t.palette.background.default }}
 		>
 			<Container maxWidth='lg'>
-				<MeetingStatusBadge timeText='0:43' />
-
-				<Stack direction='row' spacing={2} alignItems='stretch'>
-					<VideoStage remoteName='Dr. Sarah Chen' />
-					<ChatSidebar
-						show={showChat}
-						messages={messages}
-						chatInput={chatInput}
-						setShow={setShowChat}
-						setChatInput={setChatInput}
-						onSend={() => {
-							if (!chatInput.trim()) return
-							setMessages((arr) => [...arr, { me: true, text: chatInput.trim() }])
-							setChatInput('')
-						}}
-					/>
-				</Stack>
-
-				<ControlBar
-					micOn={micOn}
-					camOn={camOn}
-					onToggleMic={() => setMicOn((v) => !v)}
-					onToggleCam={() => setCamOn((v) => !v)}
-					onToggleChat={() => setShowChat((v) => !v)}
-					onEndCall={() =>
-						navigate(
-							routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.APPOINTMENT.JOIN_MEETING_ROOM + '/complete')
-						)
-					}
-				/>
-				<DoctorActions
-					onCreateMedicalHistory={() =>
-						navigate(routeUrls.BASE_ROUTE.DOCTOR(routeUrls.DOCTOR.APPOINTMENT_MANAGEMENT))
-					}
-				/>
-				{/* TEST ONLY: local media quick preview for camera/mic — remove later */}
-				<LocalMediaTest />
+				<TeleSessionCall transactionId={transactionId} />
 			</Container>
 		</Box>
 	)

@@ -20,13 +20,8 @@ const JoinMeetingRoomPage = () => {
 	const handleJoin = () => {
 		const code = roomCode.trim()
 		if (!code) return
-		// Navigate with query param for now; later can route to a dedicated join page
-		// navigate(
-		// 	`${routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.MEETING_ROOM)}?code=${encodeURIComponent(
-		// 		code
-		// 	)}`
-		// )
-		navigate(`${routeUrls.HOME.ABOUT_US}`)
+		// Điều hướng tới route meeting room với transaction ID
+		navigate(routeUrls.PATIENT.APPOINTMENT.MEETING_ROOM_TOKEN(code))
 	}
 
 	return (
@@ -60,7 +55,9 @@ const JoinMeetingRoomPage = () => {
 					<Grid container spacing={2} alignItems='center'>
 						<Grid size={{ xs: 12, md: 9 }}>
 							<SearchBar
-								onKeyDown={(e) => e.key === 'Enter' && handleJoin()}
+								value={roomCode}
+								setValue={setRoomCode}
+								onEnterDown={handleJoin}
 								placeholder={t('meeting_room.title.placeholder_meeting_id')}
 							/>
 						</Grid>
