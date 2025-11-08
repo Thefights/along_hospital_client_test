@@ -28,7 +28,12 @@ const CsvImportSection = ({ onImportSuccess }) => {
 		[t]
 	)
 
-	const { fileInputRef, handleFileChange, selectFile, reset: resetCsvImport } = useCsvImport({
+	const {
+		fileInputRef,
+		handleFileChange,
+		selectFile,
+		reset: resetCsvImport,
+	} = useCsvImport({
 		onSuccess: (_, selectedFile) => {
 			if (selectedFile) setPendingFile(selectedFile)
 		},
@@ -48,7 +53,6 @@ const CsvImportSection = ({ onImportSuccess }) => {
 			if (!isMounted) return
 
 			if (response) {
-				toast.success(t('import_management.import_success'))
 				if (onImportSuccess) {
 					await onImportSuccess()
 				}
@@ -63,7 +67,7 @@ const CsvImportSection = ({ onImportSuccess }) => {
 		return () => {
 			isMounted = false
 		}
-	}, [pendingFile, bulkImportSubmit, onImportSuccess, resetCsvImport, t])
+	}, [pendingFile, bulkImportSubmit, onImportSuccess, resetCsvImport])
 
 	return (
 		<>
@@ -81,7 +85,7 @@ const CsvImportSection = ({ onImportSuccess }) => {
 					onClick={selectFile}
 					disabled={bulkImportSubmit.loading}
 				>
-					{t('import_management.actions.import_csv')}
+					{t('import_management.button.import_csv')}
 				</Button>
 			</Stack>
 		</>

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import GenericFormDialog from '@/components/dialogs/commons/GenericFormDialog'
 import ActionMenu from '@/components/generals/ActionMenu'
 import ConfirmationButton from '@/components/generals/ConfirmationButton'
@@ -15,18 +14,6 @@ import { maxLen, numberHigherThan } from '@/utils/validateUtil'
 import { Delete, Edit } from '@mui/icons-material'
 import { Button, Stack, Tooltip, Typography } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
-
-const toArray = (payload) => {
-	if (Array.isArray(payload)) return payload
-	if (Array.isArray(payload?.collection)) return payload.collection
-	if (Array.isArray(payload?.data)) return payload.data
-	return []
-}
-
-const supplierName = (supplier, t) =>
-	supplier?.name ||
-	supplier?.supplierName ||
-	t('import_management.labels.supplier_number', { id: supplier?.id ?? '' })
 
 const ImportManagementTableSection = ({
 	imports,
@@ -56,7 +43,7 @@ const ImportManagementTableSection = ({
 	const supplierStore = useReduxStore({
 		selector: (state) => state.management.suppliers,
 		setStore: setSuppliersStore,
-		dataToStore: toArray,
+		dataToStore: (response) => response?.collection || [],
 	})
 
 	const importPost = useAxiosSubmit({
@@ -71,29 +58,29 @@ const ImportManagementTableSection = ({
 		method: 'DELETE',
 	})
 
-	const { submit: createImport } = importPost
-	const { submit: updateImport } = importPut
-	const { submit: deleteImport } = importDelete
-
-	const suppliersFromStore = useMemo(() => toArray(supplierStore.data), [supplierStore.data])
-
 	const supplierLookup = useMemo(() => {
 		const map = new Map()
+		const suppliers = Array.isArray(supplierStore.data) ? supplierStore.data : []
 		const addSupplier = (item, idKey = 'id', nameKey = 'name') => {
 			const id = item?.[idKey]
 			if (id == null || map.has(String(id))) return
-			map.set(String(id), {
-				id,
-				name: supplierName({ id, name: item?.[nameKey], supplierName: item?.supplierName }, t),
-				raw: item,
-			})
+			const name =
+				item?.[nameKey] || item?.supplierName || t('import_management.text.supplier_number', { id })
+			map.set(String(id), { id, name })
 		}
 
-		suppliersFromStore.forEach((supplier) => addSupplier(supplier))
-		imports.forEach((importItem) => addSupplier(importItem, 'supplierId', 'supplierName'))
+		suppliers.forEach((supplier) => addSupplier(supplier))
+		imports.forEach((importItem) => {
+			if (importItem?.supplierId != null) {
+				addSupplier(importItem, 'supplierId', 'supplierName')
+			}
+			if (importItem?.supplier?.id != null) {
+				addSupplier(importItem.supplier, 'id', 'name')
+			}
+		})
 
 		return map
-	}, [suppliersFromStore, imports, t])
+	}, [supplierStore.data, imports, t])
 
 	const supplierOptions = useMemo(
 		() =>
@@ -104,46 +91,46 @@ const ImportManagementTableSection = ({
 		[supplierLookup]
 	)
 
-	const withSupplierPayload = useCallback(
+	const buildPayload = useCallback(
 		(values) => {
-			const payload = { ...values }
-			delete payload.importDetailsSummary
-			const supplierMeta = supplierLookup.get(String(payload?.supplierId ?? ''))
-			if (!supplierMeta) return payload
-			return {
-				...payload,
-				supplierId: supplierMeta.id ?? payload.supplierId,
-				supplierName: supplierMeta.name,
-			}
+			const { importDetailsSummary, ...rest } = values || {}
+			const supplierMeta = supplierLookup.get(String(rest?.supplierId ?? ''))
+			return supplierMeta
+				? {
+						...rest,
+						supplierId: supplierMeta.id ?? rest.supplierId,
+						supplierName: supplierMeta.name,
+				  }
+				: rest
 		},
 		[supplierLookup]
 	)
 
-	const submitImport = useCallback(
-		async ({ values, closeDialog }, submit, options) => {
-			const response = await submit(withSupplierPayload(values), options)
+	const handleCreateSubmit = useCallback(
+		async ({ values, closeDialog }) => {
+			const response = await importPost.submit(buildPayload(values))
 			if (response) {
 				closeDialog?.()
 				await refetch()
 			}
 		},
-		[withSupplierPayload, refetch]
-	)
-
-	const handleCreateSubmit = useCallback(
-		(params) => submitImport(params, createImport),
-		[submitImport, createImport]
+		[buildPayload, importPost, refetch]
 	)
 
 	const handleUpdateSubmit = useCallback(
-		(params) =>
-			submitImport(params, updateImport, {
+		async ({ values, closeDialog }) => {
+			const response = await importPut.submit(buildPayload(values), {
 				overrideUrl: ApiUrls.IMPORT.MANAGEMENT.DETAIL(selectedRow?.id),
-			}),
-		[submitImport, updateImport, selectedRow?.id]
+			})
+			if (response) {
+				closeDialog?.()
+				await refetch()
+			}
+		},
+		[buildPayload, importPut, selectedRow?.id, refetch]
 	)
 
-	const handleDeleteMany = async () => {
+	const handleDeleteMany = useCallback(async () => {
 		if (!selectedIds.length) return
 		const isConfirmed = await confirm({
 			title: t('import_management.confirm.delete_many.title'),
@@ -154,13 +141,13 @@ const ImportManagementTableSection = ({
 			confirmText: t('button.delete'),
 		})
 		if (!isConfirmed) return
-		await deleteImport(undefined, {
+		await importDelete.submit(undefined, {
 			overrideUrl: ApiUrls.IMPORT.MANAGEMENT.DELETE_SELECTED,
 			overrideParam: { ids: selectedIds },
 		})
 		setSelectedIds([])
 		await refetch()
-	}
+	}, [confirm, importDelete, selectedIds, refetch, t])
 
 	const fields = useMemo(
 		() => [
@@ -183,7 +170,15 @@ const ImportManagementTableSection = ({
 				title: t('import_management.table.supplier'),
 				width: 20,
 				sortable: true,
-				render: (value) => value || '-',
+				render: (value, row) => {
+					const supplierId = row?.supplierId ?? row?.supplier?.id
+					if (supplierId != null) {
+						const supplierMeta = supplierLookup.get(String(supplierId))
+						if (supplierMeta?.name) return supplierMeta.name
+					}
+					const supplierName = row?.supplierName ?? row?.supplier?.name ?? value
+					return supplierName || '-'
+				},
 			},
 			{
 				key: 'note',
@@ -241,7 +236,7 @@ const ImportManagementTableSection = ({
 									})
 
 									if (isConfirmed) {
-										await deleteImport(undefined, {
+										await importDelete.submit(undefined, {
 											overrideUrl: ApiUrls.IMPORT.MANAGEMENT.DETAIL(row.id),
 										})
 										await refetch()
@@ -253,35 +248,34 @@ const ImportManagementTableSection = ({
 				),
 			},
 		],
-		[confirm, deleteImport, refetch, t]
-	)
-
-	const medicines = useMemo(
-		() => (Array.isArray(medicineStore.data) ? medicineStore.data : []),
-		[medicineStore.data]
+		[confirm, importDelete.submit, refetch, supplierLookup, t]
 	)
 
 	const medicineOptions = useMemo(
-		() => medicines.map((medicine) => ({ value: medicine.id, label: medicine.name })),
-		[medicines]
+		() =>
+			(Array.isArray(medicineStore.data) ? medicineStore.data : []).map((medicine) => ({
+				value: medicine.id,
+				label: medicine.name,
+			})),
+		[medicineStore.data]
 	)
 
 	const upsertField = useMemo(
 		() => [
 			{
 				key: 'importDate',
-				title: t('import_management.form.import_date'),
+				title: t('import_management.field.import_date'),
 				type: 'date',
 			},
 			{
 				key: 'supplierId',
-				title: t('import_management.form.supplier'),
+				title: t('import_management.field.supplier'),
 				type: 'select',
 				options: supplierOptions,
 			},
 			{
 				key: 'note',
-				title: t('import_management.form.note'),
+				title: t('import_management.field.note'),
 				type: 'text',
 				required: false,
 				multiple: 3,
@@ -292,24 +286,24 @@ const ImportManagementTableSection = ({
 			},
 			{
 				key: 'importDetails',
-				title: t('import_management.form.import_details'),
+				title: t('import_management.field.import_details'),
 				type: 'array',
 				of: [
 					{
 						key: 'medicineId',
-						title: t('import_management.form.medicine'),
+						title: t('import_management.field.medicine'),
 						type: 'select',
 						options: medicineOptions,
 					},
 					{
 						key: 'quantity',
-						title: t('import_management.form.quantity'),
+						title: t('import_management.field.quantity'),
 						type: 'number',
 						validate: [numberHigherThan(0)],
 					},
 					{
 						key: 'unitPrice',
-						title: t('import_management.form.unit_price'),
+						title: t('import_management.field.unit_price'),
 						type: 'number',
 						validate: [numberHigherThan(0)],
 					},
@@ -319,53 +313,41 @@ const ImportManagementTableSection = ({
 		[medicineOptions, supplierOptions, t]
 	)
 
-	const toReadOnlyField = (field) => ({
-		...field,
-		required: false,
-		props: {
-			...(field.props || {}),
-			InputProps: {
-				...(field.props?.InputProps || {}),
-				readOnly: true,
-			},
-			disabled: true,
-		},
-	})
-
 	const updateFields = useMemo(
 		() =>
-			upsertField.map((field) => {
-				if (field.key === 'importDetails') {
-					return {
-						key: 'importDetailsSummary',
-						title: field.title,
-						type: 'text',
-						required: false,
-						multiple: field.multiple || 3,
-						props: {
-							...(field.props || {}),
-							InputProps: {
-								...(field.props?.InputProps || {}),
-								readOnly: true,
+			upsertField.map((field) =>
+				field.key === 'note'
+					? field
+					: field.key === 'importDetails'
+					? {
+							key: 'importDetailsSummary',
+							title: field.title,
+							type: 'text',
+							required: false,
+							multiple: field.multiple || 3,
+							props: {
+								...(field.props || {}),
+								InputProps: {
+									...(field.props?.InputProps || {}),
+									readOnly: true,
+								},
+								disabled: true,
 							},
-							disabled: true,
-						},
-					}
-				}
-				if (field.key === 'note') return field
-				return toReadOnlyField(field)
-			}),
+					  }
+					: {
+							...field,
+							required: false,
+							props: {
+								...(field.props || {}),
+								InputProps: {
+									...(field.props?.InputProps || {}),
+									readOnly: true,
+								},
+								disabled: true,
+							},
+					  }
+			),
 		[upsertField]
-	)
-
-	const createInitialValues = useMemo(
-		() => ({
-			importDate: formatDateToSqlDate(new Date()),
-			note: '',
-			supplierId: '',
-			importDetails: [],
-		}),
-		[]
 	)
 
 	const updateInitialValues = useMemo(() => {
@@ -381,12 +363,12 @@ const ImportManagementTableSection = ({
 					const medicineName =
 						detail?.medicineName ||
 						detail?.medicine?.name ||
-						t('import_management.labels.medicine_number', {
+						t('import_management.text.medicine_number', {
 							id: detail?.medicineId ?? '',
 						})
 					const quantity = detail?.quantity ?? 0
 					const unitPrice = detail?.unitPrice ?? 0
-					return t('import_management.summary.import_detail_line', {
+					return t('import_management.placeholder.import_detail_line', {
 						index: index + 1,
 						name: medicineName,
 						quantity,
@@ -416,7 +398,7 @@ const ImportManagementTableSection = ({
 						variant='outlined'
 						disabled={!selectedIds.length}
 					>
-						{t('import_management.actions.delete_selected', { count: selectedIds.length })}
+						{t('import_management.button.delete_selected', { count: selectedIds.length })}
 					</ConfirmationButton>
 				</Stack>
 			</Stack>
@@ -442,7 +424,12 @@ const ImportManagementTableSection = ({
 			<GenericFormDialog
 				open={openCreate}
 				onClose={() => setOpenCreate(false)}
-				initialValues={createInitialValues}
+				initialValues={{
+					importDate: formatDateToSqlDate(new Date()),
+					note: '',
+					supplierId: '',
+					importDetails: [],
+				}}
 				fields={upsertField}
 				submitLabel={t('button.create')}
 				submitButtonColor='success'
