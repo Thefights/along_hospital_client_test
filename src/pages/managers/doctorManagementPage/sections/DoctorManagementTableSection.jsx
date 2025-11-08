@@ -5,7 +5,7 @@ import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useConfirm } from '@/hooks/useConfirm'
 import useTranslation from '@/hooks/useTranslation'
 import { Button, Stack } from '@mui/material'
-import { useCallback, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 const DoctorManagementTableSection = ({
 	doctors,
@@ -21,33 +21,25 @@ const DoctorManagementTableSection = ({
 	const confirm = useConfirm()
 	const { t } = useTranslation()
 
-	const deleteSelectedDoctors = useAxiosSubmit({
-		url: ApiUrls.DOCTOR.MANAGEMENT.DELETE_SELECTED,
+	const deleteDoctor = useAxiosSubmit({
 		method: 'DELETE',
 	})
 
-	const handleDeleteSelectedClick = useCallback(async () => {
-		if (selectedIds.length === 0) return
-
+	const handleDeleteClick = async (row) => {
 		const isConfirmed = await confirm({
 			confirmText: t('button.delete'),
 			confirmColor: 'error',
-			title: t('doctor.title.doctor_management'),
-			description: `${t('specialty.title.delete_confirm')} ${selectedIds.length} ${t(
-				'doctor.field.doctor'
-			)}?`,
+			title: t('doctor.title.delete'),
+			description: `${t('doctor.title.delete_confirm')} ${row.name}?`,
 		})
 
 		if (isConfirmed) {
-			const res = await deleteSelectedDoctors.submit(null, {
-				overrideParam: { ids: selectedIds },
+			await deleteDoctor.submit(undefined, {
+				overrideUrl: ApiUrls.DOCTOR.MANAGEMENT.DETAIL(row.id),
 			})
-			if (res) {
-				refetch()
-				setSelectedIds([])
-			}
+			refetch()
 		}
-	}, [confirm, t, deleteSelectedDoctors, refetch, selectedIds])
+	}
 
 	const fields = useMemo(
 		() => [
@@ -68,6 +60,10 @@ const DoctorManagementTableSection = ({
 								title: t('button.edit'),
 								onClick: () => onEdit(row),
 							},
+							{
+								title: t('button.delete'),
+								onClick: () => handleDeleteClick(row),
+							},
 						]}
 					/>
 				),
@@ -81,14 +77,6 @@ const DoctorManagementTableSection = ({
 			<Stack spacing={2} direction='row' alignItems='center' justifyContent='flex-end' ml={2} mb={1.5}>
 				<Button variant='contained' color='primary' onClick={onCreate}>
 					{t('button.create')}
-				</Button>
-				<Button
-					variant='contained'
-					color='error'
-					disabled={selectedIds.length === 0}
-					onClick={handleDeleteSelectedClick}
-				>
-					{t('button.delete_selected')}
 				</Button>
 			</Stack>
 			<GenericTable

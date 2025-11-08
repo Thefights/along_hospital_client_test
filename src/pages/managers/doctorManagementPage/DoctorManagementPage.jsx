@@ -78,6 +78,13 @@ const DoctorManagementPage = () => {
 				required: true,
 			},
 			{
+				key: 'password',
+				title: t('doctor.field.password'),
+				type: 'text',
+				validate: [maxLen(100)],
+				required: true,
+			},
+			{
 				key: 'gender',
 				title: t('doctor.field.gender'),
 				type: 'select',
