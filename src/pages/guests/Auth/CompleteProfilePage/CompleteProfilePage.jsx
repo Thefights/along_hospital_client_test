@@ -8,7 +8,7 @@ import useEnum from '@/hooks/useEnum'
 import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
-import { maxLen, minLen } from '@/utils/validateUtil'
+import { isPhone, maxLen, minLen } from '@/utils/validateUtil'
 import { Box, Button, CircularProgress, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -45,7 +45,7 @@ const CompleteProfilePage = () => {
 						title: t('profile.field.phone'),
 						type: 'phone',
 						required: true,
-						validate: [minLen(9), maxLen(20)],
+						validate: [isPhone()],
 						props: { placeholder: t('auth.register.phone_placeholder') },
 					},
 			  ]
