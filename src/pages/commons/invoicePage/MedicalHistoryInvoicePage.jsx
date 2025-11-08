@@ -51,9 +51,9 @@ const MedicalHistoryInvoicePage = () => {
 					#invoice-paper {
 						position: absolute;
 						top: 0;
-                        marginX: auto;
+						left: 50%;
+						transform: translateX(-50%);
 						width: 100%;
-						height: 'max-content';
 					}
 				}
 				`}
@@ -80,7 +80,7 @@ const MedicalHistoryInvoicePage = () => {
 			>
 				<Grid container spacing={2} alignItems='center'>
 					<Grid size={8}>
-						<Typography variant='h5' fontWeight={700} textTransform='uppercase'>
+						<Typography variant='h5' fontWeight={700} textTransform={'uppercase'}>
 							{t('about_us.information.name')}
 						</Typography>
 						<Typography variant='body2'>
@@ -167,7 +167,7 @@ const MedicalHistoryInvoicePage = () => {
 					<Table size='small'>
 						<TableHead>
 							<TableRow>
-								<TableCell>STT</TableCell>
+								<TableCell>{t('text.no_')}</TableCell>
 								<TableCell>{t('medical_history.field.medical_history_detail.service_name')}</TableCell>
 								<TableCell align='right'>
 									{t('medical_history.field.medical_history_detail.quantity')}
@@ -227,19 +227,19 @@ const MedicalHistoryInvoicePage = () => {
 						<Typography variant='body2' fontWeight={600}>
 							{t('medical_history.field.patient')}
 						</Typography>
-						<Typography variant='caption'>(Ký, ghi rõ họ tên)</Typography>
+						<Typography variant='caption'>({t('text.sign_here')})</Typography>
 					</Box>
 					<Box sx={{ textAlign: 'center' }}>
 						<Typography variant='body2' fontWeight={600}>
 							{t('medical_history.field.doctor')}
 						</Typography>
-						<Typography variant='caption'>(Ký, ghi rõ họ tên)</Typography>
+						<Typography variant='caption'>({t('text.sign_here')})</Typography>
 					</Box>
 					<Box sx={{ textAlign: 'center' }}>
 						<Typography variant='body2' fontWeight={600}>
 							{t('medical_history.field.invoice.creator')}
 						</Typography>
-						<Typography variant='caption'>(Ký, ghi rõ họ tên)</Typography>
+						<Typography variant='caption'>({t('text.sign_here')})</Typography>
 					</Box>
 				</Box>
 			</Paper>

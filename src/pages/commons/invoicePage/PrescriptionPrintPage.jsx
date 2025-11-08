@@ -42,9 +42,9 @@ const PrescriptionPrintPage = () => {
 					#prescription-paper {
 						position: absolute;
 						top: 0;
-                        marginX: auto;
+						left: 50%;
+						transform: translateX(-50%);
 						width: 100%;
-						height: 'max-content';
 					}
 				}
 				`}
@@ -159,7 +159,7 @@ const PrescriptionPrintPage = () => {
 					<Table size='small'>
 						<TableHead>
 							<TableRow>
-								<TableCell>No</TableCell>
+								<TableCell>{t('text.no_')}</TableCell>
 								<TableCell>
 									{t('medical_history.field.prescription.prescription_detail.medicine_name')}
 								</TableCell>
@@ -203,13 +203,13 @@ const PrescriptionPrintPage = () => {
 						<Typography variant='body2' fontWeight={600}>
 							{t('medical_history.field.patient')}
 						</Typography>
-						<Typography variant='caption'>(Ký, ghi rõ họ tên)</Typography>
+						<Typography variant='caption'>({t('text.sign_here')})</Typography>
 					</Box>
 					<Box sx={{ textAlign: 'center' }}>
 						<Typography variant='body2' fontWeight={600}>
 							{t('medical_history.field.doctor')}
 						</Typography>
-						<Typography variant='caption'>(Ký, ghi rõ họ tên)</Typography>
+						<Typography variant='caption'>({t('text.sign_here')})</Typography>
 					</Box>
 				</Box>
 			</Paper>
