@@ -4,6 +4,7 @@ export function useCsvImport({ delimiter = ',', hasHeader = true, onError, onSuc
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(null)
 	const [data, setData] = useState(null)
+	const [file, setFile] = useState(null)
 	const fileInputRef = useRef(null)
 
 	const parseCsv = useCallback(
@@ -73,12 +74,13 @@ export function useCsvImport({ delimiter = ',', hasHeader = true, onError, onSuc
 			if (!fileName.endsWith('.csv')) {
 				const err = new Error('File phải có định dạng CSV')
 				setError(err)
-				onError?.(err)
+				onError?.(err, file)
 				return
 			}
 
 			setLoading(true)
 			setError(null)
+			setFile(file)
 
 			try {
 				const text = await new Promise((resolve, reject) => {
@@ -90,11 +92,11 @@ export function useCsvImport({ delimiter = ',', hasHeader = true, onError, onSuc
 
 				const parsedData = parseCsv(text)
 				setData(parsedData)
-				onSuccess?.(parsedData)
+				onSuccess?.(parsedData, file)
 			} catch (err) {
 				const error = err instanceof Error ? err : new Error('Lỗi khi đọc file CSV')
 				setError(error)
-				onError?.(error)
+				onError?.(error, file)
 			} finally {
 				setLoading(false)
 			}
@@ -126,12 +128,14 @@ export function useCsvImport({ delimiter = ',', hasHeader = true, onError, onSuc
 		setData(null)
 		setError(null)
 		setLoading(false)
+		setFile(null)
 	}, [])
 
 	return {
 		loading,
 		error,
 		data,
+		file,
 		selectFile,
 		reset,
 		fileInputRef,
