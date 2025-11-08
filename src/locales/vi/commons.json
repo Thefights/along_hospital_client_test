@@ -104,6 +104,7 @@
         "invalid_percentage": "Phần trăm phải từ 0 đến 100",
         "past_date": "Ngày không được ở quá khứ",
         "not_match": "Giá trị không khớp",
-        "invalid_phone_or_email": "Vui lòng nhập số điện thoại hoặc email hợp lệ"
+        "invalid_phone_or_email": "Vui lòng nhập số điện thoại hoặc email hợp lệ",
+        "password_not_match": "Mật khẩu không khớp"
     }
 }
