@@ -115,11 +115,17 @@ export const ApiUrls = {
 		},
 	},
 	VOUCHER: {
-		INDEX: `/voucher`,
+		COLLECTIBLE: `/voucher/collectible`,
+		COLLECT: `/voucher/collect`,
+		MY_VOUCHERS: `/voucher/my-vouchers`,
 		MANAGEMENT: {
 			INDEX: `/voucher-management`,
 			DETAIL: (id) => `/voucher-management/${id}`,
 		},
+	},
+	PATIENT_VOUCHER: {
+		INDEX: `/patient-voucher`,
+		DETAIL: (id) => `/patient-voucher/${id}`,
 	},
 	DEPARTMENT: {
 		INDEX: `/department`,

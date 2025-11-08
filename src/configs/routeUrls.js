@@ -18,6 +18,7 @@ export const routeUrls = {
 		PRIVACY_POLICY: '/privacy-policy',
 		CAREER: '/career',
 		FAQ: '/faq',
+		VOUCHERS: '/vouchers',
 	},
 	AUTH: {
 		LOGIN: '/login',
@@ -41,39 +42,44 @@ export const routeUrls = {
 			INDEX: '/appointment',
 			CREATE: '/appointment/create',
 		},
-	},
-	DOCTOR: {
-		DASHBOARD: '/',
-		PROFILE: '/profile',
-		APPOINTMENT_MANAGEMENT: '/appointment',
-		MEDICAL_HISTORY: {
-			INDEX: '/medical-history',
-			CREATE: '/medical-history/create',
-			DETAIL: (id) => `/medical-history/${id}`,
+		MY_VOUCHERS: '/my-vouchers',
+		VOUCHER: {
+			COLLECTIBLE: '/vouchers',
+			MY_VOUCHERS: '/my-vouchers',
 		},
-	},
-	MANAGER: {
-		DASHBOARD: '/',
-		PROFILE: '/profile',
-		APPOINTMENT_MANAGEMENT: '/appointments',
-		BLOG: {
-			INDEX: '/blogs',
-			CREATE: '/blogs/create',
-			UPDATE: (blogId = ':id') => `/blogs/edit/${blogId}`,
+		DOCTOR: {
+			DASHBOARD: '/',
+			PROFILE: '/profile',
+			APPOINTMENT_MANAGEMENT: '/appointment',
+			MEDICAL_HISTORY: {
+				INDEX: '/medical-history',
+				CREATE: '/medical-history/create',
+				DETAIL: (id) => `/medical-history/${id}`,
+			},
 		},
-		MEDICAL_HISTORY: {
-			INDEX: '/medical-history',
-			DETAIL: (id) => `/medical-history/${id}`,
+		MANAGER: {
+			DASHBOARD: '/',
+			PROFILE: '/profile',
+			APPOINTMENT_MANAGEMENT: '/appointments',
+			BLOG: {
+				INDEX: '/blogs',
+				CREATE: '/blogs/create',
+				UPDATE: (blogId = ':id') => `/blogs/edit/${blogId}`,
+			},
+			MEDICAL_HISTORY: {
+				INDEX: '/medical-history',
+				DETAIL: (id) => `/medical-history/${id}`,
+			},
+			MEDICINE_MANAGEMENT: {
+				INDEX: '/medicine',
+			},
+			MEDICINE_CATEGORY_MANAGEMENT: {
+				INDEX: '/medicine-category',
+			},
+			COMPLAINT_MANAGEMENT: '/complaint',
+			SPECIALTY_MANAGEMENT: '/specialty',
+			VOUCHER_MANAGEMENT: '/voucher',
+			DOCTOR_MANAGEMENT: '/doctor',
 		},
-		MEDICINE_MANAGEMENT: {
-			INDEX: '/medicine',
-		},
-		MEDICINE_CATEGORY_MANAGEMENT: {
-			INDEX: '/medicine-category',
-		},
-		COMPLAINT_MANAGEMENT: '/complaint',
-		SPECIALTY_MANAGEMENT: '/specialty',
-		VOUCHER_MANAGEMENT: '/voucher',
-		DOCTOR_MANAGEMENT: '/doctor',
 	},
 }
