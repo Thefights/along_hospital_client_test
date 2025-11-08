@@ -19,10 +19,9 @@ import {
 	Typography,
 	useTheme,
 } from '@mui/material'
-import PropTypes from 'prop-types'
 import { useMemo } from 'react'
 
-const VoucherCard = ({
+const VoucherCardSection = ({
 	voucher,
 	mode = 'collectible',
 	onCollect,
@@ -236,14 +235,4 @@ const VoucherCard = ({
 	)
 }
 
-VoucherCard.propTypes = {
-	voucher: PropTypes.object.isRequired,
-	mode: PropTypes.oneOf(['collectible', 'my']),
-	onCollect: PropTypes.func,
-	onCopy: PropTypes.func,
-	onUse: PropTypes.func,
-	loading: PropTypes.bool,
-	userRole: PropTypes.string,
-}
-
-export default VoucherCard
+export default VoucherCardSection

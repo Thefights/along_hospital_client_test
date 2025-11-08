@@ -8,9 +8,9 @@ import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
 import { LocalOffer, SearchOff } from '@mui/icons-material'
 import { Box, Button, Grid, Paper, Stack, Typography, useMediaQuery, useTheme } from '@mui/material'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import VoucherCard from './sections/VoucherCard'
+import VoucherCardSection from './sections/VoucherCardSection'
 
 const MyVoucherListPage = () => {
 	const theme = useTheme()
@@ -20,25 +20,12 @@ const MyVoucherListPage = () => {
 	const { auth } = useAuth()
 	const [page, setPage] = useState(1)
 
-	const buildQueryParams = useCallback(
-		() => ({
-			page,
-			pageSize: 10,
-		}),
-		[page]
-	)
-
-	const { data, loading } = useFetch(ApiUrls.VOUCHER.MY_VOUCHERS, buildQueryParams(), [page])
+	const { data, loading } = useFetch(ApiUrls.VOUCHER.MY_VOUCHERS, { page, pageSize: 10 }, [page])
 
 	const handleCopyCode = (code) => navigator.clipboard.writeText(code)
 
 	const handleUseVoucher = (voucher) => {
 		navigate(routeUrls.HOME.MEDICINE, { state: { voucherCode: voucher.code } })
-	}
-
-	const handlePageChange = (newPage) => {
-		setPage(newPage)
-		window.scrollTo({ top: 0, behavior: 'smooth' })
 	}
 
 	const vouchers = data?.collection || []
@@ -140,7 +127,7 @@ const MyVoucherListPage = () => {
 						<Grid container spacing={2}>
 							{vouchers.map((voucher) => (
 								<Grid key={voucher.id || voucher.code} size={{ xs: 12, sm: 6 }}>
-									<VoucherCard
+									<VoucherCardSection
 										voucher={voucher}
 										mode='my'
 										onCopy={handleCopyCode}
@@ -152,7 +139,7 @@ const MyVoucherListPage = () => {
 
 						{totalPages > 1 && (
 							<Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-								<GenericPagination page={page} totalPage={totalPages} setPage={handlePageChange} />
+								<GenericPagination page={page} totalPage={totalPages} setPage={setPage} />
 							</Box>
 						)}
 					</>

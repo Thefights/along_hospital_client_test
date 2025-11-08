@@ -44,7 +44,6 @@ export const routeUrls = {
 			CREATE: '/appointment/create',
 		},
 		VOUCHER: {
-			COLLECTIBLE: '/vouchers',
 			MY_VOUCHERS: '/my-vouchers',
 		},
 	},

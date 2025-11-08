@@ -95,6 +95,10 @@
         "voucher_type": {
             "patient": "Patient",
             "medicine": "Medicine"
+        },
+        "voucher_discount_type": {
+            "percentage": "Percentage",
+            "fixed_amount": "Fixed Amount"  
         }
     }
 }

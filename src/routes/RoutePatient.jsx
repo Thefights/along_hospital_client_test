@@ -40,7 +40,7 @@ const RoutePatient = () => {
 						path={routeUrls.PATIENT.MEDICAL_HISTORY.DETAIL(':id')}
 						element={<MedicalHistoryDetailBasePage fetchUrl={ApiUrls.MEDICAL_HISTORY.INDEX} />}
 					/>
-					<Route path={routeUrls.PATIENT.MY_VOUCHERS} element={<MyVoucherListPage />} />
+					<Route path={routeUrls.PATIENT.VOUCHER.MY_VOUCHERS} element={<MyVoucherListPage />} />
 				</Route>
 			</Route>
 			<Route path='*' element={<NotFoundPage />} />

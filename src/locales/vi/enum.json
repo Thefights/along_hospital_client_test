@@ -95,6 +95,10 @@
         "voucher_type": {
             "patient": "Bệnh nhân",
             "medicine": "Thuốc"
+        },
+        "voucher_discount_type": {
+            "percentage": "Phần trăm",
+            "fixed_amount": "Số tiền cố định"
         }
     }
 }

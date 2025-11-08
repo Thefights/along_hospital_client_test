@@ -9,10 +9,10 @@ import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
 import { LocalOffer, SearchOff } from '@mui/icons-material'
 import { Box, Grid, Paper, Stack, Typography, useMediaQuery, useTheme } from '@mui/material'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import CollectibleVoucherFilter from './sections/CollectibleVoucherFilter'
-import VoucherCard from './sections/VoucherCard'
+import CollectibleVoucherFilterSection from './sections/CollectibleVoucherFilterSection'
+import VoucherCardSection from './sections/VoucherCardSection'
 
 const CollectibleVoucherListPage = () => {
 	const theme = useTheme()
@@ -25,19 +25,11 @@ const CollectibleVoucherListPage = () => {
 	const [page, setPage] = useState(1)
 	const [collectingVoucherId, setCollectingVoucherId] = useState(null)
 
-	const buildQueryParams = useCallback(
-		() => ({
-			page,
-			pageSize: 10,
-			...(filters.name && { name: filters.name }),
-		}),
-		[filters.name, page]
+	const { data, loading, fetch } = useFetch(
+		ApiUrls.VOUCHER.COLLECTIBLE,
+		{ page, pageSize: 10, ...(filters.name && { name: filters.name }) },
+		[page, filters.name]
 	)
-
-	const { data, loading, fetch } = useFetch(ApiUrls.VOUCHER.COLLECTIBLE, buildQueryParams(), [
-		page,
-		filters.name,
-	])
 
 	const { submit: collectVoucher, loading: collectLoading } = useAxiosSubmit({
 		url: ApiUrls.VOUCHER.COLLECT,
@@ -47,23 +39,15 @@ const CollectibleVoucherListPage = () => {
 	const handleCollectClick = async (voucher) => {
 		if (!voucher) return
 		setCollectingVoucherId(voucher.id)
-		await collectVoucher({ voucherCode: voucher.code })
-		fetch()
+		const response = await collectVoucher({ voucherCode: voucher.code })
+		if (response) {
+			fetch()
+		}
 	}
 
 	const handleFilterChange = (newFilters) => {
 		setFilters(newFilters)
 		setPage(1)
-	}
-
-	const handleResetFilters = () => {
-		setFilters({ name: '' })
-		setPage(1)
-	}
-
-	const handlePageChange = (newPage) => {
-		setPage(newPage)
-		window.scrollTo({ top: 0, behavior: 'smooth' })
 	}
 
 	const vouchers = data?.collection || []
@@ -127,24 +111,14 @@ const CollectibleVoucherListPage = () => {
 
 			{isMobile && (
 				<Box sx={{ mb: 3 }}>
-					<CollectibleVoucherFilter
-						permanent
-						filters={filters}
-						onFilterChange={handleFilterChange}
-						onReset={handleResetFilters}
-					/>
+					<CollectibleVoucherFilterSection filters={filters} onFilterChange={handleFilterChange} />
 				</Box>
 			)}
 
 			<Stack direction='row' spacing={3}>
 				{!isMobile && (
 					<Box sx={{ flexShrink: 0 }}>
-						<CollectibleVoucherFilter
-							permanent
-							filters={filters}
-							onFilterChange={handleFilterChange}
-							onReset={handleResetFilters}
-						/>
+						<CollectibleVoucherFilterSection filters={filters} onFilterChange={handleFilterChange} />
 					</Box>
 				)}
 
@@ -183,7 +157,7 @@ const CollectibleVoucherListPage = () => {
 							<Grid container spacing={2}>
 								{vouchers.map((voucher) => (
 									<Grid key={voucher.id || voucher.code} size={{ xs: 12, sm: 6 }}>
-										<VoucherCard
+										<VoucherCardSection
 											voucher={voucher}
 											mode='collectible'
 											onCollect={handleCollectClick}
@@ -196,7 +170,7 @@ const CollectibleVoucherListPage = () => {
 
 							{totalPages > 1 && (
 								<Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-									<GenericPagination page={page} totalPage={totalPages} setPage={handlePageChange} />
+									<GenericPagination page={page} totalPage={totalPages} setPage={setPage} />
 								</Box>
 							)}
 						</>
