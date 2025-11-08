@@ -22,6 +22,11 @@ export const formatCurrencyBasedOnCurrentLanguage = (number) => {
 	} catch {
 		/* empty */
 	}
+
+	if (!number || isNaN(number)) {
+		number = 0
+	}
+
 	return number.toLocaleString(language === 'vi' ? 'vi-VN' : 'en-US', {
 		style: 'currency',
 		currency: 'USD',
