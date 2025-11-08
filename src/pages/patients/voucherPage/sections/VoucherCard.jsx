@@ -159,18 +159,17 @@ const VoucherCard = ({
 								<LocalOffer sx={{ fontSize: '0.875rem', color: 'text.secondary' }} />
 								<Typography variant='caption' color='text.secondary' sx={{ wordBreak: 'break-word' }}>
 									{t('voucher.label.min_purchase', {
-										amount: `$${formatNumberWithCommas(voucher.minPurchaseAmount)}`,
+										amount: `${formatNumberWithCommas(voucher.minPurchaseAmount)} VND`,
 									})}
 								</Typography>
 							</Stack>
 						)}
-
 						{voucher?.maxDiscount > 0 && (
 							<Stack direction='row' alignItems='center' spacing={0.5}>
 								<LocalOffer sx={{ fontSize: '0.875rem', color: 'text.secondary' }} />
 								<Typography variant='caption' color='text.secondary' sx={{ wordBreak: 'break-word' }}>
 									{t('voucher.label.max_discount', {
-										amount: `$${formatNumberWithCommas(voucher.maxDiscount)}`,
+										amount: `${formatNumberWithCommas(voucher.maxDiscount)} VND`,
 									})}
 								</Typography>
 							</Stack>
