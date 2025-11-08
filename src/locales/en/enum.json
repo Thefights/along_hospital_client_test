@@ -95,6 +95,11 @@
         "voucher_type": {
             "patient": "Patient",
             "medicine": "Medicine"
+        },
+        "feedback_report_status": {
+            "pending": "Pending",
+            "resolved": "Resolved",
+            "rejected": "Rejected"
         }
     }
 }

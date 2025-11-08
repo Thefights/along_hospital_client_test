@@ -95,6 +95,11 @@
         "voucher_type": {
             "patient": "Bệnh nhân",
             "medicine": "Thuốc"
+        },
+        "feedback_report_status": {
+            "pending": "Chờ xử lý",
+            "resolved": "Đã xử lý",
+            "rejected": "Đã từ chối"
         }
     }
 }
