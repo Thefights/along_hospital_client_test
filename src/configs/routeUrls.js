@@ -19,6 +19,8 @@ export const routeUrls = {
 		CAREER: '/career',
 		FAQ: '/faq',
 		VOUCHERS: '/vouchers',
+		MEDICAL_HISTORY_INVOICE: (id) => `/medical-history/invoice/${id}`,
+		MEDICAL_HISTORY_PRINT_PRESCRIPTION: (id) => `/medical-history/print-prescription/${id}`,
 	},
 	AUTH: {
 		LOGIN: '/login',
@@ -51,6 +53,7 @@ export const routeUrls = {
 		DASHBOARD: '/',
 		PROFILE: '/profile',
 		APPOINTMENT_MANAGEMENT: '/appointment',
+		ATTENDANCE: '/attendance',
 		MEDICAL_HISTORY: {
 			INDEX: '/medical-history',
 			CREATE: '/medical-history/create',
@@ -60,7 +63,7 @@ export const routeUrls = {
 	MANAGER: {
 		DASHBOARD: '/',
 		PROFILE: '/profile',
-		APPOINTMENT_MANAGEMENT: '/appointments',
+		APPOINTMENT_MANAGEMENT: '/appointment',
 		BLOG: {
 			INDEX: '/blogs',
 			CREATE: '/blogs/create',
@@ -80,5 +83,6 @@ export const routeUrls = {
 		SPECIALTY_MANAGEMENT: '/specialty',
 		VOUCHER_MANAGEMENT: '/voucher',
 		DOCTOR_MANAGEMENT: '/doctor',
+		ATTENDANCE_MANAGEMENT: '/attendance',
 	},
 }

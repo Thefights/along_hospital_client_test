@@ -1,6 +1,7 @@
 import EmptyPage from '@/components/placeholders/EmptyPage'
 import { ApiUrls } from '@/configs/apiUrls'
 import { EnumConfig } from '@/configs/enumConfig'
+import { routeUrls } from '@/configs/routeUrls'
 import useAuth from '@/hooks/useAuth'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useConfirm } from '@/hooks/useConfirm'
@@ -9,7 +10,7 @@ import useTranslation from '@/hooks/useTranslation'
 import { Box, Grid, Stack } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Fade, Slide } from 'react-awesome-reveal'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import DoctorInfoDialog from '../../dialogs/DoctorInfoDialog'
 import PatientInfoDialog from '../../dialogs/PatientInfoDialog'
 import CreateComplaintDialog from './sections/dialogs/CreateComplaintDialog'
@@ -23,10 +24,11 @@ import MedicalHistoryDetailHeaderInfoSection from './sections/MedicalHistoryDeta
 import MedicalHistoryDetailPrescriptionSection from './sections/MedicalHistoryDetailPrescriptionSection'
 import MedicalHistoryDetailServiceSection from './sections/MedicalHistoryDetailServiceSection'
 
-const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX }) => {
+const MedicalHistoryDetailBasePage = () => {
 	const { id } = useParams()
 
 	const { t } = useTranslation()
+	const navigate = useNavigate()
 	const confirm = useConfirm()
 
 	const [openPatientInfo, setOpenPatientInfo] = useState(false)
@@ -49,10 +51,10 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 		loading,
 		data: medicalHistory,
 		setData: setMedicalHistory,
-	} = useFetch(`${fetchUrl}/${id}`, {}, [id])
+		fetch: refetchMedicalHistory,
+	} = useFetch(ApiUrls.MEDICAL_HISTORY.DETAIL(id), {}, [id])
 
 	const getPaymentUrl = useFetch(ApiUrls.MEDICAL_HISTORY.MANAGEMENT.PAYMENT_URL(id), {}, [], false)
-
 	useEffect(() => {
 		if (getPaymentUrl.data) {
 			window.open(getPaymentUrl.data, '_blank')
@@ -67,6 +69,7 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 	const completeMedicalHistory = useAxiosSubmit({
 		url: ApiUrls.MEDICAL_HISTORY.MANAGEMENT.COMPLETE(id),
 		method: 'PUT',
+		onSuccess: () => refetchMedicalHistory(),
 	})
 
 	// API Operations for Medical history detail services
@@ -111,21 +114,24 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 		},
 	})
 	const responseAsDraftComplaint = useAxiosSubmit({
-		url: ApiUrls.COMPLAINT.MANAGEMENT.DRAFT(id),
+		url: ApiUrls.COMPLAINT.MANAGEMENT.DRAFT(medicalHistory?.complaint?.id),
 		method: 'PUT',
 	})
 	const responseAsResolveComplaint = useAxiosSubmit({
-		url: ApiUrls.COMPLAINT.MANAGEMENT.RESOLVE(id),
+		url: ApiUrls.COMPLAINT.MANAGEMENT.RESOLVE(medicalHistory?.complaint?.id),
 		method: 'PUT',
 	})
 	const closeComplaint = useAxiosSubmit({
-		url: ApiUrls.COMPLAINT.MANAGEMENT.CLOSE(id),
+		url: ApiUrls.COMPLAINT.MANAGEMENT.CLOSE(medicalHistory?.complaint?.id),
 		method: 'PUT',
 		onSuccess: () => {
 			setOpenRespondComplaint(false)
 			setMedicalHistory((prev) => ({
 				...prev,
-				complaint: { ...prev.complaint, status: EnumConfig.ComplaintResolveStatus.Closed },
+				complaint: {
+					...prev.complaint,
+					complaintResolveStatus: EnumConfig.ComplaintResolveStatus.Closed,
+				},
 			}))
 		},
 	})
@@ -216,7 +222,9 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 								loading={loading}
 								onClickCreatePrescription={() => setOpenCreatePrescription(true)}
 								onClickUpdatePrescription={() => setOpenUpdatePrescription(true)}
-								onClickPrintPrescription={() => {}}
+								onClickPrintPrescription={() =>
+									navigate(routeUrls.HOME.MEDICAL_HISTORY_PRINT_PRESCRIPTION(medicalHistory.id))
+								}
 							/>
 						</Slide>
 					</Grid>
@@ -240,15 +248,10 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 						medicalHistoryStatus={medicalHistory?.medicalHistoryStatus}
 						onClickUpdateMedicalHistory={() => setOpenUpdateMedicalHistory(true)}
 						onClickPayment={async () => await getPaymentUrl.fetch()}
-						onClickCompleteMedicalHistory={async () => {
-							var response = await completeMedicalHistory.submit()
-							if (response) {
-								setMedicalHistory((prev) => ({
-									...prev,
-									medicalHistoryStatus: EnumConfig.MedicalHistoryStatus.Processed,
-								}))
-							}
-						}}
+						onClickCompleteMedicalHistory={async () => await completeMedicalHistory.submit()}
+						onClickPrintInvoice={() =>
+							navigate(routeUrls.HOME.MEDICAL_HISTORY_INVOICE(medicalHistory.id))
+						}
 						loadingPayment={getPaymentUrl.loading}
 					/>
 				)}
@@ -296,20 +299,6 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 				open={openRespondComplaint}
 				onClose={() => setOpenRespondComplaint(false)}
 				initialResponse={medicalHistory?.complaint?.response}
-				onSubmit={async (values) => {
-					const response = await responseAsResolveComplaint.submit(values)
-					if (response) {
-						setOpenRespondComplaint(false)
-						setMedicalHistory((prev) => ({
-							...prev,
-							complaint: {
-								...prev.complaint,
-								response: values.response,
-								status: EnumConfig.ComplaintResolveStatus.Resolved,
-							},
-						}))
-					}
-				}}
 				onSaveDraft={async (values) => {
 					const response = await responseAsDraftComplaint.submit(values)
 					if (response) {
@@ -319,7 +308,7 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 							complaint: {
 								...prev.complaint,
 								response: values.response,
-								status: EnumConfig.ComplaintResolveStatus.Draft,
+								complaintResolveStatus: EnumConfig.ComplaintResolveStatus.Draft,
 							},
 						}))
 					}
@@ -334,6 +323,20 @@ const MedicalHistoryDetailBasePage = ({ fetchUrl = ApiUrls.MEDICAL_HISTORY.INDEX
 
 					if (isConfirmed) {
 						await closeComplaint.submit()
+					}
+				}}
+				onSubmit={async (values) => {
+					const response = await responseAsResolveComplaint.submit(values)
+					if (response) {
+						setOpenRespondComplaint(false)
+						setMedicalHistory((prev) => ({
+							...prev,
+							complaint: {
+								...prev.complaint,
+								response: values.response,
+								complaintResolveStatus: EnumConfig.ComplaintResolveStatus.Resolved,
+							},
+						}))
 					}
 				}}
 			/>
