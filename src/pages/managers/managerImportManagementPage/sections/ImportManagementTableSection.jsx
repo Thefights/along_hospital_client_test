@@ -48,7 +48,6 @@ const ImportManagementTableSection = ({
 	const confirm = useConfirm()
 	const { t } = useTranslation()
 
-	// Fetch medicines for select options
 	const medicineStore = useReduxStore({
 		selector: (state) => state.management.medicines,
 		setStore: setMedicinesStore,
