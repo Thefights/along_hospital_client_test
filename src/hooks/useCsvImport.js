@@ -1,5 +1,5 @@
-import { useCallback, useRef, useState } from 'react'
 import useTranslation from '@/hooks/useTranslation'
+import { useCallback, useRef, useState } from 'react'
 
 export function useCsvImport({ delimiter = ',', hasHeader = true, onError, onSuccess } = {}) {
 	const [loading, setLoading] = useState(false)
@@ -23,7 +23,6 @@ export function useCsvImport({ delimiter = ',', hasHeader = true, onError, onSuc
 				headers = lines[0].split(delimiter).map((h) => h.trim().replace(/^["']|["']$/g, ''))
 				startIndex = 1
 			} else {
-				// Nếu không có header, tạo header mặc định
 				const firstLine = lines[0].split(delimiter)
 				headers = firstLine.map((_, index) => `Column${index + 1}`)
 				startIndex = 0
@@ -36,7 +35,6 @@ export function useCsvImport({ delimiter = ',', hasHeader = true, onError, onSuc
 				let currentValue = ''
 				let insideQuotes = false
 
-				// Parse line với xử lý quotes
 				for (let j = 0; j < line.length; j++) {
 					const char = line[j]
 					const nextChar = line[j + 1]
@@ -118,7 +116,6 @@ export function useCsvImport({ delimiter = ',', hasHeader = true, onError, onSuc
 			if (file) {
 				handleFileRead(file)
 			}
-			// Reset input để có thể chọn lại cùng file
 			if (e.target) {
 				e.target.value = ''
 			}
@@ -144,27 +141,3 @@ export function useCsvImport({ delimiter = ',', hasHeader = true, onError, onSuc
 		handleFileChange,
 	}
 }
-
-// Example usage:
-/*
-const { loading, error, data, selectFile, reset, fileInputRef, handleFileChange } = useCsvImport({
-	delimiter: ',',
-	hasHeader: true,
-	onSuccess: (data) => {
-		console.log('CSV data:', data)
-	},
-	onError: (error) => {
-		console.error('Error:', error)
-	},
-})
-
-// Trong component:
-<input
-	type="file"
-	ref={fileInputRef}
-	onChange={handleFileChange}
-	accept=".csv"
-	style={{ display: 'none' }}
-/>
-<Button onClick={selectFile}>Import CSV</Button>
-*/
