@@ -76,5 +76,6 @@ export const routeUrls = {
 		SPECIALTY_MANAGEMENT: '/specialty',
 		VOUCHER_MANAGEMENT: '/voucher',
 		DOCTOR_MANAGEMENT: '/doctor',
+		FEEDBACK_REPORT_MANAGEMENT: '/feedback-report',
 	},
 }
