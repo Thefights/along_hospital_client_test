@@ -1,6 +1,9 @@
 import GenericTable from '@/components/tables/GenericTable'
+import { defaultFeedbackReportStatusStyle } from '@/configs/defaultStylesConfig'
 import { EnumConfig } from '@/configs/enumConfig'
+import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
+import { getEnumLabelByValue } from '@/utils/handleStringUtil'
 import { Button, Chip, Stack } from '@mui/material'
 
 const FeedbackReportManagementTableSection = ({
@@ -13,6 +16,10 @@ const FeedbackReportManagementTableSection = ({
 	onViewReason,
 }) => {
 	const { t } = useTranslation()
+	const _enum = useEnum()
+	const styleForStatus = (status) => {
+		return defaultFeedbackReportStatusStyle(status)
+	}
 
 	const fields = [
 		{ key: 'id', title: t('feedback_report.field.id'), width: 10, sortable: true, fixedColumn: true },
@@ -21,31 +28,10 @@ const FeedbackReportManagementTableSection = ({
 			title: t('feedback_report.field.status'),
 			width: 20,
 			render: (val) => {
-				const s = val || ''
-				const color =
-					s === EnumConfig.FeedbackReportStatus.Pending
-						? 'warning'
-						: s === EnumConfig.FeedbackReportStatus.Resolved
-						? 'success'
-						: s === EnumConfig.FeedbackReportStatus.Rejected
-						? 'error'
-						: 'default'
-				const label =
-					s === EnumConfig.FeedbackReportStatus.Pending
-						? t('feedback_report.status.pending')
-						: s === EnumConfig.FeedbackReportStatus.Resolved
-						? t('feedback_report.status.resolved')
-						: s === EnumConfig.FeedbackReportStatus.Rejected
-						? t('feedback_report.status.rejected')
-						: s
-				return (
-					<Chip
-						size='small'
-						label={label}
-						color={color}
-						variant={color === 'default' ? 'outlined' : 'filled'}
-					/>
-				)
+				const status = val || ''
+				const { color, variant } = styleForStatus(status)
+				const label = getEnumLabelByValue(_enum.feedbackReportStatusEnum, status)
+				return <Chip size='small' label={label} color={color} variant={variant} />
 			},
 		},
 		{

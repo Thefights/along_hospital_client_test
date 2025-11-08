@@ -1,4 +1,4 @@
-import { EnumConfig } from '@/configs/enumConfig'
+import useEnum from '@/hooks/useEnum'
 import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
@@ -6,6 +6,7 @@ import { Button, Grid, Stack } from '@mui/material'
 
 const FeedbackReportManagementFilterSection = ({ filters, setFilters, loading }) => {
 	const { t } = useTranslation()
+	const _enum = useEnum()
 
 	const { values, setField, handleChange, registerRef, reset } = useForm({ status: filters.status })
 	const { renderField } = useFieldRenderer(
@@ -24,18 +25,7 @@ const FeedbackReportManagementFilterSection = ({ filters, setFilters, loading })
 			title: t('feedback_report.field.status'),
 			type: 'select',
 			required: false,
-			options: [
-				{ label: t('commons.text.all'), value: '' },
-				{ label: t('feedback_report.status.pending'), value: EnumConfig.FeedbackReportStatus.Pending },
-				{
-					label: t('feedback_report.status.resolved'),
-					value: EnumConfig.FeedbackReportStatus.Resolved,
-				},
-				{
-					label: t('feedback_report.status.rejected'),
-					value: EnumConfig.FeedbackReportStatus.Rejected,
-				},
-			],
+			options: _enum.feedbackReportStatusEnum,
 			props: { fullWidth: true },
 		},
 	]

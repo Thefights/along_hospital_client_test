@@ -14,6 +14,7 @@ const FeedbackReportManagementPage = () => {
 	const [sort, setSort] = useState({ key: 'id', direction: 'desc' })
 	const [page, setPage] = useState(1)
 	const [pageSize, setPageSize] = useState(10)
+
 	const { t } = useTranslation()
 
 	const getReports = useFetch(
@@ -88,8 +89,8 @@ const FeedbackReportManagementPage = () => {
 						key: 'reason',
 						title: t('feedback_report.field.reason'),
 						multiple: 6,
-						props: { InputProps: { readOnly: true }, disabled: true },
 						required: false,
+						readonly: true,
 					},
 				]}
 				submitLabel={t('button.close')}
