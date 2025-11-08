@@ -48,6 +48,9 @@ export const routeUrls = {
 	DOCTOR: {
 		DASHBOARD: '/',
 		APPOINTMENT_MANAGEMENT: '/appointment',
+		APPOINTMENT: {
+			MEETING_ROOM_TOKEN: (id) => `/appointment/meeting-room-token/${id}`,
+		},
 		MEDICAL_HISTORY: {
 			INDEX: '/medical-history',
 			CREATE: '/medical-history/create',
