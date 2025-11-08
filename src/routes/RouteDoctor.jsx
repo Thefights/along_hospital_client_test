@@ -3,6 +3,7 @@ import LayoutDoctor from '@/layouts/LayoutDoctor'
 import CreateMedicalHistoryPage from '@/pages/doctors/createMedicalHistoryPage/CreateMedicalHistoryPage'
 import DoctorAppointmentManagementPage from '@/pages/doctors/doctorAppointmentManagementPage/DoctorAppointmentManagementPage'
 import DoctorMedicalHistoryManagementPage from '@/pages/doctors/doctorMedicalHistoryManagementPage/DoctorMedicalHistoryManagementPage'
+import MeetingRoomPage from '@/pages/patients/meetingRoomPage/meetingRoomPage/MeetingRoomPage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 
@@ -22,6 +23,10 @@ const RouteDoctor = () => {
 					/>
 					<Route path={routeUrls.DOCTOR.MEDICAL_HISTORY.CREATE} element={<CreateMedicalHistoryPage />} />
 				</Route>
+				<Route
+					path={routeUrls.DOCTOR.APPOINTMENT.MEETING_ROOM_TOKEN(':id')}
+					element={<MeetingRoomPage />}
+				/>
 			</Route>
 		</Routes>
 	)
