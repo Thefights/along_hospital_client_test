@@ -1,6 +1,7 @@
 import { getEnv } from '@/utils/commons'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { routeUrls } from './routeUrls'
 
 const axiosConfig = axios.create({
 	baseURL: getEnv('VITE_BASE_API_URL', 'https://localhost:5000/api/v1'),
@@ -56,12 +57,16 @@ axiosConfig.interceptors.response.use(
 
 		switch (status) {
 			case 400:
-			case 401:
-			case 403:
 			case 404:
 			case 409:
 			case 422:
 				errorMessages?.forEach((msg) => toast.error(msg))
+				break
+			case 401:
+			case 403:
+				localStorage.removeItem('accessToken')
+				localStorage.removeItem('refreshToken')
+				window.location.href = routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.LOGIN)
 				break
 			case 500:
 			default:
