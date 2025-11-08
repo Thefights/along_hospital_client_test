@@ -124,6 +124,7 @@ export const ApiUrls = {
 		COLLECTIBLE: `/voucher/collectible`,
 		COLLECT: `/voucher/collect`,
 		MY_VOUCHERS: `/voucher/my-vouchers`,
+		MY_ALL_VOUCHERS: `/voucher/my-vouchers/all`,
 		MANAGEMENT: {
 			INDEX: `/voucher-management`,
 			DETAIL: (id) => `/voucher-management/${id}`,
