@@ -341,7 +341,7 @@ const ImportManagementTableSection = ({
 						title: field.title,
 						type: 'text',
 						required: false,
-						multiple: Math.max(field.multiple || 3, 3),
+						multiple: field.multiple || 3,
 						props: {
 							...(field.props || {}),
 							InputProps: {
