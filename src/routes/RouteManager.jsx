@@ -7,6 +7,7 @@ import LayoutManager from '@/layouts/LayoutManager'
 import NotFoundPage from '@/pages/commons/NotFoundPage'
 import ComplaintManagementPage from '@/pages/managers/complaintManagementPage/ComplaintManagementPage'
 import DoctorManagementPage from '@/pages/managers/doctorManagementPage/DoctorManagementPage'
+import FeedbackReportManagementPage from '@/pages/managers/feedbackReportManagementPage/FeedbackReportManagementPage'
 import ManagerAppointmentManagementPage from '@/pages/managers/managerAppointmentManagementPage/ManagerAppointmentManagementPage'
 import ManagerBlogManagementPage from '@/pages/managers/managerBlogManagementPage/ManagerBlogManagementPage'
 import BlogUpsertPage from '@/pages/managers/managerBlogUpsertPage/BlogUpsertPage'
@@ -17,8 +18,8 @@ import ImportManagementPage from '@/pages/managers/managerImportManagementPage/I
 import ManagerMedicineCategoryManagementPage from '@/pages/managers/managerMedicineCategoryManagementPage/ManagerMedicineCategoryManagementPage'
 import ManagerMedicineManagemntPage from '@/pages/managers/managerMedicineManagementPage/ManagerMedicineManagementPage'
 import SpecialtyManagementPage from '@/pages/managers/specialtyManagementPage/SpecialtyManagementPage'
-import ProfilePage from '@/pages/profile/ProfilePage'
 import VoucherManagementPage from '@/pages/managers/voucherManagementPage/VoucherManagementPage'
+import ProfilePage from '@/pages/profile/ProfilePage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 
@@ -75,6 +76,10 @@ const RouteManager = () => {
 					/>
 					<Route path={routeUrls.MANAGER.IMPORT_MANAGEMENT.INDEX} element={<ImportManagementPage />} />
 					<Route path={routeUrls.MANAGER.VOUCHER_MANAGEMENT} element={<VoucherManagementPage />} />
+					<Route
+						path={routeUrls.MANAGER.FEEDBACK_REPORT_MANAGEMENT}
+						element={<FeedbackReportManagementPage />}
+					/>
 				</Route>
 			</Route>
 

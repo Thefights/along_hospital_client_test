@@ -90,6 +90,15 @@ export const defaultVoucherStatusStyle = (status) => {
 	return map[status] || 'default'
 }
 
+export const defaultFeedbackReportStatusStyle = (status) => {
+	const map = {
+		[EnumConfig.FeedbackReportStatus.Pending]: 'warning',
+		[EnumConfig.FeedbackReportStatus.Resolved]: 'success',
+		[EnumConfig.FeedbackReportStatus.Rejected]: 'error',
+	}
+	return map[status] || 'default'
+}
+
 export const defaultVoucherTypeStyle = (type) => {
 	const map = {
 		[EnumConfig.VoucherType.Patient]: 'primary',

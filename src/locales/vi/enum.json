@@ -96,6 +96,11 @@
             "patient": "Bệnh nhân",
             "medicine": "Thuốc"
         },
+        "feedback_report_status": {
+            "pending": "Chờ xử lý",
+            "resolved": "Đã xử lý",
+            "rejected": "Đã từ chối"
+        },
         "voucher_discount_type": {
             "percentage": "Phần trăm",
             "fixed_amount": "Số tiền cố định"

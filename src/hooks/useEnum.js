@@ -203,6 +203,22 @@ export default function useEnum() {
 				label: t('enum.voucher_discount_type.fixed_amount'),
 			},
 		],
+
+		//For Feedbacks
+		feedbackReportStatusEnum: [
+			{
+				value: EnumConfig.FeedbackReportStatus.Pending,
+				label: t('enum.feedback_report_status.pending'),
+			},
+			{
+				value: EnumConfig.FeedbackReportStatus.Rejected,
+				label: t('enum.feedback_report_status.rejected'),
+			},
+			{
+				value: EnumConfig.FeedbackReportStatus.Resolved,
+				label: t('enum.feedback_report_status.resolved'),
+			},
+		],
 	}
 }
 

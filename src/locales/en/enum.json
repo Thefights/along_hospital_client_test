@@ -96,9 +96,14 @@
             "patient": "Patient",
             "medicine": "Medicine"
         },
+        "feedback_report_status": {
+            "pending": "Pending",
+            "resolved": "Resolved",
+            "rejected": "Rejected"
+        },
         "voucher_discount_type": {
             "percentage": "Percentage",
-            "fixed_amount": "Fixed Amount"  
+            "fixed_amount": "Fixed Amount"
         }
     }
 }

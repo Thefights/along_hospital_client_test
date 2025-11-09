@@ -88,6 +88,7 @@ export const routeUrls = {
 		MEDICAL_SERVICE: '/medical-service',
 		VOUCHER_MANAGEMENT: '/voucher',
 		DOCTOR_MANAGEMENT: '/doctor',
+		FEEDBACK_REPORT_MANAGEMENT: '/feedback-report',
 		ATTENDANCE_MANAGEMENT: '/attendance',
 	},
 }
