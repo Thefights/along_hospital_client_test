@@ -3,6 +3,7 @@
         "title": {
             "list": "News & Blog",
             "detail": "Blog",
+            "management": "Blog Management",
             "header_subtitle": "Hospital news & health articles",
             "untitled": "Untitled"
         },
