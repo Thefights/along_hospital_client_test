@@ -27,7 +27,7 @@ const CollectibleVoucherListPage = () => {
 
 	const { data, loading, fetch } = useFetch(
 		ApiUrls.VOUCHER.COLLECTIBLE,
-		{ page, pageSize: 10, ...(filters.name && { name: filters.name }) },
+		{ page, pageSize: 10, ...filters.name },
 		[page, filters.name]
 	)
 
