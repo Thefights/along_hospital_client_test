@@ -151,4 +151,8 @@ export const ApiUrls = {
 			REJECT: (id) => `/feedback-report-management/reject/${id}`,
 		},
 	},
+	ORDER_HISTORY: {
+		INDEX: `/order/all`,
+		DETAIL: (id) => `/order/${id}`,
+	},
 }

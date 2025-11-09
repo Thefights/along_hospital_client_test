@@ -136,4 +136,13 @@ export const EnumConfig = {
 		Percentage: 'Percentage',
 		FixedAmount: 'FixedAmount',
 	},
+
+	//Order
+	OrderStatus: {
+		Unpaid: 'Unpaid',
+		Processing: 'Processing',
+		Shipping: 'Shipping',
+		Completed: 'Completed',
+		Cancelled: 'Cancelled',
+	},
 }

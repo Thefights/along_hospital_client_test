@@ -95,6 +95,13 @@
         "voucher_type": {
             "patient": "Patient",
             "medicine": "Medicine"
+        },
+        "order_status": {
+            "unpaid": "Unpaid",
+            "processing": "Processing",
+            "shipping": "Shipping",
+            "completed": "Completed",
+            "cancelled": "Cancelled"
         }
     }
 }

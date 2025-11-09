@@ -203,6 +203,15 @@ export default function useEnum() {
 				label: t('enum.voucher_discount_type.fixed_amount'),
 			},
 		],
+
+		//Order
+		orderStatusOptions: [
+			{ value: EnumConfig.OrderStatus.Unpaid, label: t('enum.order_status.unpaid') },
+			{ value: EnumConfig.OrderStatus.Processing, label: t('enum.order_status.processing') },
+			{ value: EnumConfig.OrderStatus.Shipping, label: t('enum.order_status.shipping') },
+			{ value: EnumConfig.OrderStatus.Completed, label: t('enum.order_status.completed') },
+			{ value: EnumConfig.OrderStatus.Cancelled, label: t('enum.order_status.cancelled') },
+		],
 	}
 }
 
