@@ -8,7 +8,7 @@ import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useConfirm } from '@/hooks/useConfirm'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
-import { isEmail, isPhone, isRequired, maxLen } from '@/utils/validateUtil'
+import { maxLen } from '@/utils/validateUtil'
 import { DeleteRounded, EditRounded } from '@mui/icons-material'
 import { Button, Paper, Stack, Typography } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
@@ -37,26 +37,18 @@ const ManagerSupplierPage = () => {
 		sortParam,
 	])
 
-	const totalPage = useMemo(() => {
-		const apiTotalPage = data?.totalPage
-		if (apiTotalPage) return apiTotalPage
-		const totalItems =
-			(data && (data.totalItems ?? data.totalCount ?? data.total)) ??
-			(Array.isArray(data) ? data.length : 0)
-		const pages = Math.ceil((totalItems || 0) / (pageSize || 1))
-		return pages || 1
-	}, [data, pageSize])
+	const totalPage = data?.totalPage ?? 1
 
 	const postSupplier = useAxiosSubmit({
 		url: ApiUrls.SUPPLIER.MANAGEMENT.INDEX,
 		method: 'POST',
 	})
+	const updateUrl = selectedRow?.id ? ApiUrls.SUPPLIER.MANAGEMENT.DETAIL(selectedRow.id) : ''
 	const putSupplier = useAxiosSubmit({
-		url: ApiUrls.SUPPLIER.MANAGEMENT.INDEX,
+		url: updateUrl,
 		method: 'PUT',
 	})
 	const deleteSupplier = useAxiosSubmit({
-		url: ApiUrls.SUPPLIER.MANAGEMENT.INDEX,
 		method: 'DELETE',
 	})
 
@@ -72,21 +64,21 @@ const ManagerSupplierPage = () => {
 
 	const formFields = useMemo(
 		() => [
-			{ key: 'name', title: t('supplier.field.name'), validate: [isRequired(), maxLen(255)] },
-			{ key: 'phone', title: t('supplier.field.phone'), validate: [isPhone(), maxLen(20)] },
-			{ key: 'email', title: t('supplier.field.email'), validate: [isEmail(), maxLen(255)] },
+			{ key: 'name', title: t('supplier.field.name'), validate: [maxLen(255)] },
+			{ key: 'phone', title: t('supplier.field.phone'), validate: [maxLen(20)] },
+			{ key: 'email', title: t('supplier.field.email'), validate: [maxLen(255)] },
 			{
 				key: 'address',
 				title: t('supplier.field.address'),
 				validate: [maxLen(255)],
-				multiline: true,
+				multiline: 2,
 				rows: 2,
 			},
 			{
 				key: 'note',
 				title: t('supplier.field.note'),
 				validate: [maxLen(500)],
-				multiline: true,
+				multiline: 3,
 				rows: 3,
 			},
 		],
@@ -214,9 +206,7 @@ const ManagerSupplierPage = () => {
 				title={t('supplier.dialog.update_title')}
 				onSubmit={async ({ values, closeDialog }) => {
 					if (!selectedRow?.id) return
-					const ok = await putSupplier.submit(values, {
-						overrideUrl: ApiUrls.SUPPLIER.MANAGEMENT.DETAIL(selectedRow.id),
-					})
+					const ok = await putSupplier.submit(values)
 					if (ok) {
 						closeDialog()
 						setSelectedRow({})
