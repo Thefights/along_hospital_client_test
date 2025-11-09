@@ -1,4 +1,4 @@
-import TeleSessionCall from '@/components/TeleSessionCall'
+import TeleSessionCall from '@/pages/patients/meetingRoomPage/meetingRoomPage/section/TeleSessionCall'
 import { Box, Container, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 
