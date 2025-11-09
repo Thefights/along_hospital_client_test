@@ -1,0 +1,32 @@
+{
+    "order": {
+        "title": {
+            "order_management": "Quản lý đơn hàng",
+            "detail": "Chi tiết đơn hàng"
+        },
+        "field": {
+            "id": "Mã đơn",
+            "order_date": "Ngày đặt",
+            "delivery_date": "Ngày giao",
+            "status": "Trạng thái",
+            "transaction_id": "Mã giao dịch",
+            "voucher": "Mã giảm giá",
+            "origin_price": "Giá gốc",
+            "total_discount": "Giảm giá",
+            "final_price": "Thành tiền",
+            "final_price_currency": "Thành tiền ({currency})",
+            "medicine_name": "Thuốc",
+            "medicine_brand": "Thương hiệu",
+            "medicine_unit": "Đơn vị",
+            "quantity": "Số lượng",
+            "unit_price": "Đơn giá",
+            "discount_amount": "Số tiền giảm"
+        },
+        "text": {
+            "no_orders": "Không có đơn hàng nào.",
+            "order_summary": "Tổng quan đơn hàng",
+            "order_details": "Sản phẩm trong đơn",
+            "unknown": "Không rõ"
+        }
+    }
+}

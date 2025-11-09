@@ -159,8 +159,14 @@ export const ApiUrls = {
 			INDEX: `/supplier-management`,
 			GET_ALL: `/supplier-management/all`,
 			DETAIL: (id) => `/supplier-management/${id}`,
-   }
-  },
+		},
+	},
+	ORDER: {
+		MANAGEMENT: {
+			INDEX: `/order-management`,
+			DETAIL: (id) => `/order-management/${id}`,
+		},
+	},
 	FEEDBACK: {
 		INDEX: `/feedback`,
 		DETAIL: (id) => `/feedback/${id}`,

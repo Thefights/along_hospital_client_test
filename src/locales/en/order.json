@@ -1,0 +1,32 @@
+{
+    "order": {
+        "title": {
+            "order_management": "Order Management",
+            "detail": "Order Detail"
+        },
+        "field": {
+            "id": "Order ID",
+            "order_date": "Order Date",
+            "delivery_date": "Delivery Date",
+            "status": "Status",
+            "transaction_id": "Transaction ID",
+            "voucher": "Voucher",
+            "origin_price": "Origin Price",
+            "total_discount": "Discount",
+            "final_price": "Final Price",
+            "final_price_currency": "Final Price ({currency})",
+            "medicine_name": "Medicine",
+            "medicine_brand": "Brand",
+            "medicine_unit": "Unit",
+            "quantity": "Quantity",
+            "unit_price": "Unit Price",
+            "discount_amount": "Discount Amount"
+        },
+        "text": {
+            "no_orders": "No orders available.",
+            "order_summary": "Order Summary",
+            "order_details": "Order Items",
+            "unknown": "Unknown"
+        }
+    }
+}

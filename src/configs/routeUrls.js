@@ -64,6 +64,7 @@ export const routeUrls = {
 		DASHBOARD: '/',
 		PROFILE: '/profile',
 		APPOINTMENT_MANAGEMENT: '/appointment',
+		ORDER_MANAGEMENT: '/order-management',
 		BLOG: {
 			INDEX: '/blogs',
 			CREATE: '/blogs/create',
