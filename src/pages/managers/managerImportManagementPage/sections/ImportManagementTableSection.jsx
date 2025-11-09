@@ -43,7 +43,13 @@ const ImportManagementTableSection = ({
 	const supplierStore = useReduxStore({
 		selector: (state) => state.management.suppliers,
 		setStore: setSuppliersStore,
-		dataToStore: (response) => response?.collection || [],
+		dataToStore: (response) => {
+			if (Array.isArray(response?.collection)) return response.collection
+			if (Array.isArray(response?.items)) return response.items
+			if (Array.isArray(response?.data)) return response.data
+			if (Array.isArray(response)) return response
+			return []
+		},
 	})
 
 	const importPost = useAxiosSubmit({
