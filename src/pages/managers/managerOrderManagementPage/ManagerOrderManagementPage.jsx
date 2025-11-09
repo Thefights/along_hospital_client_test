@@ -20,6 +20,7 @@ import {
 	Typography,
 } from '@mui/material'
 import { useMemo, useState } from 'react'
+import OrderManagementFilterSection from './sections/OrderManagementFilterSection'
 
 const ManagerOrderManagementPage = () => {
 	const { t } = useTranslation()
@@ -28,6 +29,7 @@ const ManagerOrderManagementPage = () => {
 	const [page, setPage] = useState(1)
 	const [pageSize, setPageSize] = useState(10)
 	const [search, setSearch] = useState('')
+	const [filters, setFilters] = useState({ status: '', orderDate: '', deliveryDate: '' })
 	const [selectedOrder, setSelectedOrder] = useState(null)
 	const [openDetail, setOpenDetail] = useState(false)
 
@@ -38,6 +40,14 @@ const ManagerOrderManagementPage = () => {
 
 	const sortParam = useMemo(() => `${sort.key ?? 'orderDate'} ${sort.direction ?? 'desc'}`, [sort])
 
+	const normalizedFilters = useMemo(() => {
+		const nextFilters = {}
+		if (filters.status) nextFilters.status = filters.status
+		if (filters.orderDate) nextFilters.orderDate = filters.orderDate
+		if (filters.deliveryDate) nextFilters.deliveryDate = filters.deliveryDate
+		return nextFilters
+	}, [filters])
+
 	const fetchParams = useMemo(() => {
 		const trimmedSearch = search.trim()
 		return {
@@ -45,14 +55,44 @@ const ManagerOrderManagementPage = () => {
 			pageSize,
 			sort: sortParam,
 			...(trimmedSearch ? { keyword: trimmedSearch } : {}),
+			...normalizedFilters,
 		}
-	}, [page, pageSize, sortParam, search])
+	}, [page, pageSize, sortParam, search, normalizedFilters])
 
 	const { loading, data } = useFetch(ApiUrls.ORDER.MANAGEMENT.INDEX, fetchParams, [fetchParams])
 
 	const orders = useMemo(() => (Array.isArray(data?.collection) ? data.collection : []), [data])
 
+	const statusOptions = useMemo(() => {
+		const uniqueStatuses = new Set()
+		orders.forEach((order) => {
+			if (order?.orderStatus) {
+				uniqueStatuses.add(order.orderStatus)
+			}
+		})
+		if (filters.status) {
+			uniqueStatuses.add(filters.status)
+		}
+		return Array.from(uniqueStatuses)
+			.sort((a, b) => String(a).localeCompare(String(b)))
+			.map((status) => ({ value: status, label: status }))
+	}, [orders, filters.status])
+
 	const totalPage = data?.totalPage ?? 1
+
+	const handleFilterChange = (nextFilters) => {
+		setFilters({
+			status: nextFilters?.status ?? '',
+			orderDate: nextFilters?.orderDate ?? '',
+			deliveryDate: nextFilters?.deliveryDate ?? '',
+		})
+		setPage(1)
+	}
+
+	const handleSearchChange = (value) => {
+		setSearch(value)
+		setPage(1)
+	}
 
 	const tableFields = useMemo(
 		() => [
@@ -130,8 +170,14 @@ const ManagerOrderManagementPage = () => {
 			<Stack spacing={2}>
 				<Typography variant='h5'>{t('order.title.order_management')}</Typography>
 				<Stack direction='row' justifyContent='space-between' alignItems='center'>
-					<SearchBar widthPercent={30} value={search} setValue={setSearch} />
+					<SearchBar widthPercent={30} value={search} setValue={handleSearchChange} />
 				</Stack>
+				<OrderManagementFilterSection
+					filters={filters}
+					setFilters={handleFilterChange}
+					loading={loading}
+					statusOptions={statusOptions}
+				/>
 				<GenericTable
 					data={orders}
 					fields={tableFields}

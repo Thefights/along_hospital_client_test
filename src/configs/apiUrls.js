@@ -164,7 +164,7 @@ export const ApiUrls = {
 	ORDER: {
 		MANAGEMENT: {
 			INDEX: `/order-management`,
-			DETAIL: (id) => `/order-management/${id}`,
+			//DETAIL: (id) => `/Order-Management/${id}`,
 		},
 	},
 	FEEDBACK: {

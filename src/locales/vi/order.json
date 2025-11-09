@@ -2,7 +2,8 @@
     "order": {
         "title": {
             "order_management": "Quản lý đơn hàng",
-            "detail": "Chi tiết đơn hàng"
+            "detail": "Chi tiết đơn hàng",
+            "filters": "Bộ lọc"
         },
         "field": {
             "id": "Mã đơn",

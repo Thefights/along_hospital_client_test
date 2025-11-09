@@ -2,7 +2,8 @@
     "order": {
         "title": {
             "order_management": "Order Management",
-            "detail": "Order Detail"
+            "detail": "Order Detail",
+            "filters": "Filters"
         },
         "field": {
             "id": "Order ID",
