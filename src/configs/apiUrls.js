@@ -35,7 +35,6 @@ export const ApiUrls = {
 			INDEX: `/doctor-management`,
 			GET_ALL: `/doctor-management/all`,
 			DETAIL: (id) => `/doctor-management/${id}`,
-			DELETE_SELECTED: `/doctor-management/selected`,
 		},
 	},
 	SPECIALTY: {
