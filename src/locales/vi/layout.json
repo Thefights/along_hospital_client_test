@@ -7,6 +7,7 @@
         "doctor": "Bác sĩ",
         "specialty": "Chuyên khoa",
         "blog": "Blog",
+        "vouchers": "Ưu đãi",
         "about_us": "Về chúng tôi",
         "user_menu": {
             "dashboard": "Bảng điều khiển",
@@ -14,6 +15,7 @@
             "appointments": "Cuộc hẹn",
             "medical_history": "Lịch sử y tế",
             "order_history": "Lịch sử đơn hàng",
+            "my_vouchers": "Voucher của tôi",
             "change_password": "Đổi mật khẩu",
             "setting": "Cài đặt",
             "logout": "Đăng xuất"

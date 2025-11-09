@@ -252,7 +252,7 @@ const VoucherManagementTable = ({ vouchers, loading, refetch }) => {
 	)
 
 	const medicineOptions = useMemo(() => {
-		const raw = getMedicines.data?.collection
+		const raw = getMedicines.data
 		return raw?.map((medicine) => ({
 			value: medicine.id,
 			label: `${medicine.name}${medicine.brand ? ` - ${medicine.brand}` : ''}`,

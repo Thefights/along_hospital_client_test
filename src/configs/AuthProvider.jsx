@@ -6,6 +6,7 @@ import { resetAuthStore, setAuthStore } from '@/redux/reducers/authReducer'
 import { resetPatientStore } from '@/redux/reducers/patientReducer'
 import { createContext, useEffect, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { ApiUrls } from './apiUrls'
 import axiosConfig from './axiosConfig'
 import { EnumConfig } from './enumConfig'
@@ -15,6 +16,7 @@ export const AuthContext = createContext(null)
 
 const AuthProvider = ({ children }) => {
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
 	const [accessToken, setAccessToken, removeAccessToken] = useLocalStorage('accessToken')
 	const [refreshToken, setRefreshToken, removeRefreshToken] = useLocalStorage('refreshToken')
 
@@ -45,6 +47,7 @@ const AuthProvider = ({ children }) => {
 			removeRefreshToken()
 			dispatch(resetAuthStore())
 			dispatch(resetPatientStore())
+			navigate(routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.LOGIN))
 		}
 	}
 

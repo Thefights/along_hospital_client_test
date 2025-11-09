@@ -48,6 +48,8 @@
         "more": "More",
         "result": "Result",
         "none": "None",
+        "no_": "No.",
+        "sign_here": "Sign, full name",
         "rows_per_page": "Rows per page",
         "role": {
             "manager": "Manager",

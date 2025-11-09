@@ -19,7 +19,6 @@ const VoucherFormDialog = ({
 	const { t } = useTranslation()
 	const [values, setValues] = useState(initialValues)
 	const _enum = useEnum()
-
 	const baseFields = [
 		{
 			key: 'voucherType',
