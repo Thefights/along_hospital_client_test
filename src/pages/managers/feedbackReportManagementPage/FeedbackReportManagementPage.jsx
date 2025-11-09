@@ -90,7 +90,7 @@ const FeedbackReportManagementPage = () => {
 						title: t('feedback_report.field.reason'),
 						multiple: 6,
 						required: false,
-						readonly: true,
+						props: { readOnly: true },
 					},
 				]}
 				submitLabel={t('button.close')}

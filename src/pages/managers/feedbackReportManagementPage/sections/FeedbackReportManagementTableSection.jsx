@@ -17,9 +17,6 @@ const FeedbackReportManagementTableSection = ({
 }) => {
 	const { t } = useTranslation()
 	const _enum = useEnum()
-	const styleForStatus = (status) => {
-		return defaultFeedbackReportStatusStyle(status)
-	}
 
 	const fields = [
 		{ key: 'id', title: t('feedback_report.field.id'), width: 10, sortable: true, fixedColumn: true },
@@ -29,7 +26,7 @@ const FeedbackReportManagementTableSection = ({
 			width: 20,
 			render: (val) => {
 				const status = val || ''
-				const { color, variant } = styleForStatus(status)
+				const { color, variant } = defaultFeedbackReportStatusStyle(status)
 				const label = getEnumLabelByValue(_enum.feedbackReportStatusEnum, status)
 				return <Chip size='small' label={label} color={color} variant={variant} />
 			},
