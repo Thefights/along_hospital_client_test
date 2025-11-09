@@ -78,6 +78,13 @@ const DoctorManagementPage = () => {
 				required: true,
 			},
 			{
+				key: 'email',
+				title: t('doctor.field.email'),
+				type: 'email',
+				validate: [maxLen(100)],
+				required: true,
+			},
+			{
 				key: 'gender',
 				title: t('doctor.field.gender'),
 				type: 'select',
