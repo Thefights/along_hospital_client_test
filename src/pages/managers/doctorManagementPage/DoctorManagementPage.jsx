@@ -68,21 +68,18 @@ const DoctorManagementPage = () => {
 				title: t('doctor.field.name'),
 				type: 'text',
 				validate: [maxLen(50)],
-				required: true,
 			},
 			{
 				key: 'phone',
 				title: t('doctor.field.phone'),
 				type: 'text',
 				validate: [maxLen(15)],
-				required: true,
 			},
 			{
 				key: 'email',
 				title: t('doctor.field.email'),
 				type: 'email',
 				validate: [maxLen(100)],
-				required: true,
 			},
 			{
 				key: 'gender',
@@ -93,7 +90,6 @@ const DoctorManagementPage = () => {
 					{ label: t('enum.gender.female'), value: EnumConfig.Gender.Female },
 					{ label: t('enum.gender.other'), value: EnumConfig.Gender.Other },
 				],
-				required: true,
 			},
 			{ key: 'dateOfBirth', title: t('doctor.field.date_of_birth'), type: 'date', required: true },
 			{
@@ -103,7 +99,6 @@ const DoctorManagementPage = () => {
 				options: (specialtyStore.data || [])
 					.map((s) => ({ value: s?.id, label: s?.name }))
 					.filter((o) => o.value != null),
-				required: true,
 			},
 			{
 				key: 'departmentId',
@@ -112,7 +107,6 @@ const DoctorManagementPage = () => {
 				options: (departmentStore.data || [])
 					.map((d) => ({ value: d?.id, label: d?.name }))
 					.filter((o) => o.value != null),
-				required: true,
 			},
 			{
 				key: 'qualification',
@@ -124,14 +118,12 @@ const DoctorManagementPage = () => {
 					{ label: t('enum.qualification.phd'), value: EnumConfig.Qualification.PhD },
 					{ label: t('enum.qualification.specialist'), value: EnumConfig.Qualification.Specialist },
 				],
-				required: true,
 			},
 			{ key: 'image', title: t('doctor.field.image'), type: 'image', required: true },
 			{
 				key: 'signatureImage',
 				title: t('doctor.field.signature_image'),
 				type: 'image',
-				required: true,
 			},
 		],
 		[t, specialtyStore.data, departmentStore.data]
