@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom'
 const MeetingRoomPage = () => {
 	const { id: transactionId } = useParams()
 
-	// Nếu không có transactionId thì hiển thị lỗi
 	if (!transactionId) {
 		return (
 			<Box

@@ -21,7 +21,7 @@ const JoinMeetingRoomPage = () => {
 		const code = roomCode.trim()
 		if (!code) return
 		// Điều hướng tới route meeting room với transaction ID
-		navigate(routeUrls.PATIENT.APPOINTMENT.MEETING_ROOM_TOKEN(code))
+		navigate(routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.APPOINTMENT.MEETING_ROOM_TOKEN(code)))
 	}
 
 	return (

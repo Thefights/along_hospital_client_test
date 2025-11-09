@@ -1,5 +1,6 @@
-import axiosConfig from '@/configs/axiosConfig'
+import { ApiUrls } from '@/configs/apiUrls'
 import useAuth from '@/hooks/useAuth'
+import useFetch from '@/hooks/useFetch'
 import useMeetingSignalR from '@/hooks/useMeetingSignalR'
 import { useLocalStorage } from '@/hooks/useStorage'
 import useTranslation from '@/hooks/useTranslation'
@@ -15,30 +16,29 @@ const TeleSessionCall = ({ transactionId }) => {
 	const remoteVideoRef = useRef(null)
 	const [error, setError] = useState('')
 	const [participants, setParticipants] = useState([])
-	const [session, setSession] = useState(null)
 	const [hasRemoteParticipant, setHasRemoteParticipant] = useState(false)
 	const [pendingOffer, setPendingOffer] = useState(null)
 	const [remoteConnectionId, setRemoteConnectionId] = useState(null)
 	const isCaller = String(auth?.role || '').toLowerCase() === 'patient'
 
+	const { data: session, error: sessionError } = useFetch(
+		ApiUrls.TELE_SESSION.DETAIL(transactionId),
+		{},
+		[transactionId]
+	)
+
 	useEffect(() => {
-		if (!transactionId) return
-		let cancelled = false
-		;(async () => {
-			try {
-				const res = await axiosConfig.get(`/tele-session/${transactionId}`)
-				if (!cancelled) setSession(res?.data || res)
-			} catch {
-				if (!cancelled) setError(t('telehealth.error.session_not_ready'))
-			}
-		})()
-		return () => {
-			cancelled = true
+		if (sessionError) {
+			setError(t('telehealth.error.session_not_ready'))
 		}
-	}, [transactionId, t])
+	}, [sessionError, t])
 
 	const iceServers = useMemo(() => session?.credentials?.iceServers ?? [], [session])
 	const signalRHubUrl = useMemo(() => session?.credentials?.signalR?.hubUrl, [session])
+
+	console.log(session)
+
+	console.log(session)
 
 	const onLocalStream = (stream) => {
 		if (localVideoRef.current) localVideoRef.current.srcObject = stream

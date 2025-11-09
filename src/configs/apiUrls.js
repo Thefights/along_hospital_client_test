@@ -103,4 +103,7 @@ export const ApiUrls = {
 			DETAIL: (id) => `/Blog-Management/${id}`,
 		},
 	},
+	TELE_SESSION: {
+		DETAIL: (id) => `/tele-session/${id}`,
+	},
 }
