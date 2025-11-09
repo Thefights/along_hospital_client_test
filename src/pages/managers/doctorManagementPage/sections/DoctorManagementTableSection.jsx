@@ -5,7 +5,7 @@ import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useConfirm } from '@/hooks/useConfirm'
 import useTranslation from '@/hooks/useTranslation'
 import { Button, Stack } from '@mui/material'
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo } from 'react'
 
 const DoctorManagementTableSection = ({
 	doctors,
@@ -16,8 +16,6 @@ const DoctorManagementTableSection = ({
 	onCreate = () => {},
 	onEdit = () => {},
 }) => {
-	const [selectedIds, setSelectedIds] = useState([])
-
 	const confirm = useConfirm()
 	const { t } = useTranslation()
 
@@ -25,21 +23,26 @@ const DoctorManagementTableSection = ({
 		method: 'DELETE',
 	})
 
-	const handleDeleteClick = async (row) => {
-		const isConfirmed = await confirm({
-			confirmText: t('button.delete'),
-			confirmColor: 'error',
-			title: t('doctor.title.delete'),
-			description: `${t('doctor.title.delete_confirm')} ${row.name}?`,
-		})
-
-		if (isConfirmed) {
-			await deleteDoctor.submit(undefined, {
-				overrideUrl: ApiUrls.DOCTOR.MANAGEMENT.DETAIL(row.id),
+	const handleDeleteClick = useCallback(
+		async (row) => {
+			const isConfirmed = await confirm({
+				confirmText: t('button.delete'),
+				confirmColor: 'error',
+				title: t('doctor.title.delete'),
+				description: `${t('doctor.title.delete_confirm')} ${row.name}?`,
 			})
-			refetch()
-		}
-	}
+
+			if (isConfirmed) {
+				const res = await deleteDoctor.submit(undefined, {
+					overrideUrl: ApiUrls.DOCTOR.MANAGEMENT.DETAIL(row.id),
+				})
+				if (res) {
+					refetch()
+				}
+			}
+		},
+		[confirm, t, deleteDoctor, refetch]
+	)
 
 	const fields = useMemo(
 		() => [
@@ -86,8 +89,6 @@ const DoctorManagementTableSection = ({
 				setSort={setSort}
 				rowKey='id'
 				canSelectRows={true}
-				selectedRows={selectedIds}
-				setSelectedRows={setSelectedIds}
 				loading={loading}
 			/>
 		</>
