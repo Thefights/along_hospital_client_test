@@ -5,6 +5,12 @@
             "female": "Female",
             "other": "Other"
         },
+        "qualification": {
+            "bachelor": "Bachelor",
+            "master": "Master",
+            "phd": "PhD",
+            "specialist": "Specialist"
+        },
         "blog_type": {
             "health": "Health",
             "news": "News",
@@ -42,6 +48,10 @@
         "appointment_meeting_type": {
             "in_person": "In-person",
             "telehealth": "Telehealth"
+        },
+        "attendance_log_type": {
+            "check_in": "Check-in",
+            "check_out": "Check-out"
         },
         "severity_level": {
             "mild": "Mild",
@@ -81,6 +91,23 @@
             "bottle": "Bottle",
             "tube": "Tube",
             "other": "Other"
+        },
+        "voucher_status": {
+            "active": "Active",
+            "expired": "Expired"
+        },
+        "voucher_type": {
+            "patient": "Patient",
+            "medicine": "Medicine"
+        },
+        "feedback_report_status": {
+            "pending": "Pending",
+            "resolved": "Resolved",
+            "rejected": "Rejected"
+        },
+        "voucher_discount_type": {
+            "percentage": "Percentage",
+            "fixed_amount": "Fixed Amount"
         }
     }
 }

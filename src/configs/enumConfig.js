@@ -102,6 +102,18 @@ export const EnumConfig = {
 		Other: 'Other',
 	},
 
+	//For Doctors
+	Qualification: {
+		Bachelor: 'Bachelor',
+		Master: 'Master',
+		PhD: 'PhD',
+		Specialist: 'Specialist',
+	},
+	AttendanceLogType: {
+		CheckIn: 'CheckIn',
+		CheckOut: 'CheckOut',
+	},
+
 	// For medicines
 	MedicineUnit: {
 		Tablet: 'Tablet',
@@ -113,5 +125,26 @@ export const EnumConfig = {
 		Bottle: 'Bottle',
 		Tube: 'Tube',
 		Other: 'Other',
+	},
+
+	//Voucher
+	VoucherStatus: {
+		Active: 'Active',
+		Expired: 'Expired',
+	},
+	VoucherType: {
+		Patient: 'Patient',
+		Medicine: 'Medicine',
+	},
+	VoucherDiscountType: {
+		Percentage: 'Percentage',
+		FixedAmount: 'FixedAmount',
+	},
+
+	//Feedback
+	FeedbackReportStatus: {
+		Pending: 'Pending',
+		Resolved: 'Resolved',
+		Rejected: 'Rejected',
 	},
 }

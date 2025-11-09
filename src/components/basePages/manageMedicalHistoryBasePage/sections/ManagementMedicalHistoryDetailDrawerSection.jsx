@@ -3,6 +3,8 @@ import {
 	defaultComplaintResolveStatusStyle,
 	defaultMedicalHistoryStatusStyle,
 } from '@/configs/defaultStylesConfig'
+import { EnumConfig } from '@/configs/enumConfig'
+import { routeUrls } from '@/configs/routeUrls'
 import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
@@ -164,9 +166,16 @@ const ManagementMedicalHistoryDetailDrawerSection = ({ open, onClose, item }) =>
 			>
 				{t('medical_history.button.view_full_detail')}
 			</Button>
-			<Button variant='outlined' startIcon={<Print />} fullWidth>
-				{t('medical_history.button.print_invoice')}
-			</Button>
+			{item?.medicalHistoryStatus === EnumConfig.MedicalHistoryStatus.Paid && (
+				<Button
+					variant='outlined'
+					startIcon={<Print />}
+					onClick={() => navigate(routeUrls.HOME.MEDICAL_HISTORY_INVOICE(item.id))}
+					fullWidth
+				>
+					{t('medical_history.button.print_invoice')}
+				</Button>
+			)}
 		</Stack>
 	)
 

@@ -11,7 +11,7 @@ import useTranslation from '@/hooks/useTranslation'
 import { formatDateToDDMMYYYY } from '@/utils/formatDateUtil'
 import { stripHtml } from '@/utils/handleStringUtil'
 import { Delete, Edit } from '@mui/icons-material'
-import { Button, Paper, Stack } from '@mui/material'
+import { Button, Paper, Stack, Typography } from '@mui/material'
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -35,16 +35,21 @@ const ManagerBlogManagementPage = () => {
 	const [selectedIds, setSelectedIds] = useState([])
 	const [search, setSearch] = useState('')
 
-	const { loading, data, fetch } = useFetch(
-		ApiUrls.BLOG.MANAGEMENT.INDEX,
-		{
+	const fetchParams = useMemo(() => {
+		const params = {
 			Page: page,
 			PageSize: pageSize,
 			Sort: `${sort.key} ${sort.direction}`,
-			Title: search || undefined,
-		},
-		[page, pageSize, sort, search]
-	)
+		}
+		if (search && search.trim()) {
+			params.Title = search.trim()
+		}
+		return params
+	}, [page, pageSize, sort, search])
+
+	const { loading, data, fetch } = useFetch(ApiUrls.BLOG.MANAGEMENT.INDEX, fetchParams, [
+		fetchParams,
+	])
 
 	const blogs = useMemo(() => (Array.isArray(data?.collection) ? data.collection : []), [data])
 	const totalItems = data?.totalCount ?? 0
@@ -127,45 +132,48 @@ const ManagerBlogManagementPage = () => {
 
 	return (
 		<Paper sx={{ py: 1, px: 2, mt: 2 }}>
-			<Stack direction='row' justifyContent='space-between' alignItems='center' my={2}>
-				<SearchBar widthPercent={30} value={search} setValue={setSearch} />
-				<Stack spacing={2} direction='row' alignItems='center'>
-					<Button
-						variant='contained'
-						color='primary'
-						onClick={() => navigate(routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.BLOG.CREATE))}
-					>
-						{t('button.create')}
-					</Button>
-					<Button
-						variant='outlined'
-						color='error'
-						disabled={!selectedIds.length}
-						onClick={handleDeleteMany}
-					>
-						{t('button.delete_selected')}
-					</Button>
+			<Stack spacing={2}>
+				<Typography variant='h5'>{t('blog.title.management')}</Typography>
+				<Stack direction='row' justifyContent='space-between' alignItems='center'>
+					<SearchBar widthPercent={30} value={search} setValue={setSearch} />
+					<Stack spacing={2} direction='row' alignItems='center'>
+						<Button
+							variant='contained'
+							color='primary'
+							onClick={() => navigate(routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.BLOG.CREATE))}
+						>
+							{t('button.create')}
+						</Button>
+						<Button
+							variant='outlined'
+							color='error'
+							disabled={!selectedIds.length}
+							onClick={handleDeleteMany}
+						>
+							{t('button.delete_selected')}
+						</Button>
+					</Stack>
 				</Stack>
+				<GenericTable
+					data={blogs}
+					fields={fields}
+					rowKey='id'
+					sort={sort}
+					setSort={setSort}
+					canSelectRows={true}
+					selectedRows={selectedIds}
+					setSelectedRows={setSelectedIds}
+					loading={loading}
+				/>
+				<GenericTablePagination
+					totalPage={Math.ceil(totalItems / pageSize)}
+					page={page}
+					setPage={setPage}
+					pageSize={pageSize}
+					setPageSize={setPageSize}
+					loading={loading}
+				/>
 			</Stack>
-			<GenericTable
-				data={blogs}
-				fields={fields}
-				rowKey='id'
-				sort={sort}
-				setSort={setSort}
-				canSelectRows={true}
-				selectedRows={selectedIds}
-				setSelectedRows={setSelectedIds}
-				loading={loading}
-			/>
-			<GenericTablePagination
-				totalPage={Math.ceil(totalItems / pageSize)}
-				page={page}
-				setPage={setPage}
-				pageSize={pageSize}
-				setPageSize={setPageSize}
-				loading={loading}
-			/>
 		</Paper>
 	)
 }

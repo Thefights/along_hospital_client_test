@@ -13,6 +13,9 @@ export const ApiUrls = {
 		REFRESH_TOKEN: '/auth/refresh',
 		COMPLETE_PROFILE: '/user/complete-profile',
 	},
+	HUB: {
+		CHATBOT: '/hub/chatbot',
+	},
 	USER: {
 		INDEX: `/user`,
 		PROFILE: `/user/profile`,
@@ -26,9 +29,11 @@ export const ApiUrls = {
 	},
 	DOCTOR: {
 		INDEX: `/doctor`,
+		GET_ALL: `/doctor/all`,
 		MANAGEMENT: {
 			INDEX: `/doctor-management`,
 			GET_ALL: `/doctor-management/all`,
+			DETAIL: (id) => `/doctor-management/${id}`,
 		},
 	},
 	SPECIALTY: {
@@ -42,8 +47,8 @@ export const ApiUrls = {
 	},
 	MEDICINE: {
 		INDEX: `/medicine`,
-		GETALL: `/medicine`,
 		GET_BY_ID: (id) => `/medicine/${id}`,
+		GET_ALL: `/medicine/all`,
 		MANAGEMENT: {
 			INDEX: `/medicine-management`,
 			GET_ALL: `/medicine-management/all`,
@@ -59,11 +64,23 @@ export const ApiUrls = {
 		UPDATE: (id) => `/medicine-category/${id}`,
 		DELETE: (id) => `/medicine-category/${id}`,
 	},
+	IMPORT: {
+		MANAGEMENT: {
+			INDEX: `/import-management`,
+			GET_ALL: `/import-management/all`,
+			DETAIL: (id) => `/import-management/${id}`,
+			DELETE_SELECTED: `/import-management/selected`,
+			BULK_IMPORT_FROM_EXCEL: `/import-management/bulk-import-from-excel`,
+		},
+	},
 	MEDICAL_SERVICE: {
 		INDEX: `/medical-service`,
+		GET_ALL: `/medical-service/all`,
+		DETAIL: (id) => `/medical-service/${id}`,
 		MANAGEMENT: {
 			INDEX: `/medical-service-management`,
 			GET_ALL: `/medical-service-management/all`,
+			DETAIL: (id) => `/medical-service-management/${id}`,
 		},
 	},
 	APPOINTMENT: {
@@ -91,6 +108,7 @@ export const ApiUrls = {
 	},
 	MEDICAL_HISTORY: {
 		INDEX: `/medical-history`,
+		DETAIL: (id) => `/medical-history/${id}`,
 		CREATE_COMPLAINT: (medicalHistoryId) => `/medical-history/${medicalHistoryId}/complaint`,
 		MANAGEMENT: {
 			INDEX: `/medical-history-management`,
@@ -103,6 +121,7 @@ export const ApiUrls = {
 				}`,
 			PRESCRIPTION: (medicalHistoryId) =>
 				`/medical-history-management/${medicalHistoryId}/prescription`,
+			PAYMENT_URL: (medicalHistoryId) => `/medical-history-management/${medicalHistoryId}/payment-url`,
 		},
 	},
 	BLOG: {
@@ -118,5 +137,59 @@ export const ApiUrls = {
 		ADD_TO_CART: `/cart/add-to-cart`,
 		UPDATE: `/cart/update`,
 		DELETE: (id) => `/cart/delete/${id}`,
+	VOUCHER: {
+		COLLECTIBLE: `/voucher/collectible`,
+		COLLECT: `/voucher/collect`,
+		MY_VOUCHERS: `/voucher/my-vouchers`,
+		MY_ALL_VOUCHERS: `/voucher/my-vouchers/all`,
+		MANAGEMENT: {
+			INDEX: `/voucher-management`,
+			DETAIL: (id) => `/voucher-management/${id}`,
+		},
+	},
+	PATIENT_VOUCHER: {
+		INDEX: `/patient-voucher`,
+		DETAIL: (id) => `/patient-voucher/${id}`,
+	},
+	DEPARTMENT: {
+		INDEX: `/department`,
+		GET_ALL: `/department/all`,
+		MANAGEMENT: {
+			INDEX: `/department-management`,
+			GET_ALL: `/department-management/all`,
+			DETAIL: (id) => `/department-management/${id}`,
+		},
+	},
+	SUPPLIER: {
+		MANAGEMENT: {
+			INDEX: `/supplier-management`,
+			GET_ALL: `/supplier-management/all`,
+			DETAIL: (id) => `/supplier-management/${id}`,
+		},
+	},
+	FEEDBACK: {
+		INDEX: `/feedback`,
+		DETAIL: (id) => `/feedback/${id}`,
+		GET_FEEDBACK_BY_MEDICINE: (medicineId) => `/feedback/medicine/${medicineId}`,
+	},
+	FEEDBACK_REPORT: {
+		INDEX: `/feedback-report`,
+		DETAIL: (id) => `/feedback-report/${id}`,
+		ME: `/feedback-report/me`,
+		MANAGEMENT: {
+			INDEX: `/feedback-report-management`,
+			RESOLVE: (id) => `/feedback-report-management/resolve/${id}`,
+			REJECT: (id) => `/feedback-report-management/reject/${id}`,
+		},
+	},
+	ATTENDANCE: {
+		MANAGEMENT: {
+			INDEX: `/attendance-management`,
+		},
+		STAFF_ATTENDANCE: {
+			INDEX: `/staff-attendance`,
+			CHECK_IN: `/staff-attendance/check-in`,
+			CHECK_OUT: `/staff-attendance/check-out`,
+		},
 	},
 }

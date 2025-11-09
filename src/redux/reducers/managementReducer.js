@@ -9,6 +9,7 @@ const initState = {
 	specialties: [],
 	medicalServices: [],
 	medicines: [],
+	suppliers: [],
 }
 
 const managementSlice = createSlice({
@@ -36,6 +37,9 @@ const managementSlice = createSlice({
 		setMedicinesStore: (state, action) => {
 			state.medicines = action.payload
 		},
+		setSuppliersStore: (state, action) => {
+			state.suppliers = action.payload
+		},
 	},
 })
 
@@ -47,13 +51,17 @@ const {
 	setSpecialtiesStore,
 	setMedicalServicesStore,
 	setMedicinesStore,
+	setSuppliersStore,
 } = managementSlice.actions
 
-setDoctorsStore.defaultUrl = ApiUrls.DOCTOR.MANAGEMENT.GET_ALL
-setPatientsStore.defaultUrl = ApiUrls.PATIENT.MANAGEMENT.GET_ALL
-setSpecialtiesStore.defaultUrl = ApiUrls.SPECIALTY.MANAGEMENT.GET_ALL
-setMedicalServicesStore.defaultUrl = ApiUrls.MEDICAL_SERVICE.MANAGEMENT.GET_ALL
-setMedicinesStore.defaultUrl = ApiUrls.MEDICINE.MANAGEMENT.GET_ALL
+setDoctorsStore.defaultUrl = ApiUrls.DOCTOR.GET_ALL
+setPatientsStore.defaultUrl = ApiUrls.PATIENT.MANAGEMENT.GET_ALL // Only manager can get this
+setSpecialtiesStore.defaultUrl = ApiUrls.SPECIALTY.GET_ALL
+setMedicalServicesStore.defaultUrl = ApiUrls.MEDICAL_SERVICE.GET_ALL
+setMedicinesStore.defaultUrl = ApiUrls.MEDICINE.GET_ALL
+setDepartmentsStore.defaultUrl = ApiUrls.DEPARTMENT.MANAGEMENT.GET_ALL // Only manager can get this
+setMedicineCategoriesStore.defaultUrl = ApiUrls.MEDICINE_CATEGORY.GET_ALL
+setSuppliersStore.defaultUrl = ApiUrls.SUPPLIER.MANAGEMENT.GET_ALL
 
 export {
 	setDepartmentsStore,
@@ -63,6 +71,7 @@ export {
 	setMedicinesStore,
 	setPatientsStore,
 	setSpecialtiesStore,
+	setSuppliersStore,
 }
 
 export default managementSlice.reducer

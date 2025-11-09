@@ -4,6 +4,7 @@
             "medical_history_information": "Thông tin lịch sử y tế",
             "service_details": "Chi tiết dịch vụ y tế",
             "prescription": "Đơn thuốc",
+            "prescription_details": "Chi tiết đơn thuốc",
             "complaint": "Khiếu nại",
             "create_medical_history": "Tạo lịch sử y tế",
             "select_patient": "Chọn bệnh nhân",
@@ -12,7 +13,12 @@
             "no_chosen_patient": "Chưa chọn bệnh nhân",
             "medical_record_info": "Thông tin hồ sơ (sẽ điền sau khi tạo)",
             "medical_history_management": "Quản lý lịch sử y tế",
-            "medical_history_detail": "Chi tiết lịch sử y tế"
+            "medical_history_detail": "Chi tiết lịch sử y tế",
+            "invoice": "Hóa đơn lịch sử y tế",
+            "patient_info": "Thông tin bệnh nhân",
+            "doctor_info": "Thông tin bác sĩ",
+            "examination_info": "Thông tin khám bệnh",
+            "medication_guide": "Hướng dẫn dùng thuốc"
         },
         "placeholder": {
             "no_service": "Không có dịch vụ y tế nào được ghi nhận",
@@ -21,7 +27,8 @@
             "search_patient_name": "Tìm kiếm theo tên bệnh nhân...",
             "search_doctor_name": "Tìm kiếm theo tên bác sĩ...",
             "search_patient_in_create": "Tìm kiếm theo số điện thoại/tên/email/mã số bệnh nhân...",
-            "note_edit_after_creation": "Sau khi tạo, mở trang chi tiết để cập nhật các trường này"
+            "note_edit_after_creation": "Sau khi tạo, mở trang chi tiết để cập nhật các trường này",
+            "prescription_note": "Lưu ý: Bệnh nhân dùng thuốc đúng liều, đúng thời gian theo hướng dẫn của bác sĩ. Không tự ý ngưng thuốc hoặc thay đổi liều khi chưa hỏi ý kiến bác sĩ."
         },
         "field": {
             "id": "ID lịch sử y tế",
@@ -42,6 +49,7 @@
                 "grand_total": "Tổng cộng"
             },
             "prescription": {
+                "id": "ID đơn thuốc",
                 "prescription": "Đơn thuốc",
                 "doctor_note": "Ghi chú của bác sĩ",
                 "medication_days": "Số ngày dùng thuốc",
@@ -49,7 +57,11 @@
                 "prescription_detail": {
                     "medicine": "Thuốc",
                     "dosage": "Liều lượng (mỗi lần)",
-                    "frequency_per_day": "Tần suất (mỗi ngày)"
+                    "frequency_per_day": "Tần suất (mỗi ngày)",
+                    "medicine_name": "Tên thuốc",
+                    "medicine_brand": "Thương hiệu thuốc",
+                    "medicine_image": "Hình ảnh thuốc",
+                    "medicine_unit": "Đơn vị thuốc"
                 }
             },
             "complaint": {
@@ -58,6 +70,12 @@
                 "resolve_status": "Trạng thái giải quyết khiếu nại",
                 "response": "Phản hồi",
                 "type": "Loại khiếu nại"
+            },
+            "invoice": {
+                "subtotal": "Tổng phụ",
+                "tax": "Thuế ({tax}%)",
+                "total": "Tổng cộng",
+                "creator": "Người tạo hóa đơn"
             }
         },
         "button": {
@@ -82,7 +100,7 @@
                 "update_medical_history": "Cập nhật lịch sử y tế",
                 "add_medical_service": "Thêm dịch vụ y tế",
                 "create_prescription": "Tạo đơn thuốc",
-                "upsert_prescription": "Cập nhật đơn thuốc",
+                "update_prescription": "Cập nhật đơn thuốc",
                 "create_complaint": "Tạo khiếu nại",
                 "respond_complaint": "Phản hồi khiếu nại"
             },

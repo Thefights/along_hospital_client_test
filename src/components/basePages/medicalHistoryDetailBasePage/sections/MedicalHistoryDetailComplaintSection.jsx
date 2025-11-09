@@ -1,9 +1,10 @@
 import SkeletonBox from '@/components/skeletons/SkeletonBox'
+import { defaultComplaintResolveStatusStyle } from '@/configs/defaultStylesConfig'
 import { EnumConfig } from '@/configs/enumConfig'
 import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
 import { getEnumLabelByValue } from '@/utils/handleStringUtil'
-import { Button, Paper, Stack, Typography } from '@mui/material'
+import { Button, Chip, Paper, Stack, Typography } from '@mui/material'
 
 const MedicalHistoryDetailComplaintSection = ({
 	complaint,
@@ -61,9 +62,15 @@ const MedicalHistoryDetailComplaintSection = ({
 						},
 						{
 							label: t('complaint.field.resolve_status'),
-							value: getEnumLabelByValue(
-								_enum.complaintResolveStatusOptions,
-								complaint?.complaintResolveStatus
+							value: (
+								<Chip
+									label={getEnumLabelByValue(
+										_enum.complaintResolveStatusOptions,
+										complaint?.complaintResolveStatus
+									)}
+									size='small'
+									color={defaultComplaintResolveStatusStyle(complaint?.complaintResolveStatus)}
+								/>
 							),
 						},
 					].map((field) => (

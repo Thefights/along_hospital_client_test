@@ -1,0 +1,14 @@
+{
+    "payment": {
+        "cancel": {
+            "title": "Thanh toán đã bị hủy",
+            "subtitle": "Cảm ơn bạn đã quan tâm đến dịch vụ của Along Hospital.",
+            "help": "Nếu cần hỗ trợ, vui lòng liên hệ bộ phận chăm sóc khách hàng."
+        },
+        "success": {
+            "title": "Thanh toán thành công",
+            "subtitle": "Cảm ơn bạn đã sử dụng dịch vụ của Along Hospital.",
+            "wish": "Chúc bạn một ngày thật nhiều sức khỏe!"
+        }
+    }
+}

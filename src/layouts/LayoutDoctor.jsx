@@ -1,14 +1,15 @@
 import { default as DashboardDrawer } from '@/components/layouts/DashboardDrawer'
 import DashboardHeader from '@/components/layouts/DashboardHeader'
+import { routeUrls } from '@/configs/routeUrls'
 import { default as useAuth } from '@/hooks/useAuth'
 import { default as useReduxStore } from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
 import { setProfileStore } from '@/redux/reducers/patientReducer'
 import {
 	DashboardRounded,
-	Inventory2Rounded,
-	LocalHospitalRounded,
-	PeopleAltRounded,
+	DescriptionRounded,
+	EventAvailableRounded,
+	EventRounded,
 	Person,
 	SettingsRounded,
 } from '@mui/icons-material'
@@ -29,48 +30,56 @@ const LayoutDoctor = () => {
 
 	const sections = [
 		{
-			title: 'Resource',
 			items: [
-				{ key: 'dashboard', label: 'Dashboard', icon: <DashboardRounded />, url: '/admin' },
 				{
-					key: 'staff',
-					label: 'Staff',
-					icon: <PeopleAltRounded />,
-					of: [
-						{ key: 'doctors', label: 'Doctors', icon: <LocalHospitalRounded />, url: '/admin/doctors' },
-						{ key: 'nurses', label: 'Nurses', icon: <PeopleAltRounded />, url: '/admin/nurses' },
-					],
+					key: 'dashboard',
+					label: 'Dashboard',
+					icon: <DashboardRounded />,
+					url: routeUrls.BASE_ROUTE.DOCTOR(),
+				},
+			],
+		},
+		{
+			title: 'Work',
+			items: [
+				{
+					key: 'appointment',
+					label: 'Appointments',
+					icon: <EventAvailableRounded />,
+					url: routeUrls.BASE_ROUTE.DOCTOR(routeUrls.DOCTOR.APPOINTMENT_MANAGEMENT),
 				},
 				{
-					key: 'inventory',
-					label: 'Inventory',
-					icon: <Inventory2Rounded />,
-					of: [
-						{
-							key: 'medicines',
-							label: 'Medicines',
-							icon: <Inventory2Rounded />,
-							url: '/admin/medicines',
-						},
-						{
-							key: 'supplies',
-							label: 'Medical Supplies',
-							icon: <Inventory2Rounded />,
-							url: '/admin/supplies',
-						},
-					],
+					key: 'medical-history',
+					label: 'Medical History',
+					icon: <DescriptionRounded />,
+					url: routeUrls.BASE_ROUTE.DOCTOR(routeUrls.DOCTOR.MEDICAL_HISTORY.INDEX),
+				},
+			],
+		},
+		{
+			title: 'Personal',
+			items: [
+				{
+					key: 'attendance',
+					label: 'Attendance',
+					icon: <EventRounded />,
+					url: routeUrls.BASE_ROUTE.DOCTOR(routeUrls.DOCTOR.ATTENDANCE),
 				},
 			],
 		},
 		{
 			title: 'System',
-			items: [
-				{ key: 'settings', label: 'Settings', icon: <SettingsRounded />, url: '/admin/settings' },
-			],
+			items: [{ key: 'settings', label: 'Settings', icon: <SettingsRounded />, url: '/settings' }],
 		},
 	]
 
-	const userMenuItems = [{ label: t('header.user_menu.profile'), url: '/profile', icon: <Person /> }]
+	const userMenuItems = [
+		{
+			label: t('header.user_menu.profile'),
+			url: routeUrls.BASE_ROUTE.DOCTOR(routeUrls.DOCTOR.PROFILE),
+			icon: <Person />,
+		},
+	]
 
 	return (
 		<Stack direction={'row'}>

@@ -20,7 +20,7 @@ const CreateMedicalHistorySearchPatientSection = ({
 					<SearchBar
 						placeholder={t('medical_history.placeholder.search_patient_in_create')}
 						value={searchTerm}
-						onChange={(e) => setSearchTerm(e.target.value)}
+						setValue={setSearchTerm}
 					/>
 				</Box>
 				<Button variant='outlined' startIcon={<PersonAdd />} onClick={onCreateNewPatientClick}>

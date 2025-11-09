@@ -4,6 +4,7 @@
             "medical_history_information": "Medical History Information",
             "service_details": "Service Details",
             "prescription": "Prescription",
+            "prescription_details": "Prescription Details",
             "complaint": "Complaint",
             "create_medical_history": "Create Medical History",
             "select_patient": "Select Patient",
@@ -12,7 +13,12 @@
             "no_chosen_patient": "No patient selected",
             "medical_record_info": "Medical Record Info (will be filled after creation)",
             "medical_history_management": "Medical History Management",
-            "medical_history_detail": "Medical History Detail"
+            "medical_history_detail": "Medical History Detail",
+            "invoice": "Medical History Invoice",
+            "patient_info": "Patient Information",
+            "doctor_info": "Doctor Information",
+            "examination_info": "Examination Information",
+            "medication_guide": "Medication Guide"
         },
         "placeholder": {
             "no_service": "No medical services recorded",
@@ -21,7 +27,8 @@
             "search_patient_name": "Search by patient name...",
             "search_doctor_name": "Search by doctor name...",
             "search_patient_in_create": "Search by patient phone/name/email/medical number...",
-            "note_edit_after_creation": "After creation, open detail page to update these fields"
+            "note_edit_after_creation": "After creation, open detail page to update these fields",
+            "prescription_note": "Note: Patients should take medication with the correct dosage and duration as instructed by the doctor. Do not stop or change the dosage without consulting the doctor."
         },
         "field": {
             "id": "Medical History ID",
@@ -42,6 +49,7 @@
                 "grand_total": "Grand Total"
             },
             "prescription": {
+                "id": "Prescription ID",
                 "prescription": "Prescription",
                 "doctor_note": "Doctor's Note",
                 "medication_days": "Medication Days",
@@ -49,7 +57,11 @@
                 "prescription_detail": {
                     "medicine": "Medicine",
                     "dosage": "Dosage (per time)",
-                    "frequency_per_day": "Frequency (per day)"
+                    "frequency_per_day": "Frequency (per day)",
+                    "medicine_name": "Medicine Name",
+                    "medicine_brand": "Medicine Brand",
+                    "medicine_image": "Medicine Image",
+                    "medicine_unit": "Medicine Unit"
                 }
             },
             "complaint": {
@@ -58,6 +70,12 @@
                 "resolve_status": "Complaint Resolve Status",
                 "response": "Response",
                 "type": "Complaint Type"
+            },
+            "invoice": {
+                "subtotal": "Subtotal",
+                "tax": "Tax ({tax}%)",
+                "total": "Total",
+                "creator": "Invoice Creator"
             }
         },
         "button": {
@@ -82,7 +100,7 @@
                 "update_medical_history": "Update Medical History",
                 "add_medical_service": "Add Medical Service",
                 "create_prescription": "Create Prescription",
-                "upsert_prescription": "Upsert Prescription",
+                "update_prescription": "Update Prescription",
                 "create_complaint": "Create Complaint",
                 "respond_complaint": "Respond to Complaint"
             },

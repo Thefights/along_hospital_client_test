@@ -10,6 +10,7 @@ const MedicalHistoryDetailFooterSection = ({
 	onClickCompleteMedicalHistory,
 	onClickPayment,
 	onClickPrintInvoice,
+	loadingPayment = false,
 }) => {
 	const { t } = useTranslation()
 
@@ -57,7 +58,7 @@ const MedicalHistoryDetailFooterSection = ({
 					</>
 				)}
 				{isProcessedStatus && (
-					<Button variant='contained' onClick={onClickPayment}>
+					<Button variant='contained' loading={loadingPayment} onClick={onClickPayment}>
 						{t('medical_history.button.payment')}
 					</Button>
 				)}

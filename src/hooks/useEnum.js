@@ -183,6 +183,53 @@ export default function useEnum() {
 				label: t('enum.medicine_unit.other'),
 			},
 		],
+
+		// For vouchers
+		voucherStatusOptions: [
+			{ value: EnumConfig.VoucherStatus.Active, label: t('enum.voucher_status.active') },
+			{ value: EnumConfig.VoucherStatus.Expired, label: t('enum.voucher_status.expired') },
+		],
+		voucherTypeOptions: [
+			{ value: EnumConfig.VoucherType.Patient, label: t('enum.voucher_type.patient') },
+			{ value: EnumConfig.VoucherType.Medicine, label: t('enum.voucher_type.medicine') },
+		],
+		voucherDiscountTypeOptions: [
+			{
+				value: EnumConfig.VoucherDiscountType.Percentage,
+				label: t('enum.voucher_discount_type.percentage'),
+			},
+			{
+				value: EnumConfig.VoucherDiscountType.FixedAmount,
+				label: t('enum.voucher_discount_type.fixed_amount'),
+			},
+		],
+
+		//For Feedbacks
+		feedbackReportStatusEnum: [
+			{
+				value: EnumConfig.FeedbackReportStatus.Pending,
+				label: t('enum.feedback_report_status.pending'),
+			},
+			{
+				value: EnumConfig.FeedbackReportStatus.Rejected,
+				label: t('enum.feedback_report_status.rejected'),
+			},
+			{
+				value: EnumConfig.FeedbackReportStatus.Resolved,
+				label: t('enum.feedback_report_status.resolved'),
+			},
+		],
+
+		attendanceLogTypeOptions: [
+			{
+				value: EnumConfig.AttendanceLogType.CheckIn,
+				label: t('enum.attendance_log_type.check_in'),
+			},
+			{
+				value: EnumConfig.AttendanceLogType.CheckOut,
+				label: t('enum.attendance_log_type.check_out'),
+			},
+		],
 	}
 }
 

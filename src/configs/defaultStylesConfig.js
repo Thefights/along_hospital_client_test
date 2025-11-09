@@ -81,3 +81,36 @@ export const defaultBlogTypeStyle = (theme, blogType) => {
 	const p = map[blogType] || theme.palette.primary
 	return { bg: p.softBg || p.main + '1A', border: p.softBorder || p.main + '33', color: p.main }
 }
+
+export const defaultVoucherStatusStyle = (status) => {
+	const map = {
+		[EnumConfig.VoucherStatus.Active]: 'success',
+		[EnumConfig.VoucherStatus.Expired]: 'error',
+	}
+	return map[status] || 'default'
+}
+
+export const defaultFeedbackReportStatusStyle = (status) => {
+	const map = {
+		[EnumConfig.FeedbackReportStatus.Pending]: 'warning',
+		[EnumConfig.FeedbackReportStatus.Resolved]: 'success',
+		[EnumConfig.FeedbackReportStatus.Rejected]: 'error',
+	}
+	return map[status] || 'default'
+}
+
+export const defaultVoucherTypeStyle = (type) => {
+	const map = {
+		[EnumConfig.VoucherType.Patient]: 'primary',
+		[EnumConfig.VoucherType.Medicine]: 'secondary',
+	}
+	return map[type] || 'default'
+}
+
+export const defaultAttendanceLogTypeStyle = (type) => {
+	const map = {
+		[EnumConfig.AttendanceLogType.CheckIn]: 'success',
+		[EnumConfig.AttendanceLogType.CheckOut]: 'error',
+	}
+	return map[type] || 'default'
+}
