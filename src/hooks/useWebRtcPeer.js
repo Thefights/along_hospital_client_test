@@ -31,7 +31,6 @@ const useWebRtcPeer = ({ iceServers = [], onLocalStream, onRemoteStream, onIceCa
 	const [isAudioEnabled, setIsAudioEnabled] = useState(true)
 	const [isVideoEnabled, setIsVideoEnabled] = useState(true)
 
-	// init peer connection
 	useEffect(() => {
 		const pc = new RTCPeerConnection({ iceServers })
 		pcRef.current = pc
@@ -61,7 +60,6 @@ const useWebRtcPeer = ({ iceServers = [], onLocalStream, onRemoteStream, onIceCa
 			pcRef.current = null
 			if (localStream) localStream.getTracks().forEach((t) => t.stop())
 		}
-		// it's okay to ignore dependencies for one-time init
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 

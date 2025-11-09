@@ -42,64 +42,45 @@ const useMeetingSignalR = ({
 }) => {
 	const connectionRef = useRef(null)
 	const startedRef = useRef(false)
-	const attemptsRef = useRef(0)
-
 	const resolvedHubUrl = useMemo(() => hubUrl, [hubUrl])
 
 	const buildConnection = useCallback(() => {
-		console.log('🔄 Starting to build connection...')
-		console.log('📡 Meeting hub URL: ', hubUrl)
-
-		const conn = new signalR.HubConnectionBuilder()
+		const connection = new signalR.HubConnectionBuilder()
 			.withUrl(resolvedHubUrl, {
 				transport: signalR.HttpTransportType.WebSockets,
 				skipNegotiation: true,
 			})
-			.withAutomaticReconnect([0, 2000, 5000]) // secondary safety net
 			.configureLogging(signalR.LogLevel.Information)
 			.build()
 
-		console.log('🛠️ Connection built successfully')
-
-		// inbound handlers
-		conn.on('JoinSucceeded', (payload) => {
-			console.log('✅ Join session succeeded:', payload)
+		connection.on('JoinSucceeded', (payload) => {
 			onJoinSucceeded && onJoinSucceeded(payload)
 		})
-		conn.on('JoinFailed', (err) => {
-			console.error('❌ Join session failed:', err)
+		connection.on('JoinFailed', (err) => {
 			onJoinFailed && onJoinFailed(err)
 		})
-		conn.on('ParticipantJoined', (participant) => {
-			console.log('👤 Participant joined:', participant)
+		connection.on('ParticipantJoined', (participant) => {
 			onParticipantJoined && onParticipantJoined(participant)
 		})
-		conn.on('ParticipantLeft', (participantId) => {
-			console.log('👋 Participant left:', participantId)
+		connection.on('ParticipantLeft', (participantId) => {
 			onParticipantLeft && onParticipantLeft(participantId)
 		})
-		// Hub broadcasts: (senderId, offer/answer/candidate)
-		conn.on('ReceiveOffer', (senderId, offer) => {
-			console.log('📨 Received offer from:', senderId)
+		connection.on('ReceiveOffer', (senderId, offer) => {
 			onOffer && onOffer(senderId, offer)
 		})
-		conn.on('ReceiveAnswer', (senderId, answer) => {
-			console.log('📩 Received answer from:', senderId)
+		connection.on('ReceiveAnswer', (senderId, answer) => {
 			onAnswer && onAnswer(senderId, answer)
 		})
-		conn.on('ReceiveIceCandidate', (senderId, candidate) => {
-			console.log('🧊 Received ICE candidate from:', senderId)
+		connection.on('ReceiveIceCandidate', (senderId, candidate) => {
 			onIceCandidate && onIceCandidate(senderId, candidate)
 		})
-		conn.on('StateUpdated', (state) => {
-			console.log('🔄 State updated:', state)
+		connection.on('StateUpdated', (state) => {
 			onStateUpdated && onStateUpdated(state)
 		})
 
-		return conn
+		return connection
 	}, [
 		resolvedHubUrl,
-		hubUrl,
 		onAnswer,
 		onIceCandidate,
 		onJoinFailed,
@@ -111,75 +92,31 @@ const useMeetingSignalR = ({
 	])
 
 	const startConnection = useCallback(async () => {
-		console.log('🚀 Starting connection attempt...')
-		if (startedRef.current) {
-			console.log('⏭️ Connection already started, skipping')
-			return
+		if (!connectionRef.current) {
+			connectionRef.current = buildConnection()
 		}
 
-		return new Promise((resolve, reject) => {
-			;(async () => {
-				try {
-					if (!connectionRef.current) {
-						console.log('🔨 Building new connection...')
-						connectionRef.current = buildConnection()
-					}
-					const conn = connectionRef.current
+		const conn = connectionRef.current
 
-					// manual retry with exponential backoff 1s / 2s / 4s
-					attemptsRef.current = 0
-					let delay = 1000
-					while (attemptsRef.current < 3) {
-						try {
-							console.log(`📡 Attempt ${attemptsRef.current + 1}/3 to connect...`)
-							await conn.start()
-							startedRef.current = true
-							console.log('✅ Connection started successfully')
+		await conn.start()
+		startedRef.current = true
 
-							// auto join after start
-							if (transactionId) {
-								console.log('🔄 Joining session:', transactionId)
-								await conn.invoke('JoinSession', transactionId)
-								console.log('✅ Join session request sent')
-							}
+		if (transactionId) {
+			await conn.invoke('JoinSession', transactionId)
+		}
 
-							// Connection successful
-							resolve(true)
-							return
-						} catch (err) {
-							attemptsRef.current += 1
-							console.error(`❌ Attempt ${attemptsRef.current}/3 failed:`, err)
-							if (attemptsRef.current >= 3) {
-								console.error('❌ All connection attempts failed')
-								reject(err)
-								return
-							}
-							console.log(`⏳ Waiting ${delay}ms before next attempt...`)
-							await new Promise((r) => setTimeout(r, delay))
-							delay *= 2
-						}
-					}
-				} catch (err) {
-					reject(err)
-				}
-			})()
-		})
+		return true
 	}, [buildConnection, transactionId])
 
 	const stopConnection = useCallback(async () => {
 		const conn = connectionRef.current
 		if (conn) {
-			try {
-				await conn.stop()
-			} catch {
-				// ignore
-			}
+			await conn.stop()
 		}
 		connectionRef.current = null
 		startedRef.current = false
 	}, [])
 
-	// outbound APIs
 	const sendOffer = useCallback(
 		async (offer) => {
 			if (!connectionRef.current) return
@@ -221,20 +158,15 @@ const useMeetingSignalR = ({
 		}
 	}, [stopConnection, transactionId])
 
-	// lifecycle
 	useEffect(() => {
-		// start immediately when token, transactionId and hubUrl are all available
 		if (!transactionId || !hubUrl) {
-			console.log('Waiting for required params:', { transactionId, hubUrl })
 			return
 		}
-
 		let cancelled = false
 		;(async () => {
 			try {
 				if (!cancelled) await startConnection()
 			} catch (err) {
-				console.error('Connection failed:', err)
 				onJoinFailed && onJoinFailed(err)
 			}
 		})()
