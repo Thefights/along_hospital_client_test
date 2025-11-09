@@ -1,7 +1,7 @@
 import { getImageFromCloud } from '@/utils/commons'
 import { Box, Stack } from '@mui/material'
 
-const MedicineImagesPreviewSection = ({ images = [], maxVisible = 1, rowId }) => {
+const ManagerMedicineManagementImagesPreviewSection = ({ images = [], maxVisible = 1, rowId }) => {
 	const extraCount = images.length - maxVisible
 
 	return (
@@ -38,4 +38,4 @@ const MedicineImagesPreviewSection = ({ images = [], maxVisible = 1, rowId }) =>
 	)
 }
 
-export default MedicineImagesPreviewSection
+export default ManagerMedicineManagementImagesPreviewSection

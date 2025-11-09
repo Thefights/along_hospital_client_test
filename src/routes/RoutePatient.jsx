@@ -4,6 +4,7 @@ import { EnumConfig } from '@/configs/enumConfig'
 import { routeUrls } from '@/configs/routeUrls'
 import useAuth from '@/hooks/useAuth'
 import LayoutPatient from '@/layouts/LayoutPatient'
+import CartPage from '@/pages/patients/cartPage/CartPage'
 import NotFoundPage from '@/pages/commons/NotFoundPage'
 import CreateAppointmentPage from '@/pages/patients/createAppointmentPage/CreateAppointmentPage'
 import PatientAppointmentHistoryPage from '@/pages/patients/patientAppointmentHistoryPage/PatientAppointmentHistoryPage'
@@ -40,6 +41,7 @@ const RoutePatient = () => {
 						path={routeUrls.PATIENT.MEDICAL_HISTORY.DETAIL(':id')}
 						element={<MedicalHistoryDetailBasePage fetchUrl={ApiUrls.MEDICAL_HISTORY.INDEX} />}
 					/>
+					<Route path={routeUrls.PATIENT.CART} element={<CartPage />} />
 					<Route path={routeUrls.PATIENT.VOUCHER.MY_VOUCHERS} element={<MyVoucherListPage />} />
 				</Route>
 			</Route>

@@ -19,7 +19,6 @@ export const ApiUrls = {
 	USER: {
 		INDEX: `/user`,
 		PROFILE: `/user/profile`,
-		CART: `/user/cart`,
 	},
 	PATIENT: {
 		MANAGEMENT: {
@@ -48,6 +47,7 @@ export const ApiUrls = {
 	},
 	MEDICINE: {
 		INDEX: `/medicine`,
+		GET_BY_ID: (id) => `/medicine/${id}`,
 		GET_ALL: `/medicine/all`,
 		MANAGEMENT: {
 			INDEX: `/medicine-management`,
@@ -131,6 +131,12 @@ export const ApiUrls = {
 			DETAIL: (id) => `/Blog-Management/${id}`,
 		},
 	},
+	CART: {
+		INDEX: `/cart`,
+		CHECKOUT: `/cart/checkout`,
+		ADD_TO_CART: `/cart/add-to-cart`,
+		UPDATE: `/cart/update`,
+		DELETE: (id) => `/cart/delete/${id}`,
 	VOUCHER: {
 		COLLECTIBLE: `/voucher/collectible`,
 		COLLECT: `/voucher/collect`,

@@ -7,7 +7,7 @@ import useTranslation from '@/hooks/useTranslation'
 import { Stack, Typography } from '@mui/material'
 import { useEffect } from 'react'
 
-const MedicineFilterBarSection = ({
+const ManagerMedicineManagementFilterBarSection = ({
 	filters,
 	categories = [],
 	loading = false,
@@ -16,7 +16,7 @@ const MedicineFilterBarSection = ({
 }) => {
 	const { t } = useTranslation()
 	const _enum = useEnum()
-	
+
 	const { reset, values, handleChange, setField, registerRef } = useForm(filters)
 	const { renderField } = useFieldRenderer(
 		values,
@@ -89,4 +89,4 @@ const MedicineFilterBarSection = ({
 	)
 }
 
-export default MedicineFilterBarSection
+export default ManagerMedicineManagementFilterBarSection
