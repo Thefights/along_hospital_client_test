@@ -219,6 +219,17 @@ export default function useEnum() {
 				label: t('enum.feedback_report_status.resolved'),
 			},
 		],
+
+		attendanceLogTypeOptions: [
+			{
+				value: EnumConfig.AttendanceLogType.CheckIn,
+				label: t('enum.attendance_log_type.check_in'),
+			},
+			{
+				value: EnumConfig.AttendanceLogType.CheckOut,
+				label: t('enum.attendance_log_type.check_out'),
+			},
+		],
 	}
 }
 

@@ -159,8 +159,8 @@ export const ApiUrls = {
 			INDEX: `/supplier-management`,
 			GET_ALL: `/supplier-management/all`,
 			DETAIL: (id) => `/supplier-management/${id}`,
-   }
-  },
+		},
+	},
 	FEEDBACK: {
 		INDEX: `/feedback`,
 		DETAIL: (id) => `/feedback/${id}`,
@@ -174,6 +174,16 @@ export const ApiUrls = {
 			INDEX: `/feedback-report-management`,
 			RESOLVE: (id) => `/feedback-report-management/resolve/${id}`,
 			REJECT: (id) => `/feedback-report-management/reject/${id}`,
+		},
+	},
+	ATTENDANCE: {
+		MANAGEMENT: {
+			INDEX: `/attendance-management`,
+		},
+		STAFF_ATTENDANCE: {
+			INDEX: `/staff-attendance`,
+			CHECK_IN: `/staff-attendance/check-in`,
+			CHECK_OUT: `/staff-attendance/check-out`,
 		},
 	},
 }

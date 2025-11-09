@@ -106,3 +106,11 @@ export const defaultVoucherTypeStyle = (type) => {
 	}
 	return map[type] || 'default'
 }
+
+export const defaultAttendanceLogTypeStyle = (type) => {
+	const map = {
+		[EnumConfig.AttendanceLogType.CheckIn]: 'success',
+		[EnumConfig.AttendanceLogType.CheckOut]: 'error',
+	}
+	return map[type] || 'default'
+}

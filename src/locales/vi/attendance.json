@@ -1,0 +1,12 @@
+{
+    "attendance": {
+        "title": {
+            "manage_attendance": "Quản Lý Nhật Ký Điểm Danh"
+        },
+        "field": {
+            "id": "ID",
+            "log_type": "Loại ghi nhận",
+            "log_time": "Thời gian ghi nhận"
+        }
+    }
+}
