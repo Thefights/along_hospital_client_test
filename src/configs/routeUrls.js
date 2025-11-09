@@ -18,6 +18,7 @@ export const routeUrls = {
 		PRIVACY_POLICY: '/privacy-policy',
 		CAREER: '/career',
 		FAQ: '/faq',
+		VOUCHERS: '/vouchers',
 		MEDICAL_HISTORY_INVOICE: (id) => `/medical-history/invoice/${id}`,
 		MEDICAL_HISTORY_PRINT_PRESCRIPTION: (id) => `/medical-history/print-prescription/${id}`,
 	},
@@ -43,6 +44,9 @@ export const routeUrls = {
 		APPOINTMENT: {
 			INDEX: '/appointment',
 			CREATE: '/appointment/create',
+		},
+		VOUCHER: {
+			MY_VOUCHERS: '/my-vouchers',
 		},
 	},
 	DOCTOR: {

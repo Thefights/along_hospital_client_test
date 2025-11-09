@@ -12,6 +12,7 @@ import BlogDetailPage from '@/pages/guests/viewBlogDetailPage/BlogDetailPage'
 import BlogPage from '@/pages/guests/viewBlogPage/BlogPage'
 import DoctorPage from '@/pages/guests/viewDoctorPage/DoctorPage'
 import SpecialtyPage from '@/pages/patients/specialtyPage/SpecialtyPage'
+import CollectibleVoucherListPage from '@/pages/patients/voucherPage/CollectibleVoucherListPage'
 import TestTable from '@/pages/TestTable'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
@@ -26,6 +27,7 @@ const RouteGuest = () => {
 				<Route element={auth?.role !== null ? <LayoutPatient /> : <LayoutGuest />}>
 					<Route path='/' index element={<HomePage />} />
 					<Route path={routeUrls.HOME.SPECIALTY} element={<SpecialtyPage />} />
+					<Route path={routeUrls.HOME.VOUCHERS} element={<CollectibleVoucherListPage />} />
 					<Route path={routeUrls.HOME.DOCTOR} element={<DoctorPage />} />
 					<Route path={routeUrls.HOME.BLOG} element={<BlogPage />} />
 					<Route path={`${routeUrls.HOME.BLOG}/:id`} element={<BlogDetailPage />} />

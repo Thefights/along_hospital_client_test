@@ -12,6 +12,7 @@ import {
 	Dashboard,
 	EventAvailable,
 	HistoryOutlined,
+	LocalOffer,
 	LockReset,
 	Person,
 } from '@mui/icons-material'
@@ -47,6 +48,7 @@ const LayoutPatient = () => {
 		},
 		{ label: t('header.specialty'), url: routeUrls.HOME.SPECIALTY },
 		{ label: t('header.blog'), url: routeUrls.HOME.BLOG },
+		{ label: t('header.vouchers'), url: routeUrls.HOME.VOUCHERS },
 		{ label: t('header.about_us'), url: routeUrls.HOME.ABOUT_US },
 	]
 
@@ -78,6 +80,11 @@ const LayoutPatient = () => {
 			label: t('header.user_menu.order_history'),
 			url: routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.ORDER_HISTORY),
 			icon: <HistoryOutlined />,
+		},
+		{
+			label: t('header.user_menu.my_vouchers'),
+			url: routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.MY_VOUCHERS),
+			icon: <LocalOffer />,
 		},
 		{
 			label: t('header.user_menu.change_password'),

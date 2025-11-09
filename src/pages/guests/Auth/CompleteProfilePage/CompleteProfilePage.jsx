@@ -43,9 +43,8 @@ const CompleteProfilePage = () => {
 					{
 						key: 'phone',
 						title: t('profile.field.phone'),
-						type: 'phone',
+						type: 'tel',
 						required: true,
-						validate: [minLen(9), maxLen(20)],
 						props: { placeholder: t('auth.register.phone_placeholder') },
 					},
 			  ]

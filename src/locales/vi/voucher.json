@@ -9,7 +9,9 @@
             "create": "Tạo voucher",
             "update": "Cập nhật voucher",
             "voucher_management": "Quản lý voucher",
-            "filters": "Bộ lọc"
+            "filters": "Bộ lọc",
+            "collectible_vouchers": "Kho Voucher",
+            "my_vouchers": "Voucher Của Tôi"
         },
         "section": {
             "basic_info": "Thông tin cơ bản",
@@ -19,11 +21,23 @@
         },
         "description": {
             "page_intro": "Quản lý tất cả voucher trong hệ thống bệnh viện.",
-            "list": "Duyệt và quản lý các voucher có sẵn."
+            "list": "Duyệt và quản lý các voucher có sẵn.",
+            "collectible_subtitle": "Thu thập voucher giảm giá mua thuốc",
+            "my_vouchers_subtitle": "Quản lý và sử dụng voucher đã thu thập",
+            "no_vouchers_title": "Bạn chưa có voucher nào",
+            "no_vouchers_subtitle": "Khám phá và thu thập voucher ưu đãi ngay hôm nay",
+            "no_collectible_title": "Không tìm thấy voucher phù hợp",
+            "no_collectible_subtitle": "Thử điều chỉnh bộ lọc hoặc xóa các tiêu chí tìm kiếm"
         },
         "button": {
             "view_detail": "Xem chi tiết",
-            "collect": "Nhận voucher"
+            "collect": "Thu thập",
+            "use_now": "Dùng ngay",
+            "used": "Đã sử dụng",
+            "expired": "Hết hạn",
+            "copy_code": "Sao chép mã",
+            "explore_vouchers": "Khám phá voucher",
+            "clear_filters": "Xóa lọc"
         },
         "field": {
             "id": "ID",
@@ -62,12 +76,18 @@
             "Expired": "Hết hạn"
         },
         "type": {
-            "Patient": "Bệnh nhân",
-            "Medicine": "Thuốc"
+            "Patient": "Bệnh nhân voucher",
+            "Medicine": "Thuốc giảm giá"
         },
         "discount_type": {
             "Percentage": "Phần trăm",
             "FixedAmount": "Số tiền cố định"
+        },
+        "label": {
+            "expire_date": "Hết hạn",
+            "remaining_quantity": "Còn {quantity}",
+            "min_purchase": "Tối thiểu {amount}",
+            "max_discount": "Giảm tối đa {amount}"
         }
     }
 }
