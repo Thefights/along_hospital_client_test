@@ -137,6 +137,7 @@ export const ApiUrls = {
 		ADD_TO_CART: `/cart/add-to-cart`,
 		UPDATE: `/cart/update`,
 		DELETE: (id) => `/cart/delete/${id}`,
+	},
 	VOUCHER: {
 		COLLECTIBLE: `/voucher/collectible`,
 		COLLECT: `/voucher/collect`,
