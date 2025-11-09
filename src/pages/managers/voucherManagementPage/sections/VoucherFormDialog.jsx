@@ -2,7 +2,7 @@ import GenericFormDialog from '@/components/dialogs/commons/GenericFormDialog'
 import { EnumConfig } from '@/configs/enumConfig'
 import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
-import { isFutureDate, isPercentage, maxLen } from '@/utils/validateUtil'
+import { isPercentage, maxLen } from '@/utils/validateUtil'
 import { useState } from 'react'
 
 const VoucherFormDialog = ({
@@ -66,6 +66,12 @@ const VoucherFormDialog = ({
 			type: 'number',
 			required: false,
 		},
+		{
+			key: 'expireDate',
+			title: t('voucher.field.expire_date'),
+			type: 'date',
+			minValue: new Date().toISOString().split('T')[0],
+		},
 	]
 
 	const patientFields = [
@@ -73,12 +79,6 @@ const VoucherFormDialog = ({
 			key: 'quantity',
 			title: t('voucher.field.quantity'),
 			type: 'number',
-		},
-		{
-			key: 'expireDate',
-			title: t('voucher.field.expire_date'),
-			type: 'date',
-			validate: [isFutureDate()],
 		},
 		{
 			key: 'image',
@@ -101,12 +101,6 @@ const VoucherFormDialog = ({
 					options: medicineOptions,
 				},
 			],
-		},
-		{
-			key: 'expireDate',
-			title: t('voucher.field.expire_date'),
-			type: 'date',
-			validate: [isFutureDate()],
 		},
 	]
 

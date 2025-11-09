@@ -1,6 +1,7 @@
 import { defaultVoucherTypeStyle } from '@/configs/defaultStylesConfig'
 import { EnumConfig } from '@/configs/enumConfig'
 import useTranslation from '@/hooks/useTranslation'
+import { getImageFromCloud } from '@/utils/commons'
 import { formatDateBasedOnCurrentLanguage } from '@/utils/formatDateUtil'
 import { formatCurrencyBasedOnCurrentLanguage } from '@/utils/formatNumberUtil'
 import { AccessTime, ContentCopy, Inventory2Rounded, LocalOffer } from '@mui/icons-material'
@@ -49,7 +50,7 @@ const VoucherCardSection = ({
 			? `−${voucher.discountValue}%`
 			: `−${formatCurrencyBasedOnCurrentLanguage(voucher.discountValue)}`
 	}, [voucher])
-
+	console.log(voucher)
 	return (
 		<Card
 			sx={{
@@ -73,7 +74,7 @@ const VoucherCardSection = ({
 					objectFit: 'cover',
 					bgcolor: theme.palette.grey[200],
 				}}
-				image={voucher?.imageUrl}
+				image={getImageFromCloud(voucher?.image)}
 				alt={voucher?.name || 'Voucher'}
 			/>
 
