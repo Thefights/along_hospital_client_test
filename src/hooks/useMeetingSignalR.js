@@ -92,11 +92,15 @@ const useMeetingSignalR = ({
 	])
 
 	const startConnection = useCallback(async () => {
+		if (startedRef.current) return
+
 		if (!connectionRef.current) {
 			connectionRef.current = buildConnection()
 		}
 
 		const conn = connectionRef.current
+
+		if (conn.state !== signalR.HubConnectionState.Disconnected) return
 
 		await conn.start()
 		startedRef.current = true
@@ -110,9 +114,11 @@ const useMeetingSignalR = ({
 
 	const stopConnection = useCallback(async () => {
 		const conn = connectionRef.current
-		if (conn) {
+
+		if (conn && conn.state !== signalR.HubConnectionState.Disconnected) {
 			await conn.stop()
 		}
+
 		connectionRef.current = null
 		startedRef.current = false
 	}, [])
@@ -159,23 +165,14 @@ const useMeetingSignalR = ({
 	}, [stopConnection, transactionId])
 
 	useEffect(() => {
-		if (!transactionId || !hubUrl) {
-			return
-		}
-		let cancelled = false
-		;(async () => {
-			try {
-				if (!cancelled) await startConnection()
-			} catch (err) {
-				onJoinFailed && onJoinFailed(err)
-			}
-		})()
+		if (!transactionId || !hubUrl) return
+
+		startConnection()
 
 		return () => {
-			cancelled = true
 			stopConnection()
 		}
-	}, [transactionId, hubUrl, startConnection, stopConnection, onJoinFailed])
+	}, [transactionId, hubUrl])
 
 	return {
 		sendOffer,

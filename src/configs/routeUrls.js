@@ -21,6 +21,10 @@ export const routeUrls = {
 		VOUCHERS: '/vouchers',
 		MEDICAL_HISTORY_INVOICE: (id) => `/medical-history/invoice/${id}`,
 		MEDICAL_HISTORY_PRINT_PRESCRIPTION: (id) => `/medical-history/print-prescription/${id}`,
+		PAYMENT: {
+			RETURN: '/payment/return',
+			CANCEL: '/payment/cancel',
+		},
 	},
 	AUTH: {
 		LOGIN: '/login',
@@ -66,6 +70,7 @@ export const routeUrls = {
 			DETAIL: (id) => `/medical-history/${id}`,
 		},
 	},
+
 	MANAGER: {
 		DASHBOARD: '/',
 		PROFILE: '/profile',
