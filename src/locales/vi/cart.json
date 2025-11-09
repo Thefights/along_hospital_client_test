@@ -15,7 +15,8 @@
         },
         "button": {
             "delete": "Xóa"
-        }
+        },
+        "continue_shopping": "Tiếp tục mua sắm "
     },
     "checkout": {
         "title": "Thanh toán",

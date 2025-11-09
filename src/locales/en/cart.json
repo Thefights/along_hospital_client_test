@@ -15,7 +15,8 @@
         },
         "button": {
             "delete": "Delete"
-        }
+        },
+        "continue_shopping": "Continue shopping"
     },
     "checkout": {
         "title": "Checkout",

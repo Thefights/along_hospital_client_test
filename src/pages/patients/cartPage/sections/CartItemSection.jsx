@@ -1,9 +1,7 @@
-'use client'
-
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
 import { Add, Delete as DeleteIcon, Remove } from '@mui/icons-material'
-import { Box, Button, Card, IconButton, Stack, Typography } from '@mui/material'
+import { Box, Button, Card, IconButton, Stack, TextField, Typography } from '@mui/material'
 
 const CartItemSection = ({ cartData, updateQuantity, handleRemove }) => {
 	const { t } = useTranslation()
@@ -65,7 +63,7 @@ const CartItemSection = ({ cartData, updateQuantity, handleRemove }) => {
 									</Typography>
 								</Stack>
 
-								<Stack direction='row' alignItems='center' spacing={40}>
+								<Stack direction='row' alignItems='center' spacing={2}>
 									<Stack
 										direction='row'
 										alignItems='center'
@@ -78,9 +76,18 @@ const CartItemSection = ({ cartData, updateQuantity, handleRemove }) => {
 										>
 											<Remove fontSize='small' />
 										</IconButton>
-										<Typography sx={{ px: 1.5, minWidth: 30, textAlign: 'center' }}>
-											{item.quantity}
-										</Typography>
+
+										<TextField
+											value={item.quantity}
+											onChange={(e) => {
+												const value = parseInt(e.target.value, 10)
+												if (!isNaN(value)) updateQuantity(item.medicineId, value)
+											}}
+											size='small'
+											sx={{ width: 50, textAlign: 'center' }}
+											inputProps={{ min: 0, style: { textAlign: 'center' } }}
+										/>
+
 										<IconButton
 											size='small'
 											onClick={() => updateQuantity(item.medicineId, item.quantity + 1)}

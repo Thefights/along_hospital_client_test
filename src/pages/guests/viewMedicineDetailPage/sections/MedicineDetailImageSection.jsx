@@ -1,7 +1,10 @@
 import { getImageFromCloud } from '@/utils/commons'
 import { Box } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 
-const MedicineDetailImageSection = ({ medicine, currentImage, setCurrentImage, theme }) => {
+const MedicineDetailImageSection = ({ medicine, currentImage, setCurrentImage }) => {
+	const theme = useTheme()
+
 	return (
 		<>
 			<Box
@@ -10,11 +13,11 @@ const MedicineDetailImageSection = ({ medicine, currentImage, setCurrentImage, t
 					aspectRatio: '1 / 1',
 					borderRadius: 2,
 					overflow: 'hidden',
-					bgcolor: theme?.palette.background.default,
+					bgcolor: theme.palette.background.default,
 					display: 'flex',
 					alignItems: 'center',
 					justifyContent: 'center',
-					boxShadow: theme?.shadows[1],
+					boxShadow: theme.shadows[1],
 				}}
 			>
 				{currentImage ? (
@@ -30,7 +33,7 @@ const MedicineDetailImageSection = ({ medicine, currentImage, setCurrentImage, t
 					/>
 				) : (
 					<Box
-						sx={{ width: '100%', height: '100%', bgcolor: theme?.palette.action.disabledBackground }}
+						sx={{ width: '100%', height: '100%', bgcolor: theme.palette.action.disabledBackground }}
 					/>
 				)}
 			</Box>
@@ -52,10 +55,10 @@ const MedicineDetailImageSection = ({ medicine, currentImage, setCurrentImage, t
 								cursor: 'pointer',
 								border:
 									currentImage === img
-										? `2px solid ${theme?.palette.primary.main}`
-										: `1px solid ${theme?.palette.divider}`,
+										? `2px solid ${theme.palette.primary.main}`
+										: `1px solid ${theme.palette.divider}`,
 								transition: 'all 0.2s ease',
-								'&:hover': { borderColor: theme?.palette.primary.main },
+								'&:hover': { borderColor: theme.palette.primary.main },
 							}}
 						/>
 					))}

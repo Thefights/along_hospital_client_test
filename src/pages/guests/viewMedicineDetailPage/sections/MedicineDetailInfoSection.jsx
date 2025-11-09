@@ -1,6 +1,11 @@
+import useTranslation from '@/hooks/useTranslation'
 import { Box, Button, Chip, Divider, Stack, Typography } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 
-const MedicineDetailInfoSection = ({ medicine, quantity, setQuantity, onAddToCart, t, theme }) => {
+const MedicineDetailInfoSection = ({ medicine, quantity, setQuantity, onAddToCart }) => {
+	const theme = useTheme()
+	const { t } = useTranslation()
+
 	return (
 		<Stack spacing={3}>
 			{medicine.medicineCategory && (

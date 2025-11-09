@@ -1,28 +1,24 @@
 import { ApiUrls } from '@/configs/apiUrls'
-import { useAxiosSubmit } from '@/hooks/useAxiosSubmit' // hook của bạn
+import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
 import { Box, CircularProgress, Container, Grid, Typography } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import MedicineDetailImageSection from './sections/MedicineDetailImageSection'
 import MedicineDetailInfoSection from './sections/MedicineDetailInfoSection'
 
-const MedicineDetailPage = () => {
-	const { id } = useParams()
+export default function MedicineDetailPage() {
 	const { t } = useTranslation()
-	const theme = useTheme()
+	const { id } = useParams()
 
-	const { data: medicine, loading, error } = useFetch(id ? ApiUrls.MEDICINE.GET_BY_ID(id) : null)
+	const { data: medicine, loading, error } = useFetch(ApiUrls.MEDICINE.GET_BY_ID(id))
 
 	const [currentImage, setCurrentImage] = useState(null)
 	const [quantity, setQuantity] = useState(1)
 
 	useEffect(() => {
-		if (medicine?.images?.length) {
-			setCurrentImage(medicine.images[0])
-		}
+		if (medicine?.images?.length) setCurrentImage(medicine.images[0])
 	}, [medicine])
 
 	const { loading: addingToCart, submit: addToCartApi } = useAxiosSubmit({
@@ -31,61 +27,51 @@ const MedicineDetailPage = () => {
 	})
 
 	const handleAddToCart = () => {
-		addToCartApi({ medicineId: medicine.id, quantity })
-	}
-
-	if (loading) {
-		return (
-			<Box display='flex' justifyContent='center' alignItems='center' minHeight='60vh'>
-				<CircularProgress />
-			</Box>
-		)
-	}
-
-	if (error) {
-		return (
-			<Container sx={{ py: 4 }}>
-				<Typography color='error'>
-					{t('common.error.loading_data')}: {error.message || 'Unknown error'}
-				</Typography>
-			</Container>
-		)
-	}
-
-	if (!medicine) {
-		return (
-			<Container sx={{ py: 4 }}>
-				<Typography>{t('common.error.not_found')}</Typography>
-			</Container>
-		)
+		if (medicine?.id) addToCartApi({ medicineId: medicine.id, quantity })
 	}
 
 	return (
 		<Container maxWidth='lg' sx={{ py: 6 }}>
-			<Grid container spacing={6} alignItems='flex-start'>
-				<Grid item xs={12} md={5}>
-					<MedicineDetailImageSection
-						medicine={medicine}
-						currentImage={currentImage}
-						setCurrentImage={setCurrentImage}
-						theme={theme}
-					/>
-				</Grid>
-
-				<Grid item xs={12} md={7}>
-					<MedicineDetailInfoSection
-						medicine={medicine}
-						quantity={quantity}
-						setQuantity={setQuantity}
-						onAddToCart={handleAddToCart}
-						t={t}
-						theme={theme}
-						loading={addingToCart}
-					/>
-				</Grid>
-			</Grid>
+			<Box>
+				{loading ? (
+					<Box display='flex' justifyContent='center' alignItems='center' minHeight='60vh'>
+						<CircularProgress />
+					</Box>
+				) : medicine?.id ? (
+					<Grid container spacing={6} alignItems='flex-start'>
+						<Grid item xs={12} md={5}>
+							<MedicineDetailImageSection
+								medicine={medicine}
+								currentImage={currentImage}
+								setCurrentImage={setCurrentImage}
+							/>
+						</Grid>
+						<Grid item xs={12} md={7}>
+							<MedicineDetailInfoSection
+								medicine={medicine}
+								quantity={quantity}
+								setQuantity={setQuantity}
+								onAddToCart={handleAddToCart}
+								loading={addingToCart}
+							/>
+						</Grid>
+					</Grid>
+				) : (
+					<Box
+						sx={{
+							p: 3,
+							textAlign: 'center',
+							bgcolor: 'background.paper',
+							borderRadius: 1,
+							minHeight: '40vh',
+						}}
+					>
+						<Typography color='text.secondary'>
+							{error ? t('common.error.loading_data') : t('common.error.not_found')}
+						</Typography>
+					</Box>
+				)}
+			</Box>
 		</Container>
 	)
 }
-
-export default MedicineDetailPage

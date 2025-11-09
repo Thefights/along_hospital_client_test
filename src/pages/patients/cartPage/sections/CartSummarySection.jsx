@@ -1,10 +1,20 @@
 import useTranslation from '@/hooks/useTranslation'
-import { Button, Divider, Paper, Stack, TextField, Typography } from '@mui/material'
+import {
+	Button,
+	Divider,
+	MenuItem,
+	Paper,
+	Select,
+	Stack,
+	TextField,
+	Typography,
+} from '@mui/material'
 import { useState } from 'react'
 
-const CartSummarySection = ({ cartData, total, checkout }) => {
+const CartSummarySection = ({ cartData, total, voucherList, onCheckout, loading }) => {
 	const { t } = useTranslation()
 	const [voucherCode, setVoucherCode] = useState('')
+	const [paymentType, setPaymentType] = useState('PayOS')
 
 	return (
 		<Paper
@@ -52,31 +62,35 @@ const CartSummarySection = ({ cartData, total, checkout }) => {
 					</Typography>
 				</Stack>
 
-				{/* Input voucher code */}
 				<TextField
 					label={t('cart.summary.voucher_code')}
 					value={voucherCode}
 					onChange={(e) => setVoucherCode(e.target.value)}
 					size='small'
 					fullWidth
-				/>
+					select
+				>
+					{voucherList.map((v) => (
+						<MenuItem key={v.id} value={v.code}>
+							{v.code} - {v.discountAmount}
+						</MenuItem>
+					))}
+				</TextField>
+
+				<Select fullWidth value={paymentType} onChange={(e) => setPaymentType(e.target.value)}>
+					<MenuItem value='PayOS'>PayOS</MenuItem>
+					<MenuItem value='VnPay'>VnPay</MenuItem>
+				</Select>
 
 				<Button
 					variant='contained'
 					size='large'
 					fullWidth
 					sx={{ mt: 2 }}
-					onClick={() =>
-						checkout.submit({
-							voucherCode: voucherCode || null,
-							paymentType: 'PayOS',
-							description: t('cart.summary.checkout_description'),
-							selectedMedicineIds: cartData.cartDetails.map((ci) => ci.medicineId),
-						})
-					}
-					disabled={checkout.loading}
+					onClick={() => onCheckout(voucherCode, paymentType)}
+					disabled={loading}
 				>
-					{checkout.loading ? t('cart.summary.processing') : t('cart.summary.checkout')}
+					{loading ? t('cart.summary.processing') : t('cart.summary.checkout')}
 				</Button>
 			</Stack>
 		</Paper>

@@ -1,9 +1,20 @@
+import { ApiUrls } from '@/configs/apiUrls'
 import { routeUrls } from '@/configs/routeUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
 import { AddShoppingCart } from '@mui/icons-material'
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
+import {
+	Button,
+	Card,
+	CardActions,
+	CardContent,
+	CardMedia,
+	IconButton,
+	Stack,
+	TextField,
+	Typography,
+} from '@mui/material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -13,7 +24,7 @@ const MedicineCardSection = ({ medicine, sx = {} }) => {
 	const [quantity, setQuantity] = useState(1)
 
 	const { loading, submit } = useAxiosSubmit({
-		url: routeUrls.CART.ADD_TO_CART,
+		url: ApiUrls.CART.ADD_TO_CART,
 		method: 'POST',
 	})
 
@@ -23,7 +34,7 @@ const MedicineCardSection = ({ medicine, sx = {} }) => {
 
 	const handleAddToCart = async () => {
 		await submit({
-			id: medicine.id,
+			medicineid: medicine.id,
 			quantity: quantity,
 		})
 	}
@@ -71,9 +82,26 @@ const MedicineCardSection = ({ medicine, sx = {} }) => {
 				<Typography variant='body2' color='text.secondary' gutterBottom>
 					{medicine.brand}
 				</Typography>
-				<Typography variant='subtitle1' color='primary' fontWeight='bold'>
-					{medicine.price.toLocaleString()}₫
-				</Typography>
+
+				{medicine.discountAmount > 0 ? (
+					<Stack direction='row' spacing={1} alignItems='center'>
+						<Typography
+							variant='subtitle2'
+							color='text.secondary'
+							sx={{ textDecoration: 'line-through' }}
+						>
+							{medicine.price.toLocaleString()}$
+						</Typography>
+						<Typography variant='subtitle1' color='primary' fontWeight='bold'>
+							{medicine.finalPrice.toLocaleString()}$
+						</Typography>
+					</Stack>
+				) : (
+					<Typography variant='subtitle1' color='primary' fontWeight='bold'>
+						{medicine.price.toLocaleString()}$
+					</Typography>
+				)}
+
 				<Typography variant='caption' color='text.secondary' display='block'>
 					{t('medicine.field.unit')}: {medicine.medicineUnit}
 				</Typography>
@@ -82,7 +110,7 @@ const MedicineCardSection = ({ medicine, sx = {} }) => {
 			<CardActions onClick={(e) => e.stopPropagation()}>
 				<Stack direction='row' spacing={1} alignItems='center' width='100%'>
 					<IconButton size='small' onClick={() => handleQuantityChange(-1)} disabled={quantity <= 1}>
-						<Remove />
+						-
 					</IconButton>
 
 					<TextField
@@ -90,11 +118,10 @@ const MedicineCardSection = ({ medicine, sx = {} }) => {
 						type='number'
 						value={quantity}
 						onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
-						inputProps={{ min: 1, style: { textAlign: 'center', width: 50 } }}
 					/>
 
 					<IconButton size='small' onClick={() => handleQuantityChange(1)}>
-						<Add />
+						+
 					</IconButton>
 
 					<Button
@@ -103,6 +130,10 @@ const MedicineCardSection = ({ medicine, sx = {} }) => {
 						startIcon={<AddShoppingCart />}
 						onClick={handleAddToCart}
 						disabled={loading}
+						sx={{
+							height: 50,
+							width: 150,
+						}}
 					>
 						{loading ? t('shop.button.adding_to_cart') : t('shop.button.add_to_cart')}
 					</Button>

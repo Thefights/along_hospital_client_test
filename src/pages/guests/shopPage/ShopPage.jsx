@@ -1,8 +1,10 @@
 import { ApiUrls } from '@/configs/apiUrls'
 import useFetch from '@/hooks/useFetch'
+import { default as useReduxStore } from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
+import { setMedicineCategoriesStore } from '@/redux/reducers/managementReducer'
 import { Box, Pagination, Stack, Typography } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { default as MedicineCardSection } from './sections/MedicineCardSection'
 import ShopFilters from './sections/ShopFiltersSection'
 
@@ -17,7 +19,19 @@ export default function ShopPage() {
 	})
 
 	const getAllMedicines = useFetch(ApiUrls.MEDICINE.INDEX, filters, [filters])
-	const getAllCategories = useFetch(ApiUrls.MEDICINE_CATEGORY.GET_ALL)
+
+	const {
+		data: categories,
+		loading: loadingCategories,
+		fetch: fetchCategories,
+	} = useReduxStore({
+		selector: (state) => state.management.medicineCategories,
+		setStore: setMedicineCategoriesStore,
+	})
+
+	useEffect(() => {
+		fetchCategories()
+	}, [fetchCategories])
 
 	const handlePageChange = (_, page) => {
 		setFilters((prev) => ({ ...prev, page }))
@@ -39,7 +53,6 @@ export default function ShopPage() {
 
 	const medicines = getAllMedicines.data?.collection || []
 	const totalPages = getAllMedicines.totalPages
-	const categories = getAllCategories.data || []
 
 	return (
 		<Box py={4}>
@@ -51,8 +64,8 @@ export default function ShopPage() {
 				<Box sx={{ width: '25%', position: 'sticky', top: 96, alignSelf: 'flex-start' }}>
 					<ShopFilters
 						filters={filters}
-						categories={categories}
-						loading={getAllMedicines.loading}
+						categories={categories || []}
+						loading={getAllMedicines.loading || loadingCategories}
 						onFilterClick={handleFilterClick}
 						onResetFilterClick={handleResetFilterClick}
 					/>

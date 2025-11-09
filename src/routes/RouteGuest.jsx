@@ -5,9 +5,9 @@ import LayoutGuest from '@/layouts/LayoutGuest'
 import LayoutPatient from '@/layouts/LayoutPatient'
 import CreateMedicalHistoryPage from '@/pages/doctors/createMedicalHistoryPage/CreateMedicalHistoryPage'
 import HomePage from '@/pages/guests/HomePage'
+import ShopPage from '@/pages/guests/shopPage/ShopPage'
 import BlogDetailPage from '@/pages/guests/viewBlogDetailPage/BlogDetailPage'
 import BlogPage from '@/pages/guests/viewBlogPage/BlogPage'
-import ShopPage from '@/pages/guests/shopPage/ShopPage'
 import MedicineDetailPage from '@/pages/guests/viewMedicineDetailPage/MedicineDetailPage'
 import SpecialtyPage from '@/pages/patients/specialtyPage/SpecialtyPage'
 import TestTable from '@/pages/TestTable'
@@ -24,7 +24,6 @@ const RouteGuest = () => {
 				<Route element={auth?.role !== null ? <LayoutPatient /> : <LayoutGuest />}>
 					<Route path='/' index element={<HomePage />} />
 					<Route path={routeUrls.HOME.MEDICINE} element={<ShopPage />} />
-					<Route></Route>
 					<Route path={routeUrls.HOME.SPECIALTY} element={<SpecialtyPage />} />
 					<Route path={routeUrls.HOME.BLOG} element={<BlogPage />} />
 					<Route path={`${routeUrls.HOME.BLOG}/:id`} element={<BlogDetailPage />} />

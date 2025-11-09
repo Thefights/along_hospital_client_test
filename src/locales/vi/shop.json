@@ -15,7 +15,7 @@
         "button": {
             "filter": "Lọc",
             "reset": "Đặt lại",
-            "add_to_cart": "Thêm vào giỏ",
+            "add_to_cart": "Thêm",
             "adding_to_cart": "Đang thêm..."
         },
         "placeholder": {

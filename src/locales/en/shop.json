@@ -15,7 +15,7 @@
         "button": {
             "filter": "Filter",
             "reset": "Reset",
-            "add_to_cart": "Add to Cart",
+            "add_to_cart": "Add",
             "adding_to_cart": "Adding..."
         },
         "placeholder": {
