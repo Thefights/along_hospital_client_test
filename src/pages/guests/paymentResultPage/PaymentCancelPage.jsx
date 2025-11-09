@@ -21,19 +21,13 @@ const PaymentCancelPage = () => {
 	const { submit } = useAxiosSubmit({
 		url: orderCode ? ApiUrls.PAYMENT.CANCEL_PAYMENT(orderCode) : '',
 		method: 'POST',
-		onSuccess: () => {
-			console.log('Payment cancelled successfully')
-		},
-		onError: (err) => {
-			console.error('Failed to cancel payment:', err)
-		},
 	})
 
 	useEffect(() => {
 		if (orderCode) {
-			console.log('Cancelling payment for order:', orderCode)
 			submit()
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	return (
