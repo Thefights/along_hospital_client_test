@@ -16,7 +16,6 @@ export const ApiUrls = {
 	USER: {
 		INDEX: `/user`,
 		PROFILE: `/user/profile`,
-		CART: `/user/cart`,
 	},
 	PATIENT: {
 		MANAGEMENT: {
@@ -112,5 +111,12 @@ export const ApiUrls = {
 			INDEX: `/Blog-Management`,
 			DETAIL: (id) => `/Blog-Management/${id}`,
 		},
+	},
+	CART: {
+		INDEX: `/cart`,
+		CHECKOUT: `/cart/checkout`,
+		ADD_TO_CART: `/cart/add-to-cart`,
+		UPDATE: `/cart/update`,
+		DELETE: (id) => `/cart/delete/${id}`,
 	},
 }

@@ -7,9 +7,8 @@ import CreateMedicalHistoryPage from '@/pages/doctors/createMedicalHistoryPage/C
 import HomePage from '@/pages/guests/HomePage'
 import BlogDetailPage from '@/pages/guests/viewBlogDetailPage/BlogDetailPage'
 import BlogPage from '@/pages/guests/viewBlogPage/BlogPage'
-//sai tên
-import MedicineDetailPage from '@/pages/guests/viewMedicineDetailPage/ViewMedicineDetailPage'
-import ShopPage from '@/pages/guests/viewMedicinePage/ShopPage'
+import ShopPage from '@/pages/guests/shopPage/ShopPage'
+import MedicineDetailPage from '@/pages/guests/viewMedicineDetailPage/MedicineDetailPage'
 import SpecialtyPage from '@/pages/patients/specialtyPage/SpecialtyPage'
 import TestTable from '@/pages/TestTable'
 import { Route, Routes } from 'react-router-dom'

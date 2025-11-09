@@ -2,6 +2,7 @@ import MedicalHistoryDetailBasePage from '@/components/basePages/medicalHistoryD
 import { ApiUrls } from '@/configs/apiUrls'
 import { routeUrls } from '@/configs/routeUrls'
 import LayoutPatient from '@/layouts/LayoutPatient'
+import CartPage from '@/pages/patients/cartPage/CartPage'
 import CreateAppointmentPage from '@/pages/patients/createAppointmentPage/CreateAppointmentPage'
 import PatientAppointmentHistoryPage from '@/pages/patients/patientAppointmentHistoryPage/PatientAppointmentHistoryPage'
 import PatientMedicalHistoryPage from '@/pages/patients/patientMedicalHistoryPage/PatientMedicalHistoryPage'
@@ -28,6 +29,7 @@ const RoutePatient = () => {
 						path={routeUrls.PATIENT.MEDICAL_HISTORY.DETAIL(':id')}
 						element={<MedicalHistoryDetailBasePage fetchUrl={ApiUrls.MEDICAL_HISTORY.INDEX} />}
 					/>
+					<Route path={routeUrls.PATIENT.CART} element={<CartPage />} />
 				</Route>
 			</Route>
 		</Routes>

@@ -1,18 +1,42 @@
 {
     "shop": {
-        "title": "Cửa hàng thuốc",
+        "title": "Cửa hàng",
         "text": {
-            "no_products": "Không tìm thấy thuốc nào"
+            "no_products": "Không tìm thấy sản phẩm nào"
+        },
+        "field": {
+            "search": "Tìm kiếm",
+            "category": "Danh mục",
+            "unit": "Đơn vị",
+            "price": "Giá",
+            "quantity": "Số lượng",
+            "brand": "Thương hiệu"
         },
         "button": {
+            "filter": "Lọc",
+            "reset": "Đặt lại",
             "add_to_cart": "Thêm vào giỏ",
-            "view_details": "Xem chi tiết"
+            "adding_to_cart": "Đang thêm..."
+        },
+        "placeholder": {
+            "search": "Tìm kiếm sản phẩm..."
+        },
+        "tooltip": {
+            "quantity_decrease": "Giảm số lượng",
+            "quantity_increase": "Tăng số lượng"
+        }
+    },
+    "medicine": {
+        "field": {
+            "brand": "Thương hiệu",
+            "unit": "Đơn vị",
+            "price": "Giá",
+            "quantity": "Số lượng",
+            "final_price": "Giá sau giảm"
         },
         "filter": {
-            "title": "Bộ lọc",
-            "price": "Khoảng giá",
             "category": "Danh mục",
-            "search": "Tìm kiếm thuốc..."
+            "unit": "Đơn vị"
         }
     }
 }

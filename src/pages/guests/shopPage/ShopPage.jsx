@@ -3,12 +3,10 @@ import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
 import { Box, Pagination, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import MedicineCard from './sections/MedicineCardSection'
+import { default as MedicineCardSection } from './sections/MedicineCardSection'
 import ShopFilters from './sections/ShopFiltersSection'
 
 export default function ShopPage() {
-	const navigate = useNavigate()
 	const { t } = useTranslation()
 	const [filters, setFilters] = useState({
 		name: '',
@@ -25,11 +23,11 @@ export default function ShopPage() {
 		setFilters((prev) => ({ ...prev, page }))
 	}
 
-	const handleFilterChange = (newFilters) => {
+	const handleFilterClick = (newFilters) => {
 		setFilters((prev) => ({ ...prev, ...newFilters, page: 1 }))
 	}
 
-	const handleResetFilters = () => {
+	const handleResetFilterClick = () => {
 		setFilters({
 			name: '',
 			medicineCategoryId: '',
@@ -40,7 +38,7 @@ export default function ShopPage() {
 	}
 
 	const medicines = getAllMedicines.data?.collection || []
-	const totalPages = Math.ceil((getAllMedicines.data?.totalCount || 0) / filters.pageSize)
+	const totalPages = getAllMedicines.totalPages
 	const categories = getAllCategories.data || []
 
 	return (
@@ -55,8 +53,8 @@ export default function ShopPage() {
 						filters={filters}
 						categories={categories}
 						loading={getAllMedicines.loading}
-						onFilterChange={handleFilterChange}
-						onResetClick={handleResetFilters}
+						onFilterClick={handleFilterClick}
+						onResetFilterClick={handleResetFilterClick}
 					/>
 				</Box>
 
@@ -72,13 +70,13 @@ export default function ShopPage() {
 							<Box
 								key={medicine.id}
 								sx={{
-									flexBasis: 'calc((100% - 48px) / 3)', // 3 items fixed per row, 24px gap
+									flexBasis: 250,
 									flexGrow: 0,
 									flexShrink: 0,
 									cursor: 'pointer',
 								}}
 							>
-								<MedicineCard medicine={medicine} />
+								<MedicineCardSection medicine={medicine} />
 							</Box>
 						))}
 
