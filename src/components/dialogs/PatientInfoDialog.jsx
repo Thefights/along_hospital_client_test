@@ -30,27 +30,11 @@ const PatientInfoDialog = ({
 	loading = false,
 	isEditable,
 }) => {
-	const defaultValues = {
-		id: patientInfo.id || '',
-		name: patientInfo.name || '',
-		image: patientInfo.image || '',
-		dateOfBirth: patientInfo.dateOfBirth || '',
-		gender: patientInfo.gender || '',
-		address: patientInfo.address || '',
-		phone: patientInfo.phone || '',
-		email: patientInfo.email || '',
-		medicalNumber: patientInfo.medicalNumber || '',
-		height: patientInfo.height || '',
-		weight: patientInfo.weight || '',
-		bloodType: patientInfo.bloodType || '',
-		allergies: patientInfo.allergies || [],
-	}
-
 	const [submitted, setSubmitted] = useState(false)
 	const { t } = useTranslation()
 	const _enum = useEnum()
 
-	const { values, setField, handleChange, registerRef, reset, validateAll } = useForm(defaultValues)
+	const { values, setField, handleChange, registerRef, reset, validateAll } = useForm(patientInfo)
 	const { renderField, hasRequiredMissing } = useFieldRenderer(
 		values,
 		setField,
@@ -63,7 +47,12 @@ const PatientInfoDialog = ({
 
 	const basicInfoFields = [
 		{ key: 'name', title: t('profile.field.name'), type: 'text' },
-		{ key: 'dateOfBirth', title: t('profile.field.date_of_birth'), type: 'date' },
+		{
+			key: 'dateOfBirth',
+			title: t('profile.field.date_of_birth'),
+			type: 'date',
+			maxValue: new Date().toISOString().split('T')[0],
+		},
 		{
 			key: 'gender',
 			title: t('profile.field.gender'),
@@ -164,7 +153,7 @@ const PatientInfoDialog = ({
 
 		const response = await onSave(values)
 		if (response) {
-			handleClose()
+			onClose?.()
 		}
 	}
 

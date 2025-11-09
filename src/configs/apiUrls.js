@@ -13,6 +13,9 @@ export const ApiUrls = {
 		REFRESH_TOKEN: '/auth/refresh',
 		COMPLETE_PROFILE: '/user/complete-profile',
 	},
+	HUB: {
+		CHATBOT: '/hub/chatbot',
+	},
 	USER: {
 		INDEX: `/user`,
 		PROFILE: `/user/profile`,
@@ -27,6 +30,7 @@ export const ApiUrls = {
 	},
 	DOCTOR: {
 		INDEX: `/doctor`,
+		GET_ALL: `/doctor/all`,
 		MANAGEMENT: {
 			INDEX: `/doctor-management`,
 			GET_ALL: `/doctor-management/all`,
@@ -45,7 +49,7 @@ export const ApiUrls = {
 	},
 	MEDICINE: {
 		INDEX: `/medicine`,
-		GETALL: `/medicine`,
+		GET_ALL: `/medicine/all`,
 		MANAGEMENT: {
 			INDEX: `/medicine-management`,
 			GET_ALL: `/medicine-management/all`,
@@ -72,6 +76,7 @@ export const ApiUrls = {
 	},
 	MEDICAL_SERVICE: {
 		INDEX: `/medical-service`,
+		GET_ALL: `/medical-service/all`,
 		MANAGEMENT: {
 			INDEX: `/medical-service-management`,
 			GET_ALL: `/medical-service-management/all`,
@@ -102,6 +107,7 @@ export const ApiUrls = {
 	},
 	MEDICAL_HISTORY: {
 		INDEX: `/medical-history`,
+		DETAIL: (id) => `/medical-history/${id}`,
 		CREATE_COMPLAINT: (medicalHistoryId) => `/medical-history/${medicalHistoryId}/complaint`,
 		MANAGEMENT: {
 			INDEX: `/medical-history-management`,
@@ -114,6 +120,7 @@ export const ApiUrls = {
 				}`,
 			PRESCRIPTION: (medicalHistoryId) =>
 				`/medical-history-management/${medicalHistoryId}/prescription`,
+			PAYMENT_URL: (medicalHistoryId) => `/medical-history-management/${medicalHistoryId}/payment-url`,
 		},
 	},
 	BLOG: {
@@ -122,6 +129,20 @@ export const ApiUrls = {
 			INDEX: `/Blog-Management`,
 			DETAIL: (id) => `/Blog-Management/${id}`,
 		},
+	},
+	VOUCHER: {
+		COLLECTIBLE: `/voucher/collectible`,
+		COLLECT: `/voucher/collect`,
+		MY_VOUCHERS: `/voucher/my-vouchers`,
+		MY_ALL_VOUCHERS: `/voucher/my-vouchers/all`,
+		MANAGEMENT: {
+			INDEX: `/voucher-management`,
+			DETAIL: (id) => `/voucher-management/${id}`,
+		},
+	},
+	PATIENT_VOUCHER: {
+		INDEX: `/patient-voucher`,
+		DETAIL: (id) => `/patient-voucher/${id}`,
 	},
 	DEPARTMENT: {
 		INDEX: `/department`,
@@ -136,6 +157,19 @@ export const ApiUrls = {
 			INDEX: `/supplier-management`,
 			GET_ALL: `/supplier-management/all`,
 			DETAIL: (id) => `/supplier-management/${id}`,
+	FEEDBACK: {
+		INDEX: `/feedback`,
+		DETAIL: (id) => `/feedback/${id}`,
+		GET_FEEDBACK_BY_MEDICINE: (medicineId) => `/feedback/medicine/${medicineId}`,
+	},
+	FEEDBACK_REPORT: {
+		INDEX: `/feedback-report`,
+		DETAIL: (id) => `/feedback-report/${id}`,
+		ME: `/feedback-report/me`,
+		MANAGEMENT: {
+			INDEX: `/feedback-report-management`,
+			RESOLVE: (id) => `/feedback-report-management/resolve/${id}`,
+			REJECT: (id) => `/feedback-report-management/reject/${id}`,
 		},
 	},
 }

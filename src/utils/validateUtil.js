@@ -82,3 +82,22 @@ export const compare = (otherValue, msg) => (v) => {
 	if (v == null || v === '') return true
 	return v === otherValue ? true : msg ?? getTranslation('error.not_match')
 }
+
+export const isPercentage =
+	(msg = getTranslation('error.invalid_percentage')) =>
+	(v) => {
+		if (v == null || v === '') return true
+		const n = Number(v)
+		if (Number.isNaN(n)) return msg
+		return n >= 0 && n <= 100 ? true : msg
+	}
+
+export const isFutureDate =
+	(msg = getTranslation('error.past_date')) =>
+	(v) => {
+		if (v == null || v === '') return true
+		const inputDate = new Date(v)
+		const today = new Date()
+		today.setHours(0, 0, 0, 0)
+		return inputDate >= today ? true : msg
+	}

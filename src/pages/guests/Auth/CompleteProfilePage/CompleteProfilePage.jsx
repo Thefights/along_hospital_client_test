@@ -33,7 +33,7 @@ const CompleteProfilePage = () => {
 	const fields = [
 		{
 			key: 'name',
-			title: t('profile.field.full_name') || t('profile.field.name'),
+			title: t('profile.field.name'),
 			type: 'text',
 			validate: [minLen(2), maxLen(255)],
 			props: { placeholder: t('profile.placeholder.name') },
@@ -43,9 +43,8 @@ const CompleteProfilePage = () => {
 					{
 						key: 'phone',
 						title: t('profile.field.phone'),
-						type: 'phone',
+						type: 'tel',
 						required: true,
-						validate: [minLen(9), maxLen(20)],
 						props: { placeholder: t('auth.register.phone_placeholder') },
 					},
 			  ]
