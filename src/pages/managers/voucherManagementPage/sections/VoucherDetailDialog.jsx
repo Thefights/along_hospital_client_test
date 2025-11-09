@@ -3,6 +3,7 @@ import { EnumConfig } from '@/configs/enumConfig'
 import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
 import { formatDateBasedOnCurrentLanguage } from '@/utils/formatDateUtil'
+import { formatCurrencyBasedOnCurrentLanguage } from '@/utils/formatNumberUtil'
 import CloseIcon from '@mui/icons-material/Close'
 import {
 	Box,
@@ -100,16 +101,20 @@ const VoucherDetailDialog = ({ open, onClose, voucher }) => {
 							value={
 								voucher.discountType === EnumConfig.VoucherDiscountType.Percentage
 									? `${voucher.discountValue}%`
-									: `${voucher.discountValue.toLocaleString()} VND`
+									: formatCurrencyBasedOnCurrentLanguage(voucher.discountValue)
 							}
 						/>
 						<InfoRow
 							label={t('voucher.field.max_discount')}
-							value={voucher.maxDiscount ? `${voucher.maxDiscount.toLocaleString()} VND` : '-'}
+							value={voucher.maxDiscount ? formatCurrencyBasedOnCurrentLanguage(voucher.maxDiscount) : '-'}
 						/>
 						<InfoRow
 							label={t('voucher.field.min_purchase_amount')}
-							value={voucher.minPurchaseAmount ? `${voucher.minPurchaseAmount.toLocaleString()} VND` : '-'}
+							value={
+								voucher.minPurchaseAmount
+									? formatCurrencyBasedOnCurrentLanguage(voucher.minPurchaseAmount)
+									: '-'
+							}
 						/>
 					</Box>
 
@@ -153,7 +158,9 @@ const VoucherDetailDialog = ({ open, onClose, voucher }) => {
 													<TableCell>{medicine.id}</TableCell>
 													<TableCell>{medicine.name}</TableCell>
 													<TableCell>{medicine.brand || '-'}</TableCell>
-													<TableCell align='right'>{medicine.price.toLocaleString()} VND</TableCell>
+													<TableCell align='right'>
+														{formatCurrencyBasedOnCurrentLanguage(medicine.price)}
+													</TableCell>
 													<TableCell>{medicine.categoryName || '-'}</TableCell>
 												</TableRow>
 											))}

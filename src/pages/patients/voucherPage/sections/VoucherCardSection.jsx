@@ -2,7 +2,7 @@ import { defaultVoucherTypeStyle } from '@/configs/defaultStylesConfig'
 import { EnumConfig } from '@/configs/enumConfig'
 import useTranslation from '@/hooks/useTranslation'
 import { formatDateBasedOnCurrentLanguage } from '@/utils/formatDateUtil'
-import { formatNumberWithCommas } from '@/utils/formatNumberUtil'
+import { formatCurrencyBasedOnCurrentLanguage } from '@/utils/formatNumberUtil'
 import { AccessTime, ContentCopy, Inventory2Rounded, LocalOffer } from '@mui/icons-material'
 import {
 	Box,
@@ -47,7 +47,7 @@ const VoucherCardSection = ({
 		if (!voucher) return ''
 		return voucher.discountType === EnumConfig.VoucherDiscountType.Percentage
 			? `−${voucher.discountValue}%`
-			: `−${formatNumberWithCommas(voucher.discountValue)} VND`
+			: `−${formatCurrencyBasedOnCurrentLanguage(voucher.discountValue)}`
 	}, [voucher])
 
 	return (
@@ -158,7 +158,7 @@ const VoucherCardSection = ({
 								<LocalOffer sx={{ fontSize: '0.875rem', color: 'text.secondary' }} />
 								<Typography variant='caption' color='text.secondary' sx={{ wordBreak: 'break-word' }}>
 									{t('voucher.label.min_purchase', {
-										amount: `${formatNumberWithCommas(voucher.minPurchaseAmount)} VND`,
+										amount: formatCurrencyBasedOnCurrentLanguage(voucher.minPurchaseAmount),
 									})}
 								</Typography>
 							</Stack>
@@ -168,7 +168,7 @@ const VoucherCardSection = ({
 								<LocalOffer sx={{ fontSize: '0.875rem', color: 'text.secondary' }} />
 								<Typography variant='caption' color='text.secondary' sx={{ wordBreak: 'break-word' }}>
 									{t('voucher.label.max_discount', {
-										amount: `${formatNumberWithCommas(voucher.maxDiscount)} VND`,
+										amount: formatCurrencyBasedOnCurrentLanguage(voucher.maxDiscount),
 									})}
 								</Typography>
 							</Stack>

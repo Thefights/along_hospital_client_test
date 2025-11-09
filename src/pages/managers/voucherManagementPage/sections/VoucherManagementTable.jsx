@@ -9,6 +9,7 @@ import { useConfirm } from '@/hooks/useConfirm'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
 import { formatDateBasedOnCurrentLanguage, formatDateToSqlDate } from '@/utils/formatDateUtil'
+import { formatCurrencyBasedOnCurrentLanguage } from '@/utils/formatNumberUtil'
 import { Box, Button, Chip, Stack } from '@mui/material'
 import { useMemo, useState } from 'react'
 import VoucherDetailDialog from './VoucherDetailDialog'
@@ -136,7 +137,7 @@ const VoucherManagementTable = ({ vouchers, loading, refetch }) => {
 					if (row.discountType === EnumConfig.VoucherDiscountType.Percentage) {
 						return `${value}%`
 					}
-					return `${value.toLocaleString()} VND`
+					return formatCurrencyBasedOnCurrentLanguage(value)
 				},
 			},
 			{
