@@ -1,4 +1,4 @@
-	import MedicineCategoryFilterBar from '@/pages/managers/managerMedicineCategoryManagementPage/section/MedicineCategoryFilterSection'
+	import MedicineCategoryFilterBar from '@/pages/managers/managerMedicineCategoryManagementPage/section/ManagerMedicineCategoryManagementFilterSection'
 	import GenericFormDialog from '@/components/dialogs/commons/GenericFormDialog'
 	import ActionMenu from '@/components/generals/ActionMenu'
 	import { GenericTablePagination } from '@/components/generals/GenericPagination'
