@@ -76,7 +76,7 @@ const LayoutManager = () => {
 					key: 'medical-service',
 					label: 'Medical Service',
 					icon: <AssignmentRounded />,
-					// url: routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.MEDICAL_SERVICE_MANAGEMENT),
+					url: routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.MEDICAL_SERVICE_MANAGEMENT),
 				},
 			],
 		},
@@ -87,7 +87,7 @@ const LayoutManager = () => {
 					key: 'order',
 					label: 'Order',
 					icon: <ReceiptLongRounded />,
-					// url: routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.ORDER_MANAGEMENT),
+					url: routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.ORDER_MANAGEMENT),
 				},
 				{
 					key: 'voucher',

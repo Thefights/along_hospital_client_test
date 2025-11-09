@@ -1,0 +1,34 @@
+{
+    "order_management": {
+        "title": {
+            "order_management": "Order Management",
+            "filters": "Filters",
+            "detail": "Order Detail"
+        },
+        "field": {
+            "id": "ID",
+            "order_date": "Order Date",
+            "delivery_date": "Delivery Date",
+            "status": "Status",
+            "voucher": "Voucher",
+            "origin_price": "Origin Price",
+            "total_discount": "Total Discount",
+            "final_price": "Final Price",
+            "transaction_id": "Transaction ID",
+            "medicine_name": "Medicine Name",
+            "medicine_brand": "Medicine Brand",
+            "medicine_unit": "Unit",
+            "quantity": "Quantity",
+            "unit_price": "Unit Price",
+            "discount_amount": "Discount Amount"
+        },
+        "text": {
+            "unknown": "Unknown",
+            "order_details": "Order Details"
+        },
+        "button": {
+            "shipping": "Shipping",
+            "complete": "Complete"
+        }
+    }
+}

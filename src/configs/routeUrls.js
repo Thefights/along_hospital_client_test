@@ -85,11 +85,12 @@ export const routeUrls = {
 		COMPLAINT_MANAGEMENT: '/complaint',
 		SPECIALTY_MANAGEMENT: '/specialty',
 		DEPARTMENT_MANAGEMENT: '/department',
-		MEDICAL_SERVICE: '/medical-service',
+		MEDICAL_SERVICE_MANAGEMENT: '/medical-service',
 		VOUCHER_MANAGEMENT: '/voucher',
 		DOCTOR_MANAGEMENT: '/doctor',
 		FEEDBACK_REPORT_MANAGEMENT: '/feedback-report',
 		ATTENDANCE_MANAGEMENT: '/attendance',
 		SUPPLIER_MANAGEMENT: '/supplier',
+		ORDER_MANAGEMENT: '/order',
 	},
 }

@@ -186,4 +186,11 @@ export const ApiUrls = {
 			CHECK_OUT: `/staff-attendance/check-out`,
 		},
 	},
+	ORDER: {
+		MANAGEMENT: {
+			INDEX: `/order-management`,
+			SHIPPING: (id) => `/order-management/shipping/${id}`,
+			COMPLETE: (id) => `/order-management/complete/${id}`,
+		},
+	},
 }
