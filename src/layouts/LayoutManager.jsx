@@ -126,6 +126,12 @@ const LayoutManager = () => {
 						},
 					],
 				},
+				{
+					key: 'import',
+					label: 'Import Management',
+					icon: <FileUploadRounded />,
+					url: routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.IMPORT_MANAGEMENT.INDEX),
+				},
 			],
 		},
 		{
