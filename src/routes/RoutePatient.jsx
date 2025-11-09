@@ -6,6 +6,8 @@ import useAuth from '@/hooks/useAuth'
 import LayoutPatient from '@/layouts/LayoutPatient'
 import NotFoundPage from '@/pages/commons/NotFoundPage'
 import CreateAppointmentPage from '@/pages/patients/createAppointmentPage/CreateAppointmentPage'
+import OrderHistoryDetailPage from '@/pages/patients/orderHistoryDetailPage/OrderHistoryDetailPage'
+import OrderHistoryPage from '@/pages/patients/orderHistoryPage/OrderHistoryPage'
 import PatientAppointmentHistoryPage from '@/pages/patients/patientAppointmentHistoryPage/PatientAppointmentHistoryPage'
 import PatientMedicalHistoryPage from '@/pages/patients/patientMedicalHistoryPage/PatientMedicalHistoryPage'
 import ProfilePage from '@/pages/profile/ProfilePage'
@@ -39,7 +41,11 @@ const RoutePatient = () => {
 						path={routeUrls.PATIENT.MEDICAL_HISTORY.DETAIL(':id')}
 						element={<MedicalHistoryDetailBasePage fetchUrl={ApiUrls.MEDICAL_HISTORY.INDEX} />}
 					/>
-					<Route path={routeUrls.PATIENT.ORDER_HISTORY.INDEX} element={<PatientMedicalHistoryPage />} />
+					<Route path={routeUrls.PATIENT.ORDER_HISTORY.INDEX} element={<OrderHistoryPage />} />
+					<Route
+						path={routeUrls.PATIENT.ORDER_HISTORY.DETAIL(':id')}
+						element={<OrderHistoryDetailPage />}
+					/>
 				</Route>
 			</Route>
 			<Route path='*' element={<NotFoundPage />} />

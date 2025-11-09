@@ -95,6 +95,13 @@
         "voucher_type": {
             "patient": "Bệnh nhân",
             "medicine": "Thuốc"
+        },
+        "order_status": {
+            "unpaid": "Chưa thanh toán",
+            "processing": "Đang xử lý",
+            "shipping": "Đang vận chuyển",
+            "completed": "Đã giao",
+            "cancelled": "Đã hủy"
         }
     }
 }

@@ -154,5 +154,6 @@ export const ApiUrls = {
 	ORDER_HISTORY: {
 		INDEX: `/order/all`,
 		DETAIL: (id) => `/order/${id}`,
+		CANCEL: (id) => `/order/cancel/${id}`,
 	},
 }

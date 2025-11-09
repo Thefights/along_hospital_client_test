@@ -204,7 +204,7 @@ export default function useEnum() {
 			},
 		],
 
-		//Order
+		//For Order
 		orderStatusOptions: [
 			{ value: EnumConfig.OrderStatus.Unpaid, label: t('enum.order_status.unpaid') },
 			{ value: EnumConfig.OrderStatus.Processing, label: t('enum.order_status.processing') },

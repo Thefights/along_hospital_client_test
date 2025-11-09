@@ -41,6 +41,7 @@ export const routeUrls = {
 		},
 		ORDER_HISTORY: {
 			INDEX: '/order-history',
+			DETAIL: (id) => `/order-history/${id}`,
 		},
 		APPOINTMENT: {
 			INDEX: '/appointment',
