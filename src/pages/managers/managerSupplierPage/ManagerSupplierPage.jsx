@@ -43,9 +43,9 @@ const ManagerSupplierPage = () => {
 		url: ApiUrls.SUPPLIER.MANAGEMENT.INDEX,
 		method: 'POST',
 	})
-	const updateUrl = selectedRow?.id ? ApiUrls.SUPPLIER.MANAGEMENT.DETAIL(selectedRow.id) : ''
+
 	const putSupplier = useAxiosSubmit({
-		url: updateUrl,
+		url: ApiUrls.SUPPLIER.MANAGEMENT.DETAIL(selectedRow?.id),
 		method: 'PUT',
 	})
 	const deleteSupplier = useAxiosSubmit({
