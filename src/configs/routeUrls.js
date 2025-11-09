@@ -84,6 +84,8 @@ export const routeUrls = {
 		},
 		COMPLAINT_MANAGEMENT: '/complaint',
 		SPECIALTY_MANAGEMENT: '/specialty',
+		DEPARTMENT_MANAGEMENT: '/department',
+		MEDICAL_SERVICE: '/medical-service',
 		VOUCHER_MANAGEMENT: '/voucher',
 		DOCTOR_MANAGEMENT: '/doctor',
 		ATTENDANCE_MANAGEMENT: '/attendance',

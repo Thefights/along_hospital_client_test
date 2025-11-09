@@ -10,8 +10,10 @@ import DoctorManagementPage from '@/pages/managers/doctorManagementPage/DoctorMa
 import ManagerAppointmentManagementPage from '@/pages/managers/managerAppointmentManagementPage/ManagerAppointmentManagementPage'
 import ManagerBlogManagementPage from '@/pages/managers/managerBlogManagementPage/ManagerBlogManagementPage'
 import BlogUpsertPage from '@/pages/managers/managerBlogUpsertPage/BlogUpsertPage'
-import ImportManagementPage from '@/pages/managers/managerImportManagementPage/ImportManagementPage'
+import ManagerDepartmentManagementPage from '@/pages/managers/managerDepartmentManagementPage/ManagerDepartmentManagementPage'
 import ManagerMedicalHistoryManagementPage from '@/pages/managers/managerMedicalHistoryManagementPage/ManagerMedicalHistoryManagementPage'
+import ManagerMedicalServiceManagementPage from '@/pages/managers/managerMedicalServiceManagementPage/ManagerMedicalServiceManagemnetPage'
+import ImportManagementPage from '@/pages/managers/managerImportManagementPage/ImportManagementPage'
 import ManagerMedicineCategoryManagementPage from '@/pages/managers/managerMedicineCategoryManagementPage/ManagerMedicineCategoryManagementPage'
 import ManagerMedicineManagemntPage from '@/pages/managers/managerMedicineManagementPage/ManagerMedicineManagementPage'
 import SpecialtyManagementPage from '@/pages/managers/specialtyManagementPage/SpecialtyManagementPage'
@@ -47,6 +49,14 @@ const RouteManager = () => {
 					<Route
 						path={routeUrls.MANAGER.MEDICAL_HISTORY.INDEX}
 						element={<ManagerMedicalHistoryManagementPage />}
+					/>
+					<Route
+						path={routeUrls.MANAGER.DEPARTMENT_MANAGEMENT}
+						element={<ManagerDepartmentManagementPage />}
+					/>
+					<Route
+						path={routeUrls.MANAGER.MEDICAL_SERVICE}
+						element={<ManagerMedicalServiceManagementPage />}
 					/>
 					<Route
 						path={routeUrls.MANAGER.MEDICAL_HISTORY.DETAIL(':id')}

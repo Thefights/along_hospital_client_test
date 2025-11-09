@@ -1,0 +1,20 @@
+{
+  "department": {
+    "title": {
+      "department_management": "Department Management",
+      "filter": "Department Filter"
+    },
+    "field": {
+      "id": "ID",
+      "name": "Department Name",
+      "location": "Location",
+      "actions": "Actions"
+    },
+    "dialog": {
+      "create_title": "Create New Department",
+      "update_title": "Update Department",
+      "confirm_delete_title": "Confirm Deletion",
+      "confirm_delete_description": "Are you sure you want to delete department: {{name}}?"
+    }
+  }
+}
