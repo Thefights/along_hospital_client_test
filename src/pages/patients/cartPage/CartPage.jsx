@@ -123,7 +123,9 @@ const CartPage = () => {
 								selectedMedicineIds: cartData.cartDetails.map((ci) => ci.medicineId),
 							})
 
-							if (response) {
+							if (response?.paymentUrl) {
+								window.location.href = response.paymentUrl 
+							} else if (response) {
 								getCartItems.fetch() 
 							}
 							}}
