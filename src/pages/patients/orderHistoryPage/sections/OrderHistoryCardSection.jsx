@@ -3,22 +3,19 @@ import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
 import { formatDateBasedOnCurrentLanguage } from '@/utils/formatDateUtil'
 import { formatCurrencyBasedOnCurrentLanguage } from '@/utils/formatNumberUtil'
+import { getEnumLabelByValue } from '@/utils/handleStringUtil'
 import { Box, Button, Chip, Divider, Grid, Paper, Stack, Typography } from '@mui/material'
 
 export default function OrderHistoryCard({ order, onDetailClick, onCancelClick }) {
 	const { t } = useTranslation()
 	const _enum = useEnum()
 
-	const statusLabel =
-		_enum.orderStatusOptions.find((s) => s.value === order.orderStatus)?.label ||
-		t(`order.status.${order.orderStatus}`)
-
+	const statusLabel = getEnumLabelByValue(_enum.orderStatusOptions)
 	const totalQuantity = order.orderDetails?.reduce((sum, d) => sum + d.quantity, 0) || 0
 
-	const deliveryDisplay =
-		order.deliveryDate && !order.deliveryDate.startsWith('0001')
-			? formatDateBasedOnCurrentLanguage(order.deliveryDate)
-			: t('order.history.waiting_for_confirmation')
+	const deliveryDisplay = order.deliveryDate
+		? formatDateBasedOnCurrentLanguage(order.deliveryDate)
+		: t('order.history.waiting_for_confirmation')
 
 	return (
 		<Paper
@@ -55,7 +52,7 @@ export default function OrderHistoryCard({ order, onDetailClick, onCancelClick }
 				<Divider />
 
 				<Grid container spacing={2}>
-					<Grid item xs={6} sm={3}>
+					<Grid size={{ xs: 6, sm: 3 }}>
 						<Typography
 							variant='body2'
 							sx={{ color: '#999', fontSize: '0.75rem', textTransform: 'uppercase' }}
@@ -67,7 +64,7 @@ export default function OrderHistoryCard({ order, onDetailClick, onCancelClick }
 						</Typography>
 					</Grid>
 
-					<Grid item xs={6} sm={3}>
+					<Grid size={{ xs: 6, sm: 3 }}>
 						<Typography
 							variant='body2'
 							sx={{ color: '#999', fontSize: '0.75rem', textTransform: 'uppercase' }}
@@ -77,7 +74,7 @@ export default function OrderHistoryCard({ order, onDetailClick, onCancelClick }
 						<Typography sx={{ fontWeight: 600, mt: 0.5 }}>{deliveryDisplay}</Typography>
 					</Grid>
 
-					<Grid item xs={6} sm={3}>
+					<Grid size={{ xs: 6, sm: 3 }}>
 						<Typography
 							variant='body2'
 							sx={{ color: '#999', fontSize: '0.75rem', textTransform: 'uppercase' }}
@@ -87,7 +84,7 @@ export default function OrderHistoryCard({ order, onDetailClick, onCancelClick }
 						<Typography sx={{ fontWeight: 600, mt: 0.5 }}>{order.voucherCode || '-'}</Typography>
 					</Grid>
 
-					<Grid item xs={6} sm={3}>
+					<Grid size={{ xs: 6, sm: 3 }}>
 						<Typography
 							variant='body2'
 							sx={{ color: '#999', fontSize: '0.75rem', textTransform: 'uppercase' }}

@@ -11,11 +11,9 @@ import OrderDetailSummarySection from './sections/OrderDetailSummarySection'
 
 export default function OrderDetailPage() {
 	const { t } = useTranslation()
-	const params = useParams()
+	const { id } = useParams()
 	const navigate = useNavigate()
-	const orderId = Number(params.id)
-	const { data: orderData, loading } = useFetch(ApiUrls.ORDER_HISTORY.DETAIL(orderId))
-	const order = orderData || null
+	const { data: order, loading } = useFetch(ApiUrls.ORDER_HISTORY.DETAIL(Number(id)))
 
 	if (loading) return <Typography sx={{ p: 4 }}>{t('order_detail.common.loading')}</Typography>
 

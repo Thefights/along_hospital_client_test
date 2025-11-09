@@ -17,7 +17,7 @@ export default function OrderDetailProductsSection({ order }) {
 								{item.medicineBrand}
 							</Typography>
 						</Grid>
-						<Grid item xs={6} sm={2}>
+						<Grid size={{ xs: 6, sm: 2 }}>
 							<Typography variant='body2' sx={{ color: '#999' }}>
 								{t('order_detail.detail.quantity')}
 							</Typography>
@@ -25,7 +25,7 @@ export default function OrderDetailProductsSection({ order }) {
 								{item.quantity} {item.medicineUnit}
 							</Typography>
 						</Grid>
-						<Grid item xs={6} sm={2}>
+						<Grid size={{ xs: 6, sm: 2 }}>
 							<Typography variant='body2' sx={{ color: '#999' }}>
 								{t('order_detail.detail.unit_price')}
 							</Typography>
@@ -33,7 +33,7 @@ export default function OrderDetailProductsSection({ order }) {
 								{formatCurrencyBasedOnCurrentLanguage(item.unitPrice)}
 							</Typography>
 						</Grid>
-						<Grid item xs={6} sm={2}>
+						<Grid size={{ xs: 6, sm: 2 }}>
 							<Typography variant='body2' sx={{ color: '#999' }}>
 								{t('order_detail.detail.discount')}
 							</Typography>
@@ -41,7 +41,7 @@ export default function OrderDetailProductsSection({ order }) {
 								-{formatCurrencyBasedOnCurrentLanguage(item.discountAmount)}
 							</Typography>
 						</Grid>
-						<Grid item xs={6} sm={2}>
+						<Grid size={{ xs: 6, sm: 2 }}>
 							<Typography variant='body2' sx={{ color: '#999' }}>
 								{t('order_detail.detail.total')}
 							</Typography>

@@ -10,7 +10,7 @@ import OrderHistoryCard from './sections/OrderHistoryCardSection'
 export default function OrderHistoryPage() {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
-	const { data: orderData, loading, revalidate } = useFetch(ApiUrls.ORDER_HISTORY.INDEX)
+	const { data: orderData, loading } = useFetch(ApiUrls.ORDER_HISTORY.INDEX)
 	const orders = orderData?.collection || []
 
 	const handleDetailClick = (id) => {
@@ -25,7 +25,6 @@ export default function OrderHistoryPage() {
 		await cancelOrderSubmit.submit(null, {
 			overrideUrl: ApiUrls.ORDER_HISTORY.CANCEL(orderId),
 		})
-		revalidate()
 	}
 
 	return (

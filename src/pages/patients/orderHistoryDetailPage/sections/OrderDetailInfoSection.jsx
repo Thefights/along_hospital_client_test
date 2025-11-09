@@ -1,14 +1,14 @@
 import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
 import { formatDateBasedOnCurrentLanguage } from '@/utils/formatDateUtil'
+import { getEnumLabelByValue } from '@/utils/handleStringUtil'
 import { Box, Chip, Divider, Grid, Paper, Stack, Typography } from '@mui/material'
 
 export default function OrderDetailInfoSection({ order }) {
 	const { t } = useTranslation()
 	const _enum = useEnum()
 
-	const getStatusLabel = (status) =>
-		_enum.orderStatusOptions.find((s) => s.value === status)?.label || status
+	const getStatusLabel = getEnumLabelByValue(_enum.orderStatusOptions, status)
 
 	return (
 		<Paper sx={{ p: 3, borderRadius: 2, boxShadow: 1 }}>
@@ -26,7 +26,7 @@ export default function OrderDetailInfoSection({ order }) {
 				</Box>
 				<Divider />
 				<Grid container spacing={2}>
-					<Grid item xs={6} sm={3}>
+					<Grid size={{ xs: 6, sm: 3 }}>
 						<Typography
 							variant='body2'
 							sx={{ color: '#999', fontSize: '0.75rem', textTransform: 'uppercase' }}
@@ -37,7 +37,7 @@ export default function OrderDetailInfoSection({ order }) {
 							{formatDateBasedOnCurrentLanguage(order.orderDate)}
 						</Typography>
 					</Grid>
-					<Grid item xs={6} sm={3}>
+					<Grid size={{ xs: 6, sm: 3 }}>
 						<Typography
 							variant='body2'
 							sx={{ color: '#999', fontSize: '0.75rem', textTransform: 'uppercase' }}
@@ -50,7 +50,7 @@ export default function OrderDetailInfoSection({ order }) {
 								: t('order_detail.status.waiting_for_confirmation')}
 						</Typography>
 					</Grid>
-					<Grid item xs={6} sm={3}>
+					<Grid size={{ xs: 6, sm: 3 }}>
 						<Typography
 							variant='body2'
 							sx={{ color: '#999', fontSize: '0.75rem', textTransform: 'uppercase' }}
@@ -59,7 +59,7 @@ export default function OrderDetailInfoSection({ order }) {
 						</Typography>
 						<Typography sx={{ fontWeight: 600, mt: 0.5 }}>{order.voucherCode || '-'}</Typography>
 					</Grid>
-					<Grid item xs={6} sm={3}>
+					<Grid size={{ xs: 6, sm: 3 }}>
 						<Typography
 							variant='body2'
 							sx={{ color: '#999', fontSize: '0.75rem', textTransform: 'uppercase' }}
