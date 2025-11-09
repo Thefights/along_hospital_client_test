@@ -11,6 +11,8 @@ import HomePage from '@/pages/guests/HomePage'
 import BlogDetailPage from '@/pages/guests/viewBlogDetailPage/BlogDetailPage'
 import BlogPage from '@/pages/guests/viewBlogPage/BlogPage'
 import DoctorPage from '@/pages/guests/viewDoctorPage/DoctorPage'
+import PaymentCancelPage from '@/pages/patients/paymentResultPage/PaymentCancelPage'
+import PaymentReturnPage from '@/pages/patients/paymentResultPage/PaymentReturnPage'
 import SpecialtyPage from '@/pages/patients/specialtyPage/SpecialtyPage'
 import CollectibleVoucherListPage from '@/pages/patients/voucherPage/CollectibleVoucherListPage'
 import TestTable from '@/pages/TestTable'
@@ -39,6 +41,8 @@ const RouteGuest = () => {
 						path={routeUrls.HOME.MEDICAL_HISTORY_PRINT_PRESCRIPTION(':id')}
 						element={<PrescriptionPrintPage />}
 					/>
+					<Route path={routeUrls.HOME.PAYMENT.CANCEL} element={<PaymentCancelPage />} />
+					<Route path={routeUrls.HOME.PAYMENT.RETURN} element={<PaymentReturnPage />} />
 					{process.env.NODE_ENV === 'development' && (
 						<>
 							<Route path='/test' element={<TestTable />} />

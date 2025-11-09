@@ -6,7 +6,6 @@ import useAuth from '@/hooks/useAuth'
 import LayoutPatient from '@/layouts/LayoutPatient'
 import NotFoundPage from '@/pages/commons/NotFoundPage'
 import CreateAppointmentPage from '@/pages/patients/createAppointmentPage/CreateAppointmentPage'
-import CreateVideoConsultationPage from '@/pages/patients/createVideoConsultationPage/createVideoConsultationPage'
 import EndMeetingRoomPage from '@/pages/patients/meetingRoomPage/endMeetingRoomPage/EndMeetingRoomPage'
 import JoinMeetingRoomPage from '@/pages/patients/meetingRoomPage/JoinMeetingRoomPage'
 import MeetingRoomPage from '@/pages/patients/meetingRoomPage/meetingRoomPage/MeetingRoomPage'
@@ -36,6 +35,7 @@ const RoutePatient = () => {
 						path={routeUrls.PATIENT.APPOINTMENT.INDEX}
 						element={<PatientAppointmentHistoryPage />}
 					/>
+
 					<Route
 						path={routeUrls.PATIENT.APPOINTMENT.JOIN_MEETING_ROOM}
 						element={<JoinMeetingRoomPage />}
@@ -44,7 +44,6 @@ const RoutePatient = () => {
 						path={routeUrls.PATIENT.APPOINTMENT.JOIN_MEETING_ROOM + '/complete'}
 						element={<EndMeetingRoomPage />}
 					/>
-					<Route path={routeUrls.PATIENT.VIDEO_CONSULTATION} element={<CreateVideoConsultationPage />} />
 					<Route
 						path={routeUrls.PATIENT.MEDICAL_HISTORY.INDEX}
 						element={<PatientMedicalHistoryPage />}
