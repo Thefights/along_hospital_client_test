@@ -69,7 +69,7 @@ const DoctorManagementTableSection = ({
 				),
 			},
 		],
-		[t, onEdit]
+		[t, onEdit, handleDeleteClick]
 	)
 
 	return (
