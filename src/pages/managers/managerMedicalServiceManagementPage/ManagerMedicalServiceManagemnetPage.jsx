@@ -7,11 +7,12 @@ import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useConfirm } from '@/hooks/useConfirm'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
-import MedicalServiceFilterBarSection from '@/pages/managers/managerMedicalServiceManagementPage/section/MedicalServiceFilterBarSection'
+import MedicalServiceFilterBarSection from '@/pages/managers/managerMedicalServiceManagementPage/section/ManagerMedicalServiceManagementFilterBarSection'
+import { maxLen } from '@/utils/validateUtil'
 import { Button, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 
-const ManageMedicalServiceManagementPage = () => {
+const ManagerMedicalServiceManagementPage = () => {
 	const { t } = useTranslation()
 	const confirm = useConfirm()
 
@@ -125,8 +126,8 @@ const ManageMedicalServiceManagementPage = () => {
 	]
 
 	const formFields = [
-		{ key: 'name', title: t('medical_service.field.name') },
-		{ key: 'description', title: t('medical_service.field.description') },
+		{ key: 'name', title: t('medical_service.field.name'), validate: [maxLen(255)] },
+		{ key: 'description', title: t('medical_service.field.description'), validate: [maxLen(1000)] },
 		{ key: 'price', title: t('medical_service.field.price'), type: 'number' },
 		{
 			key: 'specialtyId',
@@ -209,4 +210,4 @@ const ManageMedicalServiceManagementPage = () => {
 	)
 }
 
-export default ManageMedicalServiceManagementPage
+export default ManagerMedicalServiceManagementPage

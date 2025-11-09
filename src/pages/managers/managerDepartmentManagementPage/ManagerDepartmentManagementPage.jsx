@@ -7,7 +7,8 @@ import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import { useConfirm } from '@/hooks/useConfirm'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
-import DepartmentFilterBarSection from '@/pages/managers/managerDepartmentManagementPage/section/DepartmentFilterBarSection'
+import DepartmentFilterBarSection from '@/pages/managers/managerDepartmentManagementPage/section/ManagerDepartmentManagementFilterBarSection'
+import { maxLen } from '@/utils/validateUtil'
 import { Button, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 
@@ -106,8 +107,8 @@ const ManagerDepartmentManagementPage = () => {
 	]
 
 	const formFields = [
-		{ key: 'name', title: t('department.field.name') },
-		{ key: 'location', title: t('department.field.location') },
+		{ key: 'name', title: t('department.field.name'), validate: [maxLen(100)] },
+		{ key: 'location', title: t('department.field.location'), validate: [maxLen(50)] },
 	]
 
 	return (

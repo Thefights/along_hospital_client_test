@@ -6,7 +6,7 @@ import useTranslation from '@/hooks/useTranslation'
 import { Stack, Typography } from '@mui/material'
 import { useEffect } from 'react'
 
-const DepartmentFilterBarSection = ({
+const ManagerMedicalServiceManagementFilterBarSection = ({
 	filters,
 	loading = false,
 	onFilterClick = () => {},
@@ -56,4 +56,4 @@ const DepartmentFilterBarSection = ({
 	)
 }
 
-export default DepartmentFilterBarSection
+export default ManagerMedicalServiceManagementFilterBarSection
