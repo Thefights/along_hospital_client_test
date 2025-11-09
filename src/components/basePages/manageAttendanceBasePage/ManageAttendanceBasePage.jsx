@@ -7,6 +7,7 @@ import { getImageFromCloud } from '@/utils/commons'
 import { formatDatetimeStringBasedOnCurrentLanguage } from '@/utils/formatDateUtil'
 import { getEnumLabelByValue } from '@/utils/handleStringUtil'
 import { Avatar, Chip, Paper, Stack, Typography } from '@mui/material'
+import React from 'react'
 import ManageAttendanceFilterSection from './sections/ManageAttendanceFilterSection'
 
 const ManageAttendanceBasePage = ({
@@ -21,6 +22,7 @@ const ManageAttendanceBasePage = ({
 	attendances,
 	totalPage,
 	loading,
+	buttons = <React.Fragment />,
 }) => {
 	const { t } = useTranslation()
 	const _enum = useEnum()
@@ -68,6 +70,7 @@ const ManageAttendanceBasePage = ({
 			<Stack spacing={2}>
 				<Typography variant='h5'>{t('attendance.title.manage_attendance')}</Typography>
 				<ManageAttendanceFilterSection filters={filters} setFilters={setFilters} loading={loading} />
+				{buttons}
 				<GenericTable
 					data={attendances}
 					fields={fields}
