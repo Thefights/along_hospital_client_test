@@ -90,8 +90,6 @@ export const routeUrls = {
 		DOCTOR_MANAGEMENT: '/doctor',
 		FEEDBACK_REPORT_MANAGEMENT: '/feedback-report',
 		ATTENDANCE_MANAGEMENT: '/attendance',
-		SUPPLIER_MANAGEMENT: {
-			INDEX: '/supplier',
-		},
+		SUPPLIER_MANAGEMENT: '/supplier',
 	},
 }

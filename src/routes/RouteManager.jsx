@@ -77,7 +77,7 @@ const RouteManager = () => {
 					/>
 					<Route path={routeUrls.MANAGER.IMPORT_MANAGEMENT.INDEX} element={<ImportManagementPage />} />
 					<Route path={routeUrls.MANAGER.VOUCHER_MANAGEMENT} element={<VoucherManagementPage />} />
-					<Route path={routeUrls.MANAGER.SUPPLIER_MANAGEMENT.INDEX} element={<ManagerSupplierPage />} />
+					<Route path={routeUrls.MANAGER.SUPPLIER_MANAGEMENT} element={<ManagerSupplierPage />} />
 					<Route
 						path={routeUrls.MANAGER.FEEDBACK_REPORT_MANAGEMENT}
 						element={<FeedbackReportManagementPage />}

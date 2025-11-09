@@ -122,7 +122,7 @@ const LayoutManager = () => {
 							key: 'supplier',
 							label: 'Supplier',
 							icon: <BadgeRounded />,
-							url: routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.SUPPLIER_MANAGEMENT.INDEX),
+							url: routeUrls.BASE_ROUTE.MANAGER(routeUrls.MANAGER.SUPPLIER_MANAGEMENT),
 						},
 					],
 				},
