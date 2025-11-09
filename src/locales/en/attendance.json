@@ -1,0 +1,12 @@
+{
+    "attendance": {
+        "title": {
+            "manage_attendance": "Manage Attendance Logs"
+        },
+        "field": {
+            "id": "ID",
+            "log_type": "Log Type",
+            "log_time": "Log Time"
+        }
+    }
+}
