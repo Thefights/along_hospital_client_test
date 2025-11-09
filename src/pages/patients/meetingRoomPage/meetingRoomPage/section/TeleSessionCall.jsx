@@ -2,7 +2,6 @@ import { ApiUrls } from '@/configs/apiUrls'
 import useAuth from '@/hooks/useAuth'
 import useFetch from '@/hooks/useFetch'
 import useMeetingSignalR from '@/hooks/useMeetingSignalR'
-import { useLocalStorage } from '@/hooks/useStorage'
 import useTranslation from '@/hooks/useTranslation'
 import useWebRtcPeer from '@/hooks/useWebRtcPeer'
 import { Box, Button, Paper, Stack, Typography } from '@mui/material'
@@ -11,7 +10,6 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 const TeleSessionCall = ({ transactionId }) => {
 	const { t } = useTranslation()
 	const { auth } = useAuth()
-	const [accessToken] = useLocalStorage('accessToken')
 	const localVideoRef = useRef(null)
 	const remoteVideoRef = useRef(null)
 	const [error, setError] = useState('')
@@ -65,7 +63,6 @@ const TeleSessionCall = ({ transactionId }) => {
 	const { sendOffer, sendAnswer, sendIceCandidate, leaveSession, startConnection, stopConnection } =
 		useMeetingSignalR({
 			transactionId,
-			accessToken: accessToken || '',
 			hubUrl: signalRHubUrl,
 			onJoinSucceeded: () => {
 				// Chỉ log hoặc đánh dấu đã vào phòng
