@@ -9,6 +9,18 @@ const axiosConfig = axios.create({
 		'Access-Control-Allow-Origin': '*',
 		'Access-Control-Allow-Headers': 'X-Requested-With',
 	},
+	paramsSerializer: {
+		serialize: (params) => {
+			return Object.entries(params)
+				.map(([key, value]) => {
+					if (Array.isArray(value)) {
+						return value.map((v) => `${encodeURIComponent(key)}=${encodeURIComponent(v)}`).join('&')
+					}
+					return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+				})
+				.join('&')
+		},
+	},
 })
 
 axiosConfig.interceptors.request.use(
@@ -35,22 +47,29 @@ axiosConfig.interceptors.response.use(
 		const { status, response } = error
 
 		let errorMessages = response?.data?.error
-		if (errorMessages && !Array.isArray(errorMessages)) {
+
+		if (typeof errorMessages === 'string') {
 			errorMessages = [errorMessages]
+		} else if (errorMessages && typeof errorMessages === 'object' && !Array.isArray(errorMessages)) {
+			errorMessages = Object.entries(errorMessages).map(([key, value]) => `[${key}] ${value}`)
 		}
 
 		switch (status) {
 			case 400:
-			case 401:
-			case 403:
 			case 404:
 			case 409:
 			case 422:
 				errorMessages?.forEach((msg) => toast.error(msg))
 				break
+			case 401:
+			case 403:
+				window.history.back()
+				break
 			case 500:
 			default:
-				toast.error('Occurred a server error, please try again later')
+				toast.error(
+					`Occurred a server error, please try again later: ${response?.data?.message || error.message}`
+				)
 				break
 		}
 		return Promise.reject(error)

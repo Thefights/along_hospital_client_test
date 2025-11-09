@@ -1,3 +1,4 @@
+import { ApiUrls } from '@/configs/apiUrls'
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
@@ -18,5 +19,10 @@ const authSlice = createSlice({
 	},
 })
 
-export const { setAuthStore, resetAuthStore } = authSlice.actions
+const { setAuthStore, resetAuthStore } = authSlice.actions
+
+setAuthStore.defaultUrl = ApiUrls.AUTH.CURRENT_ACCOUNT
+
+export { resetAuthStore, setAuthStore }
+
 export default authSlice.reducer

@@ -18,6 +18,9 @@ const LeftCreateAppointmentSection = ({
 			<Typography variant='h4' sx={{ color: 'text.primary' }}>
 				{t('appointment.title.create_appointment')}
 			</Typography>
+			<Typography variant='body2' sx={{ color: 'text.secondary' }}>
+				* {t('appointment.title.create_appointment_note')}
+			</Typography>
 			<Stack spacing={3} px={2} maxHeight={500} overflow={'auto'}>
 				{loadingGet ? (
 					<SkeletonTextField numberOfRow={patientFields?.length || 0} withTitle withLabel />

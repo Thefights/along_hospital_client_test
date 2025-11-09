@@ -15,16 +15,23 @@ const PatientAppointmentHistoryPage = () => {
 	const [selectedAppointment, setSelectedAppointment] = useState(null)
 	const [openCancelDialog, setOpenCancelDialog] = useState(false)
 	const [cancelReason, setCancelReason] = useState('')
-	const [filters, setFilters] = useState({
-		page: 1,
-		pageSize: 5,
-	})
+	const [filters, setFilters] = useState({})
+	const [page, setPage] = useState(1)
+	const [pageSize, setPageSize] = useState(5)
 
 	const { t } = useTranslation()
 
-	const getAppointments = useFetch(ApiUrls.APPOINTMENT.INDEX, filters, [filters])
+	const getAppointments = useFetch(
+		ApiUrls.APPOINTMENT.INDEX,
+		{
+			...filters,
+			page,
+			pageSize,
+		},
+		[filters, page, pageSize]
+	)
+
 	const specialtiesStore = useReduxStore({
-		url: ApiUrls.SPECIALTY.GET_ALL,
 		selector: (state) => state.management.specialties,
 		setStore: setSpecialtiesStore,
 	})
@@ -35,7 +42,7 @@ const PatientAppointmentHistoryPage = () => {
 		data: { reason: cancelReason },
 		onSuccess: async () => {
 			handleCloseCancelDialog()
-			setOpenCancelDialog(false)
+			setSelectedAppointment(null)
 			await getAppointments.fetch()
 		},
 	})
@@ -51,6 +58,10 @@ const PatientAppointmentHistoryPage = () => {
 				headerTitle={t('appointment.title.appointment_history')}
 				filters={filters}
 				setFilters={setFilters}
+				page={page}
+				setPage={setPage}
+				pageSize={pageSize}
+				setPageSize={setPageSize}
 				selectedAppointment={selectedAppointment}
 				setSelectedAppointment={setSelectedAppointment}
 				totalPage={getAppointments.data?.totalPage || 1}

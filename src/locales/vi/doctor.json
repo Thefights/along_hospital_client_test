@@ -1,0 +1,33 @@
+{
+    "doctor": {
+        "title": {
+            "doctor_management": "Quản lý bác sĩ",
+            "team": "Bác sĩ của chúng tôi",
+            "delete": "Xóa bác sĩ",
+            "delete_confirm": "Bạn có chắc chắn muốn xóa bác sĩ"
+        },
+        "text": {
+            "description": "Đội ngũ bác sĩ Bệnh viện ALong giàu kinh nghiệm, tận tâm và luôn đặt sức khỏe người bệnh lên hàng đầu."
+        },
+        "button": {
+            "load_more": "Xem thêm"
+        },
+        "placeholder": {
+            "search_doctor": "Tìm kiếm bác sĩ...",
+            "no_doctors": "Hiện chưa có bác sĩ nào."
+        },
+        "field": {
+            "id": "Mã",
+            "name": "Tên",
+            "doctor": "Bác sĩ",
+            "specialty": "Chuyên khoa",
+            "phone": "Số điện thoại",
+            "qualification": "Trình độ",
+            "gender": "Giới tính",
+            "date_of_birth": "Ngày sinh",
+            "department": "Khoa",
+            "image": "Hình ảnh",
+            "signature_image": "Chữ ký"
+        }
+    }
+}

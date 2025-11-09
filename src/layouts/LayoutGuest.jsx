@@ -1,3 +1,4 @@
+import ChatBotFloatingButton from '@/components/layouts/chatbot/ChatBotFloatingButton'
 import Footer from '@/components/layouts/Footer'
 import Header from '@/components/layouts/Header'
 import { routeUrls } from '@/configs/routeUrls'
@@ -19,6 +20,7 @@ const LayoutGuest = () => {
 		},
 		{ label: t('header.specialty'), url: routeUrls.HOME.SPECIALTY },
 		{ label: t('header.blog'), url: routeUrls.HOME.BLOG },
+		{ label: t('header.vouchers'), url: routeUrls.HOME.VOUCHERS },
 		{ label: t('header.about_us'), url: routeUrls.HOME.ABOUT_US },
 	]
 
@@ -62,6 +64,7 @@ const LayoutGuest = () => {
 			<Container sx={{ flexGrow: 1 }} maxWidth='lg'>
 				<Outlet />
 			</Container>
+			<ChatBotFloatingButton />
 			<Footer sections={footerSections} />
 		</Stack>
 	)

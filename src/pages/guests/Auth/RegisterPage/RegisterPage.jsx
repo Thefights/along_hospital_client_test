@@ -65,7 +65,7 @@ const RegisterPage = () => {
 						name='email'
 						label={t('auth.field.email')}
 						type='email'
-						placeholder={t('auth.register.email_placeholder')}
+						placeholder={t('auth.placeholder.email')}
 						value={values.email}
 						onChange={handleChange}
 						required={false}
@@ -76,7 +76,7 @@ const RegisterPage = () => {
 						name='phone'
 						label={t('auth.field.phone')}
 						type='tel'
-						placeholder={t('auth.register.phone_placeholder')}
+						placeholder={t('auth.placeholder.phone')}
 						value={values.phone}
 						onChange={handleChange}
 						ref={registerRef('phone')}

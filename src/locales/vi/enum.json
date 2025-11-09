@@ -5,6 +5,12 @@
             "female": "Nữ",
             "other": "Khác"
         },
+        "qualification": {
+            "bachelor": "Cử nhân",
+            "master": "Thạc sĩ",
+            "phd": "Tiến sĩ",
+            "specialist": "Chuyên khoa"
+        },
         "blog_type": {
             "health": "Sức khỏe",
             "news": "Tin tức",
@@ -29,7 +35,10 @@
             "consultation": "Tư vấn",
             "follow_up": "Tái khám",
             "routine_checkup": "Kiểm tra định kỳ",
-            "emergency": "Cấp cứu"
+            "lab_test": "Xét nghiệm",
+            "imaging": "Chẩn đoán hình ảnh",
+            "vaccination": "Tiêm chủng",
+            "procedure": "Thủ thuật y tế"
         },
         "appointment_time_slot": {
             "half_hour": "30 phút",
@@ -67,6 +76,34 @@
             "draft": "Đã soạn thảo",
             "resolved": "Đã giải quyết",
             "closed": "Đã đóng"
+        },
+        "medicine_unit": {
+            "tablet": "Viên nén",
+            "capsule": "Viên nang",
+            "milliliter": "Millilít",
+            "milligram": "Miligam",
+            "drop": "Giọt",
+            "spoon": "Thìa",
+            "bottle": "Chai",
+            "tube": "Tuýp",
+            "other": "Khác"
+        },
+        "voucher_status": {
+            "active": "Đang hoạt động",
+            "expired": "Hết hạn"
+        },
+        "voucher_type": {
+            "patient": "Bệnh nhân",
+            "medicine": "Thuốc"
+        },
+        "feedback_report_status": {
+            "pending": "Chờ xử lý",
+            "resolved": "Đã xử lý",
+            "rejected": "Đã từ chối"
+        },
+        "voucher_discount_type": {
+            "percentage": "Phần trăm",
+            "fixed_amount": "Số tiền cố định"
         }
     }
 }

@@ -1,3 +1,4 @@
+import { ApiUrls } from '@/configs/apiUrls'
 import { createSlice } from '@reduxjs/toolkit'
 
 const initState = {
@@ -8,9 +9,10 @@ const initState = {
 	specialties: [],
 	medicalServices: [],
 	medicines: [],
+	suppliers: [],
 }
 
-const managerSlice = createSlice({
+const managementSlice = createSlice({
 	name: 'manager',
 	initialState: initState,
 	reducers: {
@@ -35,10 +37,13 @@ const managerSlice = createSlice({
 		setMedicinesStore: (state, action) => {
 			state.medicines = action.payload
 		},
+		setSuppliersStore: (state, action) => {
+			state.suppliers = action.payload
+		},
 	},
 })
 
-export const {
+const {
 	setDoctorsStore,
 	setPatientsStore,
 	setMedicineCategoriesStore,
@@ -46,6 +51,27 @@ export const {
 	setSpecialtiesStore,
 	setMedicalServicesStore,
 	setMedicinesStore,
-} = managerSlice.actions
+	setSuppliersStore,
+} = managementSlice.actions
 
-export default managerSlice.reducer
+setDoctorsStore.defaultUrl = ApiUrls.DOCTOR.GET_ALL
+setPatientsStore.defaultUrl = ApiUrls.PATIENT.MANAGEMENT.GET_ALL // Only manager can get this
+setSpecialtiesStore.defaultUrl = ApiUrls.SPECIALTY.GET_ALL
+setMedicalServicesStore.defaultUrl = ApiUrls.MEDICAL_SERVICE.GET_ALL
+setMedicinesStore.defaultUrl = ApiUrls.MEDICINE.GET_ALL
+setDepartmentsStore.defaultUrl = ApiUrls.DEPARTMENT.MANAGEMENT.GET_ALL // Only manager can get this
+setMedicineCategoriesStore.defaultUrl = ApiUrls.MEDICINE_CATEGORY.GET_ALL
+setSuppliersStore.defaultUrl = ApiUrls.SUPPLIER.MANAGEMENT.GET_ALL
+
+export {
+	setDepartmentsStore,
+	setDoctorsStore,
+	setMedicalServicesStore,
+	setMedicineCategoriesStore,
+	setMedicinesStore,
+	setPatientsStore,
+	setSpecialtiesStore,
+	setSuppliersStore,
+}
+
+export default managementSlice.reducer

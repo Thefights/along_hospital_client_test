@@ -116,6 +116,21 @@ const fields = [
 - For now, when adding new translation keys, add them to `src/locales/en.json` only. Vietnamese updates can be done later.
 - Prefer grouping keys under meaningful namespaces (e.g., `meeting_room.*`, `appointment.*`, `header.*`).
 - Do not inline literal UI strings in components; use translation keys instead.
+#### Locale-first content rule
+- All user-facing text must be defined in locale files. Do not hard-code strings in components.
+- Scope keys by feature/page. Example namespaces: `doctor`, `blog`, `commons`, `appointment`.
+- Add keys to both `vi` and `en` under `src/locales/vi/*.json` and `src/locales/en/*.json`.
+- Reuse common texts via `commons.json` (e.g., buttons, placeholders). Only add feature-specific copy under its namespace.
+- Typical placements:
+  - Page headers: `t('doctor.title.team')`
+  - Subtexts/Descriptions: `t('doctor.text.description')`
+  - Empty states: `t('doctor.text.no_doctors')`
+  - Buttons: `t('doctor.button.load_more')`
+  - Field labels: `t('doctor.field.name')`
+- If a new UI element needs bilingual text, create keys before wiring UI. Prefer concise, neutral copy.
+- When adding new keys, keep naming consistent: `title.*`, `text.*`, `button.*`, `placeholder.*`, `field.*`, `error.*`.
+- Avoid in-code fallbacks except during rapid prototyping. Replace with locale keys before committing.
+- PR checklist: verify all added/changed user-visible strings have corresponding entries in both languages.
 
 ## Development Commands
 

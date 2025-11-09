@@ -46,7 +46,10 @@ export const EnumConfig = {
 		Consultation: 'Consultation',
 		FollowUp: 'FollowUp',
 		RoutineCheckup: 'RoutineCheckup',
-		Emergency: 'Emergency',
+		LabTest: 'LabTest',
+		Imaging: 'Imaging',
+		Vaccination: 'Vaccination',
+		Procedure: 'Procedure',
 	},
 	AppointmentMeetingType: {
 		InPerson: 'InPerson',
@@ -97,5 +100,47 @@ export const EnumConfig = {
 		Promotion: 'Promotion',
 		Guide: 'Guide',
 		Other: 'Other',
+	},
+
+	//For Doctors
+	Qualification: {
+		Bachelor: 'Bachelor',
+		Master: 'Master',
+		PhD: 'PhD',
+		Specialist: 'Specialist',
+	},
+
+	// For medicines
+	MedicineUnit: {
+		Tablet: 'Tablet',
+		Capsule: 'Capsule',
+		Milliliter: 'Milliliter',
+		Milligram: 'Milligram',
+		Drop: 'Drop',
+		Spoon: 'Spoon',
+		Bottle: 'Bottle',
+		Tube: 'Tube',
+		Other: 'Other',
+	},
+
+	//Voucher
+	VoucherStatus: {
+		Active: 'Active',
+		Expired: 'Expired',
+	},
+	VoucherType: {
+		Patient: 'Patient',
+		Medicine: 'Medicine',
+	},
+	VoucherDiscountType: {
+		Percentage: 'Percentage',
+		FixedAmount: 'FixedAmount',
+	},
+
+	//Feedback
+	FeedbackReportStatus: {
+		Pending: 'Pending',
+		Resolved: 'Resolved',
+		Rejected: 'Rejected',
 	},
 }

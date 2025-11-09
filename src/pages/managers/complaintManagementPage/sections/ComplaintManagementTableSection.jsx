@@ -10,7 +10,7 @@ import { useConfirm } from '@/hooks/useConfirm'
 import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
 import { getEnumLabelByValue } from '@/utils/handleStringUtil'
-import { Chip } from '@mui/material'
+import { Box, Chip } from '@mui/material'
 
 const ComplaintManagementTableSection = ({
 	complaints,
@@ -24,10 +24,10 @@ const ComplaintManagementTableSection = ({
 	const confirm = useConfirm()
 
 	const fields = [
-		{ key: 'id', title: 'Id', width: 5, sortable: true },
+		{ key: 'id', title: 'Id', width: 7.5, sortable: true },
 		{ key: 'complaintTopic', title: t('complaint.field.topic'), width: 15, sortable: true },
 		{ key: 'content', title: t('complaint.field.content'), width: 20, sortable: false },
-		{ key: 'response', title: t('complaint.field.response'), width: 20, sortable: false },
+		{ key: 'response', title: t('complaint.field.response'), width: 15, sortable: false },
 		{
 			key: 'complaintType',
 			title: t('complaint.field.type'),
@@ -38,6 +38,7 @@ const ComplaintManagementTableSection = ({
 					label={getEnumLabelByValue(_enum.complaintTypeOptions, value)}
 					color={defaultComplaintTypeStyle(value)}
 					size='small'
+					variant='outlined'
 				/>
 			),
 		},
@@ -57,13 +58,15 @@ const ComplaintManagementTableSection = ({
 		{
 			key: '',
 			title: '',
-			sortable: false,
-			render: (_, row) => <ViewDetailMedicalHistoryButton medicalHistoryId={row.medicalHistoryId} />,
+			render: (_, row) => (
+				<Box textAlign={'center'}>
+					<ViewDetailMedicalHistoryButton medicalHistoryId={row.medicalHistoryId} />
+				</Box>
+			),
 		},
 		{
 			key: '',
 			title: '',
-			sortable: false,
 			render: (_, row) => (
 				<ActionMenu
 					menuTooltip={t('complaint.button.tooltip_classify')}
