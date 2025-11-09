@@ -10,7 +10,7 @@ export const routeUrls = {
 		MEDICAL_SERVICE: '/medical-service',
 		MEDICINE: '/medicine',
 		SPECIALTY: '/specialty',
-		DOCTOR: '/doctor',
+		DOCTOR: '/doctors',
 		BLOG: '/blog',
 		ABOUT_US: '/about-us',
 		CONTACT: '/contact',
@@ -18,6 +18,9 @@ export const routeUrls = {
 		PRIVACY_POLICY: '/privacy-policy',
 		CAREER: '/career',
 		FAQ: '/faq',
+		VOUCHERS: '/vouchers',
+		MEDICAL_HISTORY_INVOICE: (id) => `/medical-history/invoice/${id}`,
+		MEDICAL_HISTORY_PRINT_PRESCRIPTION: (id) => `/medical-history/print-prescription/${id}`,
 	},
 	AUTH: {
 		LOGIN: '/login',
@@ -32,6 +35,7 @@ export const routeUrls = {
 	PATIENT: {
 		CART: '/cart',
 		PROFILE: '/profile',
+		FEEDBACK: '/feedback',
 		MEDICAL_HISTORY: {
 			INDEX: '/medical-history',
 			DETAIL: (id) => `/medical-history/${id}`,
@@ -41,10 +45,15 @@ export const routeUrls = {
 			INDEX: '/appointment',
 			CREATE: '/appointment/create',
 		},
+		VOUCHER: {
+			MY_VOUCHERS: '/my-vouchers',
+		},
 	},
 	DOCTOR: {
 		DASHBOARD: '/',
+		PROFILE: '/profile',
 		APPOINTMENT_MANAGEMENT: '/appointment',
+		ATTENDANCE: '/attendance',
 		MEDICAL_HISTORY: {
 			INDEX: '/medical-history',
 			CREATE: '/medical-history/create',
@@ -53,7 +62,8 @@ export const routeUrls = {
 	},
 	MANAGER: {
 		DASHBOARD: '/',
-		APPOINTMENT_MANAGEMENT: '/appointments',
+		PROFILE: '/profile',
+		APPOINTMENT_MANAGEMENT: '/appointment',
 		BLOG: {
 			INDEX: '/blogs',
 			CREATE: '/blogs/create',
@@ -63,9 +73,21 @@ export const routeUrls = {
 			INDEX: '/medical-history',
 			DETAIL: (id) => `/medical-history/${id}`,
 		},
+		MEDICINE_MANAGEMENT: {
+			INDEX: '/medicine',
+		},
+		MEDICINE_CATEGORY_MANAGEMENT: {
+			INDEX: '/medicine-category',
+		},
+		IMPORT_MANAGEMENT: {
+			INDEX: '/import-management',
+		},
 		COMPLAINT_MANAGEMENT: '/complaint',
 		SPECIALTY_MANAGEMENT: '/specialty',
 		DEPARTMENT_MANAGEMENT: '/department',
 		MEDICAL_SERVICE: '/medical-service',
+		VOUCHER_MANAGEMENT: '/voucher',
+		DOCTOR_MANAGEMENT: '/doctor',
+		ATTENDANCE_MANAGEMENT: '/attendance',
 	},
 }

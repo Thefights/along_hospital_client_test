@@ -1,4 +1,6 @@
 import FilterButton from '@/components/buttons/FilterButton'
+import { EnumConfig } from '@/configs/enumConfig'
+import useAuth from '@/hooks/useAuth'
 import useEnum from '@/hooks/useEnum'
 import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
@@ -27,12 +29,20 @@ const ManagementMedicalHistoryFilterSection = ({
 		'small'
 	)
 
+	const { auth } = useAuth()
+	const isPatient = auth?.role === EnumConfig.Role.Patient
+
 	const fields1st = [
 		{
 			key: 'medicalHistoryStatus',
 			title: t('medical_history.field.status'),
 			type: 'select',
-			options: _enum.medicalHistoryStatusOptions,
+			options: [
+				{ label: t('text.all'), value: '' },
+				..._enum.medicalHistoryStatusOptions.filter(
+					(option) => !isPatient || option.value !== EnumConfig.MedicalHistoryStatus.Draft
+				),
+			],
 			required: false,
 		},
 		{

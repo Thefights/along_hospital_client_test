@@ -5,8 +5,6 @@ import useTranslation from '@/hooks/useTranslation'
 import { getImageFromCloud } from '@/utils/commons'
 import { isEmail, maxLen, numberRange } from '@/utils/validateUtil'
 import { Bloodtype, Close } from '@mui/icons-material'
-import AddIcon from '@mui/icons-material/Add'
-import DeleteIcon from '@mui/icons-material/Delete'
 import {
 	Avatar,
 	Box,
@@ -20,11 +18,6 @@ import {
 	Grid,
 	IconButton,
 	Stack,
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableRow,
 	Typography,
 } from '@mui/material'
 import { useState } from 'react'
@@ -37,27 +30,11 @@ const PatientInfoDialog = ({
 	loading = false,
 	isEditable,
 }) => {
-	const defaultValues = {
-		id: patientInfo.id || '',
-		name: patientInfo.name || '',
-		image: patientInfo.image || '',
-		dateOfBirth: patientInfo.dateOfBirth || '',
-		gender: patientInfo.gender || '',
-		address: patientInfo.address || '',
-		phone: patientInfo.phone || '',
-		email: patientInfo.email || '',
-		medicalNumber: patientInfo.medicalNumber || '',
-		height: patientInfo.height || '',
-		weight: patientInfo.weight || '',
-		bloodType: patientInfo.bloodType || '',
-		allergies: patientInfo.allergies || [],
-	}
-
 	const [submitted, setSubmitted] = useState(false)
 	const { t } = useTranslation()
 	const _enum = useEnum()
 
-	const { values, setField, handleChange, registerRef, reset, validateAll } = useForm(defaultValues)
+	const { values, setField, handleChange, registerRef, reset, validateAll } = useForm(patientInfo)
 	const { renderField, hasRequiredMissing } = useFieldRenderer(
 		values,
 		setField,
@@ -70,7 +47,12 @@ const PatientInfoDialog = ({
 
 	const basicInfoFields = [
 		{ key: 'name', title: t('profile.field.name'), type: 'text' },
-		{ key: 'dateOfBirth', title: t('profile.field.date_of_birth'), type: 'date' },
+		{
+			key: 'dateOfBirth',
+			title: t('profile.field.date_of_birth'),
+			type: 'date',
+			maxValue: new Date().toISOString().split('T')[0],
+		},
 		{
 			key: 'gender',
 			title: t('profile.field.gender'),
@@ -123,19 +105,30 @@ const PatientInfoDialog = ({
 		},
 	]
 	const allergyFields = [
-		{ key: 'name', title: t('profile.field.allergy.name'), validate: [maxLen(100)] },
 		{
-			key: 'severityLevel',
-			title: t('profile.field.allergy.severity'),
-			type: 'select',
-			options: _enum.severityLevelOptions,
-		},
-		{
-			key: 'reaction',
-			title: t('profile.field.allergy.reaction'),
-			multiple: 1,
-			validate: [maxLen(500)],
+			key: 'allergies',
+			type: 'array',
 			required: false,
+			of: [
+				{
+					key: 'name',
+					title: t('profile.field.allergy.name'),
+					validate: [maxLen(100)],
+				},
+				{
+					key: 'severityLevel',
+					title: t('profile.field.allergy.severity'),
+					type: 'select',
+					options: _enum.severityLevelOptions,
+				},
+				{
+					key: 'reaction',
+					title: t('profile.field.allergy.reaction'),
+					multiple: 1,
+					validate: [maxLen(500)],
+					required: false,
+				},
+			],
 		},
 	]
 	const fields = [...basicInfoFields, ...healthInfoFields, ...allergyFields]
@@ -143,20 +136,6 @@ const PatientInfoDialog = ({
 	const height = parseFloat(values.height)
 	const weight = parseFloat(values.weight)
 	const bmi = height && weight ? (weight / (height / 100) ** 2).toFixed(1) : null
-
-	const handleAddAllergy = () => {
-		setField('allergies', [
-			...values.allergies,
-			{ id: Date.now(), name: '', severityLevel: '', reaction: '' },
-		])
-	}
-
-	const handleDeleteAllergy = (id) => {
-		setField(
-			'allergies',
-			values.allergies.filter((a) => a.id !== id)
-		)
-	}
 
 	const handleClose = () => {
 		onClose?.()
@@ -174,7 +153,7 @@ const PatientInfoDialog = ({
 
 		const response = await onSave(values)
 		if (response) {
-			handleClose()
+			onClose?.()
 		}
 	}
 
@@ -231,47 +210,7 @@ const PatientInfoDialog = ({
 				<Typography variant='subtitle1' sx={{ mb: 1 }}>
 					{t('dialog.patient_info.allergies')}
 				</Typography>
-				<Box sx={{ border: 1, borderColor: 'divider' }}>
-					<Table size='small'>
-						<TableHead>
-							<TableRow>
-								<TableCell>{t('dialog.patient_info.allergy_table.name')}</TableCell>
-								<TableCell>{t('dialog.patient_info.allergy_table.severity')}</TableCell>
-								<TableCell>{t('dialog.patient_info.allergy_table.reaction')}</TableCell>
-								{isEditable && <TableCell />}
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							{values.allergies.map((a, i) => {
-								return (
-									<TableRow key={a.id || i}>
-										{allergyFields.map((f) => (
-											<TableCell key={f.key} sx={{ py: 2 }}>
-												{renderField({
-													...f,
-													key: `allergies.${i}.${f.key}`,
-													props: { disabled: !isEditable },
-												})}
-											</TableCell>
-										))}
-										{isEditable && (
-											<TableCell>
-												<IconButton onClick={() => handleDeleteAllergy(a.id)}>
-													<DeleteIcon color='error' fontSize='small' />
-												</IconButton>
-											</TableCell>
-										)}
-									</TableRow>
-								)
-							})}
-						</TableBody>
-					</Table>
-					{isEditable && (
-						<Button startIcon={<AddIcon />} sx={{ m: 1 }} onClick={handleAddAllergy}>
-							{t('dialog.patient_info.allergy_table.add_allergy')}
-						</Button>
-					)}
-				</Box>
+				<Box sx={{ border: 1, borderColor: 'divider' }}>{allergyFields.map(renderField)}</Box>
 			</DialogContent>
 			<DialogActions
 				sx={{

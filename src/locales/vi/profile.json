@@ -11,10 +11,13 @@
             "no_address": "Chưa có địa chỉ",
             "no_height": "Chưa có chiều cao",
             "no_weight": "Chưa có cân nặng",
-            "no_allergies": "Chưa có dữ liệu dị ứng"
+            "no_allergies": "Chưa có dữ liệu dị ứng",
+            "name": "Nhập họ và tên của bạn",
+            "address": "Nhập địa chỉ của bạn"
         },
         "field": {
             "name": "Họ và tên",
+            "full_name": "Họ và tên đầy đủ",
             "email": "Email",
             "phone": "Số điện thoại",
             "address": "Địa chỉ",

@@ -9,7 +9,6 @@ import ConfirmationProvider from './configs/ConfirmationProvider'
 import { routeUrls } from './configs/routeUrls'
 import { hospitalDarkTheme, hospitalLightTheme } from './configs/themeConfig'
 import { useLocalStorage } from './hooks/useStorage'
-import NotFoundPage from './pages/commons/NotFoundPage'
 import store from './redux/store'
 import RouteAuth from './routes/RouteAuth'
 import RouteDoctor from './routes/RouteDoctor'
@@ -35,7 +34,6 @@ function App() {
 									<Route path={`${routeUrls.BASE_ROUTE.MANAGER()}/*`} element={<RouteManager />} />
 									<Route path={`${routeUrls.BASE_ROUTE.DOCTOR()}/*`} element={<RouteDoctor />} />
 									<Route path={`${routeUrls.BASE_ROUTE.AUTH()}/*`} element={<RouteAuth />} />
-									<Route path='*' element={<NotFoundPage />} />
 								</Routes>
 								<ToastContainer
 									autoClose={3000}

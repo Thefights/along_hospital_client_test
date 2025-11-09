@@ -11,10 +11,13 @@
             "no_address": "No address provided",
             "no_height": "No height provided",
             "no_weight": "No weight provided",
-            "no_allergies": "No allergies recorded"
+            "no_allergies": "No allergies recorded",
+            "name": "Enter your full name",
+            "address": "Enter your address"
         },
         "field": {
             "name": "Name",
+            "full_name": "Full Name",
             "email": "Email",
             "phone": "Phone",
             "address": "Address",

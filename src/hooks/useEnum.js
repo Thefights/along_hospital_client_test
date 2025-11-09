@@ -68,7 +68,10 @@ export default function useEnum() {
 				value: EnumConfig.AppointmentType.RoutineCheckup,
 				label: t('enum.appointment_type.routine_checkup'),
 			},
-			{ value: EnumConfig.AppointmentType.Emergency, label: t('enum.appointment_type.emergency') },
+			{ value: EnumConfig.AppointmentType.LabTest, label: t('enum.appointment_type.lab_test') },
+			{ value: EnumConfig.AppointmentType.Imaging, label: t('enum.appointment_type.imaging') },
+			{ value: EnumConfig.AppointmentType.Vaccination, label: t('enum.appointment_type.vaccination') },
+			{ value: EnumConfig.AppointmentType.Procedure, label: t('enum.appointment_type.procedure') },
 		],
 		appointmentMeetingTypeOptions: [
 			{
@@ -140,6 +143,64 @@ export default function useEnum() {
 			{
 				value: EnumConfig.ComplaintResolveStatus.Closed,
 				label: t('enum.complaint_resolve_status.closed'),
+			},
+		],
+		medicineUnitOptions: [
+			{
+				value: EnumConfig.MedicineUnit.Tablet,
+				label: t('enum.medicine_unit.tablet'),
+			},
+			{
+				value: EnumConfig.MedicineUnit.Capsule,
+				label: t('enum.medicine_unit.capsule'),
+			},
+			{
+				value: EnumConfig.MedicineUnit.Milliliter,
+				label: t('enum.medicine_unit.milliliter'),
+			},
+			{
+				value: EnumConfig.MedicineUnit.Milligram,
+				label: t('enum.medicine_unit.milligram'),
+			},
+			{
+				value: EnumConfig.MedicineUnit.Drop,
+				label: t('enum.medicine_unit.drop'),
+			},
+			{
+				value: EnumConfig.MedicineUnit.Spoon,
+				label: t('enum.medicine_unit.spoon'),
+			},
+			{
+				value: EnumConfig.MedicineUnit.Bottle,
+				label: t('enum.medicine_unit.bottle'),
+			},
+			{
+				value: EnumConfig.MedicineUnit.Tube,
+				label: t('enum.medicine_unit.tube'),
+			},
+			{
+				value: EnumConfig.MedicineUnit.Other,
+				label: t('enum.medicine_unit.other'),
+			},
+		],
+
+		// For vouchers
+		voucherStatusOptions: [
+			{ value: EnumConfig.VoucherStatus.Active, label: t('enum.voucher_status.active') },
+			{ value: EnumConfig.VoucherStatus.Expired, label: t('enum.voucher_status.expired') },
+		],
+		voucherTypeOptions: [
+			{ value: EnumConfig.VoucherType.Patient, label: t('enum.voucher_type.patient') },
+			{ value: EnumConfig.VoucherType.Medicine, label: t('enum.voucher_type.medicine') },
+		],
+		voucherDiscountTypeOptions: [
+			{
+				value: EnumConfig.VoucherDiscountType.Percentage,
+				label: t('enum.voucher_discount_type.percentage'),
+			},
+			{
+				value: EnumConfig.VoucherDiscountType.FixedAmount,
+				label: t('enum.voucher_discount_type.fixed_amount'),
 			},
 		],
 	}

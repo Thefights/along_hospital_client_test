@@ -35,16 +35,21 @@ const ManagerBlogManagementPage = () => {
 	const [selectedIds, setSelectedIds] = useState([])
 	const [search, setSearch] = useState('')
 
-	const { loading, data, fetch } = useFetch(
-		ApiUrls.BLOG.MANAGEMENT.INDEX,
-		{
+	const fetchParams = useMemo(() => {
+		const params = {
 			Page: page,
 			PageSize: pageSize,
 			Sort: `${sort.key} ${sort.direction}`,
-			Title: search || undefined,
-		},
-		[page, pageSize, sort, search]
-	)
+		}
+		if (search && search.trim()) {
+			params.Title = search.trim()
+		}
+		return params
+	}, [page, pageSize, sort, search])
+
+	const { loading, data, fetch } = useFetch(ApiUrls.BLOG.MANAGEMENT.INDEX, fetchParams, [
+		fetchParams,
+	])
 
 	const blogs = useMemo(() => (Array.isArray(data?.collection) ? data.collection : []), [data])
 	const totalItems = data?.totalCount ?? 0

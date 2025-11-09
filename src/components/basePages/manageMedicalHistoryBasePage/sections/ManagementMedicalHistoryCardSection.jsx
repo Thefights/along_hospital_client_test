@@ -6,6 +6,10 @@ import {
 } from '@/configs/defaultStylesConfig'
 import useEnum from '@/hooks/useEnum'
 import useTranslation from '@/hooks/useTranslation'
+import {
+	formatDateBasedOnCurrentLanguage,
+	formatDatetimeStringBasedOnCurrentLanguage,
+} from '@/utils/formatDateUtil'
 import { getEnumLabelByValue } from '@/utils/handleStringUtil'
 import { Vaccines } from '@mui/icons-material'
 import {
@@ -42,10 +46,21 @@ const ManagementMedicalHistoryCardSection = ({ items, onOpen, loading }) => {
 				/>
 			),
 		},
-		{ label: t('medical_history.field.completed_date'), value: 'completedDate' },
+		{
+			label: t('medical_history.field.completed_date'),
+			value: (item) => (
+				<Typography variant='body2'>
+					{formatDatetimeStringBasedOnCurrentLanguage(item.completedDate)}
+				</Typography>
+			),
+		},
 		{
 			label: t('medical_history.field.follow_up_appointment_date'),
-			value: 'followUpAppointmentDate',
+			value: (item) => (
+				<Typography variant='body2'>
+					{formatDateBasedOnCurrentLanguage(item.followUpAppointmentDate)}
+				</Typography>
+			),
 		},
 	]
 

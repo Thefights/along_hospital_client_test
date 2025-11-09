@@ -5,6 +5,7 @@
             "appointment_info": "Appointment Info",
             "doctor_info": "Doctor Info",
             "create_appointment": "Create Appointment",
+            "create_appointment_note": "Note: Appointments can only be scheduled at least 7 days in advance.",
             "appointment_history": "Appointment History",
             "appointment_management": "Appointment Management",
             "appointment_detail": "Appointment Detail",

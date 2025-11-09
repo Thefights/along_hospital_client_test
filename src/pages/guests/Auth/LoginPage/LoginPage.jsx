@@ -19,19 +19,26 @@ import {
 	useMediaQuery,
 } from '@mui/material'
 import { GoogleLogin } from '@react-oauth/google'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 
 const LoginPage = () => {
 	const { t } = useTranslation()
 	const isNarrow = useMediaQuery('(max-width:500px)')
 	const navigate = useNavigate()
-	const { login } = useAuth()
-	const [submitted, setSubmitted] = useState(false)
+	const { auth, login, getReturnUrlByRole } = useAuth()
+
 	const { values, handleChange, registerRef, validateAll } = useForm({
 		identifier: '',
 		password: '',
 	})
+	const [loginSuccess, setLoginSuccess] = useState(false)
+
+	useEffect(() => {
+		if (loginSuccess && auth?.role) {
+			navigate(getReturnUrlByRole(auth.role), { replace: true })
+		}
+	}, [loginSuccess, auth?.role])
 
 	const { loading, submit } = useAxiosSubmit({
 		url: ApiUrls.AUTH.LOGIN,
@@ -44,7 +51,7 @@ const LoginPage = () => {
 			if (stage && stage !== EnumConfig.AuthStage.Done) {
 				navigate(routeUrls.BASE_ROUTE.AUTH(routeUrls.AUTH.COMPLETE_PROFILE), { replace: true })
 			} else {
-				navigate('/', { replace: true })
+				setLoginSuccess(true)
 			}
 		},
 		onError: async (err) => {
@@ -57,7 +64,6 @@ const LoginPage = () => {
 
 	const onSubmit = async (e) => {
 		e.preventDefault()
-		setSubmitted(true)
 		const ok = validateAll()
 		if (!ok) return
 		await submit(values)
@@ -96,7 +102,6 @@ const LoginPage = () => {
 						type='text'
 						validate={[isPhoneOrEmail(), maxLen(255)]}
 						ref={registerRef('identifier')}
-						submitted={submitted}
 					/>
 					<PasswordTextField
 						name='password'
@@ -105,7 +110,6 @@ const LoginPage = () => {
 						value={values.password}
 						onChange={handleChange}
 						ref={registerRef('password')}
-						submitted={submitted}
 					/>
 
 					<Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>

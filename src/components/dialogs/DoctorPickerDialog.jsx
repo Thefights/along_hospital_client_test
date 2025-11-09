@@ -1,4 +1,3 @@
-import { ApiUrls } from '@/configs/apiUrls'
 import useReduxStore from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
 import { setDoctorsStore } from '@/redux/reducers/managementReducer'
@@ -14,7 +13,6 @@ const DoctorPickerDialog = ({ open, onClose, onSubmit }) => {
 	const { t } = useTranslation()
 
 	const getDoctorStore = useReduxStore({
-		url: ApiUrls.DOCTOR.MANAGEMENT.GET_ALL,
 		selector: (state) => state.management.doctors,
 		setStore: setDoctorsStore,
 	})
@@ -30,10 +28,10 @@ const DoctorPickerDialog = ({ open, onClose, onSubmit }) => {
 					key: 'doctorId',
 					title: t('text.role.doctor'),
 					type: 'select',
-					options: [
-						{ value: '', label: t('dialog.doctor_picker.title'), disabled: true },
-						...getDoctorStore.data,
-					],
+					options: getDoctorStore.data.map((doctor) => ({
+						value: doctor.id,
+						label: `${doctor.name} (${doctor.specialtyName})`,
+					})),
 				},
 			]}
 			submitLabel={t('dialog.doctor_picker.confirm_button')}

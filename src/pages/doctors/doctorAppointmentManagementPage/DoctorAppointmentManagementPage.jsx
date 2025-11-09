@@ -14,21 +14,19 @@ import { useNavigate } from 'react-router-dom'
 
 const DoctorAppointmentManagementPage = () => {
 	const [selectedAppointment, setSelectedAppointment] = useState(null)
-	const [filters, setFilters] = useState({
-		page: 1,
-		pageSize: 5,
-	})
+	const [filters, setFilters] = useState({})
+	const [page, setPage] = useState(1)
+	const [pageSize, setPageSize] = useState(5)
 
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 
 	const getAppointments = useFetch(
 		ApiUrls.APPOINTMENT.MANAGEMENT.GET_ALL_BY_CURRENT_DOCTOR,
-		filters,
-		[filters]
+		{ ...filters, page, pageSize },
+		[filters, page, pageSize]
 	)
 	const specialtiesStore = useReduxStore({
-		url: ApiUrls.SPECIALTY.GET_ALL,
 		selector: (state) => state.management.specialties,
 		setStore: setSpecialtiesStore,
 	})
@@ -65,6 +63,10 @@ const DoctorAppointmentManagementPage = () => {
 			headerTitle={t('appointment.title.appointment_management')}
 			filters={filters}
 			setFilters={setFilters}
+			page={page}
+			setPage={setPage}
+			pageSize={pageSize}
+			setPageSize={setPageSize}
 			selectedAppointment={selectedAppointment}
 			setSelectedAppointment={setSelectedAppointment}
 			totalPage={getAppointments.data?.totalPage || 1}

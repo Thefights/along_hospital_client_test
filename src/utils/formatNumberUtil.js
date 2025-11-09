@@ -14,3 +14,21 @@ export const formatNumberToTime = (number) => {
 
 	return `${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m`
 }
+
+export const formatCurrencyBasedOnCurrentLanguage = (number) => {
+	let language = localStorage.getItem('language') || 'en'
+	try {
+		language = JSON.parse(language)
+	} catch {
+		/* empty */
+	}
+
+	if (!number || isNaN(number)) {
+		number = 0
+	}
+
+	return number.toLocaleString(language === 'vi' ? 'vi-VN' : 'en-US', {
+		style: 'currency',
+		currency: 'USD',
+	})
+}
