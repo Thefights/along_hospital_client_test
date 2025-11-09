@@ -181,4 +181,7 @@ export const ApiUrls = {
 			REJECT: (id) => `/feedback-report-management/reject/${id}`,
 		},
 	},
+	PAYMENT: {
+		CANCEL_PAYMENT: (id) => `/payment/cancel-payment/${id}`,
+	},
 }
