@@ -4,7 +4,7 @@ import { default as useReduxStore } from '@/hooks/useReduxStore'
 import useTranslation from '@/hooks/useTranslation'
 import { setMedicineCategoriesStore } from '@/redux/reducers/managementReducer'
 import { Box, Pagination, Stack, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import {  useState } from 'react'
 import { default as MedicineCardSection } from './sections/MedicineCardSection'
 import ShopFilters from './sections/ShopFiltersSection'
 
@@ -23,15 +23,10 @@ export default function ShopPage() {
 	const {
 		data: categories,
 		loading: loadingCategories,
-		fetch: fetchCategories,
 	} = useReduxStore({
 		selector: (state) => state.management.medicineCategories,
 		setStore: setMedicineCategoriesStore,
 	})
-
-	useEffect(() => {
-		fetchCategories()
-	}, [fetchCategories])
 
 	const handlePageChange = (_, page) => {
 		setFilters((prev) => ({ ...prev, page }))

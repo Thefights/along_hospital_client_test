@@ -116,13 +116,16 @@ const CartPage = () => {
 							voucherList={voucherList}
 							loading={checkout.loading}
 							onCheckout={async (voucherCode, paymentType) => {
-								await checkout.submit({
-									voucherCode: voucherCode || null,
-									paymentType,
-									description: t('cart.summary.checkout_description'),
-									selectedMedicineIds: cartData.cartDetails.map((ci) => ci.medicineId),
-								})
-								getCartItems.fetch()
+							const response = await checkout.submit({
+								voucherCode: voucherCode || null,
+								paymentType,
+								description: t('cart.summary.checkout_description'),
+								selectedMedicineIds: cartData.cartDetails.map((ci) => ci.medicineId),
+							})
+
+							if (response) {
+								getCartItems.fetch() 
+							}
 							}}
 						/>
 					</Grid>

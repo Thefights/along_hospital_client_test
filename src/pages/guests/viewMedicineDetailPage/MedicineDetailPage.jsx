@@ -39,14 +39,14 @@ export default function MedicineDetailPage() {
 					</Box>
 				) : medicine?.id ? (
 					<Grid container spacing={6} alignItems='flex-start'>
-						<Grid item xs={12} md={5}>
+						<Grid item size={{ xs: 12, md: 5 }}>
 							<MedicineDetailImageSection
 								medicine={medicine}
 								currentImage={currentImage}
 								setCurrentImage={setCurrentImage}
 							/>
 						</Grid>
-						<Grid item xs={12} md={7}>
+						<Grid item size={{ xs: 12, md: 5 }}>
 							<MedicineDetailInfoSection
 								medicine={medicine}
 								quantity={quantity}

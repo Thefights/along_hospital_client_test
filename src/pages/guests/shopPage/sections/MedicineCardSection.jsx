@@ -34,7 +34,7 @@ const MedicineCardSection = ({ medicine, sx = {} }) => {
 
 	const handleAddToCart = async () => {
 		await submit({
-			medicineid: medicine.id,
+			medicineId: medicine.id,
 			quantity: quantity,
 		})
 	}
