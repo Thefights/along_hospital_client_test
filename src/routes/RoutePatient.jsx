@@ -7,6 +7,9 @@ import LayoutPatient from '@/layouts/LayoutPatient'
 import CartPage from '@/pages/patients/cartPage/CartPage'
 import NotFoundPage from '@/pages/commons/NotFoundPage'
 import CreateAppointmentPage from '@/pages/patients/createAppointmentPage/CreateAppointmentPage'
+import EndMeetingRoomPage from '@/pages/patients/meetingRoomPage/endMeetingRoomPage/EndMeetingRoomPage'
+import JoinMeetingRoomPage from '@/pages/patients/meetingRoomPage/JoinMeetingRoomPage'
+import MeetingRoomPage from '@/pages/patients/meetingRoomPage/meetingRoomPage/MeetingRoomPage'
 import PatientAppointmentHistoryPage from '@/pages/patients/patientAppointmentHistoryPage/PatientAppointmentHistoryPage'
 import PatientMedicalHistoryPage from '@/pages/patients/patientMedicalHistoryPage/PatientMedicalHistoryPage'
 import MyVoucherListPage from '@/pages/patients/voucherPage/MyVoucherListPage'
@@ -33,6 +36,15 @@ const RoutePatient = () => {
 						path={routeUrls.PATIENT.APPOINTMENT.INDEX}
 						element={<PatientAppointmentHistoryPage />}
 					/>
+
+					<Route
+						path={routeUrls.PATIENT.APPOINTMENT.JOIN_MEETING_ROOM}
+						element={<JoinMeetingRoomPage />}
+					/>
+					<Route
+						path={routeUrls.PATIENT.APPOINTMENT.JOIN_MEETING_ROOM + '/complete'}
+						element={<EndMeetingRoomPage />}
+					/>
 					<Route
 						path={routeUrls.PATIENT.MEDICAL_HISTORY.INDEX}
 						element={<PatientMedicalHistoryPage />}
@@ -44,6 +56,10 @@ const RoutePatient = () => {
 					<Route path={routeUrls.PATIENT.CART} element={<CartPage />} />
 					<Route path={routeUrls.PATIENT.VOUCHER.MY_VOUCHERS} element={<MyVoucherListPage />} />
 				</Route>
+				<Route
+					path={routeUrls.PATIENT.APPOINTMENT.MEETING_ROOM_TOKEN(':id')}
+					element={<MeetingRoomPage />}
+				/>
 			</Route>
 			<Route path='*' element={<NotFoundPage />} />
 		</Routes>

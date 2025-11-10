@@ -21,6 +21,10 @@ export const routeUrls = {
 		VOUCHERS: '/vouchers',
 		MEDICAL_HISTORY_INVOICE: (id) => `/medical-history/invoice/${id}`,
 		MEDICAL_HISTORY_PRINT_PRESCRIPTION: (id) => `/medical-history/print-prescription/${id}`,
+		PAYMENT: {
+			RETURN: '/payment/return',
+			CANCEL: '/payment/cancel',
+		},
 	},
 	AUTH: {
 		LOGIN: '/login',
@@ -42,9 +46,12 @@ export const routeUrls = {
 		},
 		ORDER_HISTORY: '/order-history',
 		APPOINTMENT: {
+			JOIN_MEETING_ROOM: `/appointments/join-meeting-room`,
+			MEETING_ROOM_TOKEN: (id) => `/appointments/meeting-room-token/${id}`,
 			INDEX: '/appointment',
 			CREATE: '/appointment/create',
 		},
+		VIDEO_CONSULTATION: '/video-consultation',
 		VOUCHER: {
 			MY_VOUCHERS: '/my-vouchers',
 		},
@@ -53,6 +60,9 @@ export const routeUrls = {
 		DASHBOARD: '/',
 		PROFILE: '/profile',
 		APPOINTMENT_MANAGEMENT: '/appointment',
+		APPOINTMENT: {
+			MEETING_ROOM_TOKEN: (id) => `/appointments/meeting-room-token/${id}`,
+		},
 		ATTENDANCE: '/attendance',
 		MEDICAL_HISTORY: {
 			INDEX: '/medical-history',
@@ -60,6 +70,7 @@ export const routeUrls = {
 			DETAIL: (id) => `/medical-history/${id}`,
 		},
 	},
+
 	MANAGER: {
 		DASHBOARD: '/',
 		PROFILE: '/profile',

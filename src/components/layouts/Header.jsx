@@ -4,7 +4,6 @@ import useAuth from '@/hooks/useAuth'
 import { alpha, AppBar, Box, Stack, Toolbar, useMediaQuery, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import AppointmentButton from '../buttons/AppointmentButton'
 import CartButton from '../buttons/CartButton'
 import LoginButton from '../buttons/LoginButton'
 import MobileMenuButton from '../buttons/MobileMenuButton'
@@ -72,11 +71,6 @@ const Header = ({
 								<CartButton
 									count={cartCount}
 									onClick={() => navigate(routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.CART))}
-								/>
-								<AppointmentButton
-									onClick={() =>
-										navigate(routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.APPOINTMENT.CREATE))
-									}
 								/>
 								<UserAvatarMenu items={userMenuItems} profile={profile} onLogout={logout} />
 							</>

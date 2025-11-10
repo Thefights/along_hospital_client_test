@@ -1,7 +1,11 @@
+import { ApiUrls } from '@/configs/apiUrls'
+import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useTranslation from '@/hooks/useTranslation'
 import { CancelOutlined } from '@mui/icons-material'
 import { Box, Paper, Stack, Typography } from '@mui/material'
 import { keyframes } from '@mui/system'
+import { useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 const pulse = keyframes`
 	0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.35); }
@@ -11,6 +15,21 @@ const pulse = keyframes`
 
 const PaymentCancelPage = () => {
 	const { t } = useTranslation()
+	const [searchParams] = useSearchParams()
+	const orderCode = searchParams.get('orderCode')
+
+	const { submit } = useAxiosSubmit({
+		url: orderCode ? ApiUrls.PAYMENT.CANCEL_PAYMENT(orderCode) : '',
+		method: 'POST',
+	})
+
+	useEffect(() => {
+		if (orderCode) {
+			submit()
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
 	return (
 		<Box sx={{ py: 6 }}>
 			<Paper elevation={0} sx={{ p: { xs: 3, md: 5 }, textAlign: 'center' }}>

@@ -86,6 +86,8 @@ export const ApiUrls = {
 	APPOINTMENT: {
 		INDEX: `/appointment`,
 		CANCEL: (id) => `/appointment/cancel/${id}`,
+		MEETING_ROOM: `/appointment/meeting-room`,
+		MEETING_ROOM_TOKEN: (id) => `/appointment/meeting-room-token/${id}`,
 		MANAGEMENT: {
 			INDEX: `/appointment-management`,
 			GET_ALL_BY_CURRENT_DOCTOR: `/appointment-management/doctor`,
@@ -131,12 +133,17 @@ export const ApiUrls = {
 			DETAIL: (id) => `/Blog-Management/${id}`,
 		},
 	},
+<<<<<<< HEAD
+	TELE_SESSION: {
+		DETAIL: (id) => `/tele-session/${id}`,
+=======
 	CART: {
 		INDEX: `/cart`,
 		CHECKOUT: `/cart/checkout`,
 		ADD_TO_CART: `/cart/add-to-cart`,
 		UPDATE: `/cart/update`,
 		DELETE: (id) => `/cart/delete/${id}`,
+>>>>>>> main
 	},
 	VOUCHER: {
 		COLLECTIBLE: `/voucher/collectible`,
@@ -182,6 +189,9 @@ export const ApiUrls = {
 			RESOLVE: (id) => `/feedback-report-management/resolve/${id}`,
 			REJECT: (id) => `/feedback-report-management/reject/${id}`,
 		},
+	},
+	PAYMENT: {
+		CANCEL_PAYMENT: (id) => `/payment/cancel-payment/${id}`,
 	},
 	ATTENDANCE: {
 		MANAGEMENT: {
