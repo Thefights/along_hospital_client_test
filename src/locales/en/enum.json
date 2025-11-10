@@ -100,6 +100,13 @@
             "patient": "Patient",
             "medicine": "Medicine"
         },
+        "order_status": {
+            "unpaid": "Unpaid",
+            "processing": "Processing",
+            "shipping": "Shipping",
+            "completed": "Completed",
+            "cancelled": "Cancelled"
+        },
         "feedback_report_status": {
             "pending": "Pending",
             "resolved": "Resolved",

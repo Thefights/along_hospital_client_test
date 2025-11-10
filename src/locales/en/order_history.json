@@ -1,0 +1,25 @@
+{
+    "order": {
+        "title": {
+            "page": "Order History",
+            "subtitle": "Manage and track your orders"
+        },
+        "history": {
+            "empty": "No orders yet",
+            "empty_desc": "You haven't placed any orders. Start shopping now!",
+            "order_id": "Order",
+            "transaction_id": "Transaction ID",
+            "order_date": "Order Date",
+            "delivery_date": "Estimated Delivery Date",
+            "voucher_code": "Voucher Code",
+            "total_products": "Total Products",
+            "product_unit": "items",
+            "origin_price": "Original Price",
+            "discount": "Discount",
+            "total": "Total Amount",
+            "detail_button": "Details",
+            "waiting_for_confirmation": "Waiting for payment",
+            "quantity": "Quantity"
+        }
+    }
+}

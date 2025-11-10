@@ -141,6 +141,15 @@ export const EnumConfig = {
 		FixedAmount: 'FixedAmount',
 	},
 
+	//Order
+	OrderStatus: {
+		Unpaid: 'Unpaid',
+		Processing: 'Processing',
+		Shipping: 'Shipping',
+		Completed: 'Completed',
+		Cancelled: 'Cancelled',
+  },
+  
 	//Feedback
 	FeedbackReportStatus: {
 		Pending: 'Pending',

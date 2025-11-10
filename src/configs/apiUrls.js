@@ -133,17 +133,15 @@ export const ApiUrls = {
 			DETAIL: (id) => `/Blog-Management/${id}`,
 		},
 	},
-<<<<<<< HEAD
 	TELE_SESSION: {
 		DETAIL: (id) => `/tele-session/${id}`,
-=======
+  },
 	CART: {
 		INDEX: `/cart`,
 		CHECKOUT: `/cart/checkout`,
 		ADD_TO_CART: `/cart/add-to-cart`,
 		UPDATE: `/cart/update`,
 		DELETE: (id) => `/cart/delete/${id}`,
->>>>>>> main
 	},
 	VOUCHER: {
 		COLLECTIBLE: `/voucher/collectible`,
@@ -190,6 +188,11 @@ export const ApiUrls = {
 			REJECT: (id) => `/feedback-report-management/reject/${id}`,
 		},
 	},
+	ORDER_HISTORY: {
+		INDEX: `/order/all`,
+		DETAIL: (id) => `/order/${id}`,
+		CANCEL: (id) => `/order/cancel/${id}`,
+  },
 	PAYMENT: {
 		CANCEL_PAYMENT: (id) => `/payment/cancel-payment/${id}`,
 	},

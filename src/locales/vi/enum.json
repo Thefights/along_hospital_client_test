@@ -100,6 +100,13 @@
             "patient": "Bệnh nhân",
             "medicine": "Thuốc"
         },
+        "order_status": {
+            "unpaid": "Chưa thanh toán",
+            "processing": "Đang xử lý",
+            "shipping": "Đang vận chuyển",
+            "completed": "Đã giao",
+            "cancelled": "Đã hủy"
+        },
         "feedback_report_status": {
             "pending": "Chờ xử lý",
             "resolved": "Đã xử lý",

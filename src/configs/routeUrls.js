@@ -44,7 +44,10 @@ export const routeUrls = {
 			INDEX: '/medical-history',
 			DETAIL: (id) => `/medical-history/${id}`,
 		},
-		ORDER_HISTORY: '/order-history',
+		ORDER_HISTORY: {
+			INDEX: '/order-history',
+			DETAIL: (id) => `/order-history/${id}`,
+		},
 		APPOINTMENT: {
 			JOIN_MEETING_ROOM: `/appointments/join-meeting-room`,
 			MEETING_ROOM_TOKEN: (id) => `/appointments/meeting-room-token/${id}`,

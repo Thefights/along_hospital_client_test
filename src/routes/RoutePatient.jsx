@@ -7,6 +7,8 @@ import LayoutPatient from '@/layouts/LayoutPatient'
 import CartPage from '@/pages/patients/cartPage/CartPage'
 import NotFoundPage from '@/pages/commons/NotFoundPage'
 import CreateAppointmentPage from '@/pages/patients/createAppointmentPage/CreateAppointmentPage'
+import OrderHistoryDetailPage from '@/pages/patients/orderHistoryDetailPage/OrderHistoryDetailPage'
+import OrderHistoryPage from '@/pages/patients/orderHistoryPage/OrderHistoryPage'
 import EndMeetingRoomPage from '@/pages/patients/meetingRoomPage/endMeetingRoomPage/EndMeetingRoomPage'
 import JoinMeetingRoomPage from '@/pages/patients/meetingRoomPage/JoinMeetingRoomPage'
 import MeetingRoomPage from '@/pages/patients/meetingRoomPage/meetingRoomPage/MeetingRoomPage'
@@ -52,6 +54,11 @@ const RoutePatient = () => {
 					<Route
 						path={routeUrls.PATIENT.MEDICAL_HISTORY.DETAIL(':id')}
 						element={<MedicalHistoryDetailBasePage fetchUrl={ApiUrls.MEDICAL_HISTORY.INDEX} />}
+					/>
+					<Route path={routeUrls.PATIENT.ORDER_HISTORY.INDEX} element={<OrderHistoryPage />} />
+					<Route
+						path={routeUrls.PATIENT.ORDER_HISTORY.DETAIL(':id')}
+						element={<OrderHistoryDetailPage />}
 					/>
 					<Route path={routeUrls.PATIENT.CART} element={<CartPage />} />
 					<Route path={routeUrls.PATIENT.VOUCHER.MY_VOUCHERS} element={<MyVoucherListPage />} />
