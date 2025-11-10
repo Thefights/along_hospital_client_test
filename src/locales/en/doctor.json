@@ -2,7 +2,9 @@
     "doctor": {
         "title": {
             "doctor_management": "Doctor Management",
-            "team": "Our Doctors"
+            "team": "Our Doctors",
+            "delete": "Delete Doctor",
+            "delete_confirm": "Are you sure you want to delete doctor"
         },
         "text": {
             "description": "ALong Hospital’s doctors are experienced, dedicated, and always put patients’ health first."
@@ -25,7 +27,8 @@
             "date_of_birth": "Date of Birth",
             "department": "Department",
             "image": "Image",
-            "signature_image": "Signature Image"
+            "signature_image": "Signature Image",
+            "email": "Email"
         }
     }
 }

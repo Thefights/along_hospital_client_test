@@ -211,6 +211,33 @@ export default function useEnum() {
 			{ value: EnumConfig.OrderStatus.Shipping, label: t('enum.order_status.shipping') },
 			{ value: EnumConfig.OrderStatus.Completed, label: t('enum.order_status.completed') },
 			{ value: EnumConfig.OrderStatus.Cancelled, label: t('enum.order_status.cancelled') },
+    ],
+    
+		//For Feedbacks
+		feedbackReportStatusEnum: [
+			{
+				value: EnumConfig.FeedbackReportStatus.Pending,
+				label: t('enum.feedback_report_status.pending'),
+			},
+			{
+				value: EnumConfig.FeedbackReportStatus.Rejected,
+				label: t('enum.feedback_report_status.rejected'),
+			},
+			{
+				value: EnumConfig.FeedbackReportStatus.Resolved,
+				label: t('enum.feedback_report_status.resolved'),
+			},
+		],
+
+		attendanceLogTypeOptions: [
+			{
+				value: EnumConfig.AttendanceLogType.CheckIn,
+				label: t('enum.attendance_log_type.check_in'),
+			},
+			{
+				value: EnumConfig.AttendanceLogType.CheckOut,
+				label: t('enum.attendance_log_type.check_out'),
+			},
 		],
 	}
 }

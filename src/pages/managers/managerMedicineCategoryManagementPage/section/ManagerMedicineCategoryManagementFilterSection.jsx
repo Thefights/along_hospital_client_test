@@ -6,7 +6,7 @@ import useTranslation from '@/hooks/useTranslation'
 import { Button, Stack, Typography } from '@mui/material'
 import { useEffect } from 'react'
 
-const MedicineCategoryFilterSection = ({
+const ManagerMedicineCategoryManagementFilterSection = ({
 	filters,
 	loading = false,
 	onFilterClick = () => {},
@@ -81,4 +81,4 @@ const MedicineCategoryFilterSection = ({
 	)
 }
 
-export default MedicineCategoryFilterSection
+export default ManagerMedicineCategoryManagementFilterSection

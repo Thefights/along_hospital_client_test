@@ -19,7 +19,6 @@ export const ApiUrls = {
 	USER: {
 		INDEX: `/user`,
 		PROFILE: `/user/profile`,
-		CART: `/user/cart`,
 	},
 	PATIENT: {
 		MANAGEMENT: {
@@ -35,7 +34,6 @@ export const ApiUrls = {
 			INDEX: `/doctor-management`,
 			GET_ALL: `/doctor-management/all`,
 			DETAIL: (id) => `/doctor-management/${id}`,
-			DELETE_SELECTED: `/doctor-management/selected`,
 		},
 	},
 	SPECIALTY: {
@@ -49,6 +47,7 @@ export const ApiUrls = {
 	},
 	MEDICINE: {
 		INDEX: `/medicine`,
+		GET_BY_ID: (id) => `/medicine/${id}`,
 		GET_ALL: `/medicine/all`,
 		MANAGEMENT: {
 			INDEX: `/medicine-management`,
@@ -65,17 +64,30 @@ export const ApiUrls = {
 		UPDATE: (id) => `/medicine-category/${id}`,
 		DELETE: (id) => `/medicine-category/${id}`,
 	},
+	IMPORT: {
+		MANAGEMENT: {
+			INDEX: `/import-management`,
+			GET_ALL: `/import-management/all`,
+			DETAIL: (id) => `/import-management/${id}`,
+			DELETE_SELECTED: `/import-management/selected`,
+			BULK_IMPORT_FROM_EXCEL: `/import-management/bulk-import-from-excel`,
+		},
+	},
 	MEDICAL_SERVICE: {
 		INDEX: `/medical-service`,
 		GET_ALL: `/medical-service/all`,
+		DETAIL: (id) => `/medical-service/${id}`,
 		MANAGEMENT: {
 			INDEX: `/medical-service-management`,
 			GET_ALL: `/medical-service-management/all`,
+			DETAIL: (id) => `/medical-service-management/${id}`,
 		},
 	},
 	APPOINTMENT: {
 		INDEX: `/appointment`,
 		CANCEL: (id) => `/appointment/cancel/${id}`,
+		MEETING_ROOM: `/appointment/meeting-room`,
+		MEETING_ROOM_TOKEN: (id) => `/appointment/meeting-room-token/${id}`,
 		MANAGEMENT: {
 			INDEX: `/appointment-management`,
 			GET_ALL_BY_CURRENT_DOCTOR: `/appointment-management/doctor`,
@@ -121,19 +133,44 @@ export const ApiUrls = {
 			DETAIL: (id) => `/Blog-Management/${id}`,
 		},
 	},
+	TELE_SESSION: {
+		DETAIL: (id) => `/tele-session/${id}`,
+  },
+	CART: {
+		INDEX: `/cart`,
+		CHECKOUT: `/cart/checkout`,
+		ADD_TO_CART: `/cart/add-to-cart`,
+		UPDATE: `/cart/update`,
+		DELETE: (id) => `/cart/delete/${id}`,
+	},
 	VOUCHER: {
-		INDEX: `/voucher`,
+		COLLECTIBLE: `/voucher/collectible`,
+		COLLECT: `/voucher/collect`,
+		MY_VOUCHERS: `/voucher/my-vouchers`,
+		MY_ALL_VOUCHERS: `/voucher/my-vouchers/all`,
 		MANAGEMENT: {
 			INDEX: `/voucher-management`,
 			DETAIL: (id) => `/voucher-management/${id}`,
 		},
 	},
+	PATIENT_VOUCHER: {
+		INDEX: `/patient-voucher`,
+		DETAIL: (id) => `/patient-voucher/${id}`,
+	},
 	DEPARTMENT: {
 		INDEX: `/department`,
+		GET_ALL: `/department/all`,
 		MANAGEMENT: {
 			INDEX: `/department-management`,
 			GET_ALL: `/department-management/all`,
 			DETAIL: (id) => `/department-management/${id}`,
+		},
+	},
+	SUPPLIER: {
+		MANAGEMENT: {
+			INDEX: `/supplier-management`,
+			GET_ALL: `/supplier-management/all`,
+			DETAIL: (id) => `/supplier-management/${id}`,
 		},
 	},
 	FEEDBACK: {
@@ -155,5 +192,18 @@ export const ApiUrls = {
 		INDEX: `/order/all`,
 		DETAIL: (id) => `/order/${id}`,
 		CANCEL: (id) => `/order/cancel/${id}`,
+  },
+	PAYMENT: {
+		CANCEL_PAYMENT: (id) => `/payment/cancel-payment/${id}`,
+	},
+	ATTENDANCE: {
+		MANAGEMENT: {
+			INDEX: `/attendance-management`,
+		},
+		STAFF_ATTENDANCE: {
+			INDEX: `/staff-attendance`,
+			CHECK_IN: `/staff-attendance/check-in`,
+			CHECK_OUT: `/staff-attendance/check-out`,
+		},
 	},
 }

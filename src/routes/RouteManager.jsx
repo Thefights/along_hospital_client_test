@@ -7,15 +7,21 @@ import LayoutManager from '@/layouts/LayoutManager'
 import NotFoundPage from '@/pages/commons/NotFoundPage'
 import ComplaintManagementPage from '@/pages/managers/complaintManagementPage/ComplaintManagementPage'
 import DoctorManagementPage from '@/pages/managers/doctorManagementPage/DoctorManagementPage'
+import FeedbackReportManagementPage from '@/pages/managers/feedbackReportManagementPage/FeedbackReportManagementPage'
 import ManagerAppointmentManagementPage from '@/pages/managers/managerAppointmentManagementPage/ManagerAppointmentManagementPage'
+import ManagerAttendanceManagementPage from '@/pages/managers/managerAttendanceManagementPage/ManagerAttendanceManagementPage'
 import ManagerBlogManagementPage from '@/pages/managers/managerBlogManagementPage/ManagerBlogManagementPage'
 import BlogUpsertPage from '@/pages/managers/managerBlogUpsertPage/BlogUpsertPage'
+import ManagerDepartmentManagementPage from '@/pages/managers/managerDepartmentManagementPage/ManagerDepartmentManagementPage'
+import ImportManagementPage from '@/pages/managers/managerImportManagementPage/ImportManagementPage'
 import ManagerMedicalHistoryManagementPage from '@/pages/managers/managerMedicalHistoryManagementPage/ManagerMedicalHistoryManagementPage'
+import ManagerMedicalServiceManagementPage from '@/pages/managers/managerMedicalServiceManagementPage/ManagerMedicalServiceManagemnetPage'
 import ManagerMedicineCategoryManagementPage from '@/pages/managers/managerMedicineCategoryManagementPage/ManagerMedicineCategoryManagementPage'
 import ManagerMedicineManagemntPage from '@/pages/managers/managerMedicineManagementPage/ManagerMedicineManagementPage'
+import ManagerSupplierPage from '@/pages/managers/managerSupplierPage/ManagerSupplierPage'
 import SpecialtyManagementPage from '@/pages/managers/specialtyManagementPage/SpecialtyManagementPage'
-import ProfilePage from '@/pages/profile/ProfilePage'
 import VoucherManagementPage from '@/pages/managers/voucherManagementPage/VoucherManagementPage'
+import ProfilePage from '@/pages/profile/ProfilePage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 
@@ -48,6 +54,14 @@ const RouteManager = () => {
 						element={<ManagerMedicalHistoryManagementPage />}
 					/>
 					<Route
+						path={routeUrls.MANAGER.DEPARTMENT_MANAGEMENT}
+						element={<ManagerDepartmentManagementPage />}
+					/>
+					<Route
+						path={routeUrls.MANAGER.MEDICAL_SERVICE}
+						element={<ManagerMedicalServiceManagementPage />}
+					/>
+					<Route
 						path={routeUrls.MANAGER.MEDICAL_HISTORY.DETAIL(':id')}
 						element={<MedicalHistoryDetailBasePage fetchUrl={ApiUrls.MEDICAL_HISTORY.MANAGEMENT.INDEX} />}
 					/>
@@ -62,7 +76,17 @@ const RouteManager = () => {
 						path={routeUrls.MANAGER.MEDICINE_CATEGORY_MANAGEMENT.INDEX}
 						element={<ManagerMedicineCategoryManagementPage />}
 					/>
+					<Route path={routeUrls.MANAGER.IMPORT_MANAGEMENT.INDEX} element={<ImportManagementPage />} />
 					<Route path={routeUrls.MANAGER.VOUCHER_MANAGEMENT} element={<VoucherManagementPage />} />
+					<Route path={routeUrls.MANAGER.SUPPLIER_MANAGEMENT} element={<ManagerSupplierPage />} />
+					<Route
+						path={routeUrls.MANAGER.FEEDBACK_REPORT_MANAGEMENT}
+						element={<FeedbackReportManagementPage />}
+					/>
+					<Route
+						path={routeUrls.MANAGER.ATTENDANCE_MANAGEMENT}
+						element={<ManagerAttendanceManagementPage />}
+					/>
 				</Route>
 			</Route>
 

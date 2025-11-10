@@ -8,10 +8,15 @@ import PrescriptionPrintPage from '@/pages/commons/invoicePage/PrescriptionPrint
 import NotFoundPage from '@/pages/commons/NotFoundPage'
 import CreateMedicalHistoryPage from '@/pages/doctors/createMedicalHistoryPage/CreateMedicalHistoryPage'
 import HomePage from '@/pages/guests/HomePage'
+import PaymentCancelPage from '@/pages/guests/paymentResultPage/PaymentCancelPage'
+import PaymentReturnPage from '@/pages/guests/paymentResultPage/PaymentReturnPage'
+import ShopPage from '@/pages/guests/shopPage/ShopPage'
 import BlogDetailPage from '@/pages/guests/viewBlogDetailPage/BlogDetailPage'
 import BlogPage from '@/pages/guests/viewBlogPage/BlogPage'
 import DoctorPage from '@/pages/guests/viewDoctorPage/DoctorPage'
+import MedicineDetailPage from '@/pages/guests/viewMedicineDetailPage/MedicineDetailPage'
 import SpecialtyPage from '@/pages/patients/specialtyPage/SpecialtyPage'
+import CollectibleVoucherListPage from '@/pages/patients/voucherPage/CollectibleVoucherListPage'
 import TestTable from '@/pages/TestTable'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
@@ -25,10 +30,13 @@ const RouteGuest = () => {
 				{/* This is route with layout */}
 				<Route element={auth?.role !== null ? <LayoutPatient /> : <LayoutGuest />}>
 					<Route path='/' index element={<HomePage />} />
+					<Route path={routeUrls.HOME.MEDICINE} element={<ShopPage />} />
 					<Route path={routeUrls.HOME.SPECIALTY} element={<SpecialtyPage />} />
+					<Route path={routeUrls.HOME.VOUCHERS} element={<CollectibleVoucherListPage />} />
 					<Route path={routeUrls.HOME.DOCTOR} element={<DoctorPage />} />
 					<Route path={routeUrls.HOME.BLOG} element={<BlogPage />} />
 					<Route path={`${routeUrls.HOME.BLOG}/:id`} element={<BlogDetailPage />} />
+					<Route path={`${routeUrls.HOME.MEDICINE}/:id`} element={<MedicineDetailPage />} />
 					<Route
 						path={routeUrls.HOME.MEDICAL_HISTORY_INVOICE(':id')}
 						element={<MedicalHistoryInvoicePage />}
@@ -37,6 +45,8 @@ const RouteGuest = () => {
 						path={routeUrls.HOME.MEDICAL_HISTORY_PRINT_PRESCRIPTION(':id')}
 						element={<PrescriptionPrintPage />}
 					/>
+					<Route path={routeUrls.HOME.PAYMENT.CANCEL} element={<PaymentCancelPage />} />
+					<Route path={routeUrls.HOME.PAYMENT.RETURN} element={<PaymentReturnPage />} />
 					{process.env.NODE_ENV === 'development' && (
 						<>
 							<Route path='/test' element={<TestTable />} />

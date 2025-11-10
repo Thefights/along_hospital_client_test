@@ -1,0 +1,57 @@
+{
+    "meeting_room": {
+        "title": {
+            "join_meeting": "Tham gia cuộc gọi",
+            "appointment_time": "Thời gian hẹn",
+            "duration": "Thời lượng",
+            "duration_left": "còn lại",
+            "note": "Vui lòng giữ trang này mở. Bác sĩ sẽ tham gia trong giây lát.",
+            "placeholder_meeting_id": "Nhập mã hoặc ID cuộc gọi..."
+        },
+        "subtitle": {
+            "enter_meeting": "Nhập ID hoặc mã để tham gia cuộc gọi"
+        },
+        "consultation_complete_title": "Buổi tư vấn đã hoàn tất",
+        "consultation_complete_subtitle": "Cuộc hẹn từ xa của bạn đã kết thúc thành công",
+        "chief_complaint": "Triệu chứng chính",
+        "diagnosis": "Chẩn đoán",
+        "recommendations": "Khuyến nghị",
+        "sample_chief_complaint": "Đau đầu và sốt nhẹ trong hai ngày.",
+        "sample_diagnosis": "Nghi nhiễm siêu vi đường hô hấp trên.",
+        "sample_rec_1": "Uống nhiều nước.",
+        "sample_rec_2": "Nghỉ ngơi đầy đủ.",
+        "sample_rec_3": "Dùng thuốc theo chỉ định.",
+        "sample_rec_4": "Tái khám nếu triệu chứng nặng hơn.",
+        "schedule_follow_up": "Đặt lịch tái khám",
+        "back_to_home": "Về trang chủ",
+        "summary_notice": "Tóm tắt buổi tư vấn đã được lưu. Bạn có thể xem lại trong Lịch sử y tế.",
+        "mic": "Micro",
+        "camera": "Camera",
+        "chat": "Trò chuyện",
+        "end_call": "Kết thúc",
+        "chat_title": "Trò chuyện",
+        "no_messages": "Chưa có tin nhắn.",
+        "chat_input_placeholder": "Nhập tin nhắn và nhấn Enter",
+        "create_medical_history": "Tạo hồ sơ khám",
+        "remote_placeholder": "Video từ đầu bên kia sẽ hiển thị tại đây",
+        "doctor_avatar_url": "",
+        "message": {
+            "waiting_for_doctor": "Đang chờ bác sĩ tham gia…"
+        }
+    },
+    "telehealth": {
+        "error": {
+            "session_not_ready": "Phiên chưa sẵn sàng"
+        },
+        "button": {
+            "start_call": "Bắt đầu gọi",
+            "hang_up": "Kết thúc",
+            "mute_unmute": "Bật/Tắt mic",
+            "toggle_video": "Bật/Tắt video"
+        },
+        "participants": {
+            "title": "Người tham gia",
+            "empty": "Chưa có người tham gia"
+        }
+    }
+}

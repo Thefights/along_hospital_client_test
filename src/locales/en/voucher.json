@@ -9,7 +9,9 @@
             "create": "Create Voucher",
             "update": "Update Voucher",
             "voucher_management": "Voucher Management",
-            "filters": "Filters"
+            "filters": "Filters",
+            "collectible_vouchers": "Voucher Store",
+            "my_vouchers": "My Vouchers"
         },
         "section": {
             "basic_info": "Basic Information",
@@ -19,11 +21,23 @@
         },
         "description": {
             "page_intro": "Manage all vouchers in the hospital system.",
-            "list": "Browse and manage available vouchers."
+            "list": "Browse and manage available vouchers.",
+            "collectible_subtitle": "Collect discount vouchers for medicine purchases",
+            "my_vouchers_subtitle": "Manage and use collected vouchers",
+            "no_vouchers_title": "You don't have any vouchers yet",
+            "no_vouchers_subtitle": "Discover and collect promotional vouchers today",
+            "no_collectible_title": "No matching vouchers found",
+            "no_collectible_subtitle": "Try adjusting filters or clearing search criteria"
         },
         "button": {
             "view_detail": "View detail",
-            "collect": "Collect"
+            "collect": "Collect",
+            "use_now": "Use Now",
+            "used": "Used",
+            "expired": "Expired",
+            "copy_code": "Copy code",
+            "explore_vouchers": "Explore vouchers",
+            "clear_filters": "Clear filters"
         },
         "placeholder": {
             "no_description": "No description available.",
@@ -62,12 +76,18 @@
             "Expired": "Expired"
         },
         "type": {
-            "Patient": "Patient",
-            "Medicine": "Medicine"
+            "Patient": "Patient Voucher",
+            "Medicine": "Medicine Discount"
         },
         "discount_type": {
             "Percentage": "Percentage",
             "FixedAmount": "Fixed Amount"
+        },
+        "label": {
+            "expire_date": "Expires",
+            "remaining_quantity": "Remaining {quantity}",
+            "min_purchase": "Minimum {amount}",
+            "max_discount": "Max discount {amount}"
         }
     }
 }

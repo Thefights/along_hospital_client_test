@@ -1,23 +1,20 @@
 import FilterButton from '@/components/buttons/FilterButton'
 import ResetFilterButton from '@/components/buttons/ResetFilterButton'
-import useEnum from '@/hooks/useEnum'
 import useFieldRenderer from '@/hooks/useFieldRenderer'
 import { useForm } from '@/hooks/useForm'
 import useTranslation from '@/hooks/useTranslation'
 import { Stack, Typography } from '@mui/material'
 import { useEffect } from 'react'
 
-const MedicineFilterBarSection = ({
+const ManagerMedicalServiceFilterBarSection = ({
 	filters,
-	categories = [],
 	loading = false,
+	specialties = [],
 	onFilterClick = () => {},
 	onResetFilterClick = () => {},
 }) => {
 	const { t } = useTranslation()
-	const _enum = useEnum()
-	
-	const { reset, values, handleChange, setField, registerRef } = useForm(filters)
+	const { values, handleChange, setField, registerRef, reset } = useForm(filters)
 	const { renderField } = useFieldRenderer(
 		values,
 		setField,
@@ -28,28 +25,13 @@ const MedicineFilterBarSection = ({
 		'small'
 	)
 
-	const fields1st = [
+	const fields = [
+		{ key: 'name', title: t('text.search'), type: 'search', required: false },
 		{
-			key: 'medicineCategoryId',
-			title: t('medicine.filter.category'),
+			key: 'specialtyId',
+			title: t('medical_service.field.specialty'),
 			type: 'select',
-			options: [{ value: '', label: t('text.all') }, ...(categories || [])],
-			required: false,
-		},
-		{
-			key: 'medicineUnit',
-			title: t('medicine.filter.unit'),
-			type: 'select',
-			options: [{ value: '', label: t('text.all') }, ...(_enum.medicineUnitOptions || [])],
-			required: false,
-		},
-	]
-
-	const fields2nd = [
-		{
-			key: 'name',
-			title: t('medicine.filter.searchPlaceholder'),
-			type: 'search',
+			options: [{ value: '', label: t('text.all') }, ...(specialties || [])],
 			required: false,
 		},
 	]
@@ -70,18 +52,17 @@ const MedicineFilterBarSection = ({
 				borderRadius: 1,
 			}}
 		>
-			<Typography variant='caption'>{t('medicine.filter.title')}</Typography>
-
+			<Typography variant='caption'>{t('medical_service.title.filter')}</Typography>
 			<Stack direction='row' spacing={2} alignItems='center'>
-				{fields1st.map(renderField)}
-			</Stack>
-
-			<Stack direction='row' spacing={2} alignItems='center'>
-				{fields2nd.map(renderField)}
-				<FilterButton onFilterClick={() => onFilterClick(values)} loading={loading} />
+				{fields.map(renderField)}
+				<FilterButton
+					onFilterClick={() => onFilterClick(values)}
+					loading={loading}
+					sx={{ minWidth: 100 }}
+				/>
 				<ResetFilterButton
 					loading={loading}
-					onResetFilterClick={onResetFilterClick}
+					onResetFilterClick={() => onResetFilterClick(reset)}
 					sx={{ minWidth: 180 }}
 				/>
 			</Stack>
@@ -89,4 +70,4 @@ const MedicineFilterBarSection = ({
 	)
 }
 
-export default MedicineFilterBarSection
+export default ManagerMedicalServiceFilterBarSection

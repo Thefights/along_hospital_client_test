@@ -109,6 +109,10 @@ export const EnumConfig = {
 		PhD: 'PhD',
 		Specialist: 'Specialist',
 	},
+	AttendanceLogType: {
+		CheckIn: 'CheckIn',
+		CheckOut: 'CheckOut',
+	},
 
 	// For medicines
 	MedicineUnit: {
@@ -144,5 +148,12 @@ export const EnumConfig = {
 		Shipping: 'Shipping',
 		Completed: 'Completed',
 		Cancelled: 'Cancelled',
+  },
+  
+	//Feedback
+	FeedbackReportStatus: {
+		Pending: 'Pending',
+		Resolved: 'Resolved',
+		Rejected: 'Rejected',
 	},
 }

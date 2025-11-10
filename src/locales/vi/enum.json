@@ -49,6 +49,10 @@
             "in_person": "Trực tiếp",
             "telehealth": "Y tế từ xa"
         },
+        "attendance_log_type": {
+            "check_in": "Check-in",
+            "check_out": "Check-out"
+        },
         "severity_level": {
             "mild": "Nhẹ",
             "moderate": "Trung bình",
@@ -102,6 +106,15 @@
             "shipping": "Đang vận chuyển",
             "completed": "Đã giao",
             "cancelled": "Đã hủy"
+        },
+        "feedback_report_status": {
+            "pending": "Chờ xử lý",
+            "resolved": "Đã xử lý",
+            "rejected": "Đã từ chối"
+        },
+        "voucher_discount_type": {
+            "percentage": "Phần trăm",
+            "fixed_amount": "Số tiền cố định"
         }
     }
 }

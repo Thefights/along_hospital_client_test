@@ -7,6 +7,7 @@
         "doctor": "Doctor",
         "specialty": "Specialty",
         "blog": "Blog",
+        "vouchers": "Vouchers",
         "about_us": "About Us",
         "user_menu": {
             "dashboard": "Dashboard",
@@ -14,10 +15,12 @@
             "appointments": "Appointments",
             "medical_history": "Medical History",
             "order_history": "Order History",
+            "my_vouchers": "My Vouchers",
             "change_password": "Change Password",
             "setting": "Setting",
             "logout": "Logout"
-        }
+        },
+        "meeting_room": "Join Meeting Room"
     },
     "footer": {
         "__________comment1": "For footer section links",

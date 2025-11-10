@@ -1,0 +1,32 @@
+{
+    "cart": {
+        "title": "Shopping Cart",
+        "empty_cart": "Your cart is empty",
+        "no_image": "No image",
+        "brand": "Brand",
+        "unit": "Unit",
+        "summary": {
+            "title": "Cart Summary",
+            "total": "Total",
+            "voucher_code": "Voucher Code",
+            "checkout": "Checkout",
+            "checkout_description": "Checkout your order",
+            "processing": "Processing..."
+        },
+        "button": {
+            "delete": "Delete"
+        },
+        "continue_shopping": "Continue shopping"
+    },
+    "checkout": {
+        "title": "Checkout",
+        "confirm_delete": "Are you sure you want to remove this item?",
+        "success": "Checkout successful"
+    },
+    "common": {
+        "error": {
+            "loading_data": "Error loading data",
+            "not_found": "Not found"
+        }
+    }
+}

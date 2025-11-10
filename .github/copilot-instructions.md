@@ -11,6 +11,9 @@ This is a React 19 + Vite hospital management client application using Material-
 
 ## Development Patterns
 
+### Communication preferences
+- When interacting with the user named "Thefight", always respond in Vietnamese.
+
 ### Import Convention
 - Use `@/` alias for all internal imports (configured in `vite.config.js`)
 - Example: `import useAuth from '@/hooks/useAuth'`
@@ -108,6 +111,11 @@ const fields = [
 - Locale files in `src/locales/` (en.json, vi.json)
 - Translation keys follow dot notation: `t('header.home')`
 
+#### Usage Rules (Important)
+- Always call `t()` with a key only, without params. Example: `t('header.home')`.
+- For now, when adding new translation keys, add them to `src/locales/en.json` only. Vietnamese updates can be done later.
+- Prefer grouping keys under meaningful namespaces (e.g., `meeting_room.*`, `appointment.*`, `header.*`).
+- Do not inline literal UI strings in components; use translation keys instead.
 #### Locale-first content rule
 - All user-facing text must be defined in locale files. Do not hard-code strings in components.
 - Scope keys by feature/page. Example namespaces: `doctor`, `blog`, `commons`, `appointment`.

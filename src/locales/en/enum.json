@@ -49,6 +49,10 @@
             "in_person": "In-person",
             "telehealth": "Telehealth"
         },
+        "attendance_log_type": {
+            "check_in": "Check-in",
+            "check_out": "Check-out"
+        },
         "severity_level": {
             "mild": "Mild",
             "moderate": "Moderate",
@@ -102,6 +106,15 @@
             "shipping": "Shipping",
             "completed": "Completed",
             "cancelled": "Cancelled"
+        },
+        "feedback_report_status": {
+            "pending": "Pending",
+            "resolved": "Resolved",
+            "rejected": "Rejected"
+        },
+        "voucher_discount_type": {
+            "percentage": "Percentage",
+            "fixed_amount": "Fixed Amount"
         }
     }
 }

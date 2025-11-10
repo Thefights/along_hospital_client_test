@@ -7,7 +7,9 @@ import LayoutDoctor from '@/layouts/LayoutDoctor'
 import NotFoundPage from '@/pages/commons/NotFoundPage'
 import CreateMedicalHistoryPage from '@/pages/doctors/createMedicalHistoryPage/CreateMedicalHistoryPage'
 import DoctorAppointmentManagementPage from '@/pages/doctors/doctorAppointmentManagementPage/DoctorAppointmentManagementPage'
+import DoctorAttendanceManagementPage from '@/pages/doctors/doctorAttendanceManagementPage/DoctorAttendanceManagementPage'
 import DoctorMedicalHistoryManagementPage from '@/pages/doctors/doctorMedicalHistoryManagementPage/DoctorMedicalHistoryManagementPage'
+import MeetingRoomPage from '@/pages/patients/meetingRoomPage/meetingRoomPage/MeetingRoomPage'
 import ProfilePage from '@/pages/profile/ProfilePage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
@@ -41,7 +43,12 @@ const RouteDoctor = () => {
 						path={routeUrls.DOCTOR.MEDICAL_HISTORY.DETAIL(':id')}
 						element={<MedicalHistoryDetailBasePage fetchUrl={ApiUrls.MEDICAL_HISTORY.MANAGEMENT.INDEX} />}
 					/>
+					<Route path={routeUrls.DOCTOR.ATTENDANCE} element={<DoctorAttendanceManagementPage />} />
 				</Route>
+				<Route
+					path={routeUrls.DOCTOR.APPOINTMENT.MEETING_ROOM_TOKEN(':id')}
+					element={<MeetingRoomPage />}
+				/>
 			</Route>
 
 			<Route path='*' element={<NotFoundPage />} />

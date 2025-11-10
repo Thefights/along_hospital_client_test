@@ -18,8 +18,13 @@ export const routeUrls = {
 		PRIVACY_POLICY: '/privacy-policy',
 		CAREER: '/career',
 		FAQ: '/faq',
+		VOUCHERS: '/vouchers',
 		MEDICAL_HISTORY_INVOICE: (id) => `/medical-history/invoice/${id}`,
 		MEDICAL_HISTORY_PRINT_PRESCRIPTION: (id) => `/medical-history/print-prescription/${id}`,
+		PAYMENT: {
+			RETURN: '/payment/return',
+			CANCEL: '/payment/cancel',
+		},
 	},
 	AUTH: {
 		LOGIN: '/login',
@@ -44,14 +49,23 @@ export const routeUrls = {
 			DETAIL: (id) => `/order-history/${id}`,
 		},
 		APPOINTMENT: {
+			JOIN_MEETING_ROOM: `/appointments/join-meeting-room`,
+			MEETING_ROOM_TOKEN: (id) => `/appointments/meeting-room-token/${id}`,
 			INDEX: '/appointment',
 			CREATE: '/appointment/create',
+		},
+		VIDEO_CONSULTATION: '/video-consultation',
+		VOUCHER: {
+			MY_VOUCHERS: '/my-vouchers',
 		},
 	},
 	DOCTOR: {
 		DASHBOARD: '/',
 		PROFILE: '/profile',
 		APPOINTMENT_MANAGEMENT: '/appointment',
+		APPOINTMENT: {
+			MEETING_ROOM_TOKEN: (id) => `/appointments/meeting-room-token/${id}`,
+		},
 		ATTENDANCE: '/attendance',
 		MEDICAL_HISTORY: {
 			INDEX: '/medical-history',
@@ -59,6 +73,7 @@ export const routeUrls = {
 			DETAIL: (id) => `/medical-history/${id}`,
 		},
 	},
+
 	MANAGER: {
 		DASHBOARD: '/',
 		PROFILE: '/profile',
@@ -78,10 +93,17 @@ export const routeUrls = {
 		MEDICINE_CATEGORY_MANAGEMENT: {
 			INDEX: '/medicine-category',
 		},
+		IMPORT_MANAGEMENT: {
+			INDEX: '/import-management',
+		},
 		COMPLAINT_MANAGEMENT: '/complaint',
 		SPECIALTY_MANAGEMENT: '/specialty',
+		DEPARTMENT_MANAGEMENT: '/department',
+		MEDICAL_SERVICE: '/medical-service',
 		VOUCHER_MANAGEMENT: '/voucher',
 		DOCTOR_MANAGEMENT: '/doctor',
+		FEEDBACK_REPORT_MANAGEMENT: '/feedback-report',
 		ATTENDANCE_MANAGEMENT: '/attendance',
+		SUPPLIER_MANAGEMENT: '/supplier',
 	},
 }

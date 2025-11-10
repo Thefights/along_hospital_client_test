@@ -56,12 +56,14 @@ axiosConfig.interceptors.response.use(
 
 		switch (status) {
 			case 400:
-			case 401:
-			case 403:
 			case 404:
 			case 409:
 			case 422:
 				errorMessages?.forEach((msg) => toast.error(msg))
+				break
+			case 401:
+			case 403:
+				window.history.back()
 				break
 			case 500:
 			default:
