@@ -43,7 +43,7 @@ const CartPage = () => {
 
 	const handleRemove = async (medicineId) => {
 		if (!cartData) return
-		const isConfirmed = await confirm({ title: t('cart.confirm_delete') })
+		const isConfirmed = await confirm({ title: t('checkout.confirm_delete') })
 		if (!isConfirmed) return
 		await deleteItem.submit(null, { overrideUrl: ApiUrls.CART.DELETE(medicineId) })
 	}
