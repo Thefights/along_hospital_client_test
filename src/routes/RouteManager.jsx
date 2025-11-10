@@ -18,6 +18,7 @@ import ManagerMedicalHistoryManagementPage from '@/pages/managers/managerMedical
 import ManagerMedicalServiceManagementPage from '@/pages/managers/managerMedicalServiceManagementPage/ManagerMedicalServiceManagemnetPage'
 import ManagerMedicineCategoryManagementPage from '@/pages/managers/managerMedicineCategoryManagementPage/ManagerMedicineCategoryManagementPage'
 import ManagerMedicineManagemntPage from '@/pages/managers/managerMedicineManagementPage/ManagerMedicineManagementPage'
+import ManagerOrderManagementPage from '@/pages/managers/managerOrderManagementPage/ManagerOrderManagementPage'
 import ManagerSupplierPage from '@/pages/managers/managerSupplierPage/ManagerSupplierPage'
 import SpecialtyManagementPage from '@/pages/managers/specialtyManagementPage/SpecialtyManagementPage'
 import VoucherManagementPage from '@/pages/managers/voucherManagementPage/VoucherManagementPage'
@@ -87,6 +88,7 @@ const RouteManager = () => {
 						path={routeUrls.MANAGER.ATTENDANCE_MANAGEMENT}
 						element={<ManagerAttendanceManagementPage />}
 					/>
+					<Route path={routeUrls.MANAGER.ORDER_MANAGEMENT} element={<ManagerOrderManagementPage />} />
 				</Route>
 			</Route>
 

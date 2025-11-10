@@ -1,0 +1,34 @@
+{
+    "order_management": {
+        "title": {
+            "order_management": "Quản lý đơn hàng",
+            "filters": "Bộ lọc",
+            "detail": "Chi tiết đơn hàng"
+        },
+        "field": {
+            "id": "Mã đơn",
+            "order_date": "Ngày đặt hàng",
+            "delivery_date": "Ngày giao hàng",
+            "status": "Trạng thái",
+            "voucher": "Mã giảm giá",
+            "origin_price": "Giá gốc",
+            "total_discount": "Tổng giảm giá",
+            "final_price": "Giá cuối",
+            "transaction_id": "Mã giao dịch",
+            "medicine_name": "Tên thuốc",
+            "medicine_brand": "Thương hiệu",
+            "medicine_unit": "Đơn vị",
+            "quantity": "Số lượng",
+            "unit_price": "Giá/đơn vị",
+            "discount_amount": "Số tiền giảm"
+        },
+        "text": {
+            "unknown": "Không xác định",
+            "order_details": "Chi tiết đơn hàng"
+        },
+        "button": {
+            "shipping": "Đang giao",
+            "complete": "Hoàn tất"
+        }
+    }
+}
