@@ -124,29 +124,18 @@ const TeleSessionCall = ({ transactionId }) => {
 
 	// Effect để tạo và gửi offer khi có remote participant
 	useEffect(() => {
-		if (!hasRemoteParticipant || !isCaller) return
-
-		// Tạo offer mới nếu chưa có
-		if (!pendingOffer) {
-			;(async () => {
-				try {
-					console.log('Creating and sending new offer')
-					const offer = await createOffer()
-					setPendingOffer(offer)
-					await sendOffer(offer)
-				} catch (err) {
-					console.error('Failed to create/send offer:', err)
-				}
-			})()
-		} else {
-			// Nếu đã có pendingOffer, gửi lại cho participant mới
-			console.log('Resending pending offer to new participant')
-			sendOffer(pendingOffer).catch((err) => {
-				console.error('Failed to resend offer:', err)
-			})
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [hasRemoteParticipant, isCaller])
+		if (!remoteConnectionId) return
+		if (participants.length !== 1) return
+		;(async () => {
+			try {
+				console.log('Creating offer because I joined second')
+				const offer = await createOffer()
+				await sendOffer(offer)
+			} catch (err) {
+				console.error('Failed to create/send offer:', err)
+			}
+		})()
+	}, [remoteConnectionId, participants.length])
 
 	if (error) {
 		return (
