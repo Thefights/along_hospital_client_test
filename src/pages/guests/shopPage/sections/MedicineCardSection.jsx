@@ -117,6 +117,10 @@ const MedicineCardSection = ({ medicine, sx = {} }) => {
 						size='small'
 						type='number'
 						value={quantity}
+						sx={{
+							height: 40,
+							width: 50,
+						}}
 						onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
 					/>
 
@@ -132,7 +136,7 @@ const MedicineCardSection = ({ medicine, sx = {} }) => {
 						disabled={loading}
 						sx={{
 							height: 50,
-							width: 150,
+							width: 100,
 						}}
 					>
 						{loading ? t('shop.button.adding_to_cart') : t('shop.button.add_to_cart')}
