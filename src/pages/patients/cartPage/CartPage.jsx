@@ -43,7 +43,7 @@ const CartPage = () => {
 
 	const handleRemove = async (medicineId) => {
 		if (!cartData) return
-		const isConfirmed = await confirm({ title: t('cart.confirm_delete') })
+		const isConfirmed = await confirm({ title: t('checkout.confirm_delete') })
 		if (!isConfirmed) return
 		await deleteItem.submit(null, { overrideUrl: ApiUrls.CART.DELETE(medicineId) })
 	}
@@ -116,18 +116,18 @@ const CartPage = () => {
 							voucherList={voucherList}
 							loading={checkout.loading}
 							onCheckout={async (voucherCode, paymentType) => {
-							const response = await checkout.submit({
-								voucherCode: voucherCode || null,
-								paymentType,
-								description: t('cart.summary.checkout_description'),
-								selectedMedicineIds: cartData.cartDetails.map((ci) => ci.medicineId),
-							})
+								const response = await checkout.submit({
+									voucherCode: voucherCode || null,
+									paymentType,
+									description: t('cart.summary.checkout_description'),
+									selectedMedicineIds: cartData.cartDetails.map((ci) => ci.medicineId),
+								})
 
-							if (response?.paymentUrl) {
-								window.location.href = response.paymentUrl 
-							} else if (response) {
-								getCartItems.fetch() 
-							}
+								if (response?.data.paymentUrl) {
+									window.location.href = response.data.paymentUrl
+								} else if (response) {
+									getCartItems.fetch()
+								}
 							}}
 						/>
 					</Grid>

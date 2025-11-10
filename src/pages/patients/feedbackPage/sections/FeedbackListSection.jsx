@@ -98,7 +98,8 @@ const FeedbackListSection = ({
 						reason: reason,
 						reporterId: auth?.userId,
 					}
-					await reportSubmit.submit(payload)
+					const result = reportSubmit.submit(payload)
+					if (result) setReportDialog({ open: false, feedbackId: null })
 				}}
 			/>
 		</>

@@ -2,6 +2,7 @@ import { ApiUrls } from '@/configs/apiUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
 import useFetch from '@/hooks/useFetch'
 import useTranslation from '@/hooks/useTranslation'
+import FeedbackSection from '@/pages/patients/feedbackPage/sections/FeedbackSection'
 import { Box, CircularProgress, Container, Grid, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -55,6 +56,7 @@ export default function MedicineDetailPage() {
 								loading={addingToCart}
 							/>
 						</Grid>
+						<FeedbackSection medicineId={medicine.id}></FeedbackSection>
 					</Grid>
 				) : (
 					<Box

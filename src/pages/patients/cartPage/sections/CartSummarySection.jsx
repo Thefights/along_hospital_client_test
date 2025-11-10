@@ -28,7 +28,7 @@ const CartSummarySection = ({ cartData, total, voucherList, onCheckout, loading 
 			})}
 		>
 			<Typography variant='h6' sx={{ fontWeight: 700, mb: 2 }}>
-				{t('cart.summary.title')}
+				{t('checkout.summary.title')}
 			</Typography>
 
 			<Stack spacing={2}>
