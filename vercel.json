@@ -3,5 +3,11 @@
         "env": {
             "ROLLUP_USE_WEB": "true"
         }
-    }
+    },
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
 }
