@@ -49,6 +49,10 @@
             "in_person": "In-person",
             "telehealth": "Telehealth"
         },
+        "attendance_log_type": {
+            "check_in": "Check-in",
+            "check_out": "Check-out"
+        },
         "severity_level": {
             "mild": "Mild",
             "moderate": "Moderate",

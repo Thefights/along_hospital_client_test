@@ -9,14 +9,16 @@ import ComplaintManagementPage from '@/pages/managers/complaintManagementPage/Co
 import DoctorManagementPage from '@/pages/managers/doctorManagementPage/DoctorManagementPage'
 import FeedbackReportManagementPage from '@/pages/managers/feedbackReportManagementPage/FeedbackReportManagementPage'
 import ManagerAppointmentManagementPage from '@/pages/managers/managerAppointmentManagementPage/ManagerAppointmentManagementPage'
+import ManagerAttendanceManagementPage from '@/pages/managers/managerAttendanceManagementPage/ManagerAttendanceManagementPage'
 import ManagerBlogManagementPage from '@/pages/managers/managerBlogManagementPage/ManagerBlogManagementPage'
 import BlogUpsertPage from '@/pages/managers/managerBlogUpsertPage/BlogUpsertPage'
 import ManagerDepartmentManagementPage from '@/pages/managers/managerDepartmentManagementPage/ManagerDepartmentManagementPage'
+import ImportManagementPage from '@/pages/managers/managerImportManagementPage/ImportManagementPage'
 import ManagerMedicalHistoryManagementPage from '@/pages/managers/managerMedicalHistoryManagementPage/ManagerMedicalHistoryManagementPage'
 import ManagerMedicalServiceManagementPage from '@/pages/managers/managerMedicalServiceManagementPage/ManagerMedicalServiceManagemnetPage'
-import ImportManagementPage from '@/pages/managers/managerImportManagementPage/ImportManagementPage'
 import ManagerMedicineCategoryManagementPage from '@/pages/managers/managerMedicineCategoryManagementPage/ManagerMedicineCategoryManagementPage'
 import ManagerMedicineManagemntPage from '@/pages/managers/managerMedicineManagementPage/ManagerMedicineManagementPage'
+import ManagerSupplierPage from '@/pages/managers/managerSupplierPage/ManagerSupplierPage'
 import SpecialtyManagementPage from '@/pages/managers/specialtyManagementPage/SpecialtyManagementPage'
 import VoucherManagementPage from '@/pages/managers/voucherManagementPage/VoucherManagementPage'
 import ProfilePage from '@/pages/profile/ProfilePage'
@@ -76,9 +78,14 @@ const RouteManager = () => {
 					/>
 					<Route path={routeUrls.MANAGER.IMPORT_MANAGEMENT.INDEX} element={<ImportManagementPage />} />
 					<Route path={routeUrls.MANAGER.VOUCHER_MANAGEMENT} element={<VoucherManagementPage />} />
+					<Route path={routeUrls.MANAGER.SUPPLIER_MANAGEMENT} element={<ManagerSupplierPage />} />
 					<Route
 						path={routeUrls.MANAGER.FEEDBACK_REPORT_MANAGEMENT}
 						element={<FeedbackReportManagementPage />}
+					/>
+					<Route
+						path={routeUrls.MANAGER.ATTENDANCE_MANAGEMENT}
+						element={<ManagerAttendanceManagementPage />}
 					/>
 				</Route>
 			</Route>
