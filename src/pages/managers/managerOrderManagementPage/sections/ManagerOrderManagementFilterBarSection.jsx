@@ -76,7 +76,7 @@ const ManagerOrderManagementFilterBarSection = ({ filters, setFilters, loading =
 	return (
 		<Stack
 			spacing={1.5}
-			sx={{
+			size={{
 				pt: 1,
 				pb: 2,
 				px: 2,
@@ -90,7 +90,7 @@ const ManagerOrderManagementFilterBarSection = ({ filters, setFilters, loading =
 					<Grid key={field.key} xs={2}>
 						{renderField({
 							...field,
-							props: { sx: { width: 200 } },
+							props: { size: { width: 200 } },
 						})}
 					</Grid>
 				))}

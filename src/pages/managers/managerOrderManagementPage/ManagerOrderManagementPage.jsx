@@ -199,7 +199,7 @@ const ManagerOrderManagementPage = () => {
 	}, [selectedOrder, t, _enum])
 
 	return (
-		<Paper sx={{ p: 2 }}>
+		<Paper size={{ p: 2 }}>
 			<Stack spacing={2}>
 				<Typography variant='h5'>{t('order_management.title.order_management')}</Typography>
 				<ManagerOrderManagementFilterBarSection
