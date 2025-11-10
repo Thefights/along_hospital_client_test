@@ -1,5 +1,5 @@
 import * as signalR from '@microsoft/signalr'
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 /**
  * useMeetingSignalR
@@ -41,152 +41,87 @@ const useMeetingSignalR = ({
 	onStateUpdated,
 }) => {
 	const connectionRef = useRef(null)
-	const startedRef = useRef(false)
-	const resolvedHubUrl = useMemo(() => hubUrl, [hubUrl])
-	const startPromiseRef = useRef(null)
+	const isStarting = useRef(false)
+	const isStarted = useRef(false)
 
 	const buildConnection = useCallback(() => {
-		const connection = new signalR.HubConnectionBuilder()
-			.withUrl(resolvedHubUrl, {
-				transport: signalR.HttpTransportType.WebSockets,
-				skipNegotiation: true,
-			})
+		if (connectionRef.current) return connectionRef.current
+
+		const conn = new signalR.HubConnectionBuilder()
+			.withUrl(hubUrl) // KHÔNG skipNegotiation nữa
+			.withAutomaticReconnect()
 			.configureLogging(signalR.LogLevel.Information)
 			.build()
 
-		connection.on('JoinSucceeded', (payload) => {
-			onJoinSucceeded && onJoinSucceeded(payload)
-		})
-		connection.on('JoinFailed', (err) => {
-			onJoinFailed && onJoinFailed(err)
-		})
-		connection.on('ParticipantJoined', (participant) => {
-			onParticipantJoined && onParticipantJoined(participant)
-		})
-		connection.on('ParticipantLeft', (participantId) => {
-			onParticipantLeft && onParticipantLeft(participantId)
-		})
-		connection.on('ReceiveOffer', (senderId, offer) => {
-			onOffer && onOffer(senderId, offer)
-		})
-		connection.on('ReceiveAnswer', (senderId, answer) => {
-			onAnswer && onAnswer(senderId, answer)
-		})
-		connection.on('ReceiveIceCandidate', (senderId, candidate) => {
-			onIceCandidate && onIceCandidate(senderId, candidate)
-		})
-		connection.on('StateUpdated', (state) => {
-			onStateUpdated && onStateUpdated(state)
-		})
+		conn.on('JoinSucceeded', (p) => onJoinSucceeded?.(p))
+		conn.on('JoinFailed', (e) => onJoinFailed?.(e))
+		conn.on('ParticipantJoined', (p) => onParticipantJoined?.(p))
+		conn.on('ParticipantLeft', (p) => onParticipantLeft?.(p))
+		conn.on('ReceiveOffer', (s, o) => onOffer?.(s, o))
+		conn.on('ReceiveAnswer', (s, a) => onAnswer?.(s, a))
+		conn.on('ReceiveIceCandidate', (s, c) => onIceCandidate?.(s, c))
+		conn.on('StateUpdated', (st) => onStateUpdated?.(st))
 
-		return connection
-	}, [
-		resolvedHubUrl,
-		onAnswer,
-		onIceCandidate,
-		onJoinFailed,
-		onJoinSucceeded,
-		onOffer,
-		onParticipantJoined,
-		onParticipantLeft,
-		onStateUpdated,
-	])
+		connectionRef.current = conn
+		return conn
+	}, [hubUrl])
 
 	const startConnection = useCallback(async () => {
-		if (startedRef.current) return
-		if (!connectionRef.current) connectionRef.current = buildConnection()
-		const conn = connectionRef.current
-		if (conn.state !== signalR.HubConnectionState.Disconnected) return
+		const conn = buildConnection()
 
-		// lưu promise để stop() có thể chờ
-		startPromiseRef.current = (async () => {
-			await conn.start()
-			startedRef.current = true
-			if (transactionId) await conn.invoke('JoinSession', transactionId)
-		})()
+		if (isStarted.current) return
+		if (isStarting.current) return
+
+		isStarting.current = true
 
 		try {
-			await startPromiseRef.current
+			await conn.start()
+			await conn.invoke('JoinSession', transactionId)
+			isStarted.current = true
+		} catch (err) {
+			console.error('SignalR start failed:', err)
+			setTimeout(() => startConnection(), 2000)
 		} finally {
-			startPromiseRef.current = null
+			isStarting.current = false
 		}
-		return true
 	}, [buildConnection, transactionId])
 
 	const stopConnection = useCallback(async () => {
 		const conn = connectionRef.current
-		// nếu đang start thì chờ xong rồi mới stop
-		if (startPromiseRef.current) {
-			try {
-				await startPromiseRef.current
-			} catch {
-				/* ignore */
-			}
-		}
-		if (conn && conn.state === signalR.HubConnectionState.Connected) {
+		if (!conn) return
+
+		if (isStarting.current) return // không stop khi đang start
+		if (!isStarted.current) return
+
+		try {
 			await conn.stop()
-		}
-		connectionRef.current = null
-		startedRef.current = false
+		} catch {}
+
+		isStarted.current = false
 	}, [])
 
-	const sendOffer = useCallback(
-		async (offer) => {
-			if (!connectionRef.current) return
-			await connectionRef.current.invoke('SendOffer', transactionId, offer)
-		},
-		[transactionId]
-	)
-
-	const sendAnswer = useCallback(
-		async (answer) => {
-			if (!connectionRef.current) return
-			await connectionRef.current.invoke('SendAnswer', transactionId, answer)
-		},
-		[transactionId]
-	)
-
-	const sendIceCandidate = useCallback(
-		async (candidate) => {
-			if (!connectionRef.current) return
-			await connectionRef.current.invoke('SendIceCandidate', transactionId, candidate)
-		},
-		[transactionId]
-	)
-
-	const notifyState = useCallback(
-		async (state) => {
-			if (!connectionRef.current) return
-			await connectionRef.current.invoke('NotifyState', transactionId, state)
-		},
-		[transactionId]
-	)
-
-	const leaveSession = useCallback(async () => {
-		if (!connectionRef.current) return
-		try {
-			await connectionRef.current.invoke('LeaveSession', transactionId)
-		} finally {
-			await stopConnection()
-		}
-	}, [stopConnection, transactionId])
-
+	// Start chỉ CHẠY 1 LẦN khi mount (KHÔNG bao giờ stop khi dependency đổi)
 	useEffect(() => {
-		if (!transactionId || !hubUrl) return
-
+		if (!hubUrl || !transactionId) return
 		startConnection()
+	}, [hubUrl, transactionId])
 
+	// Stop ONLY when unmount
+	useEffect(() => {
 		return () => {
 			stopConnection()
 		}
-	}, [transactionId, hubUrl])
+	}, [])
 
 	return {
-		sendOffer,
-		sendAnswer,
-		sendIceCandidate,
-		notifyState,
-		leaveSession,
+		sendOffer: async (o) => connectionRef.current?.invoke('SendOffer', transactionId, o),
+		sendAnswer: async (a) => connectionRef.current?.invoke('SendAnswer', transactionId, a),
+		sendIceCandidate: async (c) =>
+			connectionRef.current?.invoke('SendIceCandidate', transactionId, c),
+		leaveSession: async () => {
+			await connectionRef.current?.invoke('LeaveSession', transactionId)
+			await stopConnection()
+		},
 		startConnection,
 		stopConnection,
 	}
