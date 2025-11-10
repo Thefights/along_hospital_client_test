@@ -4,8 +4,10 @@ import useFetch from '@/hooks/useFetch'
 import useMeetingSignalR from '@/hooks/useMeetingSignalR'
 import useTranslation from '@/hooks/useTranslation'
 import useWebRtcPeer from '@/hooks/useWebRtcPeer'
-import { Box, Button, Paper, Stack, Typography } from '@mui/material'
+import { Box, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import ChatSidebar from './ChatSidebar'
+import ControlBar from './ControlBar'
 
 const TeleSessionCall = ({ transactionId }) => {
 	const { t } = useTranslation()
@@ -17,6 +19,11 @@ const TeleSessionCall = ({ transactionId }) => {
 	const [hasRemoteParticipant, setHasRemoteParticipant] = useState(false)
 	const [pendingOffer, setPendingOffer] = useState(null)
 	const [remoteConnectionId, setRemoteConnectionId] = useState(null)
+	const [isMicOn, setIsMicOn] = useState(true)
+	const [isCamOn, setIsCamOn] = useState(true)
+	const [showChat, setShowChat] = useState(false)
+	const [chatInput, setChatInput] = useState('')
+	const [messages, setMessages] = useState([])
 	const isCaller = String(auth?.role || '').toLowerCase() === 'patient'
 
 	const { data: session, error: sessionError } = useFetch(
@@ -149,63 +156,120 @@ const TeleSessionCall = ({ transactionId }) => {
 		)
 	}
 
+	const handleSendMessage = () => {
+		if (!chatInput.trim()) return
+		// Thêm tin nhắn mới vào danh sách
+		setMessages((prev) => [...prev, { text: chatInput, me: true }])
+		// Gửi tin nhắn qua SignalR (có thể thêm vào useMeetingSignalR)
+		// sendMessage(chatInput)
+		setChatInput('')
+	}
+
 	return (
 		<Box>
 			<Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-				<Paper variant='outlined' sx={{ p: 1, flex: 1, borderRadius: 2 }}>
-					<video
-						ref={localVideoRef}
-						autoPlay
-						playsInline
-						muted
-						style={{ width: '100%', borderRadius: 8 }}
+				<Stack sx={{ flex: 1 }}>
+					<Box sx={{ position: 'relative', mb: 2 }}>
+						{/* Video chính (người đối diện) */}
+						<Paper
+							variant='outlined'
+							sx={{
+								p: 1,
+								borderRadius: 2,
+								height: { xs: '400px', md: '600px' },
+								backgroundColor: 'black',
+							}}
+						>
+							<video
+								ref={remoteVideoRef}
+								autoPlay
+								playsInline
+								style={{
+									width: '100%',
+									height: '100%',
+									borderRadius: 8,
+									objectFit: 'contain',
+								}}
+							/>
+						</Paper>
+
+						{/* Video nhỏ (local video) */}
+						<Paper
+							variant='outlined'
+							sx={{
+								p: 0.5,
+								position: 'absolute',
+								bottom: 16,
+								right: 16,
+								width: { xs: '120px', md: '180px' },
+								height: { xs: '80px', md: '120px' },
+								borderRadius: 2,
+								backgroundColor: 'black',
+								zIndex: 1,
+							}}
+						>
+							<video
+								ref={localVideoRef}
+								autoPlay
+								playsInline
+								muted
+								style={{
+									width: '100%',
+									height: '100%',
+									borderRadius: 6,
+									objectFit: 'cover',
+								}}
+							/>
+						</Paper>
+					</Box>
+
+					<ControlBar
+						micOn={isMicOn}
+						camOn={isCamOn}
+						onToggleMic={() => {
+							setIsMicOn(!isMicOn)
+							toggleAudio()
+						}}
+						onToggleCam={() => {
+							setIsCamOn(!isCamOn)
+							toggleVideo()
+						}}
+						onToggleChat={() => setShowChat(!showChat)}
+						onEndCall={() => {
+							hangUp()
+							leaveSession()
+						}}
 					/>
-				</Paper>
-				<Paper variant='outlined' sx={{ p: 1, flex: 1, borderRadius: 2 }}>
-					<video ref={remoteVideoRef} autoPlay playsInline style={{ width: '100%', borderRadius: 8 }} />
-				</Paper>
-			</Stack>
 
-			<Stack direction='row' spacing={1} sx={{ mt: 2 }}>
-				<Button variant='contained' onClick={startConnection}>
-					{t('telehealth.button.start_call')}
-				</Button>
-				<Button
-					variant='outlined'
-					color='error'
-					onClick={() => {
-						hangUp()
-						leaveSession()
-					}}
-				>
-					{t('telehealth.button.hang_up')}
-				</Button>
-				<Button variant='outlined' onClick={toggleAudio}>
-					{t('telehealth.button.mute_unmute')}
-				</Button>
-				<Button variant='outlined' onClick={toggleVideo}>
-					{t('telehealth.button.toggle_video')}
-				</Button>
-			</Stack>
+					<Paper variant='outlined' sx={{ p: 1.5, mt: 2, borderRadius: 2 }}>
+						<Typography variant='subtitle2' sx={{ mb: 1 }}>
+							{t('telehealth.participants.title')}
+						</Typography>
+						{/* {participants.length === 0 ? (
+							<Typography variant='body2' color='text.secondary'>
+								{t('telehealth.participants.empty')}
+							</Typography>
+						) : (
+							<ul style={{ margin: 0, paddingLeft: 16 }}>
+								{participants.map((p) => (
+									<li key={p.id}>
+										<Typography variant='body2'>{p.displayName || p.id}</Typography>
+									</li>
+								))}
+							</ul>
+						)} */}
+					</Paper>
+				</Stack>
 
-			<Paper variant='outlined' sx={{ p: 1.5, mt: 2, borderRadius: 2 }}>
-				<Typography variant='subtitle2' sx={{ mb: 1 }}>
-					{t('telehealth.participants.title')}
-				</Typography>
-				{participants.length === 0 ? (
-					<Typography variant='body2' color='text.secondary'>
-						{t('telehealth.participants.empty')}
-					</Typography>
-				) : (
-					<ul style={{ margin: 0, paddingLeft: 16 }}>
-						{participants.map((p) => (
-							<li key={p.id}>
-								<Typography variant='body2'>{p.displayName || p.id}</Typography>
-							</li>
-						))}
-					</ul>
-				)}
-			</Paper>
+				<ChatSidebar
+					show={showChat}
+					messages={messages}
+					chatInput={chatInput}
+					setShow={setShowChat}
+					setChatInput={setChatInput}
+					onSend={handleSendMessage}
+				/>
+			</Stack>
 		</Box>
 	)
 }
