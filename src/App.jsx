@@ -2,7 +2,7 @@ import { ThemeProvider } from '@emotion/react'
 import { CssBaseline } from '@mui/material'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { Provider as ReduxStoreProvider } from 'react-redux'
-import { Route, BrowserRouter as RouterProvider, Routes, useNavigate } from 'react-router-dom'
+import { Route, BrowserRouter as RouterProvider, Routes } from 'react-router-dom'
 import { Slide, ToastContainer } from 'react-toastify'
 import AuthProvider from './configs/AuthProvider'
 import ConfirmationProvider from './configs/ConfirmationProvider'
@@ -19,8 +19,6 @@ import { getEnv } from './utils/commons'
 
 function App() {
 	const [theme, _] = useLocalStorage('theme', 'light')
-	const navigate = useNavigate()
-
 	return (
 		<ThemeProvider theme={theme === 'light' ? hospitalLightTheme : hospitalDarkTheme}>
 			<CssBaseline />
