@@ -13,14 +13,14 @@ const ManagerOrderManagementFilterBarSection = ({ filters, setFilters, loading =
 
 	const initialValues = useMemo(
 		() => ({
-			OrderStatus: filters.orderStatus || '',
-			OrderDate: filters.orderDate || '',
-			DeliveryDate: filters.deliveryDate || '',
+			orderStatus: filters.orderStatus || '',
+			orderDate: filters.orderDate || '',
+			deliveryDate: filters.deliveryDate || '',
 		}),
 		[]
 	)
 
-	const { reset, values, handleChange, setField, registerRef } = useForm(initialValues)
+	const { values, handleChange, setField, registerRef, reset } = useForm(initialValues)
 	const { renderField } = useFieldRenderer(
 		values,
 		setField,
@@ -43,41 +43,34 @@ const ManagerOrderManagementFilterBarSection = ({ filters, setFilters, loading =
 	const fieldDefinitions = useMemo(
 		() => [
 			{
-				key: 'OrderStatus',
+				key: 'orderStatus',
 				title: t('order_management.field.status'),
 				type: 'select',
 				options: mappedStatusOptions,
 				required: false,
 			},
 			{
-				key: 'OrderDate',
+				key: 'orderDate',
 				title: t('order_management.field.order_date'),
 				type: 'date',
 				required: false,
-				props: { InputLabelProps: { shrink: true } },
 			},
 			{
-				key: 'DeliveryDate',
+				key: 'deliveryDate',
 				title: t('order_management.field.delivery_date'),
 				type: 'date',
 				required: false,
-				props: { InputLabelProps: { shrink: true } },
 			},
 		],
 		[mappedStatusOptions, t]
 	)
 
-	const handleApplyFilters = () => {
-		setFilters({
-			orderStatus: values.OrderStatus || '',
-			orderDate: values.OrderDate || '',
-			deliveryDate: values.DeliveryDate || '',
-		})
-	}
+	const handleApplyFilters = () => setFilters(values)
 
 	const handleResetFilters = () => {
-		setFilters({ orderStatus: '', orderDate: '', deliveryDate: '' })
-		reset({ OrderStatus: '', OrderDate: '', DeliveryDate: '' })
+		const empty = { orderStatus: '', orderDate: '', deliveryDate: '' }
+		reset(empty)
+		setFilters(empty)
 	}
 
 	return (
@@ -87,28 +80,25 @@ const ManagerOrderManagementFilterBarSection = ({ filters, setFilters, loading =
 				pt: 1,
 				pb: 2,
 				px: 2,
-				bgcolor: 'background.paper',
-				border: (theme) => `1px solid ${theme.palette.divider}`,
 				borderRadius: 1,
+				border: (theme) => `1px solid ${theme.palette.divider}`,
 			}}
 		>
 			<Typography variant='caption'>{t('order_management.title.filters')}</Typography>
 			<Grid container spacing={2} alignItems='flex-end'>
-				{fieldDefinitions.map((field, index) => (
-					<Grid key={field.key} size={index === 0 ? 2 : 3}>
-						{renderField(field)}
+				{fieldDefinitions.map((field) => (
+					<Grid key={field.key} xs={2}>
+						{renderField({
+							...field,
+							props: { sx: { width: 200 } },
+						})}
 					</Grid>
 				))}
-				<Grid
-					size={4}
-					sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 1.25 }}
-				>
-					<FilterButton sx={{ minWidth: 110 }} loading={loading} onFilterClick={handleApplyFilters} />
-					<ResetFilterButton
-						sx={{ minWidth: 140 }}
-						loading={loading}
-						onResetFilterClick={handleResetFilters}
-					/>
+				<Grid xs={2}>
+					<Stack direction='row' justifyContent='flex-end' spacing={0.5}>
+						<FilterButton loading={loading} onFilterClick={handleApplyFilters} />
+						<ResetFilterButton loading={loading} onResetFilterClick={handleResetFilters} />
+					</Stack>
 				</Grid>
 			</Grid>
 		</Stack>

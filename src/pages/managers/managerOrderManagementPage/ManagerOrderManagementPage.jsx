@@ -1,7 +1,6 @@
 import GenericFormDialog from '@/components/dialogs/commons/GenericFormDialog'
 import ActionMenu from '@/components/generals/ActionMenu'
 import { GenericTablePagination } from '@/components/generals/GenericPagination'
-import SearchBar from '@/components/generals/SearchBar'
 import GenericTable from '@/components/tables/GenericTable'
 import { ApiUrls } from '@/configs/apiUrls'
 import { useAxiosSubmit } from '@/hooks/useAxiosSubmit'
@@ -13,7 +12,7 @@ import { formatCurrencyBasedOnCurrentLanguage } from '@/utils/formatNumberUtil'
 import { VisibilityRounded } from '@mui/icons-material'
 import { Paper, Stack, Typography } from '@mui/material'
 import { useMemo, useState } from 'react'
-import OrderManagementFilterSection from './sections/ManagerOrderManagementFilterBarSection'
+import ManagerOrderManagementFilterBarSection from './sections/ManagerOrderManagementFilterBarSection'
 
 const ManagerOrderManagementPage = () => {
 	const { t } = useTranslation()
@@ -22,7 +21,6 @@ const ManagerOrderManagementPage = () => {
 	const [sort, setSort] = useState({ key: 'orderDate', direction: 'desc' })
 	const [page, setPage] = useState(1)
 	const [pageSize, setPageSize] = useState(10)
-	const [search, setSearch] = useState('')
 	const [filters, setFilters] = useState({ orderStatus: '', orderDate: '', deliveryDate: '' })
 	const [selectedOrder, setSelectedOrder] = useState(null)
 	const [openDetail, setOpenDetail] = useState(false)
@@ -32,25 +30,14 @@ const ManagerOrderManagementPage = () => {
 		setSelectedOrder(null)
 	}
 
-	const sortParam = useMemo(() => `${sort.key} ${sort.direction}`, [sort])
-
-	const normalizedFilters = useMemo(() => {
-		const next = {}
-		if (filters.orderStatus) next.OrderStatus = filters.orderStatus
-		if (filters.orderDate) next.OrderDate = filters.orderDate
-		if (filters.deliveryDate) next.DeliveryDate = filters.deliveryDate
-		return next
-	}, [filters])
-
 	const fetchParams = useMemo(
 		() => ({
 			page,
 			pageSize,
-			sort: sortParam,
-			...(search.trim() ? { keyword: search.trim() } : {}),
-			...normalizedFilters,
+			sort: `${sort.key} ${sort.direction}`,
+			...filters,
 		}),
-		[page, pageSize, sortParam, search, normalizedFilters]
+		[page, pageSize, sort, filters]
 	)
 
 	const {
@@ -58,39 +45,13 @@ const ManagerOrderManagementPage = () => {
 		data,
 		fetch: refetch,
 	} = useFetch(ApiUrls.ORDER.MANAGEMENT.INDEX, fetchParams, [fetchParams])
-
-	const orders = useMemo(() => (Array.isArray(data?.collection) ? data.collection : []), [data])
+	const orders = useMemo(() => data?.collection || [], [data])
 	const totalPage = data?.totalPage ?? 1
 
-	const statusOptions = useMemo(() => {
-		const uniqueStatuses = new Set()
-		orders.forEach((o) => o?.orderStatus && uniqueStatuses.add(o.orderStatus))
-		if (filters.status) uniqueStatuses.add(filters.status)
-		return Array.from(uniqueStatuses)
-			.sort((a, b) => String(a).localeCompare(String(b)))
-			.map((s) => ({ value: s, label: s }))
-	}, [orders, filters.status])
-
-	const handleFilterChange = (next) => {
-		setFilters({
-			orderStatus: next?.orderStatus ?? '',
-			orderDate: next?.orderDate ?? '',
-			deliveryDate: next?.deliveryDate ?? '',
-		})
-		setPage(1)
-	}
-
-	const handleSearchChange = (val) => {
-		setSearch(val)
-		setPage(1)
-	}
-
 	const shippingSubmit = useAxiosSubmit({
-		url: ApiUrls.ORDER.MANAGEMENT.SHIPPING(':id'),
 		method: 'POST',
 	})
 	const completeSubmit = useAxiosSubmit({
-		url: ApiUrls.ORDER.MANAGEMENT.COMPLETE(':id'),
 		method: 'POST',
 	})
 
@@ -139,20 +100,19 @@ const ManagerOrderManagementPage = () => {
 				width: 15,
 				isNumeric: true,
 				sortable: true,
-				render: (v) => formatCurrencyBasedOnCurrentLanguage(Number(v ?? 0)),
+				render: (v) => formatCurrencyBasedOnCurrentLanguage(v),
 			},
 			{
 				key: 'transactionId',
 				title: t('order_management.field.transaction_id'),
 				width: 15,
-				sortable: false,
 				render: (v) => v || '-',
 			},
 			{
 				key: '',
 				title: '',
 				width: 6,
-				render: (_v, row) => (
+				render: (_, row) => (
 					<ActionMenu
 						actions={[
 							{
@@ -173,73 +133,65 @@ const ManagerOrderManagementPage = () => {
 
 	const orderDetailFields = useMemo(() => {
 		if (!selectedOrder) return []
+
 		return [
-			{ key: 'id', title: t('order_management.field.id'), readOnly: true },
+			{ key: 'id', title: t('order_management.field.id') },
 			{
 				key: 'orderDate',
 				title: t('order_management.field.order_date'),
-				readOnly: true,
 				render: (v) => formatDatetimeStringBasedOnCurrentLanguage(v),
 			},
 			{
 				key: 'deliveryDate',
 				title: t('order_management.field.delivery_date'),
-				readOnly: true,
 				render: (v) => formatDatetimeStringBasedOnCurrentLanguage(v),
 			},
 			{
 				key: 'orderStatus',
 				title: t('order_management.field.status'),
-				readOnly: true,
 				type: 'select',
 				options: _enum.orderStatusOptions,
 			},
 			{
 				key: 'voucherCode',
 				title: t('order_management.field.voucher'),
-				readOnly: true,
 				render: (v) => v || '-',
 			},
 			{
 				key: 'originPrice',
 				title: t('order_management.field.origin_price'),
-				readOnly: true,
-				render: (v) => formatCurrencyBasedOnCurrentLanguage(Number(v ?? 0)),
+				render: (v) => formatCurrencyBasedOnCurrentLanguage(v),
 			},
 			{
 				key: 'totalDiscountAmount',
 				title: t('order_management.field.total_discount'),
-				readOnly: true,
-				render: (v) => formatCurrencyBasedOnCurrentLanguage(Number(v ?? 0)),
+				render: (v) => formatCurrencyBasedOnCurrentLanguage(v),
 			},
 			{
 				key: 'finalPrice',
 				title: t('order_management.field.final_price'),
-				readOnly: true,
-				render: (v) => formatCurrencyBasedOnCurrentLanguage(Number(v ?? 0)),
+				render: (v) => formatCurrencyBasedOnCurrentLanguage(v),
 			},
-			{ key: 'transactionId', title: t('order_management.field.transaction_id'), readOnly: true },
+			{ key: 'transactionId', title: t('order_management.field.transaction_id') },
 			{
 				key: 'orderDetails',
 				title: t('order_management.text.order_details'),
 				type: 'array',
 				readOnly: true,
 				of: [
-					{ key: 'medicineName', title: t('order_management.field.medicine_name'), readOnly: true },
-					{ key: 'medicineBrand', title: t('order_management.field.medicine_brand'), readOnly: true },
-					{ key: 'medicineUnit', title: t('order_management.field.medicine_unit'), readOnly: true },
-					{ key: 'quantity', title: t('order_management.field.quantity'), readOnly: true },
+					{ key: 'medicineName', title: t('order_management.field.medicine_name') },
+					{ key: 'medicineBrand', title: t('order_management.field.medicine_brand') },
+					{ key: 'medicineUnit', title: t('order_management.field.medicine_unit') },
+					{ key: 'quantity', title: t('order_management.field.quantity') },
 					{
 						key: 'unitPrice',
 						title: t('order_management.field.unit_price'),
-						readOnly: true,
-						render: (v) => formatCurrencyBasedOnCurrentLanguage(Number(v ?? 0)),
+						render: (v) => formatCurrencyBasedOnCurrentLanguage(v),
 					},
 					{
 						key: 'discountAmount',
 						title: t('order_management.field.discount_amount'),
-						readOnly: true,
-						render: (v) => formatCurrencyBasedOnCurrentLanguage(Number(v ?? 0)),
+						render: (v) => formatCurrencyBasedOnCurrentLanguage(v),
 					},
 				],
 			},
@@ -250,12 +202,13 @@ const ManagerOrderManagementPage = () => {
 		<Paper sx={{ p: 2 }}>
 			<Stack spacing={2}>
 				<Typography variant='h5'>{t('order_management.title.order_management')}</Typography>
-				<SearchBar widthPercent={30} value={search} setValue={handleSearchChange} />
-				<OrderManagementFilterSection
+				<ManagerOrderManagementFilterBarSection
 					filters={filters}
-					setFilters={handleFilterChange}
+					setFilters={(values) => {
+						setFilters(values)
+						setPage(1)
+					}}
 					loading={loading}
-					statusOptions={statusOptions}
 				/>
 				<GenericTable
 					data={orders}
@@ -280,7 +233,10 @@ const ManagerOrderManagementPage = () => {
 					open={openDetail}
 					onClose={handleCloseDetail}
 					title={t('order_management.title.detail')}
-					fields={orderDetailFields}
+					fields={orderDetailFields.map((field) => ({
+						...field,
+						props: { readOnly: true },
+					}))}
 					initialValues={selectedOrder}
 					submitLabel={t('button.close')}
 					submitButtonColor='primary'
@@ -293,11 +249,13 @@ const ManagerOrderManagementPage = () => {
 										color: 'info',
 										variant: 'contained',
 										onClick: async ({ values }) => {
-											await shippingSubmit.submit(null, {
+											var reponse = await shippingSubmit.submit(null, {
 												overrideUrl: ApiUrls.ORDER.MANAGEMENT.SHIPPING(values.id),
 											})
-											await refetch()
-											handleCloseDetail()
+											if (reponse) {
+												await refetch()
+												handleCloseDetail()
+											}
 										},
 									},
 							  ]
@@ -309,11 +267,13 @@ const ManagerOrderManagementPage = () => {
 										color: 'success',
 										variant: 'contained',
 										onClick: async ({ values }) => {
-											await completeSubmit.submit(null, {
+											var reponse = await completeSubmit.submit(null, {
 												overrideUrl: ApiUrls.ORDER.MANAGEMENT.COMPLETE(values.id),
 											})
-											await refetch()
-											handleCloseDetail()
+											if (reponse) {
+												await refetch()
+												handleCloseDetail()
+											}
 										},
 									},
 							  ]
