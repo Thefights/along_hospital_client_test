@@ -43,6 +43,7 @@ const useMeetingSignalR = ({
 	const connectionRef = useRef(null)
 	const startedRef = useRef(false)
 	const resolvedHubUrl = useMemo(() => hubUrl, [hubUrl])
+	const startPromiseRef = useRef(null)
 
 	const buildConnection = useCallback(() => {
 		const connection = new signalR.HubConnectionBuilder()
@@ -93,32 +94,38 @@ const useMeetingSignalR = ({
 
 	const startConnection = useCallback(async () => {
 		if (startedRef.current) return
-
-		if (!connectionRef.current) {
-			connectionRef.current = buildConnection()
-		}
-
+		if (!connectionRef.current) connectionRef.current = buildConnection()
 		const conn = connectionRef.current
-
 		if (conn.state !== signalR.HubConnectionState.Disconnected) return
 
-		await conn.start()
-		startedRef.current = true
+		// lưu promise để stop() có thể chờ
+		startPromiseRef.current = (async () => {
+			await conn.start()
+			startedRef.current = true
+			if (transactionId) await conn.invoke('JoinSession', transactionId)
+		})()
 
-		if (transactionId) {
-			await conn.invoke('JoinSession', transactionId)
+		try {
+			await startPromiseRef.current
+		} finally {
+			startPromiseRef.current = null
 		}
-
 		return true
 	}, [buildConnection, transactionId])
 
 	const stopConnection = useCallback(async () => {
 		const conn = connectionRef.current
-
-		if (conn && conn.state !== signalR.HubConnectionState.Disconnected) {
+		// nếu đang start thì chờ xong rồi mới stop
+		if (startPromiseRef.current) {
+			try {
+				await startPromiseRef.current
+			} catch {
+				/* ignore */
+			}
+		}
+		if (conn && conn.state === signalR.HubConnectionState.Connected) {
 			await conn.stop()
 		}
-
 		connectionRef.current = null
 		startedRef.current = false
 	}, [])

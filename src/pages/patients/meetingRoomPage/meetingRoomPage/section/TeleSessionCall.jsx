@@ -114,13 +114,18 @@ const TeleSessionCall = ({ transactionId }) => {
 			},
 		})
 
+	// start khi đủ thông tin; KHÔNG stop khi session thay đổi
 	useEffect(() => {
-		if (!session) return
-		// Chờ có credentials trước khi kết nối
-		if (!session?.credentials) return
+		if (!transactionId || !signalRHubUrl) return
 		startConnection()
-		return () => stopConnection()
-	}, [session, startConnection, stopConnection])
+	}, [transactionId, signalRHubUrl, startConnection])
+
+	// stop khi unmount
+	useEffect(() => {
+		return () => {
+			stopConnection()
+		}
+	}, [stopConnection])
 
 	// Effect để tạo và gửi offer khi có remote participant
 	useEffect(() => {
