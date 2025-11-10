@@ -87,14 +87,14 @@ const ManagerOrderManagementFilterBarSection = ({ filters, setFilters, loading =
 			<Typography variant='caption'>{t('order_management.title.filters')}</Typography>
 			<Grid container spacing={2} alignItems='flex-end'>
 				{fieldDefinitions.map((field) => (
-					<Grid key={field.key} xs={2}>
+					<Grid key={field.key} size={2}>
 						{renderField({
 							...field,
 							props: { size: { width: 200 } },
 						})}
 					</Grid>
 				))}
-				<Grid xs={2}>
+				<Grid size={2}>
 					<Stack direction='row' justifyContent='flex-end' spacing={0.5}>
 						<FilterButton loading={loading} onFilterClick={handleApplyFilters} />
 						<ResetFilterButton loading={loading} onResetFilterClick={handleResetFilters} />
