@@ -19,7 +19,6 @@ import { getEnv } from './utils/commons'
 
 function App() {
 	const [theme, _] = useLocalStorage('theme', 'light')
-
 	return (
 		<ThemeProvider theme={theme === 'light' ? hospitalLightTheme : hospitalDarkTheme}>
 			<CssBaseline />

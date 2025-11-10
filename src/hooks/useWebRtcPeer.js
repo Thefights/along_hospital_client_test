@@ -30,6 +30,7 @@ const useWebRtcPeer = ({ iceServers = [], onLocalStream, onRemoteStream, onIceCa
 	const [remoteStream, setRemoteStream] = useState(null)
 	const [isAudioEnabled, setIsAudioEnabled] = useState(true)
 	const [isVideoEnabled, setIsVideoEnabled] = useState(true)
+	const pendingCandidates = useRef([])
 
 	useEffect(() => {
 		const pc = new RTCPeerConnection({ iceServers })
@@ -80,12 +81,31 @@ const useWebRtcPeer = ({ iceServers = [], onLocalStream, onRemoteStream, onIceCa
 	const setRemoteDescription = useCallback(async (desc) => {
 		const pc = pcRef.current
 		await pc.setRemoteDescription(new RTCSessionDescription(desc))
+
+		for (const c of pendingCandidates.current) {
+			try {
+				await pc.addIceCandidate(new RTCIceCandidate(c))
+			} catch (err) {
+				console.error('Error adding queued ICE:', err)
+			}
+		}
+		pendingCandidates.current = []
 	}, [])
 
 	const addIceCandidate = useCallback(async (candidate) => {
 		const pc = pcRef.current
 		if (!candidate) return
-		await pc.addIceCandidate(new RTCIceCandidate(candidate))
+
+		if (!pc.remoteDescription) {
+			pendingCandidates.current.push(candidate)
+			return
+		}
+
+		try {
+			await pc.addIceCandidate(new RTCIceCandidate(candidate))
+		} catch (err) {
+			console.error('Error adding ICE candidate:', err)
+		}
 	}, [])
 
 	const toggleAudio = useCallback(() => {
