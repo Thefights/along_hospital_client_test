@@ -10,7 +10,7 @@ export default function OrderHistoryCard({ order, onDetailClick, onCancelClick }
 	const { t } = useTranslation()
 	const _enum = useEnum()
 
-	const statusLabel = getEnumLabelByValue(_enum.orderStatusOptions)
+	const statusLabel = getEnumLabelByValue(_enum.orderStatusOptions, order.orderStatus)
 	const totalQuantity = order.orderDetails?.reduce((sum, d) => sum + d.quantity, 0) || 0
 
 	const deliveryDisplay = order.deliveryDate

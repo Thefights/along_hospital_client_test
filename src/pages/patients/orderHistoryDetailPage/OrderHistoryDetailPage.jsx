@@ -13,7 +13,7 @@ export default function OrderDetailPage() {
 	const { t } = useTranslation()
 	const { id } = useParams()
 	const navigate = useNavigate()
-	const { data: order, loading } = useFetch(ApiUrls.ORDER_HISTORY.DETAIL(Number(id)))
+	const { data: order, loading } = useFetch(ApiUrls.ORDER_HISTORY.DETAIL(id))
 
 	if (loading) return <Typography sx={{ p: 4 }}>{t('order_detail.common.loading')}</Typography>
 

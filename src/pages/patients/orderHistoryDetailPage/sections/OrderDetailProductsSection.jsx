@@ -11,7 +11,7 @@ export default function OrderDetailProductsSection({ order }) {
 			{order.orderDetails.map((item) => (
 				<Paper key={item.medicineId} sx={{ p: 2, borderLeft: '4px solid #1976d2' }}>
 					<Grid container spacing={2} alignItems='center'>
-						<Grid item xs={12} sm={4}>
+						<Grid size={{ xs: 12, sm: 4 }}>
 							<Typography sx={{ fontWeight: 600 }}>{item.medicineName}</Typography>
 							<Typography variant='body2' sx={{ color: '#666' }}>
 								{item.medicineBrand}

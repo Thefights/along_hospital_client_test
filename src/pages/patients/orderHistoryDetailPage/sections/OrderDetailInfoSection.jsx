@@ -8,7 +8,7 @@ export default function OrderDetailInfoSection({ order }) {
 	const { t } = useTranslation()
 	const _enum = useEnum()
 
-	const getStatusLabel = getEnumLabelByValue(_enum.orderStatusOptions, status)
+	const getStatusLabel = (status) => getEnumLabelByValue(_enum.orderStatusOptions, status)
 
 	return (
 		<Paper sx={{ p: 3, borderRadius: 2, boxShadow: 1 }}>
