@@ -29,9 +29,17 @@ export default function useWebRtcPeer({
 		})
 		pcRef.current = pc
 
+		// OPTIONAL: pre-add transceivers để SDP luôn có sendrecv
+		try {
+			pc.addTransceiver('audio', { direction: 'sendrecv' })
+			pc.addTransceiver('video', { direction: 'sendrecv' })
+		} catch (_) {}
+
 		pc.onicecandidate = (e) => {
 			const c = e.candidate
-			onIceCandidate?.(c.toJSON())
+			if (!c) return
+			const data = typeof c.toJSON === 'function' ? c.toJSON() : c
+			onIceCandidate?.(data)
 		}
 
 		const ensureRemoteStream = () => {
@@ -51,6 +59,10 @@ export default function useWebRtcPeer({
 			})
 			setRemoteStream(rs)
 			onRemoteStream?.(rs)
+
+			// đảm bảo autoplay
+			const tag = (document || {}).querySelector?.('video[autoplay][playsinline]')
+			if (tag?.play) tag.play().catch(() => {})
 		}
 		;(async () => {
 			try {
@@ -172,11 +184,9 @@ export default function useWebRtcPeer({
 
 	const hangUp = useCallback(() => {
 		const pc = pcRef.current
-
 		try {
 			pc?.getSenders().forEach((s) => s.track?.stop())
 			pc?.close()
-			console.log('[CALL] hangUp -> closed')
 		} finally {
 			pcRef.current = null
 			localStreamRef.current?.getTracks().forEach((t) => t.stop())
