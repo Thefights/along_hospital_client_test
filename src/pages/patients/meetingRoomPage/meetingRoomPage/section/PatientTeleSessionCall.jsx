@@ -62,7 +62,8 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 		toggleAudio,
 		toggleVideo,
 		hangUp,
-		renegotiate, // CHANGED: dùng cho re-negotiation sau khi bật/tắt cam
+		renegotiate,
+		localStream, // ⭐ THÊM ĐÚNG CHỖ NÀY
 	} = useWebRtcPeer({
 		iceServers,
 		onLocalStream,
@@ -78,7 +79,6 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 		leaveSession,
 		startConnection,
 		stopConnection,
-		localStream,
 	} = useMeetingSignalR({
 		transactionId,
 		roomCode: null, // patient join bằng transactionId
