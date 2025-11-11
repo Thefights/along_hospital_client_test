@@ -143,55 +143,29 @@ const useWebRtcPeer = ({ iceServers = [], onLocalStream, onRemoteStream, onIceCa
 		return offer
 	}, [])
 
-	const toggleAudio = useCallback(() => {
+	const toggleAudio = () => {
 		const ls = localStreamRef.current
-		setIsAudioEnabled((prev) => {
-			const next = !prev
-			ls?.getAudioTracks().forEach((t) => (t.enabled = next))
-			return next
+		if (!ls) return
+
+		ls.getAudioTracks().forEach((track) => {
+			track.enabled = !track.enabled
 		})
+
+		setIsAudioEnabled((prev) => !prev)
+	}
+
+	const toggleVideo = useCallback(() => {
+		const ls = localStreamRef.current
+		if (!ls) return
+
+		ls.getVideoTracks().forEach((track) => {
+			track.enabled = !track.enabled
+		})
+
+		setIsVideoEnabled((prev) => !prev)
+
+		if (onLocalStream) onLocalStream(ls)
 	}, [])
-
-	const toggleVideo = useCallback(async () => {
-		const pc = pcRef.current
-		if (!pc) return
-		const ls = localStreamRef.current || new MediaStream()
-		const senders = pc.getSenders ? pc.getSenders() : []
-		const videoSender = senders.find((s) => s.track && s.track.kind === 'video')
-
-		if (isVideoEnabled) {
-			ls.getVideoTracks().forEach((t) => {
-				try {
-					t.stop()
-					ls.removeTrack(t)
-				} catch {}
-			})
-			try {
-				if (videoSender) await videoSender.replaceTrack(null)
-			} catch {}
-			setIsVideoEnabled(false)
-			setLocalStream(ls)
-			if (onLocalStream) onLocalStream(ls)
-			return
-		}
-
-		try {
-			const cam = await navigator.mediaDevices.getUserMedia({ video: true })
-			const [videoTrack] = cam.getVideoTracks()
-			if (videoTrack) {
-				if (videoSender) {
-					await videoSender.replaceTrack(videoTrack)
-				} else {
-					pc.addTrack(videoTrack, ls)
-				}
-				ls.addTrack(videoTrack)
-				localStreamRef.current = ls
-				setLocalStream(ls)
-				if (onLocalStream) onLocalStream(ls)
-				setIsVideoEnabled(true)
-			}
-		} catch {}
-	}, [isVideoEnabled, onLocalStream])
 
 	const hangUp = useCallback(() => {
 		const pc = pcRef.current
