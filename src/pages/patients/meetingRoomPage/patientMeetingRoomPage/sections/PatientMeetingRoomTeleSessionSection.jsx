@@ -318,18 +318,6 @@ const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 						onToggleChat={() => setShowChat(!showChat)}
 						onEndCall={async () => {
 							try {
-								// Clear video elements immediately
-								if (localVideoRef.current) {
-									localVideoRef.current.srcObject = null
-									localVideoRef.current.load()
-								}
-								if (remoteVideoRef.current) {
-									remoteVideoRef.current.srcObject = null
-									remoteVideoRef.current.load()
-								}
-
-								// Clear remote stream and hangup
-								clearRemoteStream()
 								hangUp()
 								await leaveSession()
 							} finally {
