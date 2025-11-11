@@ -135,7 +135,10 @@ export const ApiUrls = {
 	},
 	TELE_SESSION: {
 		DETAIL: (id) => `/tele-session/${id}`,
-  },
+	},
+	TELE_ROOM: {
+		GET_BY_DOCTOR: (doctorId) => `/tele-room/room/${doctorId}`,
+	},
 	CART: {
 		INDEX: `/cart`,
 		CHECKOUT: `/cart/checkout`,
@@ -192,7 +195,7 @@ export const ApiUrls = {
 		INDEX: `/order/all`,
 		DETAIL: (id) => `/order/${id}`,
 		CANCEL: (id) => `/order/cancel/${id}`,
-  },
+	},
 	PAYMENT: {
 		CANCEL_PAYMENT: (id) => `/payment/cancel-payment/${id}`,
 	},

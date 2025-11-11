@@ -12,6 +12,7 @@ import {
 	EventRounded,
 	Person,
 	SettingsRounded,
+	VideocamRounded,
 } from '@mui/icons-material'
 import { Container, Stack } from '@mui/material'
 import { useState } from 'react'
@@ -69,7 +70,15 @@ const LayoutDoctor = () => {
 		},
 		{
 			title: 'System',
-			items: [{ key: 'settings', label: 'Settings', icon: <SettingsRounded />, url: '/settings' }],
+			items: [
+				{ key: 'settings', label: 'Settings', icon: <SettingsRounded />, url: '/settings' },
+				{
+					key: 'join-tele-room',
+					label: 'Join Meeting Room',
+					icon: <VideocamRounded />,
+					url: routeUrls.BASE_ROUTE.DOCTOR(routeUrls.DOCTOR.APPOINTMENT.JOIN_MEETING_ROOM),
+				},
+			],
 		},
 	]
 

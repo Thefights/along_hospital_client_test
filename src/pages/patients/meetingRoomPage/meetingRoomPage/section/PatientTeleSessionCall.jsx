@@ -4,18 +4,18 @@ import useFetch from '@/hooks/useFetch'
 import useMeetingSignalR from '@/hooks/useMeetingSignalR'
 import useTranslation from '@/hooks/useTranslation'
 import useWebRtcPeer from '@/hooks/useWebRtcPeer'
+import { MicOff, VideocamOff } from '@mui/icons-material'
 import { Box, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import ChatSidebar from './ChatSidebar'
 import ControlBar from './ControlBar'
 
-const TeleSessionCall = ({ transactionId }) => {
+const PatientTeleSessionCall = ({ transactionId }) => {
 	const { t } = useTranslation()
 	const { auth } = useAuth()
 	const localVideoRef = useRef(null)
 	const remoteVideoRef = useRef(null)
 	const [error, setError] = useState('')
-	const [participants, setParticipants] = useState([])
 	const [hasRemoteParticipant, setHasRemoteParticipant] = useState(false)
 	const [pendingOffer, setPendingOffer] = useState(null)
 	const [remoteConnectionId, setRemoteConnectionId] = useState(null)
@@ -24,6 +24,8 @@ const TeleSessionCall = ({ transactionId }) => {
 	const [showChat, setShowChat] = useState(false)
 	const [chatInput, setChatInput] = useState('')
 	const [messages, setMessages] = useState([])
+	const [remoteMicOn, setRemoteMicOn] = useState(true)
+	const [remoteCamOn, setRemoteCamOn] = useState(true)
 	const isCaller = String(auth?.role || '').toLowerCase() === 'patient'
 
 	const { data: session, error: sessionError } = useFetch(
@@ -38,12 +40,9 @@ const TeleSessionCall = ({ transactionId }) => {
 		}
 	}, [sessionError, t])
 
+	console.log(session)
 	const iceServers = useMemo(() => session?.credentials?.iceServers ?? [], [session])
 	const signalRHubUrl = useMemo(() => session?.credentials?.signalR?.hubUrl, [session])
-
-	console.log(session)
-
-	console.log(session)
 
 	const onLocalStream = (stream) => {
 		if (localVideoRef.current) localVideoRef.current.srcObject = stream
@@ -60,6 +59,7 @@ const TeleSessionCall = ({ transactionId }) => {
 		toggleAudio,
 		toggleVideo,
 		hangUp,
+		renegotiate, // CHANGED: dùng cho re-negotiation sau khi bật/tắt cam
 	} = useWebRtcPeer({
 		iceServers,
 		onLocalStream,
@@ -67,70 +67,65 @@ const TeleSessionCall = ({ transactionId }) => {
 		onIceCandidate: (c) => sendIceCandidate(c),
 	})
 
-	const { sendOffer, sendAnswer, sendIceCandidate, leaveSession, startConnection, stopConnection } =
-		useMeetingSignalR({
-			transactionId,
-			hubUrl: signalRHubUrl,
-			onJoinSucceeded: () => {
-				// Chỉ log hoặc đánh dấu đã vào phòng
-				console.log('Joined meeting room successfully')
-			},
-			onJoinFailed: () => {
-				setError(t('telehealth.error.session_not_ready'))
-			},
-			onParticipantJoined: (connectionId) => {
-				console.log('Participant joined:', connectionId)
-				// Thêm vào danh sách participants
-				setParticipants((prev) => {
-					const existing = prev.find((x) => x.id === connectionId)
-					if (existing) return prev
-					return [...prev, { id: connectionId, displayName: connectionId }]
-				})
-				// Đánh dấu có remote participant và lưu connectionId
-				setRemoteConnectionId(connectionId)
-				setHasRemoteParticipant(true)
-			},
-			onParticipantLeft: (connectionId) => {
-				console.log('Participant left:', connectionId)
-				setParticipants((prev) => prev.filter((x) => x.id !== connectionId))
-				// Nếu remote participant rời đi, reset state
-				if (connectionId === remoteConnectionId) {
-					setHasRemoteParticipant(false)
-					setRemoteConnectionId(null)
-				}
-			},
-			onOffer: async (senderId, offer) => {
-				await setRemoteDescription(offer)
-				const answer = await createAnswer()
-				await sendAnswer(answer)
-			},
-			onAnswer: async (senderId, answer) => {
-				await setRemoteDescription(answer)
-				// Xóa pendingOffer khi nhận được answer
-				setPendingOffer(null)
-			},
-			onIceCandidate: async (senderId, candidate) => {
-				await addIceCandidate(candidate)
-			},
-		})
+	const {
+		sendOffer,
+		sendAnswer,
+		sendIceCandidate,
+		notifyState,
+		leaveSession,
+		startConnection,
+		stopConnection,
+		// joinedRoomCode: có thể lấy ra nếu cần hiển thị
+	} = useMeetingSignalR({
+		transactionId,
+		roomCode: null, // patient join bằng transactionId
+		hubUrl: signalRHubUrl,
+		onJoinSucceeded: () => {},
+		onJoinFailed: () => {
+			setError(t('telehealth.error.session_not_ready'))
+		},
+		onParticipantJoined: (connectionId) => {
+			setRemoteConnectionId(connectionId)
+			setHasRemoteParticipant(true)
+		},
+		onParticipantLeft: (connectionId) => {
+			if (connectionId === remoteConnectionId) {
+				setHasRemoteParticipant(false)
+				setRemoteConnectionId(null)
+			}
+		},
+		onOffer: async (senderId, offer) => {
+			await setRemoteDescription(offer)
+			const answer = await createAnswer()
+			await sendAnswer(answer)
+		},
+		onAnswer: async (senderId, answer) => {
+			await setRemoteDescription(answer)
+			setPendingOffer(null)
+		},
+		onIceCandidate: async (senderId, candidate) => {
+			await addIceCandidate(candidate)
+		},
+		onStateUpdated: (_senderId, state) => {
+			// CHANGED: nhận (senderId, state)
+			if (typeof state?.micOn === 'boolean') setRemoteMicOn(state.micOn)
+			if (typeof state?.camOn === 'boolean') setRemoteCamOn(state.camOn)
+		},
+	})
 
 	useEffect(() => {
-		if (!session) return
-		// Chờ có credentials trước khi kết nối
-		if (!session?.credentials) return
+		if (!session?.credentials || !signalRHubUrl) return
 		startConnection()
 		return () => stopConnection()
-	}, [session, startConnection, stopConnection])
+	}, [session, signalRHubUrl, startConnection, stopConnection])
 
-	// Effect để tạo và gửi offer khi có remote participant
+	// Tạo & gửi offer khi phát hiện có participant (patient là caller)
 	useEffect(() => {
 		if (!hasRemoteParticipant || !isCaller) return
 
-		// Tạo offer mới nếu chưa có
 		if (!pendingOffer) {
 			;(async () => {
 				try {
-					console.log('Creating and sending new offer')
 					const offer = await createOffer()
 					setPendingOffer(offer)
 					await sendOffer(offer)
@@ -139,8 +134,7 @@ const TeleSessionCall = ({ transactionId }) => {
 				}
 			})()
 		} else {
-			// Nếu đã có pendingOffer, gửi lại cho participant mới
-			console.log('Resending pending offer to new participant')
+			// Nếu đã có pendingOffer (remote vừa join lại), gửi lại
 			sendOffer(pendingOffer).catch((err) => {
 				console.error('Failed to resend offer:', err)
 			})
@@ -158,10 +152,7 @@ const TeleSessionCall = ({ transactionId }) => {
 
 	const handleSendMessage = () => {
 		if (!chatInput.trim()) return
-		// Thêm tin nhắn mới vào danh sách
 		setMessages((prev) => [...prev, { text: chatInput, me: true }])
-		// Gửi tin nhắn qua SignalR (có thể thêm vào useMeetingSignalR)
-		// sendMessage(chatInput)
 		setChatInput('')
 	}
 
@@ -170,21 +161,60 @@ const TeleSessionCall = ({ transactionId }) => {
 			<Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
 				<Stack sx={{ flex: 1 }}>
 					<Box sx={{ position: 'relative', mb: 2 }}>
-						{/* Video chính (người đối diện) */}
+						{/* Remote video */}
 						<Paper
 							variant='outlined'
 							sx={{
+								position: 'relative',
 								p: 1,
 								borderRadius: 2,
 								height: { xs: '400px', md: '600px' },
 								backgroundColor: 'black',
 							}}
 						>
+							{!remoteMicOn && (
+								<Box
+									sx={{
+										position: 'absolute',
+										top: 12,
+										right: 12,
+										zIndex: 2,
+										bgcolor: 'error.main',
+										color: 'common.white',
+										width: 32,
+										height: 32,
+										borderRadius: '50%',
+										display: 'flex',
+										alignItems: 'center',
+										justifyContent: 'center',
+										boxShadow: 2,
+									}}
+								>
+									<MicOff fontSize='small' />
+								</Box>
+							)}
+							{!remoteCamOn && (
+								<Box
+									sx={{
+										position: 'absolute',
+										inset: 8,
+										borderRadius: 1.5,
+										display: 'flex',
+										alignItems: 'center',
+										justifyContent: 'center',
+										backgroundColor: 'action.hover',
+										zIndex: 1,
+									}}
+								>
+									<VideocamOff sx={{ fontSize: 64, color: 'text.disabled' }} />
+								</Box>
+							)}
 							<video
 								ref={remoteVideoRef}
 								autoPlay
 								playsInline
 								style={{
+									display: remoteCamOn ? 'block' : 'none',
 									width: '100%',
 									height: '100%',
 									borderRadius: 8,
@@ -193,7 +223,7 @@ const TeleSessionCall = ({ transactionId }) => {
 							/>
 						</Paper>
 
-						{/* Video nhỏ (local video) */}
+						{/* Local preview */}
 						<Paper
 							variant='outlined'
 							sx={{
@@ -208,12 +238,50 @@ const TeleSessionCall = ({ transactionId }) => {
 								zIndex: 1,
 							}}
 						>
+							{!isMicOn && (
+								<Box
+									sx={{
+										position: 'absolute',
+										top: 6,
+										right: 6,
+										zIndex: 3,
+										bgcolor: 'error.main',
+										color: 'common.white',
+										width: 24,
+										height: 24,
+										borderRadius: '50%',
+										display: 'flex',
+										alignItems: 'center',
+										justifyContent: 'center',
+										boxShadow: 2,
+									}}
+								>
+									<MicOff sx={{ fontSize: 16 }} />
+								</Box>
+							)}
+							{!isCamOn && (
+								<Box
+									sx={{
+										position: 'absolute',
+										inset: 4,
+										borderRadius: 1,
+										display: 'flex',
+										alignItems: 'center',
+										justifyContent: 'center',
+										backgroundColor: 'action.hover',
+										zIndex: 2,
+									}}
+								>
+									<VideocamOff sx={{ fontSize: 32, color: 'text.disabled' }} />
+								</Box>
+							)}
 							<video
 								ref={localVideoRef}
 								autoPlay
 								playsInline
 								muted
 								style={{
+									display: isCamOn ? 'block' : 'none',
 									width: '100%',
 									height: '100%',
 									borderRadius: 6,
@@ -227,12 +295,25 @@ const TeleSessionCall = ({ transactionId }) => {
 						micOn={isMicOn}
 						camOn={isCamOn}
 						onToggleMic={() => {
-							setIsMicOn(!isMicOn)
+							const next = !isMicOn
+							setIsMicOn(next)
 							toggleAudio()
+							notifyState({ micOn: next })
 						}}
-						onToggleCam={() => {
-							setIsCamOn(!isCamOn)
-							toggleVideo()
+						onToggleCam={async () => {
+							const next = !isCamOn
+							setIsCamOn(next)
+							await toggleVideo()
+							notifyState({ camOn: next })
+							// CHANGED: caller chủ động renegotiate để remote cập nhật SDP
+							if (isCaller) {
+								try {
+									const offer = await renegotiate()
+									await sendOffer(offer)
+								} catch (e) {
+									console.error('Renegotiate failed', e)
+								}
+							}
 						}}
 						onToggleChat={() => setShowChat(!showChat)}
 						onEndCall={() => {
@@ -240,25 +321,6 @@ const TeleSessionCall = ({ transactionId }) => {
 							leaveSession()
 						}}
 					/>
-
-					<Paper variant='outlined' sx={{ p: 1.5, mt: 2, borderRadius: 2 }}>
-						<Typography variant='subtitle2' sx={{ mb: 1 }}>
-							{t('telehealth.participants.title')}
-						</Typography>
-						{/* {participants.length === 0 ? (
-							<Typography variant='body2' color='text.secondary'>
-								{t('telehealth.participants.empty')}
-							</Typography>
-						) : (
-							<ul style={{ margin: 0, paddingLeft: 16 }}>
-								{participants.map((p) => (
-									<li key={p.id}>
-										<Typography variant='body2'>{p.displayName || p.id}</Typography>
-									</li>
-								))}
-							</ul>
-						)} */}
-					</Paper>
 				</Stack>
 
 				<ChatSidebar
@@ -274,4 +336,4 @@ const TeleSessionCall = ({ transactionId }) => {
 	)
 }
 
-export default TeleSessionCall
+export default PatientTeleSessionCall

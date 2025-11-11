@@ -64,7 +64,7 @@ export const routeUrls = {
 		PROFILE: '/profile',
 		APPOINTMENT_MANAGEMENT: '/appointment',
 		APPOINTMENT: {
-			MEETING_ROOM_TOKEN: (id) => `/appointments/meeting-room-token/${id}`,
+			JOIN_MEETING_ROOM: `/appointments/join-meeting-room`,
 		},
 		ATTENDANCE: '/attendance',
 		MEDICAL_HISTORY: {

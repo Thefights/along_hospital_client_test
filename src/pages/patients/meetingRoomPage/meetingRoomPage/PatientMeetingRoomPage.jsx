@@ -1,8 +1,8 @@
-import TeleSessionCall from '@/pages/patients/meetingRoomPage/meetingRoomPage/section/TeleSessionCall'
 import { Box, Container, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
+import PatientTeleSessionCall from './section/PatientTeleSessionCall'
 
-const MeetingRoomPage = () => {
+const PatientMeetingRoomPage = () => {
 	const { id: transactionId } = useParams()
 
 	if (!transactionId) {
@@ -28,10 +28,10 @@ const MeetingRoomPage = () => {
 			sx={{ py: { xs: 2, md: 3 }, px: { xs: 1, md: 0 }, bgcolor: (t) => t.palette.background.default }}
 		>
 			<Container maxWidth='lg'>
-				<TeleSessionCall transactionId={transactionId} />
+				<PatientTeleSessionCall transactionId={transactionId} />
 			</Container>
 		</Box>
 	)
 }
 
-export default MeetingRoomPage
+export default PatientMeetingRoomPage

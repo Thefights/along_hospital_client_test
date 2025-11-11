@@ -1,35 +1,9 @@
 import * as signalR from '@microsoft/signalr'
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-/**
- * useMeetingSignalR
- * Establishes and manages a SignalR connection for a tele-session.
- *
- * @param {Object} params
- * @param {string} params.transactionId - The tele-session transaction id
- * @param {string} params.accessToken - Bearer token used for hub authentication
- * @param {string=} params.hubUrl - Optional SignalR hub URL from API
- * @param {function=} params.onJoinSucceeded - Callback when JoinSession succeeded (payload)
- * @param {function=} params.onJoinFailed - Callback when JoinSession failed (error)
- * @param {function=} params.onParticipantJoined - Callback when a participant joined (participant)
- * @param {function=} params.onParticipantLeft - Callback when a participant left (participantId)
- * @param {function=} params.onOffer - Callback when receiving SDP offer (senderId, offer)
- * @param {function=} params.onAnswer - Callback when receiving SDP answer (senderId, answer)
- * @param {function=} params.onIceCandidate - Callback when receiving ICE candidate (senderId, candidate)
- * @param {function=} params.onStateUpdated - Callback when meeting state updated (state)
- *
- * @returns {{
- *  sendOffer: (offer: RTCSessionDescriptionInit) => Promise<void>,
- *  sendAnswer: (answer: RTCSessionDescriptionInit) => Promise<void>,
- *  sendIceCandidate: (candidate: RTCIceCandidateInit) => Promise<void>,
- *  notifyState: (state: any) => Promise<void>,
- *  leaveSession: () => Promise<void>,
- *  startConnection: () => Promise<void>,
- *  stopConnection: () => Promise<void>,
- * }}
- */
 const useMeetingSignalR = ({
 	transactionId,
+	roomCode,
 	hubUrl,
 	onJoinSucceeded,
 	onJoinFailed,
@@ -42,10 +16,39 @@ const useMeetingSignalR = ({
 }) => {
 	const connectionRef = useRef(null)
 	const startedRef = useRef(false)
-	const resolvedHubUrl = useMemo(() => hubUrl, [hubUrl])
+	const callbacksRef = useRef({}) // 🔥 giữ callback ổn định
 
+	// 🔥 Mỗi lần props callback đổi → update vào ref, KHÔNG khiến hook re-run
+	useEffect(() => {
+		callbacksRef.current = {
+			onJoinSucceeded,
+			onJoinFailed,
+			onParticipantJoined,
+			onParticipantLeft,
+			onOffer,
+			onAnswer,
+			onIceCandidate,
+			onStateUpdated,
+		}
+	}, [
+		onJoinSucceeded,
+		onJoinFailed,
+		onParticipantJoined,
+		onParticipantLeft,
+		onOffer,
+		onAnswer,
+		onIceCandidate,
+		onStateUpdated,
+	])
+
+	const resolvedHubUrl = useMemo(() => hubUrl, [hubUrl])
+	const [joinedRoomCode, setJoinedRoomCode] = useState(null)
+
+	// --------------------------------------------------------------------
+	// 🔥 buildConnection — KHÔNG phụ thuộc callback nữa → không bị recreate
+	// --------------------------------------------------------------------
 	const buildConnection = useCallback(() => {
-		const connection = new signalR.HubConnectionBuilder()
+		const conn = new signalR.HubConnectionBuilder()
 			.withUrl(resolvedHubUrl, {
 				transport: signalR.HttpTransportType.WebSockets,
 				skipNegotiation: true,
@@ -53,126 +56,133 @@ const useMeetingSignalR = ({
 			.configureLogging(signalR.LogLevel.Information)
 			.build()
 
-		connection.on('JoinSucceeded', (payload) => {
-			onJoinSucceeded && onJoinSucceeded(payload)
-		})
-		connection.on('JoinFailed', (err) => {
-			onJoinFailed && onJoinFailed(err)
-		})
-		connection.on('ParticipantJoined', (participant) => {
-			onParticipantJoined && onParticipantJoined(participant)
-		})
-		connection.on('ParticipantLeft', (participantId) => {
-			onParticipantLeft && onParticipantLeft(participantId)
-		})
-		connection.on('ReceiveOffer', (senderId, offer) => {
-			onOffer && onOffer(senderId, offer)
-		})
-		connection.on('ReceiveAnswer', (senderId, answer) => {
-			onAnswer && onAnswer(senderId, answer)
-		})
-		connection.on('ReceiveIceCandidate', (senderId, candidate) => {
-			onIceCandidate && onIceCandidate(senderId, candidate)
-		})
-		connection.on('StateUpdated', (state) => {
-			onStateUpdated && onStateUpdated(state)
+		conn.on('JoinSucceeded', (payload) => {
+			const room = payload.roomCode ?? payload.RoomCode
+			console.log('>>> Joined room:', room)
+			setJoinedRoomCode(room)
+
+			callbacksRef.current.onJoinSucceeded?.(payload)
 		})
 
-		return connection
-	}, [
-		resolvedHubUrl,
-		onAnswer,
-		onIceCandidate,
-		onJoinFailed,
-		onJoinSucceeded,
-		onOffer,
-		onParticipantJoined,
-		onParticipantLeft,
-		onStateUpdated,
-	])
+		conn.on('JoinFailed', (err) => {
+			console.log('JoinFailed', err)
+			callbacksRef.current.onJoinFailed?.(err)
+		})
 
+		conn.on('ParticipantJoined', (connId) => {
+			callbacksRef.current.onParticipantJoined?.(connId)
+		})
+
+		conn.on('ParticipantLeft', (connId) => {
+			callbacksRef.current.onParticipantLeft?.(connId)
+		})
+
+		conn.on('ReceiveOffer', ({ from, offer }) => {
+			callbacksRef.current.onOffer?.(from, offer)
+		})
+
+		conn.on('ReceiveAnswer', ({ from, answer }) => {
+			callbacksRef.current.onAnswer?.(from, answer)
+		})
+
+		conn.on('ReceiveIceCandidate', ({ from, candidate }) => {
+			callbacksRef.current.onIceCandidate?.(from, candidate)
+		})
+
+		conn.on('StateUpdated', ({ from, state }) => {
+			callbacksRef.current.onStateUpdated?.(from, state)
+		})
+
+		return conn
+	}, [resolvedHubUrl])
+
+	// --------------------------------------------------------------------
+	// 🔥 Start connection CHỈ chạy đúng 1 lần (per hubUrl)
+	// --------------------------------------------------------------------
 	const startConnection = useCallback(async () => {
 		if (startedRef.current) return
+		if (!resolvedHubUrl) return
+
+		startedRef.current = true
 
 		if (!connectionRef.current) {
 			connectionRef.current = buildConnection()
 		}
 
-		const conn = connectionRef.current
-
-		if (conn.state !== signalR.HubConnectionState.Disconnected) return
-
-		await conn.start()
-		startedRef.current = true
-
-		if (transactionId) {
-			await conn.invoke('JoinSession', transactionId)
+		if (connectionRef.current.state === signalR.HubConnectionState.Disconnected) {
+			await connectionRef.current.start()
+			await connectionRef.current.invoke('JoinSession', transactionId || null, roomCode || null)
 		}
-
-		return true
-	}, [buildConnection, transactionId])
+	}, [buildConnection, resolvedHubUrl, transactionId, roomCode])
 
 	const stopConnection = useCallback(async () => {
 		const conn = connectionRef.current
+		startedRef.current = false
 
 		if (conn && conn.state !== signalR.HubConnectionState.Disconnected) {
 			await conn.stop()
 		}
 
 		connectionRef.current = null
-		startedRef.current = false
+		setJoinedRoomCode(null)
 	}, [])
 
-	const sendOffer = useCallback(
-		async (offer) => {
-			if (!connectionRef.current) return
-			await connectionRef.current.invoke('SendOffer', transactionId, offer)
-		},
-		[transactionId]
-	)
-
-	const sendAnswer = useCallback(
-		async (answer) => {
-			if (!connectionRef.current) return
-			await connectionRef.current.invoke('SendAnswer', transactionId, answer)
-		},
-		[transactionId]
-	)
-
-	const sendIceCandidate = useCallback(
-		async (candidate) => {
-			if (!connectionRef.current) return
-			await connectionRef.current.invoke('SendIceCandidate', transactionId, candidate)
-		},
-		[transactionId]
-	)
-
-	const notifyState = useCallback(
-		async (state) => {
-			if (!connectionRef.current) return
-			await connectionRef.current.invoke('NotifyState', transactionId, state)
-		},
-		[transactionId]
-	)
-
-	const leaveSession = useCallback(async () => {
-		if (!connectionRef.current) return
-		try {
-			await connectionRef.current.invoke('LeaveSession', transactionId)
-		} finally {
-			await stopConnection()
-		}
-	}, [stopConnection, transactionId])
-
+	// --------------------------------------------------------------------
+	// 🔥 useEffect — chỉ phụ thuộc hubUrl → không loop forever
+	// --------------------------------------------------------------------
 	useEffect(() => {
-		if (!transactionId || !hubUrl) return
+		if (!hubUrl) return
 
 		startConnection()
 
 		return () => {
 			stopConnection()
 		}
-	}, [transactionId, hubUrl])
+	}, [hubUrl]) // chỉ hubUrl → không callback nào gây re-run nữa
+
+	// --------------------------------------------------------------------
+	// Send methods
+	// --------------------------------------------------------------------
+	const sendOffer = useCallback(
+		async (offer) => {
+			if (!connectionRef.current || !joinedRoomCode) return
+			await connectionRef.current.invoke('SendOffer', joinedRoomCode, offer)
+		},
+		[joinedRoomCode]
+	)
+
+	const sendAnswer = useCallback(
+		async (answer) => {
+			if (!connectionRef.current || !joinedRoomCode) return
+			await connectionRef.current.invoke('SendAnswer', joinedRoomCode, answer)
+		},
+		[joinedRoomCode]
+	)
+
+	const sendIceCandidate = useCallback(
+		async (candidate) => {
+			if (!connectionRef.current || !joinedRoomCode) return
+			await connectionRef.current.invoke('SendIceCandidate', joinedRoomCode, candidate)
+		},
+		[joinedRoomCode]
+	)
+
+	const notifyState = useCallback(
+		async (state) => {
+			if (!connectionRef.current || !joinedRoomCode) return
+			await connectionRef.current.invoke('NotifyState', joinedRoomCode, state)
+		},
+		[joinedRoomCode]
+	)
+
+	const leaveSession = useCallback(async () => {
+		if (!connectionRef.current) return
+		try {
+			await connectionRef.current.invoke('LeaveSession')
+		} finally {
+			await stopConnection()
+		}
+	}, [stopConnection])
 
 	return {
 		sendOffer,
@@ -182,6 +192,7 @@ const useMeetingSignalR = ({
 		leaveSession,
 		startConnection,
 		stopConnection,
+		joinedRoomCode,
 	}
 }
 

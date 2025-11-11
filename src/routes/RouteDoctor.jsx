@@ -7,9 +7,9 @@ import LayoutDoctor from '@/layouts/LayoutDoctor'
 import NotFoundPage from '@/pages/commons/NotFoundPage'
 import CreateMedicalHistoryPage from '@/pages/doctors/createMedicalHistoryPage/CreateMedicalHistoryPage'
 import DoctorAppointmentManagementPage from '@/pages/doctors/doctorAppointmentManagementPage/DoctorAppointmentManagementPage'
+import DoctorMeetingRoomPage from '@/pages/doctors/doctorAppointmentManagementPage/DoctorMeetingRoomPage'
 import DoctorAttendanceManagementPage from '@/pages/doctors/doctorAttendanceManagementPage/DoctorAttendanceManagementPage'
 import DoctorMedicalHistoryManagementPage from '@/pages/doctors/doctorMedicalHistoryManagementPage/DoctorMedicalHistoryManagementPage'
-import MeetingRoomPage from '@/pages/patients/meetingRoomPage/meetingRoomPage/MeetingRoomPage'
 import ProfilePage from '@/pages/profile/ProfilePage'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
@@ -46,8 +46,8 @@ const RouteDoctor = () => {
 					<Route path={routeUrls.DOCTOR.ATTENDANCE} element={<DoctorAttendanceManagementPage />} />
 				</Route>
 				<Route
-					path={routeUrls.DOCTOR.APPOINTMENT.MEETING_ROOM_TOKEN(':id')}
-					element={<MeetingRoomPage />}
+					path={routeUrls.DOCTOR.APPOINTMENT.JOIN_MEETING_ROOM}
+					element={<DoctorMeetingRoomPage />}
 				/>
 			</Route>
 
