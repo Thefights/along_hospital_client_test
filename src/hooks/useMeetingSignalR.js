@@ -70,6 +70,7 @@ const useMeetingSignalR = ({
 		})
 
 		conn.on('ParticipantJoined', (connId) => {
+			console.log('có người vô')
 			callbacksRef.current.onParticipantJoined?.(connId)
 		})
 
