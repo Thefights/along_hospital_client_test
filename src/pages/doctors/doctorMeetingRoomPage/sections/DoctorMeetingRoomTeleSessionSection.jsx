@@ -81,15 +81,11 @@ const DoctorMeetingRoomTeleSessionSection = ({ doctorId }) => {
 		transactionId: null, // doctor side uses roomCode
 		roomCode,
 		hubUrl: signalRHubUrl,
-		onJoinSucceeded: () => {
-			console.log('[DOCTOR] SignalR join succeeded')
-		},
+		onJoinSucceeded: () => {},
 		onJoinFailed: () => {
-			console.log('[DOCTOR] SignalR join failed')
 			setError(t('telehealth.error.session_not_ready'))
 		},
 		onParticipantJoined: (connectionId) => {
-			console.log('[DOCTOR] Participant joined:', connectionId)
 			setRemoteConnectionId(connectionId)
 			setHasRemoteParticipant(true)
 		},
@@ -109,18 +105,14 @@ const DoctorMeetingRoomTeleSessionSection = ({ doctorId }) => {
 					// Force refresh video element
 					remoteVideoRef.current.load()
 				}
-				console.log('[DOCTOR] Participant cleanup completed')
 			}
 		},
 		onOffer: async (_senderId, offer) => {
-			console.log('[DOCTOR] Received offer from:', _senderId)
 			await setRemoteDescription(offer)
 			const answer = await createAnswer()
 			await sendAnswer(answer)
-			console.log('[DOCTOR] Sent answer')
 		},
 		onAnswer: async (_senderId, answer) => {
-			console.log('[DOCTOR] Received answer from:', _senderId)
 			await setRemoteDescription(answer)
 			setPendingOffer(null)
 		},
@@ -134,7 +126,6 @@ const DoctorMeetingRoomTeleSessionSection = ({ doctorId }) => {
 	})
 
 	useEffect(() => {
-		console.log('[DOCTOR] Connection effect:', { roomCode, signalRHubUrl })
 		if (!roomCode || !signalRHubUrl) return
 
 		// Reset pending offer khi start connection mới
@@ -154,8 +145,8 @@ const DoctorMeetingRoomTeleSessionSection = ({ doctorId }) => {
 			try {
 				const offer = await renegotiate()
 				await sendOffer(offer)
-			} catch (e) {
-				console.warn('[DOCTOR] Fallback renegotiate failed:', e)
+			} catch {
+				// Silent fallback failure
 			}
 		}, 300)
 
@@ -165,12 +156,6 @@ const DoctorMeetingRoomTeleSessionSection = ({ doctorId }) => {
 	// Auto-renegotiate when both doctor has localStream and remote participant joined
 	// Để đảm bảo tracks được sync đúng cách sau khi patient đã tạo offer đầu tiên
 	useEffect(() => {
-		console.log('[DOCTOR] Auto-renegotiate check:', {
-			hasRemoteParticipant,
-			hasLocalStream: !!localStream,
-			pendingOffer,
-		})
-
 		if (!hasRemoteParticipant) return
 		if (!localStream) return
 		if (pendingOffer) return
@@ -178,12 +163,10 @@ const DoctorMeetingRoomTeleSessionSection = ({ doctorId }) => {
 		// Đợi một chút để đảm bảo answer đã được process xong
 		const timer = setTimeout(async () => {
 			try {
-				console.log('[DOCTOR] Auto-renegotiate for track sync - EXECUTING')
 				const offer = await renegotiate()
 				await sendOffer(offer)
-				console.log('[DOCTOR] Auto-renegotiate completed')
-			} catch (e) {
-				console.warn('[DOCTOR] Auto-renegotiate failed:', e)
+			} catch {
+				// Silent auto-renegotiate failure
 			}
 		}, 1500) // Tăng delay để đảm bảo
 
@@ -362,7 +345,6 @@ const DoctorMeetingRoomTeleSessionSection = ({ doctorId }) => {
 						}}
 						onToggleChat={() => setShowChat(!showChat)}
 						onEndCall={async () => {
-							console.log('[DOCTOR] End call initiated')
 							try {
 								// Clear video elements immediately
 								if (localVideoRef.current) {
@@ -378,7 +360,6 @@ const DoctorMeetingRoomTeleSessionSection = ({ doctorId }) => {
 								clearRemoteStream()
 								hangUp()
 								await leaveSession()
-								console.log('[DOCTOR] End call cleanup completed')
 							} finally {
 								navigate(routeUrls.BASE_ROUTE.DOCTOR(routeUrls.DOCTOR.DASHBOARD), { replace: true })
 							}

@@ -74,20 +74,15 @@ const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 		transactionId,
 		roomCode: null,
 		hubUrl: signalRHubUrl,
-		onJoinSucceeded: () => {
-			console.log('[PATIENT] SignalR join succeeded')
-		},
+		onJoinSucceeded: () => {},
 		onJoinFailed: () => {
-			console.log('[PATIENT] SignalR join failed')
 			setError(t('telehealth.error.session_not_ready'))
 		},
 		onParticipantJoined: (connectionId) => {
-			console.log('[PATIENT] Participant joined:', connectionId)
 			setRemoteConnectionId(connectionId)
 			setHasRemoteParticipant(true)
 		},
 		onParticipantLeft: (id) => {
-			console.log('[PATIENT] Participant left:', id)
 			if (id === remoteConnectionId) {
 				setHasRemoteParticipant(false)
 				setRemoteConnectionId(null)
@@ -103,18 +98,14 @@ const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 					// Force refresh video element
 					remoteVideoRef.current.load()
 				}
-				console.log('[PATIENT] Participant cleanup completed')
 			}
 		},
 		onOffer: async (senderId, offer) => {
-			console.log('[PATIENT] Received offer from:', senderId)
 			await setRemoteDescription(offer)
 			const answer = await createAnswer()
 			await sendAnswer(answer)
-			console.log('[PATIENT] Sent answer')
 		},
 		onAnswer: async (senderId, answer) => {
-			console.log('[PATIENT] Received answer from:', senderId)
 			await setRemoteDescription(answer)
 			setPendingOffer(null)
 		},
@@ -134,25 +125,15 @@ const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 	}, [session, signalRHubUrl, startConnection, stopConnection])
 
 	useEffect(() => {
-		console.log('[PATIENT] CreateOffer check:', {
-			hasLocalStream: !!localStream,
-			joinedRoomCode,
-			hasRemoteParticipant,
-			isCaller,
-			pendingOffer,
-		})
-
 		if (!localStream) return
 		if (!joinedRoomCode) return
 		if (!hasRemoteParticipant) return
 		if (!isCaller) return
 		if (pendingOffer) return
 		;(async () => {
-			console.log('[PATIENT] Creating offer...')
 			const offer = await createOffer()
 			setPendingOffer(offer)
 			await sendOffer(offer)
-			console.log('[PATIENT] Offer sent successfully')
 		})()
 	}, [
 		localStream,
@@ -336,7 +317,6 @@ const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 						}}
 						onToggleChat={() => setShowChat(!showChat)}
 						onEndCall={async () => {
-							console.log('[PATIENT] End call initiated')
 							try {
 								// Clear video elements immediately
 								if (localVideoRef.current) {
@@ -352,7 +332,6 @@ const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 								clearRemoteStream()
 								hangUp()
 								await leaveSession()
-								console.log('[PATIENT] End call cleanup completed')
 							} finally {
 								// Navigate to end meeting page
 								navigate(
