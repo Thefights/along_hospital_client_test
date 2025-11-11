@@ -1,4 +1,5 @@
 import { ApiUrls } from '@/configs/apiUrls'
+import { routeUrls } from '@/configs/routeUrls'
 import useAuth from '@/hooks/useAuth'
 import useFetch from '@/hooks/useFetch'
 import useMeetingSignalR from '@/hooks/useMeetingSignalR'
@@ -9,10 +10,12 @@ import ControlBar from '@/pages/patients/meetingRoomPage/meetingRoomPage/section
 import { MicOff, VideocamOff } from '@mui/icons-material'
 import { Box, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const DoctorTeleSessionCall = ({ doctorId }) => {
 	const { t } = useTranslation()
 	const { auth } = useAuth()
+	const navigate = useNavigate()
 	const localVideoRef = useRef(null)
 	const remoteVideoRef = useRef(null)
 
@@ -84,7 +87,6 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 		onJoinSucceeded: () => {},
 		onJoinFailed: () => setError(t('telehealth.error.session_not_ready')),
 		onParticipantJoined: (connectionId) => {
-			console.log('co nguoi moi vo')
 			setRemoteConnectionId(connectionId)
 			setHasRemoteParticipant(true)
 		},
@@ -296,9 +298,13 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 							}
 						}}
 						onToggleChat={() => setShowChat(!showChat)}
-						onEndCall={() => {
-							hangUp()
-							leaveSession()
+						onEndCall={async () => {
+							try {
+								hangUp()
+								await leaveSession()
+							} finally {
+								navigate(routeUrls.BASE_ROUTE.DOCTOR(routeUrls.DOCTOR.DASHBOARD), { replace: true })
+							}
 						}}
 					/>
 				</Stack>

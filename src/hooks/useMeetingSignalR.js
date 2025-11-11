@@ -75,6 +75,7 @@ const useMeetingSignalR = ({
 		})
 
 		conn.on('ParticipantLeft', (connId) => {
+			console.log('Có người cút')
 			callbacksRef.current.onParticipantLeft?.(connId)
 		})
 

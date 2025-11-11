@@ -1,4 +1,5 @@
 import { ApiUrls } from '@/configs/apiUrls'
+import { routeUrls } from '@/configs/routeUrls'
 import useAuth from '@/hooks/useAuth'
 import useFetch from '@/hooks/useFetch'
 import useMeetingSignalR from '@/hooks/useMeetingSignalR'
@@ -7,12 +8,14 @@ import useWebRtcPeer from '@/hooks/useWebRtcPeer'
 import { MicOff, VideocamOff } from '@mui/icons-material'
 import { Box, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import ChatSidebar from './ChatSidebar'
 import ControlBar from './ControlBar'
 
 const PatientTeleSessionCall = ({ transactionId }) => {
 	const { t } = useTranslation()
 	const { auth } = useAuth()
+	const navigate = useNavigate()
 	const localVideoRef = useRef(null)
 	const remoteVideoRef = useRef(null)
 	const offerSentRef = useRef(false)
@@ -85,7 +88,6 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 			setError(t('telehealth.error.session_not_ready'))
 		},
 		onParticipantJoined: (connectionId) => {
-			console.log('vô')
 			setRemoteConnectionId(connectionId)
 			setHasRemoteParticipant(true)
 		},
@@ -310,9 +312,13 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 							}
 						}}
 						onToggleChat={() => setShowChat(!showChat)}
-						onEndCall={() => {
-							hangUp()
-							leaveSession()
+						onEndCall={async () => {
+							try {
+								hangUp()
+								await leaveSession()
+							} finally {
+								navigate(routeUrls.HOME.INDEX, { replace: true })
+							}
 						}}
 					/>
 				</Stack>
