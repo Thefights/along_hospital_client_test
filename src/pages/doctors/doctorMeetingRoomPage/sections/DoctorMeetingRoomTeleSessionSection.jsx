@@ -60,6 +60,7 @@ const DoctorMeetingRoomTeleSessionSection = ({ doctorId }) => {
 		toggleVideo,
 		hangUp,
 		renegotiate,
+		localStream,
 	} = useWebRtcPeer({
 		iceServers,
 		onLocalStream,
@@ -129,11 +130,34 @@ const DoctorMeetingRoomTeleSessionSection = ({ doctorId }) => {
 			try {
 				const offer = await renegotiate()
 				await sendOffer(offer)
-			} catch {}
+			} catch (e) {
+				console.warn('[DOCTOR] Fallback renegotiate failed:', e)
+			}
 		}, 300)
 
 		return () => clearTimeout(timer)
-	}, [hasRemoteParticipant, pendingOffer])
+	}, [hasRemoteParticipant, pendingOffer, renegotiate, sendOffer])
+
+	// Auto-renegotiate when both doctor has localStream and remote participant joined
+	// Để đảm bảo tracks được sync đúng cách sau khi patient đã tạo offer đầu tiên
+	useEffect(() => {
+		if (!hasRemoteParticipant) return
+		if (!localStream) return
+		if (pendingOffer) return
+
+		// Đợi một chút để đảm bảo answer đã được process xong
+		const timer = setTimeout(async () => {
+			try {
+				console.log('[DOCTOR] Auto-renegotiate for track sync')
+				const offer = await renegotiate()
+				await sendOffer(offer)
+			} catch (e) {
+				console.warn('[DOCTOR] Auto-renegotiate failed:', e)
+			}
+		}, 1000)
+
+		return () => clearTimeout(timer)
+	}, [hasRemoteParticipant, localStream, pendingOffer, renegotiate, sendOffer])
 
 	if (error) {
 		return (
