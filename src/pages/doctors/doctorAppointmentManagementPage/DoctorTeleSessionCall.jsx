@@ -37,10 +37,9 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 		if (localVideoRef.current) localVideoRef.current.srcObject = stream
 	}
 	const onRemoteStream = (stream) => {
-		if (remoteVideoRef.current) {
-			remoteVideoRef.current.srcObject = stream
-			remoteVideoRef.current.play?.().catch(() => {})
-		}
+		if (remoteVideoRef.current) remoteVideoRef.current.srcObject = stream
+		// đảm bảo autoplay
+		remoteVideoRef.current?.play?.().catch(() => {})
 	}
 
 	const {
@@ -50,7 +49,8 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 		toggleAudio,
 		toggleVideo,
 		hangUp,
-		localStream, // dùng để chờ trước khi trả answer
+		renegotiate, // giữ để sau dùng nếu add/remove track thực sự
+		localStream,
 	} = useWebRtcPeer({
 		iceServers,
 		onLocalStream,
@@ -59,6 +59,7 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 	})
 
 	const {
+		sendOffer,
 		sendAnswer,
 		sendIceCandidate,
 		notifyState,
@@ -79,16 +80,19 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 			if (id && id === remoteConnectionId) {
 				setHasRemoteParticipant(false)
 				setRemoteConnectionId(null)
-				if (remoteVideoRef.current) remoteVideoRef.current.srcObject = null
+				if (remoteVideoRef.current) {
+					remoteVideoRef.current.srcObject = null
+				}
 			}
 		},
 		onOffer: async (_senderId, offer) => {
 			await setRemoteDescription(offer)
-			// CHỜ local tracks có rồi mới tạo answer
-			const waitForLocal = async (ms = 4000) => {
-				const t0 = Date.now()
-				while (!localStream && Date.now() - t0 < ms) {
+			// đợi local tracks sẵn sàng rồi mới tạo answer
+			const waitForLocal = async (timeoutMs = 4000) => {
+				const start = Date.now()
+				while (!localStream) {
 					await new Promise((r) => setTimeout(r, 40))
+					if (Date.now() - start > timeoutMs) break
 				}
 			}
 			await waitForLocal()
@@ -96,7 +100,6 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 			await sendAnswer(answer)
 		},
 		onAnswer: async (_senderId, answer) => {
-			// Doctor không tạo offer, nên về lý không nhận answer; cứ giữ cho chắc
 			await setRemoteDescription(answer)
 		},
 		onIceCandidate: async (_senderId, candidate) => {
@@ -133,6 +136,7 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 			<Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
 				<Stack sx={{ flex: 1 }}>
 					<Box sx={{ position: 'relative', mb: 2 }}>
+						{/* Remote video */}
 						<Paper
 							variant='outlined'
 							sx={{
@@ -194,6 +198,7 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 							/>
 						</Paper>
 
+						{/* Local preview */}
 						<Paper
 							variant='outlined'
 							sx={{
@@ -275,7 +280,7 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 							setIsCamOn(next)
 							toggleVideo()
 							notifyState({ camOn: next })
-							// KHÔNG renegotiate ở đây
+							// Không renegotiate khi chỉ bật/tắt track.enabled
 						}}
 						onToggleChat={() => setShowChat(!showChat)}
 						onEndCall={async () => {
@@ -288,7 +293,6 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 						}}
 					/>
 				</Stack>
-
 				<ChatSidebar
 					show={showChat}
 					messages={messages}

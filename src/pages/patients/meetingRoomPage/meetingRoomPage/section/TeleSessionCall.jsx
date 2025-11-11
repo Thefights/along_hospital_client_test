@@ -48,6 +48,7 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 		toggleAudio,
 		toggleVideo,
 		hangUp,
+		renegotiate,
 		localStream,
 	} = useWebRtcPeer({
 		iceServers,
@@ -286,6 +287,14 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 							setIsCamOn(next)
 							toggleVideo()
 							notifyState({ camOn: next })
+							if (isCaller) {
+								try {
+									const offer = await renegotiate()
+									await sendOffer(offer)
+								} catch (e) {
+									console.error('Renegotiate failed', e)
+								}
+							}
 						}}
 						onToggleChat={() => setShowChat(!showChat)}
 						onEndCall={() => {
