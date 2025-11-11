@@ -23,17 +23,13 @@ export default function useWebRtcPeer({
 			return
 		}
 
-		const pc = new RTCPeerConnection({
-			iceServers,
-			iceTransportPolicy: 'all',
-		})
+		const pc = new RTCPeerConnection({ iceServers, iceTransportPolicy: 'all' })
 		pcRef.current = pc
 
-		// OPTIONAL: pre-add transceivers để SDP luôn có sendrecv
 		try {
 			pc.addTransceiver('audio', { direction: 'sendrecv' })
 			pc.addTransceiver('video', { direction: 'sendrecv' })
-		} catch (_) {}
+		} catch {}
 
 		pc.onicecandidate = (e) => {
 			const c = e.candidate
@@ -59,29 +55,20 @@ export default function useWebRtcPeer({
 			})
 			setRemoteStream(rs)
 			onRemoteStream?.(rs)
-
-			// đảm bảo autoplay
 			const tag = (document || {}).querySelector?.('video[autoplay][playsinline]')
-			if (tag?.play) tag.play().catch(() => {})
+			tag?.play?.().catch(() => {})
 		}
 		;(async () => {
 			try {
-				const stream = await navigator.mediaDevices.getUserMedia({
-					audio: true,
-					video: true,
-				})
+				const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: true })
 				localStreamRef.current = stream
 				setLocalStream(stream)
 				onLocalStream?.(stream)
 				stream.getTracks().forEach((track) => pc.addTrack(track, stream))
 			} catch (err) {
-				console.warn('[GUM] failed → fallback audio only', err)
+				console.warn('[GUM] failed → audio only', err)
 				try {
-					const stream = await navigator.mediaDevices.getUserMedia({
-						audio: true,
-						video: false,
-					})
-					console.log('[GUM] got audio-only')
+					const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false })
 					localStreamRef.current = stream
 					setLocalStream(stream)
 					onLocalStream?.(stream)
@@ -98,13 +85,10 @@ export default function useWebRtcPeer({
 		return () => {
 			pc.close()
 			pcRef.current = null
-
 			localStreamRef.current?.getTracks().forEach((t) => t.stop())
 			localStreamRef.current = null
-
 			remoteStreamRef.current = null
 			setRemoteStream(null)
-
 			expectingAnswerRef.current = false
 			candidateQueueRef.current = []
 		}
@@ -127,17 +111,11 @@ export default function useWebRtcPeer({
 
 	const setRemoteDescription = useCallback(async (desc) => {
 		const pc = pcRef.current
-
 		if (desc?.type === 'answer') {
-			if (pc.signalingState !== 'have-local-offer' || !expectingAnswerRef.current) {
-				return
-			}
+			if (pc.signalingState !== 'have-local-offer' || !expectingAnswerRef.current) return
 		}
-
 		await pc.setRemoteDescription(new RTCSessionDescription(desc))
-
 		if (desc?.type === 'answer') expectingAnswerRef.current = false
-
 		if (candidateQueueRef.current.length > 0) {
 			for (const c of candidateQueueRef.current) {
 				await pc.addIceCandidate(new RTCIceCandidate(c))
@@ -149,7 +127,6 @@ export default function useWebRtcPeer({
 	const addIceCandidate = useCallback(async (candidate) => {
 		if (!candidate) return
 		const pc = pcRef.current
-
 		if (!pc.remoteDescription) {
 			candidateQueueRef.current.push(candidate)
 			return
@@ -168,19 +145,17 @@ export default function useWebRtcPeer({
 	const toggleAudio = () => {
 		const ls = localStreamRef.current
 		if (!ls) return
-		ls.getAudioTracks().forEach((track) => (track.enabled = !track.enabled))
-		const next = !isAudioEnabled
-		setIsAudioEnabled(next)
+		ls.getAudioTracks().forEach((t) => (t.enabled = !t.enabled))
+		setIsAudioEnabled((x) => !x)
 	}
 
 	const toggleVideo = useCallback(() => {
 		const ls = localStreamRef.current
 		if (!ls) return
-		ls.getVideoTracks().forEach((track) => (track.enabled = !track.enabled))
-		const next = !isVideoEnabled
-		setIsVideoEnabled(next)
+		ls.getVideoTracks().forEach((t) => (t.enabled = !t.enabled))
+		setIsVideoEnabled((x) => !x)
 		onLocalStream?.(ls)
-	}, [isVideoEnabled, onLocalStream])
+	}, [onLocalStream])
 
 	const hangUp = useCallback(() => {
 		const pc = pcRef.current

@@ -48,7 +48,6 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 		toggleAudio,
 		toggleVideo,
 		hangUp,
-		renegotiate,
 		localStream,
 	} = useWebRtcPeer({
 		iceServers,
@@ -119,6 +118,7 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 		if (!isCaller) return
 		if (pendingOffer) return
 		;(async () => {
+			console.log('[SDP] initial offer create')
 			const offer = await createOffer()
 			setPendingOffer(offer)
 			await sendOffer(offer)
@@ -286,14 +286,6 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 							setIsCamOn(next)
 							toggleVideo()
 							notifyState({ camOn: next })
-							if (isCaller) {
-								try {
-									const offer = await renegotiate()
-									await sendOffer(offer)
-								} catch (e) {
-									console.error('Renegotiate failed', e)
-								}
-							}
 						}}
 						onToggleChat={() => setShowChat(!showChat)}
 						onEndCall={() => {
