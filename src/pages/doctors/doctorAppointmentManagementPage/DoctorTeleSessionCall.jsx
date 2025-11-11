@@ -29,17 +29,7 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 	const [remoteMicOn, setRemoteMicOn] = useState(true)
 	const [remoteCamOn, setRemoteCamOn] = useState(true)
 
-	const { data: room, error: roomError } = useFetch(ApiUrls.TELE_ROOM.GET_BY_DOCTOR(doctorId), {}, [
-		doctorId,
-	])
-
-	useEffect(() => {
-		console.log(room)
-	}, [room])
-
-	useEffect(() => {
-		if (roomError) setError(t('telehealth.error.session_not_ready'))
-	}, [roomError, t])
+	const room = useFetch(ApiUrls.TELE_ROOM.GET_BY_DOCTOR(doctorId), {}, [doctorId])
 
 	const iceServers = useMemo(() => room?.credentials?.iceServers ?? [], [room])
 	const signalRHubUrl = useMemo(() => room?.credentials?.signalR?.hubUrl, [room])
@@ -76,7 +66,7 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 		startConnection,
 		stopConnection,
 	} = useMeetingSignalR({
-		transactionId: null, // doctor side uses roomCode
+		transactionId: null,
 		roomCode,
 		hubUrl: signalRHubUrl,
 		onJoinSucceeded: () => {},
@@ -119,17 +109,13 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 		return () => stopConnection()
 	}, [roomCode, signalRHubUrl, startConnection, stopConnection])
 
-	// Doctor acts as callee: waits for offer; but if patient already present and no offer yet, can create one after a timeout fallback
 	useEffect(() => {
 		if (!hasRemoteParticipant) return
 		if (pendingOffer) return
 
-		// doctor chỉ fallback khi quá 300ms mà không nhận offer
 		const timer = setTimeout(async () => {
-			try {
-				const offer = await renegotiate()
-				await sendOffer(offer)
-			} catch {}
+			const offer = await renegotiate()
+			await sendOffer(offer)
 		}, 300)
 
 		return () => clearTimeout(timer)
@@ -296,14 +282,10 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 						onToggleCam={async () => {
 							const next = !isCamOn
 							setIsCamOn(next)
-							await toggleVideo()
+							toggleVideo()
 							notifyState({ camOn: next })
-							try {
-								const offer = await renegotiate()
-								await sendOffer(offer)
-							} catch (e) {
-								void e
-							}
+							const offer = await renegotiate()
+							await sendOffer(offer)
 						}}
 						onToggleChat={() => setShowChat(!showChat)}
 						onEndCall={async () => {

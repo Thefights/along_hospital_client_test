@@ -28,19 +28,8 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 	const [remoteCamOn, setRemoteCamOn] = useState(true)
 	const isCaller = String(auth?.role || '').toLowerCase() === 'patient'
 
-	const { data: session, error: sessionError } = useFetch(
-		ApiUrls.TELE_SESSION.DETAIL(transactionId),
-		{},
-		[transactionId]
-	)
+	const session = useFetch(ApiUrls.TELE_SESSION.DETAIL(transactionId), {}, [transactionId])
 
-	useEffect(() => {
-		if (sessionError) {
-			setError(t('telehealth.error.session_not_ready'))
-		}
-	}, [sessionError, t])
-
-	console.log(session)
 	const iceServers = useMemo(() => session?.credentials?.iceServers ?? [], [session])
 	const signalRHubUrl = useMemo(() => session?.credentials?.signalR?.hubUrl, [session])
 
@@ -79,7 +68,7 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 		joinedRoomCode,
 	} = useMeetingSignalR({
 		transactionId,
-		roomCode: null, // patient join bằng transactionId
+		roomCode: null,
 		hubUrl: signalRHubUrl,
 		onJoinSucceeded: () => {},
 		onJoinFailed: () => {
@@ -112,7 +101,6 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 			await addIceCandidate(candidate)
 		},
 		onStateUpdated: (_senderId, state) => {
-			// CHANGED: nhận (senderId, state)
 			if (typeof state?.micOn === 'boolean') setRemoteMicOn(state.micOn)
 			if (typeof state?.camOn === 'boolean') setRemoteCamOn(state.camOn)
 		},
@@ -124,7 +112,6 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 		return () => stopConnection()
 	}, [session, signalRHubUrl, startConnection, stopConnection])
 
-	// Tạo & gửi offer khi phát hiện có participant (patient là caller)
 	useEffect(() => {
 		if (!localStream) return
 		if (!joinedRoomCode) return
@@ -157,7 +144,6 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 			<Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
 				<Stack sx={{ flex: 1 }}>
 					<Box sx={{ position: 'relative', mb: 2 }}>
-						{/* Remote video */}
 						<Paper
 							variant='outlined'
 							sx={{
@@ -219,7 +205,6 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 							/>
 						</Paper>
 
-						{/* Local preview */}
 						<Paper
 							variant='outlined'
 							sx={{
@@ -299,9 +284,8 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 						onToggleCam={async () => {
 							const next = !isCamOn
 							setIsCamOn(next)
-							await toggleVideo()
+							toggleVideo()
 							notifyState({ camOn: next })
-							// CHANGED: caller chủ động renegotiate để remote cập nhật SDP
 							if (isCaller) {
 								try {
 									const offer = await renegotiate()

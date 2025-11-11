@@ -16,9 +16,8 @@ const useMeetingSignalR = ({
 }) => {
 	const connectionRef = useRef(null)
 	const startedRef = useRef(false)
-	const callbacksRef = useRef({}) // 🔥 giữ callback ổn định
+	const callbacksRef = useRef({})
 
-	// 🔥 Mỗi lần props callback đổi → update vào ref, KHÔNG khiến hook re-run
 	useEffect(() => {
 		callbacksRef.current = {
 			onJoinSucceeded,
@@ -44,9 +43,6 @@ const useMeetingSignalR = ({
 	const resolvedHubUrl = useMemo(() => hubUrl, [hubUrl])
 	const [joinedRoomCode, setJoinedRoomCode] = useState(null)
 
-	// --------------------------------------------------------------------
-	// 🔥 buildConnection — KHÔNG phụ thuộc callback nữa → không bị recreate
-	// --------------------------------------------------------------------
 	const buildConnection = useCallback(() => {
 		const conn = new signalR.HubConnectionBuilder()
 			.withUrl(resolvedHubUrl, {
@@ -58,19 +54,16 @@ const useMeetingSignalR = ({
 
 		conn.on('JoinSucceeded', (payload) => {
 			const room = payload.roomCode ?? payload.RoomCode
-			console.log('>>> Joined room:', room)
 			setJoinedRoomCode(room)
 
 			callbacksRef.current.onJoinSucceeded?.(payload)
 		})
 
 		conn.on('JoinFailed', (err) => {
-			console.log('JoinFailed', err)
 			callbacksRef.current.onJoinFailed?.(err)
 		})
 
 		conn.on('ParticipantJoined', (connId) => {
-			console.log('có người vô')
 			callbacksRef.current.onParticipantJoined?.(connId)
 		})
 
@@ -98,9 +91,6 @@ const useMeetingSignalR = ({
 		return conn
 	}, [resolvedHubUrl])
 
-	// --------------------------------------------------------------------
-	// 🔥 Start connection CHỈ chạy đúng 1 lần (per hubUrl)
-	// --------------------------------------------------------------------
 	const startConnection = useCallback(async () => {
 		if (startedRef.current) return
 		if (!resolvedHubUrl) return
@@ -129,9 +119,6 @@ const useMeetingSignalR = ({
 		setJoinedRoomCode(null)
 	}, [])
 
-	// --------------------------------------------------------------------
-	// 🔥 useEffect — chỉ phụ thuộc hubUrl → không loop forever
-	// --------------------------------------------------------------------
 	useEffect(() => {
 		if (!hubUrl) return
 
@@ -142,9 +129,6 @@ const useMeetingSignalR = ({
 		}
 	}, [hubUrl]) // chỉ hubUrl → không callback nào gây re-run nữa
 
-	// --------------------------------------------------------------------
-	// Send methods
-	// --------------------------------------------------------------------
 	const sendOffer = useCallback(
 		async (offer) => {
 			if (!connectionRef.current || !joinedRoomCode) return
