@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 export default function useWebRtcPeer({
 	iceServers = [],
@@ -12,10 +12,29 @@ export default function useWebRtcPeer({
 	const candidateQueueRef = useRef([])
 	const expectingAnswerRef = useRef(false)
 
+	// Keep latest callbacks without forcing effect re-run
+	const onLocalStreamRef = useRef(onLocalStream)
+	const onRemoteStreamRef = useRef(onRemoteStream)
+	const onIceCandidateRef = useRef(onIceCandidate)
+
+	useEffect(() => {
+		onLocalStreamRef.current = onLocalStream
+	}, [onLocalStream])
+
+	useEffect(() => {
+		onRemoteStreamRef.current = onRemoteStream
+	}, [onRemoteStream])
+
+	useEffect(() => {
+		onIceCandidateRef.current = onIceCandidate
+	}, [onIceCandidate])
+
 	const [localStream, setLocalStream] = useState(null)
 	const [remoteStream, setRemoteStream] = useState(null)
 	const [isAudioEnabled, setIsAudioEnabled] = useState(true)
 	const [isVideoEnabled, setIsVideoEnabled] = useState(true)
+
+	const iceKey = useMemo(() => JSON.stringify(iceServers || []), [iceServers])
 
 	useEffect(() => {
 		if (!iceServers || iceServers.length === 0) {
@@ -31,14 +50,22 @@ export default function useWebRtcPeer({
 
 		pc.onicecandidate = (e) => {
 			const c = e.candidate
-			onIceCandidate?.(c.toJSON())
+			// Khi ICE gathering kết thúc, trình duyệt sẽ bắn một event với candidate=null.
+			// Cần guard để tránh gọi toJSON trên null.
+			if (!c) {
+				// Tuỳ logic trên server, có thể gửi null để báo end-of-candidates hoặc đơn giản là bỏ qua.
+				onIceCandidateRef.current?.(null)
+				return
+			}
+			const payload = typeof c.toJSON === 'function' ? c.toJSON() : c
+			onIceCandidateRef.current?.(payload)
 		}
 
 		const ensureRemoteStream = () => {
 			if (!remoteStreamRef.current) {
 				remoteStreamRef.current = new MediaStream()
 				setRemoteStream(remoteStreamRef.current)
-				onRemoteStream?.(remoteStreamRef.current)
+				onRemoteStreamRef.current?.(remoteStreamRef.current)
 			}
 			return remoteStreamRef.current
 		}
@@ -50,7 +77,7 @@ export default function useWebRtcPeer({
 				if (!exists) rs.addTrack(t)
 			})
 			setRemoteStream(rs)
-			onRemoteStream?.(rs)
+			onRemoteStreamRef.current?.(rs)
 		}
 		;(async () => {
 			try {
@@ -60,7 +87,7 @@ export default function useWebRtcPeer({
 				})
 				localStreamRef.current = stream
 				setLocalStream(stream)
-				onLocalStream?.(stream)
+				onLocalStreamRef.current?.(stream)
 				stream.getTracks().forEach((track) => pc.addTrack(track, stream))
 			} catch (err) {
 				console.warn('[GUM] failed → fallback audio only', err)
@@ -72,7 +99,7 @@ export default function useWebRtcPeer({
 					console.log('[GUM] got audio-only')
 					localStreamRef.current = stream
 					setLocalStream(stream)
-					onLocalStream?.(stream)
+					onLocalStreamRef.current?.(stream)
 					stream.getTracks().forEach((track) => pc.addTrack(track, stream))
 					setIsVideoEnabled(false)
 				} catch (e) {
@@ -96,7 +123,7 @@ export default function useWebRtcPeer({
 			expectingAnswerRef.current = false
 			candidateQueueRef.current = []
 		}
-	}, [JSON.stringify(iceServers)])
+	}, [iceKey, iceServers])
 
 	const createOffer = useCallback(async () => {
 		const pc = pcRef.current
@@ -167,8 +194,8 @@ export default function useWebRtcPeer({
 		ls.getVideoTracks().forEach((track) => (track.enabled = !track.enabled))
 		const next = !isVideoEnabled
 		setIsVideoEnabled(next)
-		onLocalStream?.(ls)
-	}, [isVideoEnabled, onLocalStream])
+		onLocalStreamRef.current?.(ls)
+	}, [isVideoEnabled])
 
 	const hangUp = useCallback(() => {
 		const pc = pcRef.current
