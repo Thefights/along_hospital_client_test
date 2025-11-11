@@ -78,7 +78,7 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 		leaveSession,
 		startConnection,
 		stopConnection,
-		// joinedRoomCode: có thể lấy ra nếu cần hiển thị
+		localStream,
 	} = useMeetingSignalR({
 		transactionId,
 		roomCode: null, // patient join bằng transactionId
@@ -91,10 +91,14 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 			setRemoteConnectionId(connectionId)
 			setHasRemoteParticipant(true)
 		},
-		onParticipantLeft: (connectionId) => {
-			if (connectionId === remoteConnectionId) {
+		onParticipantLeft: (id) => {
+			if (id === remoteConnectionId) {
 				setHasRemoteParticipant(false)
 				setRemoteConnectionId(null)
+
+				if (remoteVideoRef.current) {
+					remoteVideoRef.current.srcObject = null // ⭐ CLEAR VIDEO
+				}
 			}
 		},
 		onOffer: async (senderId, offer) => {
@@ -125,14 +129,14 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 	// Tạo & gửi offer khi phát hiện có participant (patient là caller)
 	useEffect(() => {
 		if (!hasRemoteParticipant || !isCaller) return
+		if (!localStream) return // ⭐ CHỈ CẦN KIỂM LOCALSTREAM
 		if (offerSentRef.current) return
 		;(async () => {
 			const offer = await createOffer()
 			offerSentRef.current = true
 			await sendOffer(offer)
 		})()
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [hasRemoteParticipant, isCaller])
+	}, [hasRemoteParticipant, isCaller, localStream])
 
 	if (error) {
 		return (
