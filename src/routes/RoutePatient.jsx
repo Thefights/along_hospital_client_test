@@ -67,6 +67,7 @@ const RoutePatient = () => {
 					path={routeUrls.PATIENT.APPOINTMENT.MEETING_ROOM_TOKEN(':id')}
 					element={<PatientMeetingRoomPage />}
 				/>
+				<Route path={routeUrls.PATIENT.APPOINTMENT.END_MEETING_ROOM} element={<EndMeetingRoomPage />} />
 			</Route>
 			<Route path='*' element={<NotFoundPage />} />
 		</Routes>

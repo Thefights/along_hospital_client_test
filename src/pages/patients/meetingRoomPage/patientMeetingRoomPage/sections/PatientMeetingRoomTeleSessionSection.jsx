@@ -1,4 +1,5 @@
 import { ApiUrls } from '@/configs/apiUrls'
+import { routeUrls } from '@/configs/routeUrls'
 import useAuth from '@/hooks/useAuth'
 import useFetch from '@/hooks/useFetch'
 import useMeetingSignalR from '@/hooks/useMeetingSignalR'
@@ -7,12 +8,14 @@ import useWebRtcPeer from '@/hooks/useWebRtcPeer'
 import { MicOff, VideocamOff } from '@mui/icons-material'
 import { Box, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import ChatSidebar from '../../components/ChatSidebar'
 import ControlBar from '../../components/ControlBar'
 
 const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 	const { t } = useTranslation()
 	const { auth } = useAuth()
+	const navigate = useNavigate()
 	const localVideoRef = useRef(null)
 	const remoteVideoRef = useRef(null)
 	const [error, setError] = useState('')
@@ -123,7 +126,15 @@ const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 			setPendingOffer(offer)
 			await sendOffer(offer)
 		})()
-	}, [localStream, joinedRoomCode, hasRemoteParticipant, isCaller, pendingOffer])
+	}, [
+		localStream,
+		joinedRoomCode,
+		hasRemoteParticipant,
+		isCaller,
+		pendingOffer,
+		createOffer,
+		sendOffer,
+	])
 
 	if (error) {
 		return (
@@ -296,9 +307,16 @@ const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 							}
 						}}
 						onToggleChat={() => setShowChat(!showChat)}
-						onEndCall={() => {
-							hangUp()
-							leaveSession()
+						onEndCall={async () => {
+							try {
+								hangUp()
+								await leaveSession()
+							} finally {
+								// Navigate to end meeting page
+								navigate(routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.APPOINTMENT.JOIN_MEETING_ROOM), {
+									replace: true,
+								})
+							}
 						}}
 					/>
 				</Stack>
