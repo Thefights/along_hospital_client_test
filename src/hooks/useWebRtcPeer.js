@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 export default function useWebRtcPeer({
 	iceServers = [],
@@ -17,6 +17,8 @@ export default function useWebRtcPeer({
 	const [isAudioEnabled, setIsAudioEnabled] = useState(true)
 	const [isVideoEnabled, setIsVideoEnabled] = useState(true)
 
+	const iceServersKey = useMemo(() => JSON.stringify(iceServers), [iceServers])
+
 	useEffect(() => {
 		if (!iceServers || iceServers.length === 0) {
 			console.log('[WEBRTC] waiting for iceServers…')
@@ -29,9 +31,19 @@ export default function useWebRtcPeer({
 		})
 		pcRef.current = pc
 
+		// OPTIONAL: pre-add transceivers để SDP luôn có sendrecv
+		try {
+			pc.addTransceiver('audio', { direction: 'sendrecv' })
+			pc.addTransceiver('video', { direction: 'sendrecv' })
+		} catch {
+			// Ignore transceiver errors
+		}
+
 		pc.onicecandidate = (e) => {
 			const c = e.candidate
-			onIceCandidate?.(c.toJSON())
+			if (!c) return
+			const data = typeof c.toJSON === 'function' ? c.toJSON() : c
+			onIceCandidate?.(data)
 		}
 
 		const ensureRemoteStream = () => {
@@ -51,6 +63,10 @@ export default function useWebRtcPeer({
 			})
 			setRemoteStream(rs)
 			onRemoteStream?.(rs)
+
+			// đảm bảo autoplay
+			const tag = (document || {}).querySelector?.('video[autoplay][playsinline]')
+			if (tag?.play) tag.play().catch(() => {})
 		}
 		;(async () => {
 			try {
@@ -96,7 +112,8 @@ export default function useWebRtcPeer({
 			expectingAnswerRef.current = false
 			candidateQueueRef.current = []
 		}
-	}, [JSON.stringify(iceServers)])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [iceServersKey])
 
 	const createOffer = useCallback(async () => {
 		const pc = pcRef.current
@@ -153,43 +170,68 @@ export default function useWebRtcPeer({
 		return offer
 	}, [])
 
-	const toggleAudio = () => {
+	const toggleAudio = useCallback(() => {
 		const ls = localStreamRef.current
 		if (!ls) return
-		ls.getAudioTracks().forEach((track) => (track.enabled = !track.enabled))
-		const next = !isAudioEnabled
-		setIsAudioEnabled(next)
-	}
 
-	const toggleVideo = useCallback(() => {
+		console.log('[WEBRTC] toggleAudio called, current isAudioEnabled:', isAudioEnabled)
+		const audioTracks = ls.getAudioTracks()
+		console.log('[WEBRTC] Audio tracks:', audioTracks)
+
+		const newEnabled = !isAudioEnabled
+		audioTracks.forEach((track) => {
+			console.log(`[WEBRTC] Setting audio track ${track.id} enabled to:`, newEnabled)
+			track.enabled = newEnabled
+		})
+
+		setIsAudioEnabled(newEnabled)
+		console.log('[WEBRTC] New isAudioEnabled:', newEnabled)
+	}, [isAudioEnabled])
+
+	const toggleVideo = useCallback(async () => {
 		const ls = localStreamRef.current
 		if (!ls) return
-		ls.getVideoTracks().forEach((track) => (track.enabled = !track.enabled))
-		const next = !isVideoEnabled
-		setIsVideoEnabled(next)
+
+		console.log('[WEBRTC] toggleVideo called, current isVideoEnabled:', isVideoEnabled)
+		const videoTracks = ls.getVideoTracks()
+		console.log('[WEBRTC] Video tracks:', videoTracks)
+
+		const newEnabled = !isVideoEnabled
+		videoTracks.forEach((track) => {
+			console.log(`[WEBRTC] Setting track ${track.id} enabled to:`, newEnabled)
+			track.enabled = newEnabled
+		})
+
+		setIsVideoEnabled(newEnabled)
+		console.log('[WEBRTC] New isVideoEnabled:', newEnabled)
 		onLocalStream?.(ls)
 	}, [isVideoEnabled, onLocalStream])
 
+	const clearRemoteStream = useCallback(() => {
+		if (remoteStreamRef.current) {
+			remoteStreamRef.current.getTracks().forEach((track) => track.stop())
+			remoteStreamRef.current = null
+			setRemoteStream(null)
+		}
+	}, [])
+
 	const hangUp = useCallback(() => {
 		const pc = pcRef.current
-
 		try {
 			pc?.getSenders().forEach((s) => s.track?.stop())
 			pc?.close()
-			console.log('[CALL] hangUp -> closed')
 		} finally {
 			pcRef.current = null
 			localStreamRef.current?.getTracks().forEach((t) => t.stop())
 			localStreamRef.current = null
-			remoteStreamRef.current = null
-			setRemoteStream(null)
+			clearRemoteStream()
 			setLocalStream(null)
 			setIsVideoEnabled(false)
 			setIsAudioEnabled(false)
 			candidateQueueRef.current = []
 			expectingAnswerRef.current = false
 		}
-	}, [])
+	}, [clearRemoteStream])
 
 	return {
 		createOffer,
@@ -200,6 +242,7 @@ export default function useWebRtcPeer({
 		toggleAudio,
 		toggleVideo,
 		hangUp,
+		clearRemoteStream,
 		localStream,
 		remoteStream,
 		isAudioEnabled,

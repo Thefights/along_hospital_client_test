@@ -1,4 +1,5 @@
 import { ApiUrls } from '@/configs/apiUrls'
+import { routeUrls } from '@/configs/routeUrls'
 import useAuth from '@/hooks/useAuth'
 import useFetch from '@/hooks/useFetch'
 import useMeetingSignalR from '@/hooks/useMeetingSignalR'
@@ -7,12 +8,14 @@ import useWebRtcPeer from '@/hooks/useWebRtcPeer'
 import { MicOff, VideocamOff } from '@mui/icons-material'
 import { Box, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import ChatSidebar from '../../components/ChatSidebar'
 import ControlBar from '../../components/ControlBar'
 
 const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 	const { t } = useTranslation()
 	const { auth } = useAuth()
+	const nav = useNavigate()
 	const localVideoRef = useRef(null)
 	const remoteVideoRef = useRef(null)
 	const [error, setError] = useState('')
@@ -28,16 +31,35 @@ const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 	const [remoteCamOn, setRemoteCamOn] = useState(true)
 	const isCaller = String(auth?.role || '').toLowerCase() === 'patient'
 
-	const session = useFetch(ApiUrls.TELE_SESSION.DETAIL(transactionId), {}, [transactionId])
+	const { data: session, error: sessionError } = useFetch(
+		ApiUrls.TELE_SESSION.DETAIL(transactionId),
+		{},
+		[transactionId]
+	)
+
+	useEffect(() => {
+		console.log('Patient session data:', session)
+		if (sessionError) {
+			console.error('Session error:', sessionError)
+			setError(t('telehealth.error.session_not_ready'))
+		}
+	}, [session, sessionError, t])
 
 	const iceServers = useMemo(() => session?.credentials?.iceServers ?? [], [session])
 	const signalRHubUrl = useMemo(() => session?.credentials?.signalR?.hubUrl, [session])
 
 	const onLocalStream = (stream) => {
-		if (localVideoRef.current) localVideoRef.current.srcObject = stream
+		console.log('Patient local stream received:', stream)
+		console.log('Video tracks:', stream.getVideoTracks())
+		if (localVideoRef.current) {
+			localVideoRef.current.srcObject = stream
+		}
 	}
 	const onRemoteStream = (stream) => {
-		if (remoteVideoRef.current) remoteVideoRef.current.srcObject = stream
+		console.log('Patient remote stream received:', stream)
+		if (remoteVideoRef.current) {
+			remoteVideoRef.current.srcObject = stream
+		}
 	}
 
 	const {
@@ -49,6 +71,7 @@ const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 		toggleVideo,
 		hangUp,
 		renegotiate,
+		clearRemoteStream,
 		localStream,
 	} = useWebRtcPeer({
 		iceServers,
@@ -82,9 +105,14 @@ const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 			if (id === remoteConnectionId) {
 				setHasRemoteParticipant(false)
 				setRemoteConnectionId(null)
+				setRemoteMicOn(true)
+				setRemoteCamOn(true)
 
+				// Clear remote video and stream
+				clearRemoteStream()
 				if (remoteVideoRef.current) {
 					remoteVideoRef.current.srcObject = null
+					remoteVideoRef.current.load()
 				}
 			}
 		},
@@ -107,6 +135,16 @@ const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 	})
 
 	useEffect(() => {
+		console.log('Patient camera states:', {
+			localStream: !!localStream,
+			isCamOn,
+			isMicOn,
+			videoTracks: localStream?.getVideoTracks()?.length || 0,
+			videoTracksEnabled: localStream?.getVideoTracks().map((t) => t.enabled) || [],
+		})
+	}, [localStream, isCamOn, isMicOn])
+
+	useEffect(() => {
 		if (!session?.credentials || !signalRHubUrl) return
 		startConnection()
 		return () => stopConnection()
@@ -123,7 +161,15 @@ const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 			setPendingOffer(offer)
 			await sendOffer(offer)
 		})()
-	}, [localStream, joinedRoomCode, hasRemoteParticipant, isCaller, pendingOffer])
+	}, [
+		localStream,
+		joinedRoomCode,
+		hasRemoteParticipant,
+		isCaller,
+		pendingOffer,
+		createOffer,
+		sendOffer,
+	])
 
 	if (error) {
 		return (
@@ -284,7 +330,7 @@ const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 						onToggleCam={async () => {
 							const next = !isCamOn
 							setIsCamOn(next)
-							toggleVideo()
+							await toggleVideo()
 							notifyState({ camOn: next })
 							if (isCaller) {
 								try {
@@ -299,6 +345,11 @@ const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 						onEndCall={() => {
 							hangUp()
 							leaveSession()
+							nav(
+								routeUrls.BASE_ROUTE.PATIENT(
+									routeUrls.PATIENT.APPOINTMENT.MEETING_ROOM_TOKEN(transactionId) + '/complete'
+								)
+							)
 						}}
 					/>
 				</Stack>

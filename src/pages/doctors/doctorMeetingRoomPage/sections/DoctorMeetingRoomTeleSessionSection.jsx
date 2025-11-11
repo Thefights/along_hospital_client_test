@@ -60,6 +60,8 @@ const DoctorMeetingRoomTeleSessionSection = ({ doctorId }) => {
 		toggleVideo,
 		hangUp,
 		renegotiate,
+		clearRemoteStream,
+		localStream,
 	} = useWebRtcPeer({
 		iceServers,
 		onLocalStream,
@@ -80,7 +82,9 @@ const DoctorMeetingRoomTeleSessionSection = ({ doctorId }) => {
 		roomCode,
 		hubUrl: signalRHubUrl,
 		onJoinSucceeded: () => {},
-		onJoinFailed: () => setError(t('telehealth.error.session_not_ready')),
+		onJoinFailed: () => {
+			setError(t('telehealth.error.session_not_ready'))
+		},
 		onParticipantJoined: (connectionId) => {
 			setRemoteConnectionId(connectionId)
 			setHasRemoteParticipant(true)
@@ -90,8 +94,16 @@ const DoctorMeetingRoomTeleSessionSection = ({ doctorId }) => {
 				setHasRemoteParticipant(false)
 				setRemoteConnectionId(null)
 
+				// Reset remote states
+				setRemoteMicOn(true)
+				setRemoteCamOn(true)
+
+				// Clear remote video and stream
+				clearRemoteStream()
 				if (remoteVideoRef.current) {
 					remoteVideoRef.current.srcObject = null
+					// Force refresh video element
+					remoteVideoRef.current.load()
 				}
 			}
 		},
@@ -115,6 +127,10 @@ const DoctorMeetingRoomTeleSessionSection = ({ doctorId }) => {
 
 	useEffect(() => {
 		if (!roomCode || !signalRHubUrl) return
+
+		// Reset pending offer khi start connection mới
+		setPendingOffer(null)
+
 		startConnection()
 		return () => stopConnection()
 	}, [roomCode, signalRHubUrl, startConnection, stopConnection])
@@ -129,11 +145,33 @@ const DoctorMeetingRoomTeleSessionSection = ({ doctorId }) => {
 			try {
 				const offer = await renegotiate()
 				await sendOffer(offer)
-			} catch {}
+			} catch {
+				// Silent fallback failure
+			}
 		}, 300)
 
 		return () => clearTimeout(timer)
-	}, [hasRemoteParticipant, pendingOffer])
+	}, [hasRemoteParticipant, pendingOffer, renegotiate, sendOffer])
+
+	// Auto-renegotiate when both doctor has localStream and remote participant joined
+	// Để đảm bảo tracks được sync đúng cách sau khi patient đã tạo offer đầu tiên
+	useEffect(() => {
+		if (!hasRemoteParticipant) return
+		if (!localStream) return
+		if (pendingOffer) return
+
+		// Đợi một chút để đảm bảo answer đã được process xong
+		const timer = setTimeout(async () => {
+			try {
+				const offer = await renegotiate()
+				await sendOffer(offer)
+			} catch {
+				// Silent auto-renegotiate failure
+			}
+		}, 1500) // Tăng delay để đảm bảo
+
+		return () => clearTimeout(timer)
+	}, [hasRemoteParticipant, localStream, pendingOffer, renegotiate, sendOffer])
 
 	if (error) {
 		return (
@@ -308,6 +346,18 @@ const DoctorMeetingRoomTeleSessionSection = ({ doctorId }) => {
 						onToggleChat={() => setShowChat(!showChat)}
 						onEndCall={async () => {
 							try {
+								// Clear video elements immediately
+								if (localVideoRef.current) {
+									localVideoRef.current.srcObject = null
+									localVideoRef.current.load()
+								}
+								if (remoteVideoRef.current) {
+									remoteVideoRef.current.srcObject = null
+									remoteVideoRef.current.load()
+								}
+
+								// Clear remote stream and hangup
+								clearRemoteStream()
 								hangUp()
 								await leaveSession()
 							} finally {
