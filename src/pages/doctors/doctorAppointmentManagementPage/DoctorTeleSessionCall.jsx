@@ -21,6 +21,7 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 
 	const [error, setError] = useState('')
 	const [hasRemoteParticipant, setHasRemoteParticipant] = useState(false)
+	const [pendingOffer, setPendingOffer] = useState(null)
 	const [remoteConnectionId, setRemoteConnectionId] = useState(null)
 	const [isMicOn, setIsMicOn] = useState(true)
 	const [isCamOn, setIsCamOn] = useState(true)
@@ -35,22 +36,22 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 	])
 
 	useEffect(() => {
+		console.log(room)
+	}, [room])
+
+	useEffect(() => {
 		if (roomError) setError(t('telehealth.error.session_not_ready'))
 	}, [roomError, t])
 
-	// lấy trực tiếp từ BE (đã đúng keys `urls/username/credential`)
 	const iceServers = useMemo(() => room?.credentials?.iceServers ?? [], [room])
-	const signalRHubUrl = useMemo(() => room?.credentials?.signalR?.hubUrl ?? null, [room])
-	const roomCode = room?.roomCode ?? null
+	const signalRHubUrl = useMemo(() => room?.credentials?.signalR?.hubUrl, [room])
+	const roomCode = room?.roomCode
 
 	const onLocalStream = (stream) => {
 		if (localVideoRef.current) localVideoRef.current.srcObject = stream
 	}
 	const onRemoteStream = (stream) => {
-		if (remoteVideoRef.current) {
-			remoteVideoRef.current.srcObject = stream
-			remoteVideoRef.current.play?.().catch(() => {})
-		}
+		if (remoteVideoRef.current) remoteVideoRef.current.srcObject = stream
 	}
 
 	const {
@@ -60,8 +61,7 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 		toggleAudio,
 		toggleVideo,
 		hangUp,
-		// doctor là callee → không dùng renegotiate mặc định
-		getSignalingState,
+		renegotiate,
 	} = useWebRtcPeer({
 		iceServers,
 		onLocalStream,
@@ -78,35 +78,29 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 		startConnection,
 		stopConnection,
 	} = useMeetingSignalR({
-		transactionId: null, // doctor join bằng roomCode
+		transactionId: null, // doctor side uses roomCode
 		roomCode,
 		hubUrl: signalRHubUrl,
 		onJoinSucceeded: () => {},
 		onJoinFailed: () => setError(t('telehealth.error.session_not_ready')),
-		onParticipantJoined: (payload) => {
-			const id = payload?.connectionId ?? payload
-			setRemoteConnectionId(String(id))
+		onParticipantJoined: (connectionId) => {
+			setRemoteConnectionId(connectionId)
 			setHasRemoteParticipant(true)
 		},
-		onParticipantLeft: (payload) => {
-			const id = payload?.connectionId ?? payload
-			if (String(id) === String(remoteConnectionId)) {
+		onParticipantLeft: (connectionId) => {
+			if (connectionId === remoteConnectionId) {
 				setHasRemoteParticipant(false)
 				setRemoteConnectionId(null)
 			}
 		},
-		// Doctor (callee): nhận offer -> answer
 		onOffer: async (_senderId, offer) => {
 			await setRemoteDescription(offer)
 			const answer = await createAnswer()
 			await sendAnswer(answer)
 		},
 		onAnswer: async (_senderId, answer) => {
-			// callee thường không nhận answer; nếu có, chỉ set khi đang have-local-offer
-			const state = getSignalingState?.()
-			if (state === 'have-local-offer') {
-				await setRemoteDescription(answer)
-			}
+			await setRemoteDescription(answer)
+			setPendingOffer(null)
 		},
 		onIceCandidate: async (_senderId, candidate) => {
 			await addIceCandidate(candidate)
@@ -122,6 +116,13 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 		startConnection()
 		return () => stopConnection()
 	}, [roomCode, signalRHubUrl, startConnection, stopConnection])
+
+	// Doctor acts as callee: waits for offer; but if patient already present and no offer yet, can create one after a timeout fallback
+	useEffect(() => {
+		if (!hasRemoteParticipant) return
+		if (pendingOffer) return
+		// Optionally doctor could initiate renegotiation after camera changes
+	}, [hasRemoteParticipant, pendingOffer])
 
 	if (error) {
 		return (
@@ -286,7 +287,12 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 							setIsCamOn(next)
 							await toggleVideo()
 							notifyState({ camOn: next })
-							// Doctor = callee → không chủ động renegotiate để tránh "unexpected answer"
+							try {
+								const offer = await renegotiate()
+								await sendOffer(offer)
+							} catch (e) {
+								void e
+							}
 						}}
 						onToggleChat={() => setShowChat(!showChat)}
 						onEndCall={async () => {
@@ -299,7 +305,6 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 						}}
 					/>
 				</Stack>
-
 				<ChatSidebar
 					show={showChat}
 					messages={messages}
