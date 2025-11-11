@@ -6,7 +6,7 @@ import useTranslation from '@/hooks/useTranslation'
 import useWebRtcPeer from '@/hooks/useWebRtcPeer'
 import { MicOff, VideocamOff } from '@mui/icons-material'
 import { Box, Paper, Stack, Typography } from '@mui/material'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ChatSidebar from './ChatSidebar'
 import ControlBar from './ControlBar'
 
@@ -15,9 +15,9 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 	const { auth } = useAuth()
 	const localVideoRef = useRef(null)
 	const remoteVideoRef = useRef(null)
+	const offerSentRef = useRef(false)
 	const [error, setError] = useState('')
 	const [hasRemoteParticipant, setHasRemoteParticipant] = useState(false)
-	const [pendingOffer, setPendingOffer] = useState(null)
 	const [remoteConnectionId, setRemoteConnectionId] = useState(null)
 	const [isMicOn, setIsMicOn] = useState(true)
 	const [isCamOn, setIsCamOn] = useState(true)
@@ -41,8 +41,8 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 	}, [sessionError, t])
 
 	console.log(session)
-	const iceServers = useMemo(() => session?.credentials?.iceServers ?? [], [session])
-	const signalRHubUrl = useMemo(() => session?.credentials?.signalR?.hubUrl, [session])
+	const iceServers = session?.credentials?.iceServers || []
+	const signalRHubUrl = session?.credentials?.signalR?.hubUrl || null
 
 	const onLocalStream = (stream) => {
 		if (localVideoRef.current) localVideoRef.current.srcObject = stream
@@ -102,7 +102,6 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 		},
 		onAnswer: async (senderId, answer) => {
 			await setRemoteDescription(answer)
-			setPendingOffer(null)
 		},
 		onIceCandidate: async (senderId, candidate) => {
 			await addIceCandidate(candidate)
@@ -118,28 +117,18 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 		if (!session?.credentials || !signalRHubUrl) return
 		startConnection()
 		return () => stopConnection()
-	}, [session, signalRHubUrl, startConnection, stopConnection])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [signalRHubUrl])
 
 	// Tạo & gửi offer khi phát hiện có participant (patient là caller)
 	useEffect(() => {
 		if (!hasRemoteParticipant || !isCaller) return
-
-		if (!pendingOffer) {
-			;(async () => {
-				try {
-					const offer = await createOffer()
-					setPendingOffer(offer)
-					await sendOffer(offer)
-				} catch (err) {
-					console.error('Failed to create/send offer:', err)
-				}
-			})()
-		} else {
-			// Nếu đã có pendingOffer (remote vừa join lại), gửi lại
-			sendOffer(pendingOffer).catch((err) => {
-				console.error('Failed to resend offer:', err)
-			})
-		}
+		if (offerSentRef.current) return
+		;(async () => {
+			const offer = await createOffer()
+			offerSentRef.current = true
+			await sendOffer(offer)
+		})()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [hasRemoteParticipant, isCaller])
 
@@ -155,6 +144,15 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 		if (!chatInput.trim()) return
 		setMessages((prev) => [...prev, { text: chatInput, me: true }])
 		setChatInput('')
+	}
+
+	const renegotiateAndSend = async () => {
+		try {
+			const offer = await renegotiate()
+			await sendOffer(offer)
+		} catch (err) {
+			console.error('Renegotiate failed', err)
+		}
 	}
 
 	return (
@@ -308,12 +306,7 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 							notifyState({ camOn: next })
 							// CHANGED: caller chủ động renegotiate để remote cập nhật SDP
 							if (isCaller) {
-								try {
-									const offer = await renegotiate()
-									await sendOffer(offer)
-								} catch (e) {
-									console.error('Renegotiate failed', e)
-								}
+								renegotiateAndSend()
 							}
 						}}
 						onToggleChat={() => setShowChat(!showChat)}
