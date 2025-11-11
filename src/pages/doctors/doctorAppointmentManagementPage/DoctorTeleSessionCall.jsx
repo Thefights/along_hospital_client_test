@@ -1,6 +1,5 @@
 import { ApiUrls } from '@/configs/apiUrls'
 import { routeUrls } from '@/configs/routeUrls'
-import useAuth from '@/hooks/useAuth'
 import useFetch from '@/hooks/useFetch'
 import useMeetingSignalR from '@/hooks/useMeetingSignalR'
 import useTranslation from '@/hooks/useTranslation'
@@ -14,7 +13,6 @@ import { useNavigate } from 'react-router-dom'
 
 const DoctorTeleSessionCall = ({ doctorId }) => {
 	const { t } = useTranslation()
-	const { auth } = useAuth()
 	const navigate = useNavigate()
 	const localVideoRef = useRef(null)
 	const remoteVideoRef = useRef(null)
@@ -87,10 +85,14 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 			setRemoteConnectionId(connectionId)
 			setHasRemoteParticipant(true)
 		},
-		onParticipantLeft: (connectionId) => {
-			if (connectionId === remoteConnectionId) {
+		onParticipantLeft: (id) => {
+			if (id === remoteConnectionId) {
 				setHasRemoteParticipant(false)
 				setRemoteConnectionId(null)
+
+				if (remoteVideoRef.current) {
+					remoteVideoRef.current.srcObject = null
+				}
 			}
 		},
 		onOffer: async (_senderId, offer) => {
@@ -121,7 +123,16 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 	useEffect(() => {
 		if (!hasRemoteParticipant) return
 		if (pendingOffer) return
-		// Optionally doctor could initiate renegotiation after camera changes
+
+		// doctor chỉ fallback khi quá 300ms mà không nhận offer
+		const timer = setTimeout(async () => {
+			try {
+				const offer = await renegotiate()
+				await sendOffer(offer)
+			} catch {}
+		}, 300)
+
+		return () => clearTimeout(timer)
 	}, [hasRemoteParticipant, pendingOffer])
 
 	if (error) {
