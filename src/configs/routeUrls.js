@@ -51,7 +51,6 @@ export const routeUrls = {
 		APPOINTMENT: {
 			JOIN_MEETING_ROOM: `/appointments/join-meeting-room`,
 			MEETING_ROOM_TOKEN: (id) => `/appointments/meeting-room-token/${id}`,
-			END_MEETING_ROOM: `/appointments/join-meeting-room/complete`,
 			INDEX: '/appointment',
 			CREATE: '/appointment/create',
 		},

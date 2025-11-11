@@ -197,6 +197,14 @@ export default function useWebRtcPeer({
 		onLocalStreamRef.current?.(ls)
 	}, [isVideoEnabled])
 
+	const clearRemoteStream = useCallback(() => {
+		if (remoteStreamRef.current) {
+			remoteStreamRef.current.getTracks().forEach((track) => track.stop())
+			remoteStreamRef.current = null
+			setRemoteStream(null)
+		}
+	}, [])
+
 	const hangUp = useCallback(() => {
 		const pc = pcRef.current
 
@@ -208,15 +216,14 @@ export default function useWebRtcPeer({
 			pcRef.current = null
 			localStreamRef.current?.getTracks().forEach((t) => t.stop())
 			localStreamRef.current = null
-			remoteStreamRef.current = null
-			setRemoteStream(null)
+			clearRemoteStream()
 			setLocalStream(null)
 			setIsVideoEnabled(false)
 			setIsAudioEnabled(false)
 			candidateQueueRef.current = []
 			expectingAnswerRef.current = false
 		}
-	}, [])
+	}, [clearRemoteStream])
 
 	return {
 		createOffer,
@@ -227,6 +234,7 @@ export default function useWebRtcPeer({
 		toggleAudio,
 		toggleVideo,
 		hangUp,
+		clearRemoteStream,
 		localStream,
 		remoteStream,
 		isAudioEnabled,

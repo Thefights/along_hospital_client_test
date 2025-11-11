@@ -60,6 +60,7 @@ const DoctorMeetingRoomTeleSessionSection = ({ doctorId }) => {
 		toggleVideo,
 		hangUp,
 		renegotiate,
+		clearRemoteStream,
 		localStream,
 	} = useWebRtcPeer({
 		iceServers,
@@ -91,8 +92,16 @@ const DoctorMeetingRoomTeleSessionSection = ({ doctorId }) => {
 				setHasRemoteParticipant(false)
 				setRemoteConnectionId(null)
 
+				// Reset remote states
+				setRemoteMicOn(true)
+				setRemoteCamOn(true)
+
+				// Clear remote video and stream
+				clearRemoteStream()
 				if (remoteVideoRef.current) {
 					remoteVideoRef.current.srcObject = null
+					// Force refresh video element
+					remoteVideoRef.current.load()
 				}
 			}
 		},

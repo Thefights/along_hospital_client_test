@@ -52,6 +52,7 @@ const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 		toggleVideo,
 		hangUp,
 		renegotiate,
+		clearRemoteStream,
 		localStream,
 	} = useWebRtcPeer({
 		iceServers,
@@ -86,8 +87,16 @@ const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 				setHasRemoteParticipant(false)
 				setRemoteConnectionId(null)
 
+				// Reset remote states
+				setRemoteMicOn(true)
+				setRemoteCamOn(true)
+
+				// Clear remote video and stream
+				clearRemoteStream()
 				if (remoteVideoRef.current) {
 					remoteVideoRef.current.srcObject = null
+					// Force refresh video element
+					remoteVideoRef.current.load()
 				}
 			}
 		},
@@ -313,9 +322,14 @@ const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 								await leaveSession()
 							} finally {
 								// Navigate to end meeting page
-								navigate(routeUrls.BASE_ROUTE.PATIENT(routeUrls.PATIENT.APPOINTMENT.JOIN_MEETING_ROOM), {
-									replace: true,
-								})
+								navigate(
+									routeUrls.BASE_ROUTE.PATIENT(
+										routeUrls.PATIENT.APPOINTMENT.JOIN_MEETING_ROOM + '/complete'
+									),
+									{
+										replace: true,
+									}
+								)
 							}
 						}}
 					/>
