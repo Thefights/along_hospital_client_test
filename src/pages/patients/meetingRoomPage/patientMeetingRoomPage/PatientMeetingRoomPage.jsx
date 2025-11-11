@@ -1,6 +1,6 @@
 import { Box, Container, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
-import PatientTeleSessionCall from './section/PatientTeleSessionCall'
+import PatientMeetingRoomTeleSessionSection from './sections/PatientMeetingRoomTeleSessionSection'
 
 const PatientMeetingRoomPage = () => {
 	const { id: transactionId } = useParams()
@@ -28,7 +28,7 @@ const PatientMeetingRoomPage = () => {
 			sx={{ py: { xs: 2, md: 3 }, px: { xs: 1, md: 0 }, bgcolor: (t) => t.palette.background.default }}
 		>
 			<Container maxWidth='lg'>
-				<PatientTeleSessionCall transactionId={transactionId} />
+				<PatientMeetingRoomTeleSessionSection transactionId={transactionId} />
 			</Container>
 		</Box>
 	)

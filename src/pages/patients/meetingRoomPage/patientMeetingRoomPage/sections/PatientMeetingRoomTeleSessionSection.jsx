@@ -1,5 +1,4 @@
 import { ApiUrls } from '@/configs/apiUrls'
-import { routeUrls } from '@/configs/routeUrls'
 import useAuth from '@/hooks/useAuth'
 import useFetch from '@/hooks/useFetch'
 import useMeetingSignalR from '@/hooks/useMeetingSignalR'
@@ -7,20 +6,18 @@ import useTranslation from '@/hooks/useTranslation'
 import useWebRtcPeer from '@/hooks/useWebRtcPeer'
 import { MicOff, VideocamOff } from '@mui/icons-material'
 import { Box, Paper, Stack, Typography } from '@mui/material'
-import { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import ChatSidebar from './ChatSidebar'
-import ControlBar from './ControlBar'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import ChatSidebar from '../../components/ChatSidebar'
+import ControlBar from '../../components/ControlBar'
 
-const PatientTeleSessionCall = ({ transactionId }) => {
+const PatientMeetingRoomTeleSessionSection = ({ transactionId }) => {
 	const { t } = useTranslation()
 	const { auth } = useAuth()
-	const navigate = useNavigate()
 	const localVideoRef = useRef(null)
 	const remoteVideoRef = useRef(null)
-	const offerSentRef = useRef(false)
 	const [error, setError] = useState('')
 	const [hasRemoteParticipant, setHasRemoteParticipant] = useState(false)
+	const [pendingOffer, setPendingOffer] = useState(null)
 	const [remoteConnectionId, setRemoteConnectionId] = useState(null)
 	const [isMicOn, setIsMicOn] = useState(true)
 	const [isCamOn, setIsCamOn] = useState(true)
@@ -31,21 +28,10 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 	const [remoteCamOn, setRemoteCamOn] = useState(true)
 	const isCaller = String(auth?.role || '').toLowerCase() === 'patient'
 
-	const { data: session, error: sessionError } = useFetch(
-		ApiUrls.TELE_SESSION.DETAIL(transactionId),
-		{},
-		[transactionId]
-	)
+	const session = useFetch(ApiUrls.TELE_SESSION.DETAIL(transactionId), {}, [transactionId])
 
-	useEffect(() => {
-		if (sessionError) {
-			setError(t('telehealth.error.session_not_ready'))
-		}
-	}, [sessionError, t])
-
-	console.log(session)
-	const iceServers = session?.credentials?.iceServers || []
-	const signalRHubUrl = session?.credentials?.signalR?.hubUrl || null
+	const iceServers = useMemo(() => session?.credentials?.iceServers ?? [], [session])
+	const signalRHubUrl = useMemo(() => session?.credentials?.signalR?.hubUrl, [session])
 
 	const onLocalStream = (stream) => {
 		if (localVideoRef.current) localVideoRef.current.srcObject = stream
@@ -63,7 +49,7 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 		toggleVideo,
 		hangUp,
 		renegotiate,
-		localStream, // ⭐ THÊM ĐÚNG CHỖ NÀY
+		localStream,
 	} = useWebRtcPeer({
 		iceServers,
 		onLocalStream,
@@ -79,9 +65,10 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 		leaveSession,
 		startConnection,
 		stopConnection,
+		joinedRoomCode,
 	} = useMeetingSignalR({
 		transactionId,
-		roomCode: null, // patient join bằng transactionId
+		roomCode: null,
 		hubUrl: signalRHubUrl,
 		onJoinSucceeded: () => {},
 		onJoinFailed: () => {
@@ -97,7 +84,7 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 				setRemoteConnectionId(null)
 
 				if (remoteVideoRef.current) {
-					remoteVideoRef.current.srcObject = null // ⭐ CLEAR VIDEO
+					remoteVideoRef.current.srcObject = null
 				}
 			}
 		},
@@ -108,12 +95,12 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 		},
 		onAnswer: async (senderId, answer) => {
 			await setRemoteDescription(answer)
+			setPendingOffer(null)
 		},
 		onIceCandidate: async (senderId, candidate) => {
 			await addIceCandidate(candidate)
 		},
 		onStateUpdated: (_senderId, state) => {
-			// CHANGED: nhận (senderId, state)
 			if (typeof state?.micOn === 'boolean') setRemoteMicOn(state.micOn)
 			if (typeof state?.camOn === 'boolean') setRemoteCamOn(state.camOn)
 		},
@@ -123,20 +110,20 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 		if (!session?.credentials || !signalRHubUrl) return
 		startConnection()
 		return () => stopConnection()
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [signalRHubUrl])
+	}, [session, signalRHubUrl, startConnection, stopConnection])
 
-	// Tạo & gửi offer khi phát hiện có participant (patient là caller)
 	useEffect(() => {
-		if (!hasRemoteParticipant || !isCaller) return
-		if (!localStream) return // ⭐ CHỈ CẦN KIỂM LOCALSTREAM
-		if (offerSentRef.current) return
+		if (!localStream) return
+		if (!joinedRoomCode) return
+		if (!hasRemoteParticipant) return
+		if (!isCaller) return
+		if (pendingOffer) return
 		;(async () => {
 			const offer = await createOffer()
-			offerSentRef.current = true
+			setPendingOffer(offer)
 			await sendOffer(offer)
 		})()
-	}, [hasRemoteParticipant, isCaller, localStream])
+	}, [localStream, joinedRoomCode, hasRemoteParticipant, isCaller, pendingOffer])
 
 	if (error) {
 		return (
@@ -152,21 +139,11 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 		setChatInput('')
 	}
 
-	const renegotiateAndSend = async () => {
-		try {
-			const offer = await renegotiate()
-			await sendOffer(offer)
-		} catch (err) {
-			console.error('Renegotiate failed', err)
-		}
-	}
-
 	return (
 		<Box>
 			<Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
 				<Stack sx={{ flex: 1 }}>
 					<Box sx={{ position: 'relative', mb: 2 }}>
-						{/* Remote video */}
 						<Paper
 							variant='outlined'
 							sx={{
@@ -228,7 +205,6 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 							/>
 						</Paper>
 
-						{/* Local preview */}
 						<Paper
 							variant='outlined'
 							sx={{
@@ -308,21 +284,21 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 						onToggleCam={async () => {
 							const next = !isCamOn
 							setIsCamOn(next)
-							await toggleVideo()
+							toggleVideo()
 							notifyState({ camOn: next })
-							// CHANGED: caller chủ động renegotiate để remote cập nhật SDP
 							if (isCaller) {
-								renegotiateAndSend()
+								try {
+									const offer = await renegotiate()
+									await sendOffer(offer)
+								} catch (e) {
+									console.error('Renegotiate failed', e)
+								}
 							}
 						}}
 						onToggleChat={() => setShowChat(!showChat)}
-						onEndCall={async () => {
-							try {
-								hangUp()
-								await leaveSession()
-							} finally {
-								navigate(routeUrls.HOME.INDEX, { replace: true })
-							}
+						onEndCall={() => {
+							hangUp()
+							leaveSession()
 						}}
 					/>
 				</Stack>
@@ -340,4 +316,4 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 	)
 }
 
-export default PatientTeleSessionCall
+export default PatientMeetingRoomTeleSessionSection

@@ -1,6 +1,6 @@
 import useAuth from '@/hooks/useAuth'
 import { Box, Container } from '@mui/material'
-import DoctorTeleSessionCall from './DoctorTeleSessionCall'
+import DoctorMeetingRoomTeleSessionSection from './sections/DoctorMeetingRoomTeleSessionSection'
 
 const DoctorMeetingRoomPage = () => {
 	const { auth } = useAuth()
@@ -13,7 +13,7 @@ const DoctorMeetingRoomPage = () => {
 			sx={{ py: { xs: 2, md: 3 }, px: { xs: 1, md: 0 }, bgcolor: (t) => t.palette.background.default }}
 		>
 			<Container maxWidth='lg'>
-				<DoctorTeleSessionCall doctorId={doctorId} />
+				<DoctorMeetingRoomTeleSessionSection doctorId={doctorId} />
 			</Container>
 		</Box>
 	)
