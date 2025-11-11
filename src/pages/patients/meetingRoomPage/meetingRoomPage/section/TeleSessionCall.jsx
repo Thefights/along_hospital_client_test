@@ -119,7 +119,6 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 		if (!isCaller) return
 		if (pendingOffer) return
 		;(async () => {
-			console.log('[SDP] initial offer create')
 			const offer = await createOffer()
 			setPendingOffer(offer)
 			await sendOffer(offer)

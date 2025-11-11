@@ -53,8 +53,9 @@ const useMeetingSignalR = ({
 			.build()
 
 		conn.on('JoinSucceeded', (payload) => {
-			const room = payload?.roomCode ?? payload?.RoomCode ?? null
-			if (room) setJoinedRoomCode(room)
+			const room = payload.roomCode ?? payload.RoomCode
+			setJoinedRoomCode(room)
+
 			callbacksRef.current.onJoinSucceeded?.(payload)
 		})
 
@@ -62,14 +63,13 @@ const useMeetingSignalR = ({
 			callbacksRef.current.onJoinFailed?.(err)
 		})
 
-		conn.on('ParticipantJoined', (payload) => {
-			const id = payload?.connectionId ?? payload?.ConnectionId ?? payload
-			callbacksRef.current.onParticipantJoined?.(id)
+		conn.on('ParticipantJoined', (connId) => {
+			callbacksRef.current.onParticipantJoined?.(connId)
 		})
 
-		conn.on('ParticipantLeft', (payload) => {
-			const id = payload?.connectionId ?? payload?.ConnectionId ?? payload
-			callbacksRef.current.onParticipantLeft?.(id)
+		conn.on('ParticipantLeft', (connId) => {
+			console.log('Có người cút')
+			callbacksRef.current.onParticipantLeft?.(connId)
 		})
 
 		conn.on('ReceiveOffer', ({ from, offer }) => {
@@ -94,43 +94,40 @@ const useMeetingSignalR = ({
 	const startConnection = useCallback(async () => {
 		if (startedRef.current) return
 		if (!resolvedHubUrl) return
+
 		startedRef.current = true
 
 		if (!connectionRef.current) {
 			connectionRef.current = buildConnection()
 		}
 
-		try {
-			if (connectionRef.current.state === signalR.HubConnectionState.Disconnected) {
-				await connectionRef.current.start()
-				await connectionRef.current.invoke('JoinSession', transactionId || null, roomCode || null)
-			}
-		} catch (e) {
-			startedRef.current = false
-			callbacksRef.current.onJoinFailed?.(e)
+		if (connectionRef.current.state === signalR.HubConnectionState.Disconnected) {
+			await connectionRef.current.start()
+			await connectionRef.current.invoke('JoinSession', transactionId || null, roomCode || null)
 		}
 	}, [buildConnection, resolvedHubUrl, transactionId, roomCode])
 
 	const stopConnection = useCallback(async () => {
 		const conn = connectionRef.current
 		startedRef.current = false
-		try {
-			if (conn && conn.state !== signalR.HubConnectionState.Disconnected) {
-				await conn.stop()
-			}
-		} finally {
-			connectionRef.current = null
-			setJoinedRoomCode(null)
+
+		if (conn && conn.state !== signalR.HubConnectionState.Disconnected) {
+			await conn.stop()
 		}
+
+		connectionRef.current = null
+		setJoinedRoomCode(null)
 	}, [])
 
 	useEffect(() => {
 		if (!hubUrl) return
+
 		startConnection()
+
 		return () => {
 			stopConnection()
 		}
-	}, [hubUrl, startConnection, stopConnection])
+	}, [hubUrl]) // chỉ hubUrl → không callback nào gây re-run nữa
 
 	const sendOffer = useCallback(
 		async (offer) => {

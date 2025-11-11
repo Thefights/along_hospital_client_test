@@ -19,6 +19,7 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 
 	const [error, setError] = useState('')
 	const [hasRemoteParticipant, setHasRemoteParticipant] = useState(false)
+	const [pendingOffer, setPendingOffer] = useState(null)
 	const [remoteConnectionId, setRemoteConnectionId] = useState(null)
 	const [isMicOn, setIsMicOn] = useState(true)
 	const [isCamOn, setIsCamOn] = useState(true)
@@ -29,6 +30,7 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 	const [remoteCamOn, setRemoteCamOn] = useState(true)
 
 	const room = useFetch(ApiUrls.TELE_ROOM.GET_BY_DOCTOR(doctorId), {}, [doctorId])
+
 	const iceServers = useMemo(() => room?.credentials?.iceServers ?? [], [room])
 	const signalRHubUrl = useMemo(() => room?.credentials?.signalR?.hubUrl, [room])
 	const roomCode = room?.roomCode
@@ -38,8 +40,6 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 	}
 	const onRemoteStream = (stream) => {
 		if (remoteVideoRef.current) remoteVideoRef.current.srcObject = stream
-		// đảm bảo autoplay
-		remoteVideoRef.current?.play?.().catch(() => {})
 	}
 
 	const {
@@ -49,8 +49,7 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 		toggleAudio,
 		toggleVideo,
 		hangUp,
-		renegotiate, // giữ để sau dùng nếu add/remove track thực sự
-		localStream,
+		renegotiate,
 	} = useWebRtcPeer({
 		iceServers,
 		onLocalStream,
@@ -72,14 +71,15 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 		hubUrl: signalRHubUrl,
 		onJoinSucceeded: () => {},
 		onJoinFailed: () => setError(t('telehealth.error.session_not_ready')),
-		onParticipantJoined: (id) => {
-			setRemoteConnectionId(id)
+		onParticipantJoined: (connectionId) => {
+			setRemoteConnectionId(connectionId)
 			setHasRemoteParticipant(true)
 		},
 		onParticipantLeft: (id) => {
-			if (id && id === remoteConnectionId) {
+			if (id === remoteConnectionId) {
 				setHasRemoteParticipant(false)
 				setRemoteConnectionId(null)
+
 				if (remoteVideoRef.current) {
 					remoteVideoRef.current.srcObject = null
 				}
@@ -87,20 +87,12 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 		},
 		onOffer: async (_senderId, offer) => {
 			await setRemoteDescription(offer)
-			// đợi local tracks sẵn sàng rồi mới tạo answer
-			const waitForLocal = async (timeoutMs = 4000) => {
-				const start = Date.now()
-				while (!localStream) {
-					await new Promise((r) => setTimeout(r, 40))
-					if (Date.now() - start > timeoutMs) break
-				}
-			}
-			await waitForLocal()
 			const answer = await createAnswer()
 			await sendAnswer(answer)
 		},
 		onAnswer: async (_senderId, answer) => {
 			await setRemoteDescription(answer)
+			setPendingOffer(null)
 		},
 		onIceCandidate: async (_senderId, candidate) => {
 			await addIceCandidate(candidate)
@@ -116,6 +108,18 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 		startConnection()
 		return () => stopConnection()
 	}, [roomCode, signalRHubUrl, startConnection, stopConnection])
+
+	useEffect(() => {
+		if (!hasRemoteParticipant) return
+		if (pendingOffer) return
+
+		const timer = setTimeout(async () => {
+			const offer = await renegotiate()
+			await sendOffer(offer)
+		}, 300)
+
+		return () => clearTimeout(timer)
+	}, [hasRemoteParticipant, pendingOffer])
 
 	if (error) {
 		return (
@@ -275,12 +279,13 @@ const DoctorTeleSessionCall = ({ doctorId }) => {
 							toggleAudio()
 							notifyState({ micOn: next })
 						}}
-						onToggleCam={() => {
+						onToggleCam={async () => {
 							const next = !isCamOn
 							setIsCamOn(next)
 							toggleVideo()
 							notifyState({ camOn: next })
-							// Không renegotiate khi chỉ bật/tắt track.enabled
+							const offer = await renegotiate()
+							await sendOffer(offer)
 						}}
 						onToggleChat={() => setShowChat(!showChat)}
 						onEndCall={async () => {
