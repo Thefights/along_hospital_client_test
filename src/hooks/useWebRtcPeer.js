@@ -17,30 +17,35 @@ export default function useWebRtcPeer({
 	const [isAudioEnabled, setIsAudioEnabled] = useState(true)
 	const [isVideoEnabled, setIsVideoEnabled] = useState(true)
 
+	//------------------------------------------------------------
+	// ❗ CHỈ TẠO RTCPeerConnection KHI iceServers ĐÃ CÓ DỮ LIỆU
+	//------------------------------------------------------------
 	useEffect(() => {
+		if (!iceServers || iceServers.length === 0) {
+			console.log('[WEBRTC] waiting for iceServers…')
+			return
+		}
+
 		console.log('[WEBRTC] creating RTCPeerConnection with', iceServers)
+
 		const pc = new RTCPeerConnection({
 			iceServers,
 			iceTransportPolicy: 'all',
 		})
 		pcRef.current = pc
 
-		// ===== Logs =====
+		//--------------------------------
+		// Logging
+		//--------------------------------
 		pc.onsignalingstatechange = () => console.log('[PC] signalingState =', pc.signalingState)
 		pc.onicegatheringstatechange = () => console.log('[PC] iceGatheringState =', pc.iceGatheringState)
 		pc.oniceconnectionstatechange = () =>
 			console.log('[PC] iceConnectionState =', pc.iceConnectionState)
 		pc.onconnectionstatechange = () => console.log('[PC] connectionState =', pc.connectionState)
 
-		const ensureRemoteStream = () => {
-			if (!remoteStreamRef.current) {
-				remoteStreamRef.current = new MediaStream()
-				setRemoteStream(remoteStreamRef.current)
-				onRemoteStream?.(remoteStreamRef.current)
-			}
-			return remoteStreamRef.current
-		}
-
+		//--------------------------------
+		// ICE candidates
+		//--------------------------------
 		pc.onicecandidate = (e) => {
 			if (e.candidate) {
 				const c = e.candidate
@@ -59,8 +64,20 @@ export default function useWebRtcPeer({
 			}
 		}
 
+		//--------------------------------
+		// Remote track
+		//--------------------------------
+		const ensureRemoteStream = () => {
+			if (!remoteStreamRef.current) {
+				remoteStreamRef.current = new MediaStream()
+				setRemoteStream(remoteStreamRef.current)
+				onRemoteStream?.(remoteStreamRef.current)
+			}
+			return remoteStreamRef.current
+		}
+
 		pc.ontrack = (e) => {
-			console.log('[PC] ontrack: streams[0] tracks =', e.streams?.[0]?.getTracks()?.length)
+			console.log('[PC] ontrack: tracks =', e.streams[0].getTracks().length)
 			const rs = ensureRemoteStream()
 			e.streams[0].getTracks().forEach((t) => {
 				const exists = rs.getTracks().some((x) => x.id === t.id)
@@ -69,18 +86,28 @@ export default function useWebRtcPeer({
 			setRemoteStream(rs)
 			onRemoteStream?.(rs)
 		}
+
+		//--------------------------------
+		// Local media
+		//--------------------------------
 		;(async () => {
 			try {
-				const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+				const stream = await navigator.mediaDevices.getUserMedia({
+					audio: true,
+					video: true,
+				})
 				console.log('[GUM] got audio+video')
 				localStreamRef.current = stream
 				setLocalStream(stream)
 				onLocalStream?.(stream)
 				stream.getTracks().forEach((track) => pc.addTrack(track, stream))
 			} catch (err) {
-				console.warn('[GUM] video failed, retry audio-only', err)
+				console.warn('[GUM] failed → fallback audio only', err)
 				try {
-					const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+					const stream = await navigator.mediaDevices.getUserMedia({
+						audio: true,
+						video: false,
+					})
 					console.log('[GUM] got audio-only')
 					localStreamRef.current = stream
 					setLocalStream(stream)
@@ -88,7 +115,7 @@ export default function useWebRtcPeer({
 					stream.getTracks().forEach((track) => pc.addTrack(track, stream))
 					setIsVideoEnabled(false)
 				} catch (e) {
-					console.error('[GUM] audio/video denied', e)
+					console.error('[GUM] permission denied', e)
 					setIsAudioEnabled(false)
 					setIsVideoEnabled(false)
 				}
@@ -101,20 +128,22 @@ export default function useWebRtcPeer({
 			} catch {}
 			pcRef.current = null
 
-			const ls = localStreamRef.current
-			if (ls) ls.getTracks().forEach((t) => t.stop())
+			localStreamRef.current?.getTracks().forEach((t) => t.stop())
 			localStreamRef.current = null
 
 			remoteStreamRef.current = null
 			setRemoteStream(null)
-			expectingAnswerRef.current = false
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
 
+			expectingAnswerRef.current = false
+			candidateQueueRef.current = []
+		}
+	}, [JSON.stringify(iceServers)]) // 🔥 đảm bảo chỉ chạy khi server list khác
+
+	//------------------------------------------------------------
+	// OFFER / ANSWER
+	//------------------------------------------------------------
 	const createOffer = useCallback(async () => {
 		const pc = pcRef.current
-		if (!pc) throw new Error('PeerConnection not ready')
 		const offer = await pc.createOffer({ iceRestart: false })
 		console.log('[SDP] createOffer done')
 		await pc.setLocalDescription(offer)
@@ -125,7 +154,6 @@ export default function useWebRtcPeer({
 
 	const createAnswer = useCallback(async () => {
 		const pc = pcRef.current
-		if (!pc) throw new Error('PeerConnection not ready')
 		const answer = await pc.createAnswer()
 		console.log('[SDP] createAnswer done')
 		await pc.setLocalDescription(answer)
@@ -135,7 +163,6 @@ export default function useWebRtcPeer({
 
 	const setRemoteDescription = useCallback(async (desc) => {
 		const pc = pcRef.current
-		if (!pc) throw new Error('PeerConnection not ready')
 
 		if (desc?.type === 'answer') {
 			if (pc.signalingState !== 'have-local-offer' || !expectingAnswerRef.current) {
@@ -147,17 +174,15 @@ export default function useWebRtcPeer({
 		await pc.setRemoteDescription(new RTCSessionDescription(desc))
 		console.log('[SDP] setRemoteDescription', desc?.type)
 
-		if (desc?.type === 'answer') {
-			expectingAnswerRef.current = false
-		}
+		if (desc?.type === 'answer') expectingAnswerRef.current = false
 
 		if (candidateQueueRef.current.length > 0) {
-			console.log('[ICE] flushing queued remote candidates:', candidateQueueRef.current.length)
+			console.log('[ICE] flushing queued candidates:', candidateQueueRef.current.length)
 			for (const c of candidateQueueRef.current) {
 				try {
 					await pc.addIceCandidate(new RTCIceCandidate(c))
 				} catch (e) {
-					console.warn('[ICE] addIceCandidate (flushed) failed', e)
+					console.warn('[ICE] addIceCandidate failed', e)
 				}
 			}
 			candidateQueueRef.current = []
@@ -167,12 +192,13 @@ export default function useWebRtcPeer({
 	const addIceCandidate = useCallback(async (candidate) => {
 		if (!candidate) return
 		const pc = pcRef.current
-		if (!pc) return
+
 		if (!pc.remoteDescription) {
-			console.log('[ICE] queue remote candidate (no remoteDescription yet)')
+			console.log('[ICE] queueing candidate (no remoteDescription)')
 			candidateQueueRef.current.push(candidate)
 			return
 		}
+
 		try {
 			await pc.addIceCandidate(new RTCIceCandidate(candidate))
 			console.log('[ICE][REMOTE] added')
@@ -183,21 +209,23 @@ export default function useWebRtcPeer({
 
 	const renegotiate = useCallback(async () => {
 		const pc = pcRef.current
-		if (!pc) throw new Error('PeerConnection not ready')
 		const offer = await pc.createOffer({ iceRestart: false })
-		console.log('[SDP] renegotiate -> createOffer done')
+		console.log('[SDP] renegotiate offer created')
 		await pc.setLocalDescription(offer)
-		console.log('[SDP] renegotiate -> setLocalDescription(offer)')
+		console.log('[SDP] renegotiate setLocalDescription(offer)')
 		expectingAnswerRef.current = true
 		return offer
 	}, [])
 
+	//------------------------------------------------------------
+	// TOGGLE MEDIA
+	//------------------------------------------------------------
 	const toggleAudio = () => {
 		const ls = localStreamRef.current
 		if (!ls) return
 		ls.getAudioTracks().forEach((track) => (track.enabled = !track.enabled))
 		const next = !isAudioEnabled
-		console.log('[MEDIA] toggleAudio ->', next ? 'ON' : 'OFF')
+		console.log('[MEDIA] toggleAudio ->', next)
 		setIsAudioEnabled(next)
 	}
 
@@ -206,26 +234,24 @@ export default function useWebRtcPeer({
 		if (!ls) return
 		ls.getVideoTracks().forEach((track) => (track.enabled = !track.enabled))
 		const next = !isVideoEnabled
-		console.log('[MEDIA] toggleVideo ->', next ? 'ON' : 'OFF')
+		console.log('[MEDIA] toggleVideo ->', next)
 		setIsVideoEnabled(next)
 		onLocalStream?.(ls)
 	}, [isVideoEnabled, onLocalStream])
 
+	//------------------------------------------------------------
+	// HANG UP
+	//------------------------------------------------------------
 	const hangUp = useCallback(() => {
 		const pc = pcRef.current
+
 		try {
-			pc?.getSenders().forEach((s) => {
-				try {
-					s.track && s.track.stop()
-				} catch {}
-			})
+			pc?.getSenders().forEach((s) => s.track?.stop())
 			pc?.close()
 			console.log('[CALL] hangUp -> closed')
-		} catch {
 		} finally {
 			pcRef.current = null
-			const ls = localStreamRef.current
-			if (ls) ls.getTracks().forEach((t) => t.stop())
+			localStreamRef.current?.getTracks().forEach((t) => t.stop())
 			localStreamRef.current = null
 			remoteStreamRef.current = null
 			setRemoteStream(null)
@@ -236,8 +262,6 @@ export default function useWebRtcPeer({
 			expectingAnswerRef.current = false
 		}
 	}, [])
-
-	const getSignalingState = useCallback(() => pcRef.current?.signalingState, [])
 
 	return {
 		createOffer,
@@ -252,6 +276,5 @@ export default function useWebRtcPeer({
 		remoteStream,
 		isAudioEnabled,
 		isVideoEnabled,
-		getSignalingState,
 	}
 }
