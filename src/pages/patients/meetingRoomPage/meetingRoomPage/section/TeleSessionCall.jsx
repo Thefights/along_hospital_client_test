@@ -85,7 +85,6 @@ const PatientTeleSessionCall = ({ transactionId }) => {
 			setError(t('telehealth.error.session_not_ready'))
 		},
 		onParticipantJoined: (connectionId) => {
-			console.log('vô')
 			setRemoteConnectionId(connectionId)
 			setHasRemoteParticipant(true)
 		},
