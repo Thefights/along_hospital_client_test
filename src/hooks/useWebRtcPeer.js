@@ -12,6 +12,23 @@ export default function useWebRtcPeer({
 	const candidateQueueRef = useRef([])
 	const expectingAnswerRef = useRef(false)
 
+	// Keep latest callbacks without forcing effect re-run
+	const onLocalStreamRef = useRef(onLocalStream)
+	const onRemoteStreamRef = useRef(onRemoteStream)
+	const onIceCandidateRef = useRef(onIceCandidate)
+
+	useEffect(() => {
+		onLocalStreamRef.current = onLocalStream
+	}, [onLocalStream])
+
+	useEffect(() => {
+		onRemoteStreamRef.current = onRemoteStream
+	}, [onRemoteStream])
+
+	useEffect(() => {
+		onIceCandidateRef.current = onIceCandidate
+	}, [onIceCandidate])
+
 	const [localStream, setLocalStream] = useState(null)
 	const [remoteStream, setRemoteStream] = useState(null)
 	const [isAudioEnabled, setIsAudioEnabled] = useState(true)
@@ -50,7 +67,7 @@ export default function useWebRtcPeer({
 			if (!remoteStreamRef.current) {
 				remoteStreamRef.current = new MediaStream()
 				setRemoteStream(remoteStreamRef.current)
-				onRemoteStream?.(remoteStreamRef.current)
+				onRemoteStreamRef.current?.(remoteStreamRef.current)
 			}
 			return remoteStreamRef.current
 		}
@@ -76,7 +93,7 @@ export default function useWebRtcPeer({
 				})
 				localStreamRef.current = stream
 				setLocalStream(stream)
-				onLocalStream?.(stream)
+				onLocalStreamRef.current?.(stream)
 				stream.getTracks().forEach((track) => pc.addTrack(track, stream))
 			} catch (err) {
 				console.warn('[GUM] failed → fallback audio only', err)
@@ -88,7 +105,7 @@ export default function useWebRtcPeer({
 					console.log('[GUM] got audio-only')
 					localStreamRef.current = stream
 					setLocalStream(stream)
-					onLocalStream?.(stream)
+					onLocalStreamRef.current?.(stream)
 					stream.getTracks().forEach((track) => pc.addTrack(track, stream))
 					setIsVideoEnabled(false)
 				} catch (e) {
